@@ -1,3 +1,4 @@
+
 body {
   display: flex;
   min-height: 100vh;
@@ -12,12 +13,6 @@ body {
   font-size: 14px;
   font-family: system-ui;
   color: initial;
-}
-
-.main-content {
-  flex: 1;
-  display: block;
-  height: 100vh;
 }
 
 a {
@@ -41,6 +36,16 @@ button {
 }
 
 :global {
+  #main-content {
+    position: absolute;
+    left: 240px;
+    right: 0px;
+    top: 66px;
+    bottom: 0px;
+    padding: 10px;
+    overflow: scroll;
+  }
+
   @import './styles/NavigationBar';
   @import './styles/Sidebar';
 }
