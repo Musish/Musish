@@ -6,11 +6,11 @@ class MenuItem extends React.Component {
   render() {
     return (
         <Route path={this.props.to} exact children={({match}) => (
+          <li className={cx({active: !!match})}>
             <Link to={this.props.to}>
-              <li className={cx({active: !!match})}>
                 {this.props.label}
-              </li>
             </Link>
+          </li>
         )}/>
     );
   }

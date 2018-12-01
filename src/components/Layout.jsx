@@ -8,7 +8,6 @@ export default class Layout extends React.Component {
         <Fragment>
           <NavigationBar/>
 
-
           <div id="main-wrapper">
             <Sidebar/>
             <main id="main-content">

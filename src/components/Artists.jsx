@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import PageTitle from "./PageTitle";
 
 export default class Artists extends React.Component {
   constructor(props) {
@@ -26,15 +27,23 @@ export default class Artists extends React.Component {
       return 'Loading...';
     }
 
-    return this.state.artists.map(
-        (artist) => {
-          return (
-              <div>
-                <div>
-                  {artist.attributes.name}
-                </div>
-              </div>
-          );
-        });
+    const artists = this.state.artists.map(
+      (artist) => {
+        return (
+          <div>
+            <div>
+              {artist.attributes.name}
+            </div>
+          </div>
+        );
+      }
+    );
+
+    return (
+      <Fragment>
+        <PageTitle title={"Artists"} context={"Your Library"} />
+        { artists }
+      </Fragment>
+    )
   }
 }

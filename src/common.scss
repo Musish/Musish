@@ -23,14 +23,17 @@ a:hover {
   color: #fe2851;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
 button {
   -webkit-appearance: none;
   background: none;
-  border: solid 1px #00c4ff;
+  border: solid 1px #fe2851;
   padding: 10px 15px;
-  color: #00c4ff;
-  ffont-size: 11px;
-  font-family: 'Fira Mono', monospace;
+  color: #fe2851;
+  font-size: 11px;
 }
 
 :global {
@@ -54,9 +57,11 @@ button {
     }
     #main-content {
       height:100%;
-      padding: 10px;
       overflow-y: scroll;
       flex: 1;
+      > div {
+        padding: 10px;
+      }
     }
   }
 
