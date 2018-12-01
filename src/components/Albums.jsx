@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 
 import AlbumItem from './AlbumItem';
 
 import AlbumScss from './Albums.scss';
+import PageTitle from "./PageTitle";
 
 export default class Albums extends React.Component {
   constructor(props) {
@@ -41,9 +42,12 @@ export default class Albums extends React.Component {
       });
 
     return (
-      <div className={AlbumScss.container}>
-        { albums }
-      </div>
+      <Fragment>
+        <PageTitle title={"Albums"} context={"Your Library"} />
+        <div className={AlbumScss.container}>
+          { albums }
+        </div>
+      </Fragment>
     )
   }
 }

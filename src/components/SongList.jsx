@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import addImage from  '../assets/Add.png';
+import PageTitle from "./PageTitle";
 
 export default class SongList extends React.Component {
   // Props can have album=true which will just change the icon to the track number instead
@@ -36,21 +37,24 @@ export default class SongList extends React.Component {
     }
 
     return (
-      <table className="songList">
-        <thead>
+      <Fragment>
+        <PageTitle title={"Artists"} context={"Your Library"} />
+        <table className="songList">
+          <thead>
           <tr>
             <th>Song</th>
             <th>Artist</th>
             <th>Album</th>
             <th>Time</th>
           </tr>
-        </thead>
-        <tbody>
-          {this.state.songs.map(song => 
+          </thead>
+          <tbody>
+          {this.state.songs.map(song =>
             <SongListItem key={song.id} song={song} albumArt={!this.state.album} />
           )}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </Fragment>
     );
   }
 }
