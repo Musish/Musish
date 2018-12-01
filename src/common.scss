@@ -57,9 +57,11 @@ button {
     }
     #main-content {
       height:100%;
-      padding: 10px;
       overflow-y: scroll;
       flex: 1;
+      > div {
+        padding: 10px;
+      }
     }
   }
 
