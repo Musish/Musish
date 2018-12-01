@@ -12,6 +12,7 @@ import AlbumItem from './AlbumItem';
 import Layout from './Layout';
 import Artists from './Artists';
 import Artist from './Artist';
+import SongList from './SongList';
 
 export default class App extends React.Component {
   render() {
@@ -26,6 +27,7 @@ export default class App extends React.Component {
                   <Route path="/albumItem" exact component={AlbumItem}/>
                   <Route path="/artists" exact component={Artists}/>
                   <Route path="/artist/{id}" exact component={Artist}/>
+                  <Route path="/songs" exact component={SongList}/>
                   <Redirect to="/"/>
                 </Switch>
               </Layout>
