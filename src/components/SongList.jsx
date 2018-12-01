@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import addImage from  '../assets/Add.png';
+import PageTitle from "./PageTitle";
 
 export default class SongList extends React.Component {
   // Props can have album=true which will just change the icon to the track number instead
@@ -17,10 +18,6 @@ export default class SongList extends React.Component {
     if(!this.state.loaded) {
       const music = MusicKit.getInstance();
       const songs = await music.api.library.songs();
-      console.log(songs);
-      let player = music.player;
-      console.log(player);
-
 
       this.setState({
         songs: songs,
@@ -40,8 +37,10 @@ export default class SongList extends React.Component {
     }
 
     return (
-      <table className="songList">
-        <thead>
+      <Fragment>
+        <PageTitle title={"Artists"} context={"Your Library"} />
+        <table className="songList">
+          <thead>
           <tr>
             <th>Song</th>
             <th>Artist</th>
@@ -53,8 +52,9 @@ export default class SongList extends React.Component {
           {this.state.songs.map((song, i) =>
             <SongListItem key={song.id} song={song} index={i} songs={this.state.songs} albumArt={!this.state.album} />
           )}
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      </Fragment>
     );
   }
 }
@@ -62,7 +62,7 @@ export default class SongList extends React.Component {
 class SongListItem extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this._playSong = this._playSong.bind(this);
   }
 
@@ -81,13 +81,13 @@ class SongListItem extends React.Component {
     let d = new Date(ms);
     return d.getUTCMinutes() + ':' + String("0" + d.getUTCSeconds()).slice(-2); // gets a nice minutes and seconds formatting of the time
   }
-  
+
   render() {
-    const WHEIGHT = 50;
+    const WHEIGHT = 40;
     let url = MusicKit.formatArtworkURL(this.props.song.attributes.artwork, WHEIGHT, WHEIGHT);
     const explicit = ''; // TODO: get if the song is explicit or not
     const inLibrary = this.props.song.attributes.playParams.isLibrary ? "" : <img src={addImage}/>; // If the song is already in the library or not
-    
+
     const time = this.getTime(this.props.song.attributes.durationInMillis);
 
     const songPre = this.props.albumArt ? <img src={url} style={{width: WHEIGHT, height: WHEIGHT}} alt="" /> : <h3>{this.props.attributes.trackNumber}</h3>
