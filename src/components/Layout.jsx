@@ -2,6 +2,8 @@ import React, {Fragment} from 'react';
 import NavigationBar from './NavigationBar';
 import Sidebar from './Sidebar';
 
+import LayoutScss from './Layout.scss'
+
 export default class Layout extends React.Component {
   render() {
     return (
@@ -10,7 +12,9 @@ export default class Layout extends React.Component {
           <Sidebar/>
 
           <main id="main-content">
-            {this.props.children}
+            <div className={LayoutScss.mainContainer}>
+              {this.props.children}
+            </div>
           </main>
         </Fragment>
     );

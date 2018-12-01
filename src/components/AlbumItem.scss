@@ -1,0 +1,27 @@
+.container {
+  width: 200px;
+  height: 300px;
+  background-color: rgb(249, 249, 249);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 5px;
+
+  .imageContainer {
+    width: 150px;
+    height: 150px;
+    background-color: aquamarine;
+    margin-top: 20px;
+
+    .image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .descriptionContainer {
+    text-align: center;
+  }
+}
+
