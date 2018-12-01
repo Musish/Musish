@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import addImage from  '../assets/Add.png';
+import addImage from '../assets/Add.png';
 import PageTitle from "./PageTitle";
 
 export default class SongList extends React.Component {
@@ -15,7 +15,7 @@ export default class SongList extends React.Component {
   }
 
   async componentDidMount() {
-    if(!this.state.loaded) {
+    if (!this.state.loaded) {
       const music = MusicKit.getInstance();
       const songs = await music.api.library.songs();
 
@@ -28,33 +28,33 @@ export default class SongList extends React.Component {
   }
 
   render() {
-    if(!this.state.loaded) {
+    if (!this.state.loaded) {
       return (
-        <div>
-          Loading...
-        </div>
+          <div>
+            Loading...
+          </div>
       );
     }
 
     return (
-      <Fragment>
-        <PageTitle title={"Artists"} context={"Your Library"} />
-        <table className="songList">
-          <thead>
-          <tr>
-            <th>Song</th>
-            <th>Artist</th>
-            <th>Album</th>
-            <th>Time</th>
-          </tr>
-          </thead>
-          <tbody>
-          {this.state.songs.map(song =>
-            <SongListItem key={song.id} song={song} albumArt={!this.state.album} />
-          )}
-          </tbody>
-        </table>
-      </Fragment>
+        <Fragment>
+          <PageTitle title={"Artists"} context={"Your Library"}/>
+          <table className="songList">
+            <thead>
+            <tr>
+              <th>Song</th>
+              <th>Artist</th>
+              <th>Album</th>
+              <th>Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            {this.state.songs.map(song =>
+                <SongListItem key={song.id} song={song} albumArt={!this.state.album}/>
+            )}
+            </tbody>
+          </table>
+        </Fragment>
     );
   }
 }
@@ -62,7 +62,7 @@ export default class SongList extends React.Component {
 class SongListItem extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this._playSong = this._playSong.bind(this);
   }
 
@@ -76,41 +76,42 @@ class SongListItem extends React.Component {
   }
 
   getTime(ms) {
-    ms = 1000*Math.round(ms/1000); // round to nearest second
+    ms = 1000 * Math.round(ms / 1000); // round to nearest second
     let d = new Date(ms);
     return d.getUTCMinutes() + ':' + String("0" + d.getUTCSeconds()).slice(-2); // gets a nice minutes and seconds formatting of the time
   }
-  
+
   render() {
     const WHEIGHT = 40;
     let url = MusicKit.formatArtworkURL(this.props.song.attributes.artwork, WHEIGHT, WHEIGHT);
     const explicit = ''; // TODO: get if the song is explicit or not
     const inLibrary = this.props.song.attributes.playParams.isLibrary ? "" : <img src={addImage}/>; // If the song is already in the library or not
-    
+
     const time = this.getTime(this.props.song.attributes.durationInMillis);
 
-    const songPre = this.props.albumArt ? <img src={url} style={{width: WHEIGHT, height: WHEIGHT}} alt="" /> : <h3>{this.props.attributes.trackNumber}</h3>
+    const songPre = this.props.albumArt ? <img src={url} style={{width: WHEIGHT, height: WHEIGHT}} alt=""/> :
+        <h3>{this.props.attributes.trackNumber}</h3>
 
     return (
-      <tr onClick={this._playSong}>
-        <td> {/* Song Name, icon, explicit */}
-          <div>
-            {songPre}
-            <span>{this.props.song.attributes.name}</span>
-            {explicit}
-          </div>
-        </td>
-        <td> {/* Artist Name */}
-          <span>{this.props.song.attributes.artistName}</span>
-        </td>
-        <td> {/* Album Name and add to library */}
-          <span>{this.props.song.attributes.albumName}</span>
-          <span>{inLibrary}</span> {/* If it is not in the users library, then it will just show an image to add to library  */}
-        </td>
-        <td> {/* Time or menu button */}
-          <span>{time}</span>
-        </td>
-      </tr>
+        <tr onClick={this._playSong}>
+          <td> {/* Song Name, icon, explicit */}
+            <div>
+              {songPre}
+              <span>{this.props.song.attributes.name}</span>
+              {explicit}
+            </div>
+          </td>
+          <td> {/* Artist Name */}
+            <span>{this.props.song.attributes.artistName}</span>
+          </td>
+          <td> {/* Album Name and add to library */}
+            <span>{this.props.song.attributes.albumName}</span>
+            <span>{inLibrary}</span> {/* If it is not in the users library, then it will just show an image to add to library  */}
+          </td>
+          <td> {/* Time or menu button */}
+            <span>{time}</span>
+          </td>
+        </tr>
     );
   }
 }

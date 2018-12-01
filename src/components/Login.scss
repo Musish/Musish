@@ -25,11 +25,26 @@
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  .title {
+    margin-bottom: 5px;
+    color: white;
+  }
+
+  .subheading {
+    margin-bottom: 30px;
+    color: white;
+    font-weight: 100;
+  }
 
   .button {
     width: 150px;
     height: 40px;
+    border-color: #fff;
+    color: #fff;
+    border-radius: 5px;
   }
 }
