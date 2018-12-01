@@ -22,6 +22,12 @@
 
   .descriptionContainer {
     text-align: center;
+    height: 130px;
+    width: 200px;
+    overflow: scroll;
+    white-space: pre-wrap;
+    word-break: break-all;
+    word-wrap: break-word;
   }
 }
 

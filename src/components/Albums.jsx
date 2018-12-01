@@ -27,15 +27,13 @@ export default class Albums extends React.Component {
     }
 
     return this.state.albums.map(
-        album => {
+        (album, i) => {
           let url = album.attributes.artwork.url;
           url = url.replace('{w}', 150);
           url = url.replace('{h}', 150);
 
-          console.log("Works?");
-
           return (
-              <div>
+              <div key={i}>
                 <AlbumItem url={url} title={album.attributes.name} name={album.attributes.artistName}/>
               </div>
           );
