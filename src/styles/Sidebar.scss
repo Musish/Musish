@@ -1,0 +1,33 @@
+#main-sidebar {
+  min-height: 500px;
+  position: absolute;
+  top: 66px;
+  bottom: 0px;
+  width: 220px;
+  padding: 10px;
+  overflow: scroll;
+}
+
+#main-sidebar > div.menu {
+  background: rgb(249,249,249);
+  padding: 10px 15px;
+  border-radius: 5px;
+  ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	li {
+	  color: #333;
+	  margin: 10px 0px;
+	  a {
+		padding: 5px 12px;
+	  }
+	  &.active a {
+		border-radius: 4px;
+		background: rgb(240, 240, 240);
+		color: #fe2851;
+		font-weight: 500;
+	  }
+	}
+  }
+}

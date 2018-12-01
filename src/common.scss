@@ -1,0 +1,46 @@
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  margin: 0;
+  font-weight: 300;
+  background: #ffffff;
+  color: #333333;
+  overflow: hidden;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  font-family: system-ui;
+  color: initial;
+}
+
+.main-content {
+  flex: 1;
+  display: block;
+  height: 100vh;
+}
+
+a {
+  color: rgb(105, 105, 105);
+  text-decoration: none;
+
+  transition: color 0.1s;
+}
+a:hover {
+  color: #fe2851;
+}
+
+button {
+  -webkit-appearance: none;
+  background: none;
+  border: solid 1px #00c4ff;
+  padding: 10px 15px;
+  color: #00c4ff;
+  ffont-size: 11px;
+  font-family: 'Fira Mono', monospace;
+}
+
+:global {
+  @import './styles/NavigationBar';
+  @import './styles/Sidebar';
+}
