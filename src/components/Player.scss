@@ -1,0 +1,12 @@
+.player {
+  background:green;
+  height: 50px;
+  .main-info {
+	> div.picture {
+	  background: red;
+	}
+	> div.track {
+	  background: blue;
+	}
+  }
+}
