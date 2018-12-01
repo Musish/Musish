@@ -50,8 +50,8 @@ export default class SongList extends React.Component {
           </tr>
         </thead>
         <tbody>
-          {this.state.songs.map(song => 
-            <SongListItem key={song.id} song={song} albumArt={!this.state.album} />
+          {this.state.songs.map((song, i) =>
+            <SongListItem key={song.id} song={song} index={i} songs={this.state.songs} albumArt={!this.state.album} />
           )}
         </tbody>
       </table>
@@ -68,9 +68,10 @@ class SongListItem extends React.Component {
 
   async _playSong() {
     let music = MusicKit.getInstance();
-    let song = this.props.song.attributes.playParams
+
     await music.setQueue({
-      'song': song.id
+      startPosition: this.props.index,
+      items: this.props.songs,
     });
     await music.play();
   }
