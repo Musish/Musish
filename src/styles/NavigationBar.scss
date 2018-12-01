@@ -1,0 +1,72 @@
+.navigation-bar {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  background: rgb(247, 247, 247);
+  box-shadow: inset 0px -3px 2px -2px rgba(0,0,0,0.1);
+  text-align: center;
+  > div.nav-wrapper {
+	position: relative;
+	width: 100%;
+  }
+  ul.nav-menu {
+	list-style-type: none;
+	margin: 0px;
+	padding: 0px;
+	display: inline-block;
+	line-height: 65px;
+	&.pull-right {
+	  float:right
+	}
+	li {
+	  margin: 0px;
+	  padding: 0px;
+	  display: inline-block;
+
+	  a {
+		color: #ffffff;
+		background: none;
+		font-weight: 300;
+		font-size: 14px;
+		padding: 5px 12px;
+		border-radius: 4px;
+		letter-spacing: -0.1px;
+		margin: 0 5px;
+		color: rgb(105, 105, 105);
+		&:hover {
+		  color: #fe2851;
+		}
+	  }
+	  &.active a {
+		color: #ffffff;
+		background: #fe2851;
+	  }
+	}
+  }
+  h1.brand {
+	position: absolute;
+	top: 0px;
+	left: 30px;
+	line-height: 65px;
+	font-size: 20px;
+	color: #555555;
+	margin: 0px;
+  }
+  div.nav-search {
+	position: absolute;
+	top: 15px;
+	right: 50px;
+	input {
+	  border: none;
+	  -webkit-appearance: none;
+	  outline: none;
+	  padding: 8px 15px;
+	  text-align: center;
+	  border-radius: 5px;
+	  border: solid 1px #eee;
+	  font-size: 11px;
+	  line-height: 15px;
+	}
+  }
+}
