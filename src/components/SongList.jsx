@@ -7,7 +7,7 @@ export default class SongList extends React.Component {
 
     this.state = {
       songs: this.props.songs !== undefined ? this.props.songs : [],
-      loaded: this.props.songs !== undefined ? true : false
+      loaded: this.props.songs !== undefined
     }
   }
 
@@ -45,7 +45,7 @@ export default class SongList extends React.Component {
           </tr>
         </thead>
         <tbody>
-          {this.state.songs.map(song => 
+          {this.state.songs.map(song =>
             <SongListItem key={song.id} song={song} albumArt={false} />
           )}
         </tbody>
@@ -55,18 +55,18 @@ export default class SongList extends React.Component {
 }
 
 class SongListItem extends React.Component {
-  
+
   render() {
-    const WHEIGHT = 50
+    const WHEIGHT = 50;
     let url = this.props.song.attributes.artwork.url;
           url = url.replace('{w}', WHEIGHT);
           url = url.replace('{h}', WHEIGHT);
-    let explicit = null // TODO: get if the song is explicit or not
-    let inLibrary = this.props.song.attributes.playParams.isLibrary ? "" : <img src={addImage}/>
-    var ms = this.props.song.attributes.durationInMillis;
+    let explicit = null; // TODO: get if the song is explicit or not
+    let inLibrary = this.props.song.attributes.playParams.isLibrary ? "" : <img src={addImage}/>;
+    let ms = this.props.song.attributes.durationInMillis;
     ms = 1000*Math.round(ms/1000); // round to nearest second
-    var d = new Date(ms);
-    var time = d.getUTCMinutes() + ':' + String("0" + d.getUTCSeconds()).slice(-2)
+    const d = new Date(ms);
+    const time = d.getUTCMinutes() + ':' + String("0" + d.getUTCSeconds()).slice(-2);
     return (
       <tr>
         <td>
