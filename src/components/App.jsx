@@ -8,7 +8,7 @@ import {
   Switch,
 } from 'react-router-dom';
 import Albums from './Albums';
-import Album from './Album';
+import AlbumItem from './AlbumItem';
 import Layout from './Layout';
 
 export default class App extends React.Component {
@@ -21,7 +21,7 @@ export default class App extends React.Component {
                 <Switch>
                   <Route path="/" exact component={() => 'Home'}/>
                   <Route path="/albums" exact component={Albums}/>
-                  <Route path="/album" exact component={Album}/>
+                  <Route path="/albumItem" exact component={AlbumItem}/>
                   <Redirect to="/"/>
                 </Switch>
               </Router>

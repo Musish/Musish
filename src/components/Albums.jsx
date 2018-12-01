@@ -1,5 +1,7 @@
 import React from 'react';
 
+import AlbumItem from './AlbumItem';
+
 export default class Albums extends React.Component {
   constructor(props) {
     super(props);
@@ -27,15 +29,14 @@ export default class Albums extends React.Component {
     return this.state.albums.map(
         album => {
           let url = album.attributes.artwork.url;
-          url = url.replace('{w}', 100);
-          url = url.replace('{h}', 100);
+          url = url.replace('{w}', 150);
+          url = url.replace('{h}', 150);
+
+          console.log("Works?");
 
           return (
               <div>
-                <img src={url} style={{width: 100, height: 100}} alt=""/>
-                <div>
-                  {album.attributes.name}
-                </div>
+                <AlbumItem url={url} title={album.attributes.name} name={album.attributes.artistName}/>
               </div>
           );
         });
