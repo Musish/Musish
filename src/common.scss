@@ -1,8 +1,6 @@
 
 body {
-  display: flex;
   min-height: 100vh;
-  flex-direction: column;
   margin: 0;
   font-weight: 300;
   background: #ffffff;
@@ -36,14 +34,30 @@ button {
 }
 
 :global {
-  #main-content {
-    position: absolute;
-    left: 240px;
-    right: 0px;
-    top: 66px;
-    bottom: 0px;
-    padding: 10px;
-    overflow: scroll;
+  #app-root {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #main-wrapper {
+    display: flex;
+    flex: 1;
+    #main-sidebar {
+      height:100%;
+      min-height: 500px;
+      top: 66px;
+      bottom: 0px;
+      width: 220px;
+      padding: 10px;
+      //overflow-y: scroll;
+    }
+    #main-content {
+      height:100%;
+      padding: 10px;
+      overflow-y: scroll;
+      flex: 1;
+    }
   }
 
   @import './styles/NavigationBar';

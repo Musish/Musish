@@ -2,6 +2,8 @@ import React from 'react';
 
 import AlbumItem from './AlbumItem';
 
+import AlbumScss from './Albums.scss';
+
 export default class Albums extends React.Component {
   constructor(props) {
     super(props);
@@ -26,17 +28,23 @@ export default class Albums extends React.Component {
       return 'Loading...';
     }
 
-    return this.state.albums.map(
-        (album, i) => {
-          let url = album.attributes.artwork.url;
-          url = url.replace('{w}', 150);
-          url = url.replace('{h}', 150);
+    const albums = this.state.albums.map(
+      (album, i) => {
+        let url = album.attributes.artwork.url;
+        url = url.replace('{w}', 150);
+        url = url.replace('{h}', 150);
 
-          return (
-              <div key={i}>
-                <AlbumItem url={url} title={album.attributes.name} name={album.attributes.artistName}/>
-              </div>
-          );
-        });
+        return (
+            <div key={i}>
+              <AlbumItem url={url} title={album.attributes.name} name={album.attributes.artistName}/>
+            </div>
+        );
+      });
+
+    return (
+      <div className={AlbumScss.container}>
+        { albums }
+      </div>
+    )
   }
 }
