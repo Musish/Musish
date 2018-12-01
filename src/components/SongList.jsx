@@ -17,10 +17,6 @@ export default class SongList extends React.Component {
     if(!this.state.loaded) {
       const music = MusicKit.getInstance();
       const songs = await music.api.library.songs();
-      console.log(songs);
-      let player = music.player;
-      console.log(player);
-
 
       this.setState({
         songs: songs,
@@ -70,7 +66,7 @@ class SongListItem extends React.Component {
     let music = MusicKit.getInstance();
     let song = this.props.song.attributes.playParams
     await music.setQueue({
-      'song': song.id
+      [song.kind]: song.id
     });
     await music.play();
   }
@@ -82,7 +78,7 @@ class SongListItem extends React.Component {
   }
   
   render() {
-    const WHEIGHT = 50;
+    const WHEIGHT = 40;
     let url = MusicKit.formatArtworkURL(this.props.song.attributes.artwork, WHEIGHT, WHEIGHT);
     const explicit = ''; // TODO: get if the song is explicit or not
     const inLibrary = this.props.song.attributes.playParams.isLibrary ? "" : <img src={addImage}/>; // If the song is already in the library or not
