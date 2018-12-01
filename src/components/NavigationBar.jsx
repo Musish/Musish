@@ -4,23 +4,23 @@ export default class NavigationBar extends React.Component {
   render() {
     return (
       <nav>
-        <div class="nav-wrapper">
-          <h1 class="brand"> Musi.sh</h1>
-          <ul class="nav-menu">
-            <li class="active">
+        <div className="nav-wrapper">
+          <h1 className="brand"> Musi.sh</h1>
+          <ul className="nav-menu">
+            <li className="active">
               <a href="#">Library</a>
             </li>
-            <li class="">
+            <li className="">
               <a href="#">Discover</a>
             </li>
-            <li class="">
+            <li className="">
               <a href="#">Social</a>
             </li>
-            <li class="">
+            <li className="">
               <a href="#">Radio</a>
             </li>
           </ul>
-          <div class="nav-search">
+          <div className="nav-search">
             <input type="text" placeholder="Search  Music" />
           </div>
         </div>
