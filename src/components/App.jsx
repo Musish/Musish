@@ -9,21 +9,23 @@ import {
 } from 'react-router-dom';
 import Albums from './Albums';
 import Layout from './Layout';
+import Artists from './Artists';
 
 export default class App extends React.Component {
   render() {
     return (
         <MusicKitProvider>
           <MusicKitAuthorizeProvider>
-            <Layout>
-              <Router>
+            <Router>
+              <Layout>
                 <Switch>
                   <Route path="/" exact component={() => 'Home'}/>
                   <Route path="/albums" exact component={Albums}/>
+                  <Route path="/artists" exact component={Artists}/>
                   <Redirect to="/"/>
                 </Switch>
-              </Router>
-            </Layout>
+              </Layout>
+            </Router>
           </MusicKitAuthorizeProvider>
         </MusicKitProvider>
     );
