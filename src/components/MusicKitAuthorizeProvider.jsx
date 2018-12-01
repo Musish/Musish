@@ -1,0 +1,28 @@
+import React from 'react';
+
+export default class MusicKitAuthorizeProvider extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      ready: false,
+    };
+  }
+
+  async componentDidMount() {
+    const music = MusicKit.getInstance();
+    await music.authorize();
+
+    this.setState({
+      ready: true
+    })
+  }
+
+  render() {
+    if (!this.state.ready) {
+      return 'Authorizing...';
+    }
+
+    return this.props.children;
+  }
+}
