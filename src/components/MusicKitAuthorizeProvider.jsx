@@ -1,4 +1,5 @@
 import React from 'react';
+import Login from './Login';
 
 export default class MusicKitAuthorizeProvider extends React.Component {
   constructor(props) {
@@ -9,7 +10,7 @@ export default class MusicKitAuthorizeProvider extends React.Component {
     };
   }
 
-  async componentDidMount() {
+  async authorize() {
     const music = MusicKit.getInstance();
     await music.authorize();
 
@@ -20,7 +21,7 @@ export default class MusicKitAuthorizeProvider extends React.Component {
 
   render() {
     if (!this.state.ready) {
-      return 'Authorizing...';
+      return <Login onClick={() => this.authorize()}/>;
     }
 
     return this.props.children;
