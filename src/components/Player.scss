@@ -2,11 +2,20 @@
   background:green;
   height: 50px;
   .main-info {
+	display: flex;
+	flex-direction: row;
+	width: 100%;
 	> div.picture {
 	  background: red;
+	  padding: 10px;
+	  > .image {
+		width: 20px;
+		height: 20px;
+	  }
 	}
 	> div.track {
 	  background: blue;
+	  flex: 1;
 	}
   }
 }
