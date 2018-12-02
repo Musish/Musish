@@ -1,5 +1,7 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
+import PageTitle from './PageTitle';
+import SongList from './SongList';
 
 class Playlist extends React.Component {
   constructor(props) {
@@ -26,9 +28,13 @@ class Playlist extends React.Component {
     if (!this.state.playlist) {
       return 'Loading...';
     }
+
     return (
         <div>
-          {this.state.playlist.id}
+          <PageTitle title={this.state.playlist.attributes.name} context={"YOUR LIBRARY"}/>
+          <p>{this.state.playlist.attributes.description.standard}</p>
+
+          <SongList songs={this.state.playlist.relationships.tracks.data} album={false}/>
         </div>
     );
   }
