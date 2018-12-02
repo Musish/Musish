@@ -26,7 +26,7 @@ export default class Playlists extends React.Component {
 
           return (
               <div key={i}>
-                <PlaylistItem url={url} title={playlist.attributes.name} name={playlist.attributes.artistName}/>
+                <PlaylistItem url={url} id={playlist.id} title={playlist.attributes.name} name={playlist.attributes.artistName}/>
               </div>
           );
         });
