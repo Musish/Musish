@@ -1,23 +1,31 @@
-#main-sidebar > div.menu {
-  background: rgb(249,249,249);
-  padding: 10px 15px;
-  border-radius: 5px;
-  margin-top: 15px;
-  ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-	li {
-	  color: #333;
-	  margin: 10px 0px;
-	  a {
-		padding: 5px 12px;
-	  }
-	  &.active a {
-		border-radius: 4px;
-		background: rgb(240, 240, 240);
-		color: #fe2851;
-		font-weight: 500;
+#main-sidebar{
+  display: flex;
+  flex-direction: column;
+  .menus {
+	flex: 1;
+	overflow: scroll;
+	.menu {
+	  background: rgb(249,249,249);
+	  padding: 10px 15px;
+	  border-radius: 5px;
+	  margin-top: 15px;
+	  ul {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+		li {
+		  color: #333;
+		  margin: 10px 0px;
+		  a {
+			padding: 5px 12px;
+		  }
+		  &.active a {
+			border-radius: 4px;
+			background: rgb(240, 240, 240);
+			color: #fe2851;
+			font-weight: 500;
+		  }
+		}
 	  }
 	}
   }

@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from './Player.scss'
 
 export default class Player extends React.Component {
   constructor(props) {
@@ -144,6 +145,30 @@ export default class Player extends React.Component {
   }
 
   render() {
+
+    if (!this.state.nowPlayingItem) {
+      return "";
+    }
+
+    console.log(this.state.nowPlayingItem);
+
+    return (
+      <div className={styles.player}>
+        <div className={styles["main-info"]}>
+          <div className={styles.picture}>
+            <img src={this.state.nowPlayingItem.attributes.artwork.url} className={styles.image} alt={'album artwork'} />
+          </div>
+          <div className={styles.track}>
+            <h1>{this.state.nowPlayingItem.title}</h1>
+            <h2>{this.state.nowPlayingItem.attributes.artistName}</h2>
+            <h3>{this.state.nowPlayingItem.attributes.albumName}</h3>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+      /*
     return (
         <div>
           {this.state.nowPlayingItem && (
@@ -175,5 +200,5 @@ export default class Player extends React.Component {
           </div>
         </div>
     );
-  }
+    */
 }
