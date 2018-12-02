@@ -6,7 +6,7 @@ Frustrated by the lack of access to the greatest bangers in our ever-growing mus
 
 ## What it does
 Plays music. Without hassle. In a web browser. With your Apple ID. Revolutionary.
-Musi.sh allows a user to authenticate using their Apple ID (while subscribed to Apple Music), and browse their Music library on the go. We plan to add music discovery, clean the UI up even more, and throw some glitter all over it before long! [star emoji, you guys don't support 'em yet]
+Musi.sh allows a user to authenticate using their Apple ID (while subscribed to Apple Music), and browse their Music library on the go. We plan to add music discovery, clean the UI up even more, and throw some glitter all over it before long! ✨
 
 All data (including user library, discovery content, album artwork, and the music itself) is retrieved through public APIs provided by Apple.
 
@@ -23,9 +23,9 @@ We're proud of our product, we enjoy using our webapp and that's a great accompl
 We've all learnt a fair share of the Apple Music API, improved our React skills as well as overall web development. We've dealt with handling Authentication using JSON Web Tokens (JWT) (specifically for Apple Music), and we have also improved upon our general time management for tasks needing to be completed at a very quick pace and our teamwork (delegating tasks between us all while utilising each persons' strengths to their best).
 
 ## What's next for Apple Musi.sh
-A proper open source product built by the community for the community! [rocket emoji]
+A proper open source product built by the community for the community! 🚀
 
-(And hopefully not a lawsuit [grimacing face emoji]).  
+(And hopefully not a lawsuit 😬.  
 
 ### To run locally
 ```bash
