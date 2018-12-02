@@ -1,49 +1,41 @@
 import React, { Fragment } from 'react';
 import PageTitle from "./PageTitle";
+import PaginatedResults from './PaginatedResults';
 
 export default class Artists extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      artists: null,
-    };
-  }
-
-  async componentDidMount() {
+  async load(params) {
     const music = MusicKit.getInstance();
 
-    const artists = await music.api.library.artists();
-
-    console.log(artists);
-
-    this.setState({
-      artists,
-    });
+    return await music.api.library.artists(null, params);
   }
 
-  render() {
-    if (!this.state.artists) {
+  renderItems(items, more, {loading, end}) {
+    if (!items) {
       return 'Loading...';
     }
 
-    const artists = this.state.artists.map(
-      (artist) => {
-        return (
-          <div>
-            <div>
-              {artist.attributes.name}
-            </div>
-          </div>
-        );
-      }
+    const artists = items.map(
+        (artist) => {
+          return (
+              <div>
+                <div>
+                  {artist.attributes.name}
+                </div>
+              </div>
+          );
+        }
     );
 
     return (
-      <Fragment>
-        <PageTitle title={"Artists"} context={"Your Library"} />
-        { artists }
-      </Fragment>
-    )
+        <Fragment>
+          <PageTitle title={"Artists"} context={"Your Library"} />
+          { artists }
+          {loading ? "Loading..." : (!end && <div onClick={more}>Load more</div>)}
+        </Fragment>
+    );
+  }
+
+  render() {
+    return <PaginatedResults load={this.load} render={this.renderItems}/>;
   }
 }
