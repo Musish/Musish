@@ -10,17 +10,6 @@ export default class PlaylistItem extends Component {
     }
   }
 
-  async componentDidMount() {
-    const music = MusicKit.getInstance();
-    const playlist = await music.api.library.playlists();
-
-    this.setState({
-      playlist
-    });
-
-    console.log(this.state.playlist);
-  }
-
   render() {
     return (
         <div className={PlaylistScss.container}>

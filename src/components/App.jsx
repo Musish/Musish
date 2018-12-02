@@ -14,6 +14,7 @@ import Artists from './Artists';
 import Artist from './Artist';
 import SongList from './SongList';
 import PlaylistItem from './PlaylistItem';
+import Playlist from "./Playlist";
 
 export default class App extends React.Component {
   render() {
@@ -26,6 +27,7 @@ export default class App extends React.Component {
                   <Route path="/" exact component={() => 'Home'}/>
                   <Route path="/albums" exact component={Albums}/>
                   <Route path="/playlists" exact component={PlaylistItem}/>
+                  <Route path="/playlists/:id" exact component={Playlist}/>
                   <Route path="/artists" exact component={Artists}/>
                   <Route path="/artist/{id}" exact component={Artist}/>
                   <Route path="/songs" exact component={SongList}/>
