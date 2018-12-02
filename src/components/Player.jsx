@@ -21,21 +21,18 @@ export default class Player extends React.Component {
   }
 
   mediaItemDidChange(event) {
-    console.log('nowPlayingItem', event);
     this.setState({
       nowPlayingItem: event.item,
     });
   };
 
   queueItemsDidChange(event) {
-    console.log('queue', event);
     this.setState({
       queue: event.items,
     });
   };
 
   queuePositionDidChange(event) {
-    console.log('queuePosition', event);
     this.setState({
       queuePosition: event,
     });
