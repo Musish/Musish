@@ -141,7 +141,7 @@ class SongListItem extends React.Component {
     
     const imageOrNumber = this.props.albumArt ?
         <div className={"play-overlay"}><img src={url} alt=""/></div> :
-        <h3>{this.props.attributes.trackNumber}</h3>;
+        <div className={"play-overlay"}><h3>{this.props.song.attributes.trackNumber}</h3></div>;
 
     return (
         <tr onClick={this._handleClick} className={`test-overlay ${this.props.isPlaying ? 'pause' : ''}`} >

@@ -36,65 +36,6 @@ button {
 }
 
 :global {
-
-  .test-overlay {
-    .play-overlay {
-      position: relative;
-      width: 30px;
-      height: 30px;
-      img {
-        height: 100%;
-        width: 100%;
-      }
-    }
-    &:hover {
-      .play-overlay:before {
-        content: '';
-        background: rgba(25,25,25,0.5);
-        position: absolute;
-        left: 0px;
-        top: 0px;
-        bottom: 0px;
-        right: 0px;
-      }
-      .play-overlay:after {
-        content: '';
-        background: url(./assets/Play.png);
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: 15px 15px;
-        position: absolute;
-        left: 0px;
-        top: 0px;
-        bottom: 0px;
-        right: 0px;
-      }
-    }
-    &.pause {
-      .play-overlay:before {
-        content: '';
-        background: rgba(25,25,25,0.5);
-        position: absolute;
-        left: 0px;
-        top: 0px;
-        bottom: 0px;
-        right: 0px;
-      }
-      .play-overlay:after {
-        content: '';
-        background: url(./assets/Pause.png);
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: 15px 15px;
-        position: absolute;
-        left: 0px;
-        top: 0px;
-        bottom: 0px;
-        right: 0px;
-      }
-    }
-  }
-
   #app-root {
     height: 100vh;
     display: flex;

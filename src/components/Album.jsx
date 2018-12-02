@@ -33,7 +33,7 @@ class Album extends React.Component {
         <div>
           <PageTitle title={this.state.album.attributes.name} context={"YOUR LIBRARY"}/>
 
-          <SongList songs={this.state.album.relationships.tracks.data} album={false}/>
+          <SongList songs={this.state.album.relationships.tracks.data} album={true}/>
         </div>
     );
   }
