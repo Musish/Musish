@@ -2,18 +2,20 @@ import React, {Fragment} from 'react';
 import addImage from '../assets/Add.png';
 import PageTitle from './PageTitle';
 
+import styles from './SongList.scss';
+
 export default class SongList extends React.Component {
   render() {
     return (
         <Fragment>
           <PageTitle title={'Songs'} context={'Your Library'}/>
-          <table className="songList">
+          <table className={styles.songList}>
             <thead>
             <tr>
-              <th>Song</th>
-              <th>Artist</th>
-              <th>Album</th>
-              <th>Time</th>
+              <th width="100">Song</th>
+              <th width="300">Artist</th>
+              <th width="100">Album</th>
+              <th width="100">Time</th>
             </tr>
             </thead>
             <tbody>
@@ -55,7 +57,7 @@ class SongListItem extends React.Component {
   render() {
     const songAttributes = this.props.song.attributes;
 
-    const WHEIGHT = 40;
+    const WHEIGHT = 30;
     let url = MusicKit.formatArtworkURL(songAttributes.artwork, WHEIGHT,
         WHEIGHT);
     const explicit = ''; // TODO: get if the song is explicit or not
@@ -72,18 +74,24 @@ class SongListItem extends React.Component {
     return (
         <tr onClick={this._playSong}>
           <td> {/* Song Name, icon, explicit */}
-            <div>
-              {songPre}
-              <span>{songAttributes.name}</span>
-              {explicit}
+            <div className={styles.songTitleWrapper}>
+              <div>
+                {songPre}
+              </div>
+              <div>
+                <span className={styles.songName}>{songAttributes.name}</span>
+                {explicit}
+              </div>
             </div>
           </td>
           <td> {/* Artist Name */}
             <span>{songAttributes.artistName}</span>
           </td>
           <td> {/* Album Name and add to library */}
-            <span>{songAttributes.albumName}</span>
-            <span>{inLibrary}</span> {/* If it is not in the users library, then it will just show an image to add to library  */}
+            <div className={styles.albumName}>
+              <span>{songAttributes.albumName}</span>
+              <span>{inLibrary}</span> {/* If it is not in the users library, then it will just show an image to add to library  */}
+            </div>
           </td>
           <td> {/* Time or menu button */}
             <span>{time}</span>

@@ -1,0 +1,40 @@
+.songList {
+  margin: 20px 10px;
+  thead {
+	text-align: left;
+
+  }
+
+  .songTitleWrapper {
+	display: flex;
+	flex-direction: row;
+	line-height: 30px;
+
+  }
+
+  .songName {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: 450px;
+	display: block;
+	margin-left: 10px;
+  }
+
+  .albumName {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: 340px;
+	display: block;
+  }
+
+  .artistName {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: 240px;
+	display: block;
+  }
+
+}
