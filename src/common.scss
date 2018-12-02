@@ -67,3 +67,8 @@ button {
   @import './styles/NavigationBar';
   @import './styles/Sidebar';
 }
+
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+}

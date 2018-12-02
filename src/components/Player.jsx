@@ -5,38 +5,39 @@ export default class Player extends React.Component {
   constructor(props) {
     super(props);
 
+    const music = MusicKit.getInstance();
+
     this.state = {
       nowPlayingItem: null,
       queuePosition: null,
       queue: null,
       playbackTime: null,
+      isPlaying: music.player.isPlaying,
     };
 
     this.mediaItemDidChange = this.mediaItemDidChange.bind(this);
     this.queueItemsDidChange = this.queueItemsDidChange.bind(this);
     this.queuePositionDidChange = this.queuePositionDidChange.bind(this);
     this.playbackTimeDidChange = this.playbackTimeDidChange.bind(this);
+    this.playbackStateDidChange = this.playbackStateDidChange.bind(this);
 
     this.handlePrevious = this.handlePrevious.bind(this);
     this.handleNext = this.handleNext.bind(this);
   }
 
   mediaItemDidChange(event) {
-    console.log('nowPlayingItem', event);
     this.setState({
       nowPlayingItem: event.item,
     });
   };
 
   queueItemsDidChange(event) {
-    console.log('queue', event);
     this.setState({
       queue: event.items,
     });
   };
 
   queuePositionDidChange(event) {
-    console.log('queuePosition', event);
     this.setState({
       queuePosition: event,
     });
@@ -45,6 +46,14 @@ export default class Player extends React.Component {
   playbackTimeDidChange(event) {
     this.setState({
       playbackTime: event,
+    });
+  };
+
+  playbackStateDidChange(event) {
+    const music = MusicKit.getInstance();
+
+    this.setState({
+      isPlaying: music.player.isPlaying,
     });
   };
 
@@ -66,6 +75,10 @@ export default class Player extends React.Component {
     music.addEventListener(
         MusicKit.Events.playbackTimeDidChange,
         this.playbackTimeDidChange,
+    );
+    music.addEventListener(
+        MusicKit.Events.playbackStateDidChange,
+        this.playbackStateDidChange,
     );
 
     var url = 'https://itunes.apple.com/us/album/hamilton-original-broadway-cast-recording/1025210938';
@@ -91,6 +104,11 @@ export default class Player extends React.Component {
         MusicKit.Events.playbackTimeDidChange,
         this.playbackTimeDidChange,
     );
+    music.removeEventListener(
+      MusicKit.Events.playbackStateDidChange,
+      this.playbackStateDidChange,
+    );
+
   }
 
   handlePlay() {
@@ -131,42 +149,61 @@ export default class Player extends React.Component {
     const t = this.state.playbackTime;
 
     if (!t || t.currentPlaybackDuration === 0) {
-      return null;
+      return (<div className={styles["progress-bar"]}><div></div></div>);
     }
 
     const percent = (t.currentPlaybackTime * 100) / t.currentPlaybackDuration;
 
     return (
-        <div style={{width: '100%', height: 3}}>
+        <div className={styles["progress-bar"]}>
           <div style={{
-            background: 'red',
-            width: `${percent}%`,
-            height: '100%',
+            width: `${percent}%`
           }}/>
         </div>
     );
   }
 
   render() {
-
     if (!this.state.nowPlayingItem) {
       return "";
     }
 
-    console.log(this.state.nowPlayingItem);
+    const nowPlayingItem = this.state.nowPlayingItem;
 
     return (
       <div className={styles.player}>
         <div className={styles["main-info"]}>
           <div className={styles.picture}>
-            <img src={this.state.nowPlayingItem.attributes.artwork.url} className={styles.image} alt={'album artwork'} />
+            <img src={nowPlayingItem.attributes.artwork.url} className={styles.image} alt={'album artwork'} />
           </div>
           <div className={styles.track}>
-            <h1>{this.state.nowPlayingItem.title}</h1>
-            <h2>{this.state.nowPlayingItem.attributes.artistName}</h2>
-            <h3>{this.state.nowPlayingItem.attributes.albumName}</h3>
+            <h1>{nowPlayingItem.title}</h1>
+            <h2>{nowPlayingItem.attributes.artistName}</h2>
+            <h3>{nowPlayingItem.attributes.albumName}</h3>
           </div>
         </div>
+
+        {this.renderProgress()}
+
+        <div className={styles.buttons}>
+          <span onClick={this.handlePrevious}>
+            <i className="fas fa-backward"></i>
+          </span>
+          {this.state.isPlaying ? (
+            <span onClick={this.handlePause}>
+            <i className="fas fa-pause"></i>
+          </span>
+          ) : (
+            <span onClick={this.handlePlay}>
+            <i className="fas fa-play"></i>
+          </span>
+          )}
+          <span onClick={this.handleNext}>
+            <i className="fas fa-forward"></i>
+          </span>
+        </div>
+
+
       </div>
     );
   }
