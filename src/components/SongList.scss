@@ -2,6 +2,9 @@
   margin: 20px 10px;
   thead {
 	text-align: left;
+	> tr > :first-child {
+	  padding-left: 40px;
+	}
 
   }
 
@@ -18,6 +21,7 @@
 	text-overflow: ellipsis;
 	width: 450px;
 	display: block;
+	padding-left: 10px;
   }
 
   .albumName {
