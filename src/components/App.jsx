@@ -8,12 +8,11 @@ import {
   Switch,
 } from 'react-router-dom';
 import Albums from './Albums';
-import AlbumItem from './AlbumItem';
 import Layout from './Layout';
 import Artists from './Artists';
 import Artist from './Artist';
-import SongList from './SongList';
 import PlaylistItem from './PlaylistItem';
+import Songs from './Songs';
 
 export default class App extends React.Component {
   render() {
@@ -28,7 +27,7 @@ export default class App extends React.Component {
                   <Route path="/playlists" exact component={PlaylistItem}/>
                   <Route path="/artists" exact component={Artists}/>
                   <Route path="/artist/{id}" exact component={Artist}/>
-                  <Route path="/songs" exact component={SongList}/>
+                  <Route path="/songs" exact component={Songs}/>
                   <Redirect to="/"/>
                 </Switch>
               </Layout>
