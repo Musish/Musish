@@ -9,5 +9,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="musickit" level="application" />
+    <orderEntry type="library" name="musickit" level="application" />
   </component>
 </module>
