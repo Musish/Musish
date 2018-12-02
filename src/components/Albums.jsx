@@ -1,4 +1,5 @@
 import React, {Fragment} from 'react';
+import Loader from './common/Loader';
 
 import AlbumItem from './AlbumItem';
 
@@ -16,7 +17,7 @@ export default class Albums extends React.Component {
 
   renderItems(items, more, {loading, end}) {
     if (!items) {
-      return 'Loading...';
+      return <Loader/>
     }
 
     const albums = items.map(
@@ -37,7 +38,7 @@ export default class Albums extends React.Component {
           <div className={AlbumScss.container}>
             { albums }
           </div>
-          {loading && "Loading..."}
+          {loading && <Loader/>}
         </MainPaginatedResults>
     )
   }

@@ -2,6 +2,7 @@ import React from 'react';
 import SongList from './SongList';
 import PaginatedResults from './PaginatedResults';
 import MainPaginatedResults from './MainPaginatedResults';
+import Loader from './common/Loader';
 import PageTitle from './PageTitle';
 
 export default class Songs extends React.Component {
@@ -13,14 +14,14 @@ export default class Songs extends React.Component {
 
   renderItems(items, more, {loading, end}) {
     if (!items) {
-      return 'Loading...';
+      return <Loader/>;
     }
 
     return (
         <MainPaginatedResults more={more}>
           <PageTitle title={"Songs"} context={"Your Library"} />
           <SongList songs={items} album={false}/>
-          {loading && "Loading..."}
+          {loading && <Loader/>}
         </MainPaginatedResults>
     );
   }

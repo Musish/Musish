@@ -24,7 +24,7 @@ export default class Sidebar extends React.Component {
 
   render() {
     if (!this.state.playlists) {
-      return "Loading...."
+      return ""
     }
 
     const playlists = this.state.playlists.map((playlist, i) => <MenuItem

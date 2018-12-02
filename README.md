@@ -1,3 +1,0 @@
-# AppleMusish
-
-Apple Music webapp.
