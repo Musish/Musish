@@ -1,4 +1,5 @@
 import React from 'react';
+import Loader from './common/Loader';
 
 export default class MusicKitProvider extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ export default class MusicKitProvider extends React.Component {
 
   render() {
     if (!this.state.ready) {
-      return 'Loading...';
+      return <Loader/>
     }
 
     return this.props.children;

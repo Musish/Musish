@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PageTitle from "./PageTitle";
 import PaginatedResults from './PaginatedResults';
+import Loader from "./common/Loader";
 
 import ArtistsScss from './Artists.scss';
 import ArtistItem from "./ArtistItem";
@@ -15,7 +16,7 @@ export default class Artists extends React.Component {
 
   renderItems(items, more, {loading, end}) {
     if (!items) {
-      return 'Loading...';
+      return <Loader/>;
     }
 
     const artists = items.map(
