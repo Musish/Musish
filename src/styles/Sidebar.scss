@@ -13,12 +13,19 @@
 	  ul {
 		list-style-type: none;
 		margin: 0;
+		margin-top: 20px;
 		padding: 0;
 		li {
 		  color: #333;
 		  margin: 10px 0px;
 		  a {
+			margin: -10px 0;
 			padding: 5px 12px;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			width: 210px;
+			display: block;
 		  }
 		  &.active a {
 			border-radius: 4px;
