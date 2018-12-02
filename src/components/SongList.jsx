@@ -133,7 +133,7 @@ class SongListItem extends React.Component {
         <h3>{this.props.attributes.trackNumber}</h3>;
 
     return (
-        <tr onClick={this._handleClick} className={`test-overlay ${this.props.isPlaying ? 'pause' : ''}`} >
+        <tr onClick={this._handleClick} className={`test-overlay ${this.state.isPlaying ? 'pause' : ''}`} >
           <td> {/* Song Name, icon, explicit */}
 
             <div className={styles.songTitleWrapper}>
