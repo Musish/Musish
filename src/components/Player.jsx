@@ -153,17 +153,18 @@ export default class Player extends React.Component {
       return "";
     }
 
-    const artworkUrl = this.state.nowPlayingItem.attributes.artwork.url;
-
+    console.log(this.state.nowPlayingItem);
 
     return (
       <div className={styles.player}>
         <div className={styles["main-info"]}>
           <div className={styles.picture}>
-            <img src={artworkUrl} className={styles.image} alt={'album artwork'} />
+            <img src={this.state.nowPlayingItem.attributes.artwork.url} className={styles.image} alt={'album artwork'} />
           </div>
           <div className={styles.track}>
-            abc
+            <h1>{this.state.nowPlayingItem.title}</h1>
+            <h2>{this.state.nowPlayingItem.attributes.artistName}</h2>
+            <h3>{this.state.nowPlayingItem.attributes.albumName}</h3>
           </div>
         </div>
       </div>
