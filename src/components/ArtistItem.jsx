@@ -1,37 +1,13 @@
-import React from 'react';
-import MusicKitProvider from './MusicKitProvider';
-import MusicKitAuthorizeProvider from './MusicKitAuthorizeProvider';
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from 'react-router-dom';
-import Albums from './Albums';
-import AlbumItem from './AlbumItem';
-import Layout from './Layout';
-import Artists from './Artists';
-import Artist from './Artist';
+import React, {Component} from 'react';
 
-export default class App extends React.Component {
+import ArtistItemScss from './AlbumItem.scss';
+
+export default class ArtistItem extends Component {
   render() {
     return (
-      <MusicKitProvider>
-        <MusicKitAuthorizeProvider>
-          <Router>
-            <Layout>
-              <Switch>
-                <Route path="/" exact component={() => 'Home'}/>
-                <Route path="/albums" exact component={Albums}/>
-                <Route path="/albumItem" exact component={AlbumItem}/>
-                <Route path="/artists" exact component={Artists}/>
-                <Route path="/artist/{id}" exact component={Artist}/>
-                <Redirect to="/"/>
-              </Switch>
-            </Layout>
-          </Router>
-        </MusicKitAuthorizeProvider>
-      </MusicKitProvider>
+      <div className={ArtistItemScss.container}>
+        123
+      </div>
     );
   }
 }

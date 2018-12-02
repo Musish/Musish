@@ -10,7 +10,7 @@ import {
 import Albums from './Albums';
 import Layout from './Layout';
 import Artists from './Artists';
-import Artist from './Artist';
+import Artist from './ArtistItem';
 import PlaylistItem from './PlaylistItem';
 import Songs from './Songs';
 

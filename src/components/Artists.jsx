@@ -23,26 +23,28 @@ export default class Artists extends React.Component {
   }
 
   render() {
-    if (!this.state.artists) {
+    if (!this.state.albums) {
       return 'Loading...';
     }
 
-    const artists = this.state.artists.map(
-      (artist) => {
+    const albums = this.state.albums.map(
+      (album, i) => {
+        const WHEIGHT = 150;
+        let url = MusicKit.formatArtworkURL(album.attributes.artwork, WHEIGHT, WHEIGHT);
+
         return (
-          <div>
-            <div>
-              {artist.attributes.name}
-            </div>
+          <div key={i}>
+            <AlbumItem url={url} title={album.attributes.name} name={album.attributes.artistName}/>
           </div>
         );
-      }
-    );
+      });
 
     return (
       <Fragment>
-        <PageTitle title={"Artists"} context={"Your Library"} />
-        { artists }
+        <PageTitle title={"Albums"} context={"Your Library"} />
+        <div className={ArtistsScss.container}>
+          { albums }
+        </div>
       </Fragment>
     )
   }
