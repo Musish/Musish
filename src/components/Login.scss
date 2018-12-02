@@ -46,5 +46,10 @@
     border-color: #fff;
     color: #fff;
     border-radius: 5px;
+    cursor: pointer;
+  }
+  .button:hover {
+    background: #ffffff;
+    color: #fe2851;
   }
 }
