@@ -62,4 +62,14 @@
 	  }
 	}
   }
+  .buttons {
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+	font-size: 16px;
+	> span {
+	  margin: 0px 10px;
+	  color: #111;
+	}
+  }
 }
