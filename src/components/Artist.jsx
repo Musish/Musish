@@ -1,37 +1,38 @@
 import React from 'react';
-import MusicKitProvider from './MusicKitProvider';
-import MusicKitAuthorizeProvider from './MusicKitAuthorizeProvider';
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from 'react-router-dom';
-import Albums from './Albums';
-import AlbumItem from './AlbumItem';
-import Layout from './Layout';
-import Artists from './Artists';
-import Artist from './Artist';
+import {withRouter} from 'react-router-dom';
+import PageTitle from './PageTitle';
+import SongList from './SongList';
 
-export default class App extends React.Component {
+class Artist extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      artist: null,
+    };
+  }
+
+  async componentDidMount() {
+    const music = MusicKit.getInstance();
+    const artist = await music.api.library.artist(this.props.match.params.id);
+
+    console.log(artist);
+
+    this.setState({
+      artist,
+    });
+  }
+
   render() {
+    if (!this.state.artist) {
+      return 'Loading...';
+    }
     return (
-      <MusicKitProvider>
-        <MusicKitAuthorizeProvider>
-          <Router>
-            <Layout>
-              <Switch>
-                <Route path="/" exact component={() => 'Home'}/>
-                <Route path="/albums" exact component={Albums}/>
-                <Route path="/albumItem" exact component={AlbumItem}/>
-                <Route path="/artists" exact component={Artists}/>
-                <Route path="/artist/{id}" exact component={Artist}/>
-                <Redirect to="/"/>
-              </Switch>
-            </Layout>
-          </Router>
-        </MusicKitAuthorizeProvider>
-      </MusicKitProvider>
+        <div>
+          <PageTitle title={this.state.artist.attributes.name} context={"YOUR LIBRARY"}/>
+        </div>
     );
   }
 }
+
+export default withRouter(Artist);
