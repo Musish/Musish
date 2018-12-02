@@ -24,7 +24,7 @@ export default class App extends React.Component {
             <Router>
               <Layout>
                 <Switch>
-                  <Route path="/" exact component={() => 'Home'}/>
+                  <Route path="/" exact component={Artists}/>
                   <Route path="/albums" exact component={Albums}/>
                   <Route path="/albums/:id" exact component={Album}/>
                   <Route path="/playlists" exact component={Playlists}/>
