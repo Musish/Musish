@@ -128,17 +128,15 @@ export default class Player extends React.Component {
     const t = this.state.playbackTime;
 
     if (!t || t.currentPlaybackDuration === 0) {
-      return null;
+      return (<div className={styles["progress-bar"]}><div></div></div>);
     }
 
     const percent = (t.currentPlaybackTime * 100) / t.currentPlaybackDuration;
 
     return (
-        <div style={{width: '100%', height: 3}}>
+        <div className={styles["progress-bar"]}>
           <div style={{
-            background: 'red',
-            width: `${percent}%`,
-            height: '100%',
+            width: `${percent}%`
           }}/>
         </div>
     );
