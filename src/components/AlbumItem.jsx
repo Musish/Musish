@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 
 import AlbumScss from './AlbumItem.scss';
+import {Link} from 'react-router-dom';
 
 export default class AlbumItem extends Component {
   render() {
     return (
-        <div className={AlbumScss.container}>
+        <Link to={`/albums/${this.props.id}`} className={AlbumScss.container}>
           <div className={AlbumScss.imageContainer}>
             <img src={this.props.url}
                  className={AlbumScss.image}
@@ -16,7 +17,7 @@ export default class AlbumItem extends Component {
             <h3>{this.props.title}</h3>
             <h4>{this.props.name}</h4>
           </div>
-        </div>
+        </Link>
     );
   }
 }

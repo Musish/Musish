@@ -27,7 +27,7 @@ export default class Albums extends React.Component {
 
           return (
               <div key={i}>
-                <AlbumItem url={url} title={album.attributes.name} name={album.attributes.artistName}/>
+                <AlbumItem url={url} id={album.id} title={album.attributes.name} name={album.attributes.artistName}/>
               </div>
           );
         });

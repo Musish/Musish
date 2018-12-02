@@ -3,6 +3,7 @@ import SongList from './SongList';
 import PaginatedResults from './PaginatedResults';
 import MainPaginatedResults from './MainPaginatedResults';
 import Loader from './common/Loader';
+import PageTitle from './PageTitle';
 
 export default class Songs extends React.Component {
   async load(params) {
@@ -18,6 +19,7 @@ export default class Songs extends React.Component {
 
     return (
         <MainPaginatedResults more={more}>
+          <PageTitle title={"Songs"} context={"Your Library"} />
           <SongList songs={items} album={false}/>
           {loading && <Loader/>}
         </MainPaginatedResults>
