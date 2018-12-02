@@ -5,6 +5,7 @@ import AlbumItem from './AlbumItem';
 import AlbumScss from './Albums.scss';
 import PageTitle from "./PageTitle";
 import PaginatedResults from './PaginatedResults';
+import MainPaginatedResults from './MainPaginatedResults';
 
 export default class Albums extends React.Component {
   async load(params) {
@@ -31,13 +32,13 @@ export default class Albums extends React.Component {
         });
 
     return (
-        <Fragment>
+        <MainPaginatedResults more={more}>
           <PageTitle title={"Albums"} context={"Your Library"} />
           <div className={AlbumScss.container}>
             { albums }
           </div>
-          {loading ? "Loading..." : (!end && <div onClick={more}>Load more</div>)}
-        </Fragment>
+          {loading && "Loading..."}
+        </MainPaginatedResults>
     )
   }
 
