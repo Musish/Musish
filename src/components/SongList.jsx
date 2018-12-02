@@ -1,32 +1,28 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import addImage from '../assets/Add.png';
-import PageTitle from './PageTitle';
 
 import styles from './SongList.scss';
 
 export default class SongList extends React.Component {
   render() {
     return (
-        <Fragment>
-          <PageTitle title={'Songs'} context={'Your Library'}/>
-          <table className={styles.songList}>
-            <thead>
-            <tr>
-              <th width="100">Song</th>
-              <th width="300">Artist</th>
-              <th width="100">Album</th>
-              <th width="100">Time</th>
-            </tr>
-            </thead>
-            <tbody>
-            {this.props.songs.map((song, i) =>
-                <SongListItem key={i} song={song} index={i}
-                              songs={this.props.songs}
-                              albumArt={!this.props.album}/>,
-            )}
-            </tbody>
-          </table>
-        </Fragment>
+      <table className={styles.songList}>
+        <thead>
+        <tr>
+          <th width="100">Song</th>
+          <th width="300">Artist</th>
+          <th width="100">Album</th>
+          <th width="100">Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        {this.props.songs.map((song, i) =>
+            <SongListItem key={i} song={song} index={i}
+                          songs={this.props.songs}
+                          albumArt={!this.props.album}/>,
+        )}
+        </tbody>
+      </table>
     );
   }
 }
