@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import {Link, Route} from 'react-router-dom';
+import Player from './Player';
 
 class MenuItem extends React.Component {
   render() {
@@ -29,6 +30,8 @@ export default class Sidebar extends React.Component {
               <MenuItem to={'/songs'} label={'Songs'}/>
             </ul>
           </div>
+
+          <Player/>
         </aside>
     );
   }
