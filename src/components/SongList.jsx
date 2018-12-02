@@ -8,18 +8,26 @@ export default class SongList extends React.Component {
     super(props);
 
     this.state = {
-      currentSong: ''
+      currentSong: '',
+      isPlaying: false
     }
 
     this.onMediaItemDidChange = this.onMediaItemDidChange.bind(this);
+    this.playbackStateDidChange = this.playbackStateDidChange.bind(this);
   }
 
   onMediaItemDidChange(event) {
-    console.log(event);
     this.setState({
       currentSong: event.item.id
     })
   }
+
+  playbackStateDidChange(_) {
+    const music = MusicKit.getInstance();
+    this.setState({
+      isPlaying: music.player.isPlaying,
+    });
+  };
 
   componentDidMount() {
     const music = MusicKit.getInstance();
@@ -27,12 +35,20 @@ export default class SongList extends React.Component {
       MusicKit.Events.mediaItemDidChange,
       this.onMediaItemDidChange,
     );
+    music.addEventListener(
+      MusicKit.Events.playbackStateDidChange,
+      this.playbackStateDidChange,
+  );
   }
   componentWillUnmount() {
     const music = MusicKit.getInstance();
     music.removeEventListener(
       MusicKit.Events.mediaItemDidChange,
       this.onMediaItemDidChange,
+    );
+    music.removeEventListener(
+      MusicKit.Events.playbackStateDidChange,
+      this.playbackStateDidChange,
     );
   }
 
@@ -49,11 +65,14 @@ export default class SongList extends React.Component {
         </thead>
         <tbody>
             {this.props.songs.map((song, i) => {
-                const id = song.attributes.playParams.catalogId;
+                let id = song.attributes.playParams.catalogId;
+                if(id==undefined) {
+                  id = song.attributes.playParams.id
+                }
                 return <SongListItem key={id} song={song} index={i}
                               songs={this.props.songs}
                               albumArt={!this.props.album}
-                              isPlaying={id == this.state.currentSong}/>
+                              isPlaying={id == this.state.currentSong && this.state.isPlaying}/>
             }
         )}
         </tbody>
@@ -67,8 +86,7 @@ class SongListItem extends React.Component {
     super(props);
 
     this.state = {
-      setQueue: false,
-      isPlaying: false
+      setQueue: false
     }
 
     this._playSong = this._playSong.bind(this);
@@ -88,17 +106,10 @@ class SongListItem extends React.Component {
       });
     }
     await music.play();
-    this.setState({
-      isPlaying: true
-    });
   }
   _pauseSong() {
     const music = MusicKit.getInstance();
-
     music.player.pause();
-    this.setState({
-      isPlaying: false
-    });
   }
 
   _handleClick() {
@@ -133,7 +144,7 @@ class SongListItem extends React.Component {
         <h3>{this.props.attributes.trackNumber}</h3>;
 
     return (
-        <tr onClick={this._handleClick} className={`test-overlay ${this.state.isPlaying ? 'pause' : ''}`} >
+        <tr onClick={this._handleClick} className={`test-overlay ${this.props.isPlaying ? 'pause' : ''}`} >
           <td> {/* Song Name, icon, explicit */}
 
             <div className={styles.songTitleWrapper}>
