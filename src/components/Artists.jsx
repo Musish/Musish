@@ -1,51 +1,42 @@
 import React, { Fragment } from 'react';
 import PageTitle from "./PageTitle";
+import PaginatedResults from './PaginatedResults';
+
+import ArtistsScss from './Artists.scss';
+import ArtistItem from "./ArtistItem";
 
 export default class Artists extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      artists: null,
-    };
-  }
-
-  async componentDidMount() {
+  async load(params) {
     const music = MusicKit.getInstance();
 
-    const artists = await music.api.library.artists();
-
-    console.log(artists);
-
-    this.setState({
-      artists,
-    });
+    return await music.api.library.artists(null, params);
   }
 
-  render() {
-    if (!this.state.albums) {
+  renderItems(items, more, {loading, end}) {
+    if (!items) {
       return 'Loading...';
     }
 
-    const albums = this.state.albums.map(
-      (album, i) => {
-        const WHEIGHT = 150;
-        let url = MusicKit.formatArtworkURL(album.attributes.artwork, WHEIGHT, WHEIGHT);
-
-        return (
-          <div key={i}>
-            <AlbumItem url={url} title={album.attributes.name} name={album.attributes.artistName}/>
-          </div>
-        );
-      });
+    const artists = items.map(
+        (artist) => {
+          return (
+            <ArtistItem artist={artist} />
+          );
+        }
+    );
 
     return (
-      <Fragment>
-        <PageTitle title={"Albums"} context={"Your Library"} />
-        <div className={ArtistsScss.container}>
-          { albums }
-        </div>
-      </Fragment>
-    )
+        <Fragment>
+          <PageTitle title={"Artists"} context={"Your Library"} />
+          <div className={ArtistsScss.container}>
+          { artists }
+          </div>
+          {loading ? "Loading..." : (!end && <div onClick={more}>Load more</div>)}
+        </Fragment>
+    );
+  }
+
+  render() {
+    return <PaginatedResults load={this.load} render={this.renderItems}/>;
   }
 }

@@ -6,7 +6,7 @@ export default class SongList extends React.Component {
   render() {
     return (
         <Fragment>
-          <PageTitle title={'Artists'} context={'Your Library'}/>
+          <PageTitle title={'Songs'} context={'Your Library'}/>
           <table className="songList">
             <thead>
             <tr>
