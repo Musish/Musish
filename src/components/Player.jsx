@@ -153,8 +153,6 @@ export default class Player extends React.Component {
       return "";
     }
 
-    console.log(this.state.nowPlayingItem);
-
     return (
       <div className={styles.player}>
         <div className={styles["main-info"]}>
@@ -167,6 +165,9 @@ export default class Player extends React.Component {
             <h3>{this.state.nowPlayingItem.attributes.albumName}</h3>
           </div>
         </div>
+
+        {this.renderProgress()}
+
       </div>
     );
   }

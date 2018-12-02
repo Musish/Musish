@@ -1,5 +1,7 @@
 .player {
   background: rgb(249,249,249);
+  padding: 20px 15px;
+  border-radius: 5px;
   .main-info {
 	display: flex;
 	flex-direction: row;
@@ -8,19 +10,28 @@
 	  > .image {
 		width: 60px;
 		height: 60px;
-		margin: 10px;
 	  }
 	}
 	> div.track {
 	  flex: 1;
+	  padding-left:10px;
+	  h1, h2, h3 {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		width: 160px;
+		display: block;
+	  }
 	  h1 {
 		font-size: 18px;
+		margin-bottom: 6px;
 	  }
 	  h2, h3 {
 		font-size: 12px;
 		color: #555;
 	  }
 	  h3 {
+		margin-top: 3px;
 		font-weight: 300;
 	  }
 	}
