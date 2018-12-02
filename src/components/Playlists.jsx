@@ -1,17 +1,17 @@
 import React, {Fragment} from 'react';
 
-import AlbumItem from './AlbumItem';
+import PlaylistItem from './PlaylistItem';
 
-import AlbumScss from './Albums.scss';
+import PlaylistScss from './Playlists.scss';
 import PageTitle from "./PageTitle";
 import PaginatedResults from './PaginatedResults';
 import MainPaginatedResults from './MainPaginatedResults';
 
-export default class Albums extends React.Component {
+export default class Playlists extends React.Component {
   async load(params) {
     const music = MusicKit.getInstance();
 
-    return await music.api.library.albums(null, params);
+    return await music.api.library.playlists(null, params);
   }
 
   renderItems(items, more, {loading, end}) {
@@ -19,23 +19,23 @@ export default class Albums extends React.Component {
       return 'Loading...';
     }
 
-    const albums = items.map(
-        (album, i) => {
+    const playlists = items.map(
+        (playlist, i) => {
           const WHEIGHT = 150;
-          let url = MusicKit.formatArtworkURL(album.attributes.artwork, WHEIGHT, WHEIGHT);
+          let url = MusicKit.formatArtworkURL(playlist.attributes.artwork, WHEIGHT, WHEIGHT);
 
           return (
               <div key={i}>
-                <AlbumItem url={url} id={album.id} title={album.attributes.name} name={album.attributes.artistName}/>
+                <PlaylistItem url={url} title={playlist.attributes.name} name={playlist.attributes.artistName}/>
               </div>
           );
         });
 
     return (
         <MainPaginatedResults more={more}>
-          <PageTitle title={"Albums"} context={"Your Library"} />
-          <div className={AlbumScss.container}>
-            { albums }
+          <PageTitle title={"Playlists"} context={"Your Library"} />
+          <div className={PlaylistScss.container}>
+            { playlists }
           </div>
           {loading && "Loading..."}
         </MainPaginatedResults>
