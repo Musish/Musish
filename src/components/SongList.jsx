@@ -18,7 +18,7 @@ export default class SongList extends React.Component {
             </thead>
             <tbody>
             {this.props.songs.map((song, i) =>
-                <SongListItem key={song.id} song={song} index={i}
+                <SongListItem key={i} song={song} index={i}
                               songs={this.props.songs}
                               albumArt={!this.props.album}/>,
             )}

@@ -4,6 +4,7 @@ import PaginatedResults from './PaginatedResults';
 
 import ArtistsScss from './Artists.scss';
 import ArtistItem from "./ArtistItem";
+import MainPaginatedResults from './MainPaginatedResults';
 
 export default class Artists extends React.Component {
   async load(params) {
@@ -26,13 +27,13 @@ export default class Artists extends React.Component {
     );
 
     return (
-        <Fragment>
+        <MainPaginatedResults more={more}>
           <PageTitle title={"Artists"} context={"Your Library"} />
           <div className={ArtistsScss.container}>
           { artists }
           </div>
-          {loading ? "Loading..." : (!end && <div onClick={more}>Load more</div>)}
-        </Fragment>
+          {loading && "Loading..."}
+        </MainPaginatedResults>
     );
   }
 
