@@ -38,7 +38,7 @@ export default class Albums extends React.Component {
           <div className={AlbumScss.container}>
             { albums }
           </div>
-          {loading && "Loading..."}
+          {loading && <Loader/>}
         </MainPaginatedResults>
     )
   }

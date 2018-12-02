@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-
 import LoaderScss from "./Loader.scss";
 
 export default class Login extends Component {
