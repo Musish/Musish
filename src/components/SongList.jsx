@@ -7,9 +7,15 @@ export default class SongList extends React.Component {
   constructor(props) {
     super(props);
 
+    const music = MusicKit.getInstance();
+    let currentSong = null;
+    if (music.player.isPlaying) {
+      currentSong = music.player.nowPlayingItem.id;
+    }
+
     this.state = {
-      currentSong: '',
-      isPlaying: false
+      currentSong: currentSong,
+      isPlaying: music.player.isPlaying,
     }
 
     this.onMediaItemDidChange = this.onMediaItemDidChange.bind(this);
@@ -65,13 +71,13 @@ export default class SongList extends React.Component {
         </thead>
         <tbody>
           {this.props.songs.map((song, i) => {
-            const id = song.attributes.playParams.catalogId == undefined ?
-              song.attributes.playParams.id :
-              song.attributes.playParams.catalogId;
-            return <SongListItem key={i} song={song} index={i}
-              songs={this.props.songs}
-              albumArt={!this.props.album}
-              isPlaying={id == this.state.currentSong && this.state.isPlaying} />
+            if (song.attributes.playParams.catalogId !== undefined) {
+              return <SongListItem key={i} song={song} index={i}
+                songs={this.props.songs}
+                albumArt={!this.props.album}
+                isPlaying={song.attributes.playParams.catalogId == this.state.currentSong && this.state.isPlaying} />
+            }
+            //console.log(song.attributes.name + " not in Apple Music");
           }
           )}
         </tbody>
@@ -116,15 +122,15 @@ class SongListItem extends React.Component {
         setQueue: true
       });
     }
-    await music.play();
+    await music.player.play();
   }
-  _pauseSong() {
-    const music = MusicKit.getInstance();
-    music.player.pause();
+  async _pauseSong() {
+    let music = MusicKit.getInstance();
+    await music.player.pause();
   }
 
-  _handleClick() {
-    if (this.state.isPlaying) {
+  async _handleClick() {
+    if (this.props.isPlaying) {
       this._pauseSong();
     } else {
       this._playSong();
