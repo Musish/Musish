@@ -1,9 +1,8 @@
 .player {
-  background: rgb(249,249,249);
+  background: #f9f9f9;
   padding: 20px 15px;
   border-radius: 5px;
   margin-bottom: 30px;
-  box-shadow: 0px 10px 15px -10px rgba(0, 0, 0, 0.1);
   .main-info {
 	display: flex;
 	flex-direction: row;
@@ -72,7 +71,7 @@
 	  color: #111;
 	  cursor: pointer;
 	  &:hover {
-		color: #333;
+		color: #555555;
 	  }
 	  &:active {
 		transform: scale(0.95);

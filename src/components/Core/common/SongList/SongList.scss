@@ -12,6 +12,7 @@
 		position: relative;
 		font-size: 11px;
 		transition: background 0.05s;
+		min-height: 25px;
 		&:not(:first-child):before {
 			content: '';
 			position: absolute;
@@ -30,6 +31,7 @@
 				border-radius: 3px;
 				width: 40px;
 				height: 40px;
+				background: #fafafa;
 			}
 			img {
 				border-radius: inherit;

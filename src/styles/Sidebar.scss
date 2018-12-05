@@ -1,15 +1,16 @@
 #main-sidebar{
   display: flex;
   flex-direction: column;
+	background: #ffffff;
+	border-right: solid 1px #f5f5f5;
   .menus {
 	flex: 1;
 	overflow: scroll;
 	.menu {
-	  background: rgb(249,249,249);
+	  background: #f9f9f9;
 	  padding: 10px 15px;
 	  border-radius: 5px;
 	  margin-top: 15px;
-	  box-shadow: 0px 10px 15px -10px rgba(0, 0, 0, 0.1);
 	  ul {
 		list-style-type: none;
 		margin: 0;
@@ -29,8 +30,8 @@
 		  }
 		  &.active a {
 			border-radius: 4px;
-			background: rgb(240, 240, 240);
-			color: #fe2851;
+			background: #fe2851;
+			color: #ffffff;
 			font-weight: 500;
 		  }
 		}
