@@ -79,7 +79,6 @@ export default class Player extends React.Component {
         MusicKit.Events.playbackStateDidChange,
         this.playbackStateDidChange,
     );
-    await music.setQueue({url: url});
   }
 
   componentWillUnmount() {
@@ -105,7 +104,6 @@ export default class Player extends React.Component {
       MusicKit.Events.playbackStateDidChange,
       this.playbackStateDidChange,
     );
-
   }
 
   handlePlay() {
@@ -116,12 +114,6 @@ export default class Player extends React.Component {
   handlePause() {
     const music = MusicKit.getInstance();
     music.player.pause();
-  }
-
-  handleStop() {
-    const music = MusicKit.getInstance();
-
-    music.player.stop();
   }
 
   handlePrevious() {
@@ -174,19 +166,19 @@ export default class Player extends React.Component {
         {this.renderProgress()}
         <div className={styles.buttons}>
           <span onClick={this.handlePrevious}>
-            <i className="fas fa-backward"></i>
+            <i className="fas fa-backward" />
           </span>
           {this.state.isPlaying ? (
             <span onClick={this.handlePause}>
-            <i className="fas fa-pause"></i>
+            <i className="fas fa-pause" />
           </span>
           ) : (
             <span onClick={this.handlePlay}>
-            <i className="fas fa-play"></i>
+            <i className="fas fa-play" />
           </span>
           )}
           <span onClick={this.handleNext}>
-            <i className="fas fa-forward"></i>
+            <i className="fas fa-forward" />
           </span>
         </div>
       </div>
