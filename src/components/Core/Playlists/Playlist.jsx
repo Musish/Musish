@@ -31,10 +31,18 @@ class Playlist extends React.Component {
 
     return (
         <div>
-          <PageTitle title={this.state.playlist.attributes.name} context={"YOUR LIBRARY"}/>
+          <PageTitle
+            title={this.state.playlist.attributes.name}
+            context={"YOUR LIBRARY"}
+          />
+
           <p>{this.state.playlist.attributes.description && this.state.playlist.attributes.description.standard}</p>
 
-          <SongList songs={this.state.playlist.relationships.tracks.data} album={false}/>
+          <SongList
+            songs={this.state.playlist.relationships.tracks.data}
+            showArtist={true}
+            showAlbum={true}
+          />
         </div>
     );
   }

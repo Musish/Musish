@@ -20,7 +20,12 @@ export default class Songs extends React.Component {
     return (
         <MainPaginatedResults more={more}>
           <PageTitle title={"Songs"} context={"Your Library"} />
-          <SongList songs={items} album={false}/>
+          <SongList
+            songs={items}
+            album={false}
+            showAlbum={true}
+            showArtist={true}
+          />
           {loading && <Loader/>}
         </MainPaginatedResults>
     );

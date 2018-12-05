@@ -1,104 +1,69 @@
 .songList {
-  margin: 20px 10px;
-  thead {
-	text-align: left;
-	> tr > :first-child {
-	  padding-left: 40px;
-	}
-
-  }
-
-  .songTitleWrapper {
-	display: flex;
-	flex-direction: row;
-	line-height: 30px;
-
-  }
-
-  .songName {
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	width: 450px;
-	display: block;
-	padding-left: 10px;
-  }
-
-  .albumName {
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	width: 340px;
-	display: block;
-  }
-
-  .artistName {
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	width: 240px;
-	display: block;
-	}
-	
-	:global {
-		.test-overlay {
-			.play-overlay {
-				position: relative;
-				text-align: center;
-				width: 30px;
-				height: 30px;
-				img{
-					height: 100%;
-					width: 100%;
-				}
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	margin-left: 15px; // Temporary for testing song page
+	margin-top: 25px; // Temporary for testing song page
+  .song {
+		display: flex;
+		flex-direction: row;
+		padding: 5px 5px;
+		cursor: pointer;
+		position: relative;
+		font-size: 11px;
+		transition: background 0.05s;
+		&:not(:first-child):before {
+			content: '';
+			position: absolute;
+			left: 70px;
+			right: 10px;
+			top: 0;
+			height: 1px;
+			display: block;
+			background: rgba(220, 220, 220, 0.5);
+		}
+		&:hover {
+			background: rgba(230, 230, 230, 0.2);
+		}
+		.albumArtwork {
+			.artworkWrapper {
+				border-radius: 3px;
+				width: 40px;
+				height: 40px;
 			}
-			&:hover {
-				.play-overlay:before {
-					content: '';
-					background: rgba(25,25,25,0.5);
-					position: absolute;
-					left: 0px;
-					top: 0px;
-					bottom: 0px;
-					right: 0px;
-				}
-				.play-overlay:after {
-					content: '';
-					background: url(./assets/Play.png);
-					background-position: center center;
-					background-repeat: no-repeat;
-					background-size: 15px 15px;
-					position: absolute;
-					left: 0px;
-					top: 0px;
-					bottom: 0px;
-					right: 0px;
-				}
-			}
-			&.pause {
-				.play-overlay:before {
-					content: '';
-					background: rgba(25,25,25,0.5);
-					position: absolute;
-					left: 0px;
-					top: 0px;
-					bottom: 0px;
-					right: 0px;
-				}
-				.play-overlay:after {
-					content: '';
-					background: url(./assets/Pause.png);
-					background-position: center center;
-					background-repeat: no-repeat;
-					background-size: 15px 15px;
-					position: absolute;
-					left: 0px;
-					top: 0px;
-					bottom: 0px;
-					right: 0px;
-				}
+			img {
+				border-radius: inherit;
+				width: 100%;
+				height: 100%;
 			}
 		}
+		> span {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+		}
+		.songIndex {
+			color: #fe2851;
+		}
+		.songInfo {
+			flex: 1;
+			margin: 0 10px;
+			> span {
+				display: block;
+				width: 100%;
+				overflow: hidden;
+				white-space: nowrap;
+				color: #aaaaaa;
+			}
+			.songTitle {
+				font-size: 12px;
+				color: #333333;
+			}
+		}
+		.songDuration {
+			width: 60px;
+			align-items: center;
+			color: #777777;
+		}
 	}
-
 }

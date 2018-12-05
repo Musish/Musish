@@ -1,7 +1,7 @@
 import React from 'react';
 import addImage from '../../../../assets/Add.png';
 
-import styles from './SongList.scss';
+import classes from './SongList.scss';
 
 export default class SongList extends React.Component {
   constructor(props) {
@@ -16,7 +16,7 @@ export default class SongList extends React.Component {
     this.state = {
       currentSong: currentSong,
       isPlaying: music.player.isPlaying,
-    }
+    };
 
     this.onMediaItemDidChange = this.onMediaItemDidChange.bind(this);
     this.playbackStateDidChange = this.playbackStateDidChange.bind(this);
@@ -60,27 +60,23 @@ export default class SongList extends React.Component {
   }
 
   render() {
-    const {songs, album} = this.props;
+    const {songs, album, showArtist, showAlbum} = this.props;
     const {currentSong, isPlaying} = this.state;
     return (
-      <table className={styles.songList}>
-        <thead>
-        <tr>
-          <th width="100">Song</th>
-          <th width="300">Artist</th>
-          <th width="100">Album</th>
-          <th width="100">Time</th>
-        </tr>
-        </thead>
-        <tbody>
+      <ul className={classes.songList}>
         {songs.filter(song => song.attributes.playParams && song.attributes.playParams.catalogId).map((song, i) => (
-          <SongListItem key={i} song={song} index={i}
-                        songs={songs}
-                        albumArt={!album}
-                        isPlaying={song.attributes.playParams.catalogId === currentSong && isPlaying}/>
+          <SongListItem
+            key={i}
+            song={song}
+            index={i}
+            songs={songs}
+            albumArt={!album}
+            isPlaying={song.attributes.playParams.catalogId === currentSong && isPlaying}
+            showArtist={showArtist}
+            showAlbum={showAlbum}
+          />
         ))}
-        </tbody>
-      </table>
+      </ul>
     );
   }
 }
@@ -91,15 +87,15 @@ class SongListItem extends React.Component {
 
     this.state = {
       setQueue: false
-    }
+    };
 
-    const SIZE = 30;
+    const SIZE = 40;
 
     this.imageUrl = MusicKit.formatArtworkURL(this.props.song.attributes.artwork, SIZE, SIZE);
     this.explicit = <React.Fragment/>; // TODO: get if the song is explicit or not
-    this.inLibrary = this.props.song.attributes.playParams.isLibrary ?
-      <React.Fragment/> :
-      <img src={addImage}/>; // If the song is already in the library or not
+    this.inLibrary = this.props.song.attributes.playParams.isLibrary
+      ? <React.Fragment/>
+      : <img src={addImage}/>;
     this.time = this.getTime(this.props.song.attributes.durationInMillis);
     this.imageOrNumber = this.props.albumArt ?
       <div className={"play-overlay"}><img src={this.imageUrl} alt=""/></div> :
@@ -144,34 +140,86 @@ class SongListItem extends React.Component {
     return d.getUTCMinutes() + ':' + String('0' + d.getUTCSeconds()).slice(-2); // gets a nice minutes and seconds formatting of the time
   }
 
+  renderIcon() {
+    return (
+      <React.Fragment>
+        {this.props.albumArt ? (
+          <span className={classes.albumArtwork}>
+            <span className={classes.artworkWrapper}>
+            <img src={this.imageUrl} alt=""/>
+            </span>
+          </span>
+        ) : (
+          <span className={classes.songIndex}>
+            {this.props.song.attributes.trackNumber}
+          </span>
+        )}
+      </React.Fragment>
+    );
+  }
+
   render() {
+    const {isPlaying, showArtist, showAlbum} = this.props;
     const songAttributes = this.props.song.attributes;
     return (
-      <tr onClick={this._handleClick} className={`test-overlay ${this.props.isPlaying ? 'pause' : ''}`}>
+      <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}>
+        {this.renderIcon()}
+        <span className={classes.songInfo}>
+          <span className={classes.songTitle}>
+            {songAttributes.name}{this.explicit}
+          </span>
+          {(showArtist || showAlbum) && (
+            <span className={classes.songCaption}>
+              {(showArtist && showAlbum) ? (
+                `${songAttributes.artistName} - ${songAttributes.albumName}`
+              ) : showArtist ? (
+                `${songAttributes.artistName}`
+              ) : (
+                `${songAttributes.albumName}`
+              )}
+            </span>
+          )}
+        </span>
+        <span className={classes.songDuration}>
+          <span>{this.time}</span>
+        </span>
+      </li>
+      /*
+      <tr onClick={this._handleClick} className={`test-overlay ${isPlaying ? 'pause' : ''}`}>
         <td>
-          <div className={styles.songTitleWrapper}>
+          <div className={classes.songTitleWrapper}>
             <div>
               {this.imageOrNumber}
             </div>
             <div>
-              <span className={styles.songName}>{songAttributes.name}</span>
+              <span className={classes.songName}>{songAttributes.name}</span>
               {this.explicit}
             </div>
           </div>
         </td>
-        <td>
-          <span>{songAttributes.artistName}</span>
-        </td>
-        <td>
-          <div className={styles.albumName}>
-            <span>{songAttributes.albumName}</span>
-            <span>{this.inLibrary}</span> {/* If it is not in the users library, then it will just show an image to add to library  */}
-          </div>
-        </td>
+        {showArtist && (
+          <td>
+            <span>{songAttributes.artistName}</span>
+          </td>
+        )}
+        {(showAlbum && (
+          <td>
+            <div className={classes.albumName}>
+              <span>{songAttributes.albumName}</span>
+              <span>{this.inLibrary}</span> {/* If it is not in the users library, then it will just show an image to add to library  * /}
+            </div>
+          </td>
+        ))}
         <td>
           <span>{this.time}</span>
         </td>
       </tr>
+      */
     );
   }
 }
+
+SongList.defaultProps = {
+  showArtist: false,
+  showAlbum: false
+};
