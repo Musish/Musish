@@ -3,9 +3,9 @@ import React, {Fragment} from 'react';
 import PlaylistItem from './PlaylistItem';
 
 import PlaylistScss from './Playlists.scss';
-import PageTitle from "./PageTitle";
-import PaginatedResults from './PaginatedResults';
-import MainPaginatedResults from './MainPaginatedResults';
+import PageTitle from "../../common/PageTitle";
+import PaginatedResults from '../common/PaginatedResults';
+import MainPaginatedResults from '../common/MainPaginatedResults';
 
 export default class Playlists extends React.Component {
   async load(params) {

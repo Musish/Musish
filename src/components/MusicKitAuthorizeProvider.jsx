@@ -1,5 +1,5 @@
 import React from 'react';
-import Login from './Login';
+import Login from './Login/Login';
 
 export default class MusicKitAuthorizeProvider extends React.Component {
   constructor(props) {

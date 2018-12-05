@@ -1,5 +1,5 @@
 import React from 'react';
-import addImage from '../assets/Add.png';
+import addImage from '../../../../assets/Add.png';
 
 import styles from './SongList.scss';
 

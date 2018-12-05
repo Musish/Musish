@@ -1,7 +1,7 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
-import PageTitle from './PageTitle';
-import SongList from './SongList';
+import PageTitle from '../../common/PageTitle';
+import SongList from '../common/SongList/SongList';
 
 class Artist extends React.Component {
   constructor(props) {

@@ -1,12 +1,12 @@
 import React, {Fragment} from 'react';
-import Loader from './common/Loader';
+import Loader from '../../common/Loader';
 
 import AlbumItem from './AlbumItem';
 
 import AlbumScss from './Albums.scss';
-import PageTitle from "./PageTitle";
-import PaginatedResults from './PaginatedResults';
-import MainPaginatedResults from './MainPaginatedResults';
+import PageTitle from "../../common/PageTitle";
+import PaginatedResults from '../common/PaginatedResults';
+import MainPaginatedResults from '../common/MainPaginatedResults';
 
 export default class Albums extends React.Component {
   async load(params) {

@@ -7,14 +7,14 @@ import {
   Route,
   Switch,
 } from 'react-router-dom';
-import Albums from './Albums';
-import Layout from './Layout';
-import Artists from './Artists';
-import Artist from './Artist';
-import Playlist from './Playlist';
-import Songs from './Songs';
-import Playlists from './Playlists';
-import Album from './Album';
+import Albums from './Core/Albums/Albums';
+import Layout from './Core/Layout/Layout';
+import Artists from './Core/Artists/Artists';
+import Artist from './Core/Artists/Artist';
+import Playlist from './Core/Playlists/Playlist';
+import Songs from './Core/Songs/Songs';
+import Playlists from './Core/Playlists/Playlists';
+import Album from './Core/Albums/Album';
 
 export default class App extends React.Component {
   render() {

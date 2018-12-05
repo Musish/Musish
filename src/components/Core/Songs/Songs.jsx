@@ -1,9 +1,9 @@
 import React from 'react';
-import SongList from './SongList';
-import PaginatedResults from './PaginatedResults';
-import MainPaginatedResults from './MainPaginatedResults';
-import Loader from './common/Loader';
-import PageTitle from './PageTitle';
+import SongList from '../common/SongList/SongList';
+import PaginatedResults from '../common/PaginatedResults';
+import MainPaginatedResults from '../common/MainPaginatedResults';
+import Loader from '../../common/Loader';
+import PageTitle from '../../common/PageTitle';
 
 export default class Songs extends React.Component {
   async load(params) {

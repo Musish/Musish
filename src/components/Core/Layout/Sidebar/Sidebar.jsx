@@ -1,7 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import {Link, Route} from 'react-router-dom';
-import Player from './Player';
+import Player from '../../Player/Player';
 
 export default class Sidebar extends React.Component {
 

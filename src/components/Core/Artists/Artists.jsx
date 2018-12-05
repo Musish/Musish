@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
-import PageTitle from "./PageTitle";
-import PaginatedResults from './PaginatedResults';
-import Loader from "./common/Loader";
+import PageTitle from "../../common/PageTitle";
+import PaginatedResults from '../common/PaginatedResults';
+import Loader from "../../common/Loader";
 
 import ArtistsScss from './Artists.scss';
 import ArtistItem from "./ArtistItem";
-import MainPaginatedResults from './MainPaginatedResults';
+import MainPaginatedResults from '../common/MainPaginatedResults';
 
 export default class Artists extends React.Component {
   async load(params) {

@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
-import NavigationBar from './NavigationBar';
-import Sidebar from './Sidebar';
+import NavigationBar from './NavigationBar/NavigationBar';
+import Sidebar from './Sidebar/Sidebar';
 
 export default class Layout extends React.Component {
   render() {
