@@ -51,7 +51,6 @@ export default class Player extends React.Component {
 
   playbackStateDidChange(event) {
     const music = MusicKit.getInstance();
-
     this.setState({
       isPlaying: music.player.isPlaying,
     });
@@ -80,8 +79,6 @@ export default class Player extends React.Component {
         MusicKit.Events.playbackStateDidChange,
         this.playbackStateDidChange,
     );
-
-    var url = 'https://itunes.apple.com/us/album/hamilton-original-broadway-cast-recording/1025210938';
     await music.setQueue({url: url});
   }
 
@@ -113,13 +110,11 @@ export default class Player extends React.Component {
 
   handlePlay() {
     const music = MusicKit.getInstance();
-
     music.player.play();
   }
 
   handlePause() {
     const music = MusicKit.getInstance();
-
     music.player.pause();
   }
 
@@ -141,19 +136,15 @@ export default class Player extends React.Component {
 
   handleNext() {
     const music = MusicKit.getInstance();
-
     music.player.skipToNextItem();
   }
 
   renderProgress() {
     const t = this.state.playbackTime;
-
     if (!t || t.currentPlaybackDuration === 0) {
       return (<div className={styles["progress-bar"]}><div></div></div>);
     }
-
     const percent = (t.currentPlaybackTime * 100) / t.currentPlaybackDuration;
-
     return (
         <div className={styles["progress-bar"]}>
           <div style={{
@@ -167,9 +158,7 @@ export default class Player extends React.Component {
     if (!this.state.nowPlayingItem) {
       return "";
     }
-
     const nowPlayingItem = this.state.nowPlayingItem;
-
     return (
       <div className={styles.player}>
         <div className={styles["main-info"]}>
@@ -182,9 +171,7 @@ export default class Player extends React.Component {
             <h3>{nowPlayingItem.attributes.albumName}</h3>
           </div>
         </div>
-
         {this.renderProgress()}
-
         <div className={styles.buttons}>
           <span onClick={this.handlePrevious}>
             <i className="fas fa-backward"></i>
@@ -202,43 +189,7 @@ export default class Player extends React.Component {
             <i className="fas fa-forward"></i>
           </span>
         </div>
-
-
       </div>
     );
   }
-
-      /*
-    return (
-        <div>
-          {this.state.nowPlayingItem && (
-              <div>
-                {this.state.nowPlayingItem.title}
-              </div>
-          )}
-
-          {this.renderProgress()}
-
-          <div onClick={this.handlePlay}>
-            Play
-          </div>
-
-          <div onClick={this.handlePause}>
-            Pause
-          </div>
-
-          <div onClick={this.handleStop}>
-            Stop
-          </div>
-
-          <div onClick={this.handlePrevious}>
-            Previous
-          </div>
-
-          <div onClick={this.handleNext}>
-            Next
-          </div>
-        </div>
-    );
-    */
 }

@@ -70,6 +70,13 @@
 	> span {
 	  margin: 0px 10px;
 	  color: #111;
+	  cursor: pointer;
+	  &:hover {
+		color: #333;
+	  }
+	  &:active {
+		transform: scale(0.95);
+	  }
 	}
   }
 }
