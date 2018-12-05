@@ -1,5 +1,5 @@
-.buttonContainer {
-  background: linear-gradient(290deg, #CD3C5A, #fb453f);
+.loginContainer {
+  background: #fb453f linear-gradient(290deg, #CD3C5A, #fb453f);
   background-size: 100% 100%;
 
   width: 100%;
@@ -12,6 +12,9 @@
   .title {
     margin-bottom: 5px;
     color: white;
+    .fab {
+      font-weight: 400 !important;
+    }
   }
 
   .subheading {
