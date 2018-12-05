@@ -4,9 +4,10 @@ import Login from './Login';
 export default class MusicKitAuthorizeProvider extends React.Component {
   constructor(props) {
     super(props);
+    const music = MusicKit.getInstance();
 
     this.state = {
-      ready: false,
+      ready: music.isAuthorized,
     };
   }
 
