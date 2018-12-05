@@ -1,26 +1,6 @@
 .buttonContainer {
-  background: linear-gradient(270deg, #25bafe, #8350f2, #fb453f);
-  background-size: 600% 600%;
-
-  -webkit-animation: AppleMusish 20s ease infinite;
-  -moz-animation: AppleMusish 20s ease infinite;
-  animation: AppleMusish 20s ease infinite;
-
-  @-webkit-keyframes AppleMusish {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-  }
-  @-moz-keyframes AppleMusish {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-  }
-  @keyframes AppleMusish {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-  }
+  background: linear-gradient(290deg, #CD3C5A, #fb453f);
+  background-size: 100% 100%;
 
   width: 100%;
   height: 100%;
