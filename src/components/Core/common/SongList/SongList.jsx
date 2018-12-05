@@ -151,7 +151,7 @@ class SongListItem extends React.Component {
           </span>
         ) : (
           <span className={classes.songIndex}>
-            {this.props.song.attributes.trackNumber}
+            {this.props.song.attributes.trackNumber}.
           </span>
         )}
       </React.Fragment>
