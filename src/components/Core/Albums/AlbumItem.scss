@@ -26,6 +26,12 @@
     }
   }
 
+  &:hover {
+    .image {
+      opacity: 0.9;
+    }
+  }
+
   .descriptionContainer {
     text-align: left;
     width: 100%;

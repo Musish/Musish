@@ -8,9 +8,10 @@ export default class AlbumItem extends Component {
     return (
         <Link to={`/albums/${this.props.id}`} className={Classes.container}>
           <div className={Classes.imageContainer}>
-            <img src={this.props.url}
-                 className={Classes.image}
-                 alt={'image'}/>
+            <img
+              src={this.props.url}
+              className={Classes.image}
+            />
           </div>
 
           <div className={Classes.descriptionContainer}>
