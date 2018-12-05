@@ -1,43 +1,46 @@
+@mixin wrapTo($width) {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: $width;
+  display: block;
+}
+
 .container {
-  width: 200px;
-  background-color: rgb(249, 249, 249);
-  border-radius: 5px;
+  width: 170px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0;
   cursor: pointer;
-  box-shadow: 0px 10px 15px -10px rgba(0,0,0,0.15);
-  &:hover {
-    background-color: rgb(244, 244, 244);
-  }
+  margin-bottom: 10px;
 
   .imageContainer {
-    width: 150px;
-    height: 150px;
-    background-color: aquamarine;
-
+    width: 170px;
+    height: 170px;
+    background: #fafafa;
+    border-radius: 8px;
     .image {
       width: 100%;
       height: 100%;
+      border-radius: 8px;
     }
   }
 
   .descriptionContainer {
-    text-align: center;
-    width: 200px;
-    overflow: scroll;
-    white-space: pre-wrap;
-    word-break: break-all;
-    word-wrap: break-word;
-    h3 {
-      font-weight: 400;
-      margin: 10px 0 5px 0;
-    }
-    h4 {
-      font-weight: 300;
-      margin: 0;
+    text-align: left;
+    width: 100%;
+    > span {
+      display:block;
+      @include wrapTo(170px);
+      &.albumName {
+        font-weight: 400;
+        margin: 10px 0 5px 0;
+      }
+      &.artistName {
+        font-weight: 300;
+        color: #aaaaaa;
+        margin: 0;
+      }
     }
   }
 }
-
