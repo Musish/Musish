@@ -23,50 +23,50 @@ export default class Sidebar extends React.Component {
   }
 
   render() {
-    if (!this.state.playlists) {
-      return ""
-    }
-
-    const playlists = this.state.playlists.map((playlist, i) => <MenuItem
+    const playlists = this.state.playlists && this.state.playlists.map((playlist, i) => (
+      <MenuItem
         to={`/playlists/${playlist.id}`}
         label={playlist.attributes.name}
-        key={i}/>);
+        key={i}
+      />
+    ));
 
     return (
-        <aside id="main-sidebar">
-          <div className="menus">
-            <div className="menu library">
-              <h3>My Library</h3>
-              <ul>
-                <MenuItem to={'/artists'} label={'Artists'}/>
-                <MenuItem to={'/albums'} label={'Albums'}/>
-                <MenuItem to={'/songs'} label={'Songs'}/>
-              </ul>
-            </div>
+      <aside id="main-sidebar">
+        <div className="menus">
+          <div className="menu library">
+            <h3>My Library</h3>
+            <ul>
+              <MenuItem to={'/artists'} label={'Artists'}/>
+              <MenuItem to={'/albums'} label={'Albums'}/>
+              <MenuItem to={'/songs'} label={'Songs'}/>
+            </ul>
+          </div>
+          {playlists && (
             <div className="menu playlists">
               <h3>Playlists</h3>
               <ul>
                 {playlists}
               </ul>
             </div>
-          </div>
-          <Player/>
-        </aside>
+          )}
+        </div>
+        <Player/>
+      </aside>
     );
   }
 }
 
-
 class MenuItem extends React.Component {
   render() {
     return (
-        <Route path={this.props.to} exact children={({match}) => (
-            <li className={cx({active: !!match})}>
-              <Link to={this.props.to}>
-                {this.props.label}
-              </Link>
-            </li>
-        )}/>
+      <Route path={this.props.to} exact children={({match}) => (
+        <li className={cx({active: !!match})}>
+          <Link to={this.props.to}>
+            {this.props.label}
+          </Link>
+        </li>
+      )}/>
     );
   }
 }

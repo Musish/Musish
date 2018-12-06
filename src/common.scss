@@ -45,6 +45,9 @@ button {
   #main-wrapper {
     display: flex;
     flex: 1;
+    > aside {
+      overflow-y: scroll;
+    }
     #main-sidebar {
       height:100%;
       min-height: 500px;
