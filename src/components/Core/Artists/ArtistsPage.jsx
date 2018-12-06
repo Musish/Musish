@@ -3,45 +3,76 @@ import PageTitle from "../../common/PageTitle";
 import PaginatedResults from '../common/PaginatedResults';
 import Loader from "../../common/Loader";
 
-import ArtistsScss from './Artists.scss';
-import ArtistItem from "./ArtistItem";
-import MainPaginatedResults from '../common/MainPaginatedResults';
+import Classes from './Artists.scss';
 import Page from "../Layout/Page";
+import MainPaginatedResults from "../common/MainPaginatedResults";
 
 export default class ArtistsPage extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  setArtist(artist) {
+    console.log('set', artist);
+  };
+
+  render() {
+    return (
+      <Fragment>
+        <ArtistList setArtist={this.setArtist}>
+          D
+        </ArtistList>
+        <Page>
+          <PageTitle title={"Artists"} context={"My Library"} />
+          <div className={Classes.container}>
+            Page contents
+          </div>
+        </Page>
+      </Fragment>
+    );
+  }
+}
+
+class ArtistList extends React.Component {
   async load(params) {
     const music = MusicKit.getInstance();
-
     return await music.api.library.artists(null, params);
   }
 
-  renderItems(items, more, {loading, end}) {
-    if (!items) {
+  renderList(artists, more, {loading, end}) {
+    if (!artists) {
       return <Loader/>;
     }
 
-    const artists = items.map(
-        (artist) => {
-          return (
-            <ArtistItem artist={artist} />
-          );
-        }
-    );
+    const artistRows = artists && artists.map((artist) => {
+      return (
+        <li key={`artist-${artist.id}`}>
+          <div>
+            <span className={Classes.pictureWrapper}>
+
+            </span>
+          </div>
+          <div>
+            <span className={Classes.artistName}>
+              {artist.attributes.name}
+            </span>
+          </div>
+        </li>
+      );
+    });
 
     return (
-      <Page>
-        <MainPaginatedResults more={more}>
-          <PageTitle title={"Artists"} context={"My Library"} />
-          <div className={ArtistsScss.container}>
-            { artists }
-          </div>
-          {loading && "Loading..."}
-        </MainPaginatedResults>
-      </Page>
+      <ul>
+        {artistRows}
+      </ul>
     );
-  }
+  };
 
   render() {
-    return <PaginatedResults load={this.load} render={this.renderItems}/>;
+    return (
+      <aside className={Classes.artistList}>
+        <PaginatedResults load={this.load} render={this.renderList} />
+      </aside>
+    );
   }
 }

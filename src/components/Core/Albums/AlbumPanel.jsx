@@ -1,13 +1,7 @@
 import React, {Fragment} from 'react';
 import Loader from '../../common/Loader';
 
-import AlbumItem from './AlbumItem';
-
-import Classes from './Albums.scss';
-import PageTitle from "../../common/PageTitle";
-import PaginatedResults from '../common/PaginatedResults';
-import MainPaginatedResults from '../common/MainPaginatedResults';
-import Page from "../Layout/Page";
+import Classes from './AlbumPanel.scss';
 
 export default class AlbumsPage extends React.Component {
   async load(params) {
@@ -22,16 +16,16 @@ export default class AlbumsPage extends React.Component {
     }
 
     const albums = items.map(
-        (album, i) => {
-          const WHEIGHT = 150;
-          let url = MusicKit.formatArtworkURL(album.attributes.artwork, WHEIGHT, WHEIGHT);
+      (album, i) => {
+        const WHEIGHT = 150;
+        let url = MusicKit.formatArtworkURL(album.attributes.artwork, WHEIGHT, WHEIGHT);
 
-          return (
-              <div key={i}>
-                <AlbumItem url={url} id={album.id} title={album.attributes.name} name={album.attributes.artistName}/>
-              </div>
-          );
-        });
+        return (
+          <div key={i}>
+            <AlbumItem url={url} id={album.id} title={album.attributes.name} name={album.attributes.artistName}/>
+          </div>
+        );
+      });
 
     return (
       <MainPaginatedResults more={more}>
