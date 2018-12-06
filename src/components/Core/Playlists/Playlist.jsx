@@ -33,7 +33,7 @@ class Playlist extends React.Component {
         <div>
           <PageTitle
             title={this.state.playlist.attributes.name}
-            context={"YOUR LIBRARY"}
+            context={"My Library"}
           />
 
           <p>{this.state.playlist.attributes.description && this.state.playlist.attributes.description.standard}</p>

@@ -6,8 +6,9 @@ import PlaylistScss from './Playlists.scss';
 import PageTitle from "../../common/PageTitle";
 import PaginatedResults from '../common/PaginatedResults';
 import MainPaginatedResults from '../common/MainPaginatedResults';
+import Page from "../Layout/Page";
 
-export default class Playlists extends React.Component {
+export default class PlaylistsPage extends React.Component {
   async load(params) {
     const music = MusicKit.getInstance();
 
@@ -32,13 +33,15 @@ export default class Playlists extends React.Component {
         });
 
     return (
+      <Page>
         <MainPaginatedResults more={more}>
-          <PageTitle title={"Playlists"} context={"Your Library"} />
+          <PageTitle title={"Playlists"} context={"My Library"} />
           <div className={PlaylistScss.container}>
             { playlists }
           </div>
           {loading && "Loading..."}
         </MainPaginatedResults>
+      </Page>
     )
   }
 

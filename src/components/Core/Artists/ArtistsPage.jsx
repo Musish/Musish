@@ -6,8 +6,9 @@ import Loader from "../../common/Loader";
 import ArtistsScss from './Artists.scss';
 import ArtistItem from "./ArtistItem";
 import MainPaginatedResults from '../common/MainPaginatedResults';
+import Page from "../Layout/Page";
 
-export default class Artists extends React.Component {
+export default class ArtistsPage extends React.Component {
   async load(params) {
     const music = MusicKit.getInstance();
 
@@ -28,13 +29,15 @@ export default class Artists extends React.Component {
     );
 
     return (
+      <Page>
         <MainPaginatedResults more={more}>
-          <PageTitle title={"Artists"} context={"Your Library"} />
+          <PageTitle title={"Artists"} context={"My Library"} />
           <div className={ArtistsScss.container}>
-          { artists }
+            { artists }
           </div>
           {loading && "Loading..."}
         </MainPaginatedResults>
+      </Page>
     );
   }
 

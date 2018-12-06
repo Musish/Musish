@@ -10,11 +10,7 @@ export default class Layout extends React.Component {
 
           <div id="main-wrapper">
             <Sidebar/>
-            <main id="main-content">
-              <div>
-                {this.props.children}
-              </div>
-            </main>
+            {this.props.children}
           </div>
         </Fragment>
     );

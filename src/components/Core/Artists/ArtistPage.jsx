@@ -2,8 +2,9 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 import PageTitle from '../../common/PageTitle';
 import SongList from '../common/SongList/SongList';
+import Page from "../Layout/Page";
 
-class Artist extends React.Component {
+class ArtistPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -28,11 +29,11 @@ class Artist extends React.Component {
       return 'Loading...';
     }
     return (
-        <div>
-          <PageTitle title={this.state.artist.attributes.name} context={"YOUR LIBRARY"}/>
-        </div>
+        <Page>
+          <PageTitle title={this.state.artist.attributes.name} context={"My Library"}/>
+        </Page>
     );
   }
 }
 
-export default withRouter(Artist);
+export default withRouter(ArtistPage);

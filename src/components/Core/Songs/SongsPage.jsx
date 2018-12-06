@@ -4,8 +4,9 @@ import PaginatedResults from '../common/PaginatedResults';
 import MainPaginatedResults from '../common/MainPaginatedResults';
 import Loader from '../../common/Loader';
 import PageTitle from '../../common/PageTitle';
+import Page from "../Layout/Page";
 
-export default class Songs extends React.Component {
+export default class SongsPage extends React.Component {
   async load(params) {
     const music = MusicKit.getInstance();
 
@@ -18,8 +19,9 @@ export default class Songs extends React.Component {
     }
 
     return (
+      <Page>
         <MainPaginatedResults more={more}>
-          <PageTitle title={"Songs"} context={"Your Library"} />
+          <PageTitle title={"Songs"} context={"My Library"} />
           <SongList
             songs={items}
             album={false}
@@ -28,6 +30,7 @@ export default class Songs extends React.Component {
           />
           {loading && <Loader/>}
         </MainPaginatedResults>
+      </Page>
     );
   }
 

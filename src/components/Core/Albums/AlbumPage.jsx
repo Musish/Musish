@@ -2,8 +2,9 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 import PageTitle from '../../common/PageTitle';
 import SongList from '../common/SongList/SongList';
+import Page from "../Layout/Page";
 
-class Album extends React.Component {
+class AlbumPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -30,13 +31,12 @@ class Album extends React.Component {
     }
 
     return (
-        <div>
-          <PageTitle title={this.state.album.attributes.name} context={"YOUR LIBRARY"}/>
-
+        <Page>
+          <PageTitle title={this.state.album.attributes.name} context={"My Library"}/>
           <SongList songs={this.state.album.relationships.tracks.data} album={true}/>
-        </div>
+        </Page>
     );
   }
 }
 
-export default withRouter(Album);
+export default withRouter(AlbumPage);
