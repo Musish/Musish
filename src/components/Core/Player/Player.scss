@@ -3,79 +3,93 @@
   padding: 20px 15px;
   border-radius: 5px;
   margin-bottom: 30px;
+
   .main-info {
-	display: flex;
-	flex-direction: row;
-	width: 100%;
-	> div.picture {
-	  > .image {
-		width: 60px;
-		height: 60px;
-	  }
-	}
-	> div.track {
-	  flex: 1;
-	  padding-left:10px;
-	  h1, h2, h3 {
-		overflow: hidden;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		width: 160px;
-		display: block;
-	  }
-	  h1 {
-		font-size: 18px;
-		margin-bottom: 6px;
-	  }
-	  h2, h3 {
-		font-size: 12px;
-		color: #555;
-	  }
-	  h3 {
-		margin-top: 3px;
-		font-weight: 300;
-	  }
-	}
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+
+    > div.picture {
+      > .image {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+    > div.track {
+      flex: 1;
+      padding-left: 10px;
+
+      h1, h2, h3 {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 160px;
+        display: block;
+      }
+
+      h1 {
+        font-size: 18px;
+        margin-bottom: 6px;
+      }
+
+      h2, h3 {
+        font-size: 12px;
+        color: #555;
+      }
+
+      h3 {
+        margin-top: 3px;
+        font-weight: 300;
+      }
+    }
   }
+
   .progress-bar {
-	width: 100%;
-	height: 4px;
-	background: rgb(230, 230, 230);
-	margin-top: 10px;
-	border-radius: 2px;
-	> div {
-	  width: 0%;
-	  height: 100%;
-	  background: rgb(100, 100, 100);
-	  border-radius: 2px;
-	  position:relative;
-	  &:after {
-		content: '';
-		background: rgb(100, 100, 100);
-		position: absolute;
-		right:-1px;
-		top:-2px;
-		height:8px;
-		width:3px;
-		border-radius: 2px;
-	  }
-	}
+    width: 100%;
+    height: 4px;
+    background: rgb(230, 230, 230);
+    margin-top: 10px;
+    border-radius: 2px;
+
+    > div {
+      width: 0%;
+      height: 100%;
+      background: rgb(100, 100, 100);
+      border-radius: 2px;
+      position: relative;
+
+      &:after {
+        content: '';
+        background: rgb(100, 100, 100);
+        position: absolute;
+        right: -1px;
+        top: -2px;
+        height: 8px;
+        width: 3px;
+        border-radius: 2px;
+      }
+    }
   }
+
   .buttons {
-	display: flex;
-	justify-content: center;
-	margin-top: 10px;
-	font-size: 16px;
-	> span {
-	  margin: 0px 10px;
-	  color: #111;
-	  cursor: pointer;
-	  &:hover {
-		color: #555555;
-	  }
-	  &:active {
-		transform: scale(0.95);
-	  }
-	}
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    font-size: 16px;
+
+    > span {
+      margin: 0px 10px;
+      color: #111;
+      cursor: pointer;
+
+      &:hover {
+        color: #555555;
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
   }
 }
