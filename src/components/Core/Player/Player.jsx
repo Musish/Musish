@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './Player.scss'
+import {artworkForMediaItem} from "../common/Utils";
 
 export default class Player extends React.Component {
   constructor(props) {
@@ -138,11 +139,22 @@ export default class Player extends React.Component {
     }
     const percent = (t.currentPlaybackTime * 100) / t.currentPlaybackDuration;
     return (
-        <div className={styles["progress-bar"]}>
-          <div style={{
-            width: `${percent}%`
-          }}/>
-        </div>
+      <div className={styles["progress-bar"]}>
+        <div style={{
+          width: `${percent}%`
+        }}/>
+      </div>
+    );
+  }
+
+  renderVolume() {
+    const percent = 50;
+    return (
+      <div className={styles["progress-bar"]}>
+        <div style={{
+          width: `${percent}%`
+        }}/>
+      </div>
     );
   }
 
@@ -151,11 +163,12 @@ export default class Player extends React.Component {
       return "";
     }
     const nowPlayingItem = this.state.nowPlayingItem;
+    const artworkURL = artworkForMediaItem(nowPlayingItem, 40);
     return (
       <div className={styles.player}>
         <div className={styles["main-info"]}>
           <div className={styles.picture}>
-            <img src={nowPlayingItem.attributes.artwork.url} className={styles.image} alt={'album artwork'} />
+            <img src={artworkURL} className={styles.image} alt={'album artwork'} />
           </div>
           <div className={styles.track}>
             <h1>{nowPlayingItem.title}</h1>
@@ -169,11 +182,11 @@ export default class Player extends React.Component {
             <i className="fas fa-backward" />
           </span>
           {this.state.isPlaying ? (
-            <span onClick={this.handlePause}>
+            <span className={styles.main} onClick={this.handlePause}>
             <i className="fas fa-pause" />
           </span>
           ) : (
-            <span onClick={this.handlePlay}>
+            <span className={styles.main} onClick={this.handlePlay}>
             <i className="fas fa-play" />
           </span>
           )}

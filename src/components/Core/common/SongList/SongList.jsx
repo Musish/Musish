@@ -1,8 +1,8 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import addImage from '../../../../assets/Add.png';
 
 import classes from './SongList.scss';
-import {createMediaItem} from "../Utils";
+import {artworkForMediaItem, createMediaItem} from "../Utils";
 
 export default class SongList extends React.Component {
   constructor(props) {
@@ -86,21 +86,13 @@ class SongListItem extends React.Component {
   constructor(props) {
     super(props);
 
+    const artworkURL = artworkForMediaItem(this.props.song, 40);
+
     this.state = {
-      setQueue: false
+      artworkURL: artworkURL,
     };
 
-    const SIZE = 40;
-
-    this.imageUrl = MusicKit.formatArtworkURL(this.props.song.attributes.artwork, SIZE, SIZE);
     this.explicit = <React.Fragment/>; // TODO: get if the song is explicit or not
-    this.inLibrary = this.props.song.attributes.playParams.isLibrary
-      ? <React.Fragment/>
-      : <img src={addImage}/>;
-    this.time = this.getTime(this.props.song.attributes.durationInMillis);
-    this.imageOrNumber = this.props.albumArt ?
-      <div className={"play-overlay"}><img src={this.imageUrl} alt=""/></div> :
-      <div className={"play-overlay"}><h3>{this.props.song.attributes.trackNumber}</h3></div>;
 
     this._playSong = this._playSong.bind(this);
     this._pauseSong = this._pauseSong.bind(this);
@@ -109,15 +101,11 @@ class SongListItem extends React.Component {
 
   async _playSong() {
     let music = MusicKit.getInstance();
-    if (!this.state.setQueue) {
-      await music.setQueue({
-        startPosition: this.props.index,
-        items: this.props.songs.map(song => createMediaItem(song)),
-      });
-      this.setState({
-        setQueue: true
-      });
-    }
+    console.log(this.props.songs.indexOf(this.props.song), this.props.songs.map(song => createMediaItem(song)));
+    await music.setQueue({
+      startPosition: this.props.songs.indexOf(this.props.song),
+      items: this.props.songs.map(song => createMediaItem(song)),
+    });
     await music.player.play();
   }
 
@@ -142,18 +130,27 @@ class SongListItem extends React.Component {
   }
 
   renderIcon() {
+    const { albumArt, song, isPlaying } = this.props;
     return (
       <React.Fragment>
-        {this.props.albumArt ? (
+        {albumArt ? (
           <span className={classes.albumArtwork}>
             <span className={classes.artworkWrapper}>
-            <img src={this.imageUrl} alt=""/>
+            <img src={this.state.artworkURL} alt=""/>
             </span>
           </span>
         ) : (
-          <span className={classes.songIndex}>
-            {this.props.song.attributes.trackNumber}.
-          </span>
+          <Fragment>
+            {isPlaying ? (
+              <span className={classes.songIndex}>
+                {song.attributes.trackNumber}.
+              </span>
+            ) : (
+              <span className={classes.songIndex}>
+                {song.attributes.trackNumber}.
+              </span>
+            )}
+          </Fragment>
         )}
       </React.Fragment>
     );
@@ -162,6 +159,11 @@ class SongListItem extends React.Component {
   render() {
     const {isPlaying, showArtist, showAlbum} = this.props;
     const songAttributes = this.props.song.attributes;
+    const inLibrary = this.props.song.attributes.playParams.isLibrary
+      ? <React.Fragment/>
+      : <img src={addImage} />;
+    const duration = this.getTime(this.props.song.attributes.durationInMillis);
+
     return (
       <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}>
         {this.renderIcon()}
@@ -182,7 +184,7 @@ class SongListItem extends React.Component {
           )}
         </span>
         <span className={classes.songDuration}>
-          <span>{this.time}</span>
+          <span>{duration}</span>
         </span>
       </li>
       /*

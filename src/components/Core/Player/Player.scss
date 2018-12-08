@@ -10,7 +10,7 @@
     width: 100%;
 
     > div.picture {
-      border-radius: 3px;
+      border-radius: 4px;
       > .image {
         width: 60px;
         height: 60px;
@@ -78,17 +78,19 @@
     display: flex;
     justify-content: center;
     margin-top: 10px;
-    font-size: 16px;
 
     > span {
       margin: 0px 10px;
+      font-size: 20px;
+      line-height:24px;
       color: #111;
       cursor: pointer;
-
+      &.main {
+        font-size: 24px;
+      }
       &:hover {
         color: #555555;
       }
-
       &:active {
         transform: scale(0.95);
       }

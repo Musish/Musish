@@ -7,3 +7,7 @@ export function createMediaItem(song) {
     }
   }
 }
+
+export function artworkForMediaItem(song, size) {
+  return MusicKit.formatArtworkURL(song.attributes.artwork, size, size);
+}
