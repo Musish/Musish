@@ -33,19 +33,21 @@ export default class PlaylistsPage extends React.Component {
         });
 
     return (
-      <Page>
-        <MainPaginatedResults more={more}>
-          <PageTitle title={"Playlists"} context={"My Library"} />
-          <div className={PlaylistScss.container}>
-            { playlists }
-          </div>
-          {loading && "Loading..."}
-        </MainPaginatedResults>
-      </Page>
+      <MainPaginatedResults more={more}>
+        <PageTitle title={"Playlists"} context={"My Library"} />
+        <div className={PlaylistScss.container}>
+          { playlists }
+        </div>
+        {loading && "Loading..."}
+      </MainPaginatedResults>
     )
   }
 
   render() {
-    return <PaginatedResults load={this.load} render={this.renderItems}/>;
+    return (
+      <Page>
+        <PaginatedResults load={this.load} render={this.renderItems}/>
+      </Page>
+    );
   }
 }

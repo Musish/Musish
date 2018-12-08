@@ -2,6 +2,7 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 import PageTitle from '../../common/PageTitle';
 import SongList from '../common/SongList/SongList';
+import Page from "../Layout/Page";
 
 class Playlist extends React.Component {
   constructor(props) {
@@ -30,20 +31,18 @@ class Playlist extends React.Component {
     }
 
     return (
-        <div>
-          <PageTitle
-            title={this.state.playlist.attributes.name}
-            context={"My Library"}
-          />
-
-          <p>{this.state.playlist.attributes.description && this.state.playlist.attributes.description.standard}</p>
-
-          <SongList
-            songs={this.state.playlist.relationships.tracks.data}
-            showArtist={true}
-            showAlbum={true}
-          />
-        </div>
+      <Page>
+        <PageTitle
+          title={this.state.playlist.attributes.name}
+          context={"My Library"}
+        />
+        <p>{this.state.playlist.attributes.description && this.state.playlist.attributes.description.standard}</p>
+        <SongList
+          songs={this.state.playlist.relationships.tracks.data}
+          showArtist={true}
+          showAlbum={true}
+        />
+      </Page>
     );
   }
 }
