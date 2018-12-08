@@ -2,6 +2,7 @@ import React from 'react';
 import addImage from '../../../../assets/Add.png';
 
 import classes from './SongList.scss';
+import {createMediaItem} from "../Utils";
 
 export default class SongList extends React.Component {
   constructor(props) {
@@ -111,7 +112,7 @@ class SongListItem extends React.Component {
     if (!this.state.setQueue) {
       await music.setQueue({
         startPosition: this.props.index,
-        items: this.props.songs,
+        items: this.props.songs.map(song => createMediaItem(song)),
       });
       this.setState({
         setQueue: true
