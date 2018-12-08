@@ -14,8 +14,8 @@ export default class MusicKitProvider extends React.Component {
     MusicKit.configure({
       developerToken: process.env.JWT_TOKEN,
       app: {
-        name: 'Apple Musish',
-        build: '0.01a',
+        name: 'Musi.sh',
+        build: '0.03a',
       },
     });
 

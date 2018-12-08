@@ -1,4 +1,4 @@
-# (Apple) Musi.sh
+# Musi.sh
 
 ### Apple Music... ish
 Frustrated by the lack of access to the greatest bangers in our ever-growing music libraries (when away from our laptops and bound to the confines of work computers) we decided to create the single greatest web-based music client for Apple Music. Apple doesn't provide one officially which greatly helped to be honest with you...

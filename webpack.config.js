@@ -26,7 +26,7 @@ const config = Encore.getWebpackConfig();
 
 config.plugins.push(new HtmlWebpackPlugin({  // Also generate a test.html
   template: 'src/app.html',
-  title: 'Apple Musish',
+  title: 'Musi.sh',
   meta: {
     viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
   },
