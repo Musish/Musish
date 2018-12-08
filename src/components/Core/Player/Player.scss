@@ -10,9 +10,11 @@
     width: 100%;
 
     > div.picture {
+      border-radius: 3px;
       > .image {
         width: 60px;
         height: 60px;
+        border-radius: inherit;
       }
     }
 
