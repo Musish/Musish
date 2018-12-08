@@ -3,6 +3,7 @@ import addImage from '../../../../assets/Add.png';
 
 import classes from './SongList.scss';
 import {artworkForMediaItem, createMediaItem} from "../Utils";
+import {ContextMenu, ContextMenuTrigger, MenuItem} from "react-contextmenu";
 
 export default class SongList extends React.Component {
   constructor(props) {
@@ -96,12 +97,13 @@ class SongListItem extends React.Component {
 
     this._playSong = this._playSong.bind(this);
     this._pauseSong = this._pauseSong.bind(this);
+    this._queueNext = this._queueNext.bind(this);
+    this._queueLater = this._queueLater.bind(this);
     this._handleClick = this._handleClick.bind(this);
   }
 
   async _playSong() {
     let music = MusicKit.getInstance();
-    console.log(this.props.songs.indexOf(this.props.song), this.props.songs.map(song => createMediaItem(song)));
     await music.setQueue({
       startPosition: this.props.songs.indexOf(this.props.song),
       items: this.props.songs.map(song => createMediaItem(song)),
@@ -112,6 +114,16 @@ class SongListItem extends React.Component {
   async _pauseSong() {
     let music = MusicKit.getInstance();
     await music.player.pause();
+  }
+
+  async _queueNext() {
+    let music = MusicKit.getInstance();
+    await music.player.queue.prepend({items: [createMediaItem(this.props.song)]});
+  }
+
+  async _queueLater() {
+    let music = MusicKit.getInstance();
+    await music.player.queue.append({items: [createMediaItem(this.props.song)]});
   }
 
   async _handleClick() {
@@ -165,28 +177,38 @@ class SongListItem extends React.Component {
     const duration = this.getTime(this.props.song.attributes.durationInMillis);
 
     return (
-      <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}>
-        {this.renderIcon()}
-        <span className={classes.songInfo}>
-          <span className={classes.songTitle}>
-            {songAttributes.name}{this.explicit}
-          </span>
-          {(showArtist || showAlbum) && (
-            <span className={classes.songCaption}>
-              {(showArtist && showAlbum) ? (
-                `${songAttributes.artistName} - ${songAttributes.albumName}`
-              ) : showArtist ? (
-                `${songAttributes.artistName}`
-              ) : (
-                `${songAttributes.albumName}`
-              )}
+      <Fragment>
+        <ContextMenuTrigger id={`SONG_LIST_ITEM_${this.props.song.id}`}>
+          <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}>
+            {this.renderIcon()}
+            <span className={classes.songInfo}>
+            <span className={classes.songTitle}>
+              {songAttributes.name}{this.explicit}
             </span>
-          )}
-        </span>
-        <span className={classes.songDuration}>
-          <span>{duration}</span>
-        </span>
-      </li>
+              {(showArtist || showAlbum) && (
+                <span className={classes.songCaption}>
+                {(showArtist && showAlbum) ? (
+                  `${songAttributes.artistName} - ${songAttributes.albumName}`
+                ) : showArtist ? (
+                  `${songAttributes.artistName}`
+                ) : (
+                  `${songAttributes.albumName}`
+                )}
+              </span>
+              )}
+          </span>
+            <span className={classes.songDuration}>
+            <span>{duration}</span>
+          </span>
+          </li>
+        </ContextMenuTrigger>
+        <ContextMenu id={`SONG_LIST_ITEM_${this.props.song.id}`}>
+          <strong>{songAttributes.name}{this.explicit}</strong>
+          <MenuItem onClick={this._playSong}>Play now</MenuItem>
+          <MenuItem onClick={this._queueNext}>Play next</MenuItem>
+          <MenuItem onClick={this._queueLater}>Play later</MenuItem>
+        </ContextMenu>
+      </Fragment>
       /*
       <tr onClick={this._handleClick} className={`test-overlay ${isPlaying ? 'pause' : ''}`}>
         <td>
