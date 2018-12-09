@@ -184,6 +184,7 @@ class SongListItem extends React.Component {
     return (
       <Fragment>
         <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}>
+          <div className={classes.songBacker} />
           {this.renderIcon()}
             <span className={classes.songInfo}>
             <span className={classes.songTitle}>
