@@ -181,35 +181,33 @@ class SongListItem extends React.Component {
       : <img src={addImage}/>;
     const duration = this.getTime(this.props.song.attributes.durationInMillis);
 
-    console.log(this.props.index);
-
     return (
       <Fragment>
-        <ContextMenuTrigger id={`song-list-item-${this.props.index}`}>
-          <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}>
-            <div className={classes.songBacker} />
-            {this.renderIcon()}
-              <span className={classes.songInfo}>
-              <span className={classes.songTitle}>
-                {songAttributes.name}{this.explicit}
-              </span>
-                {(showArtist || showAlbum) && (
-                  <span className={classes.songCaption}>
-                  {(showArtist && showAlbum) ? (
-                    `${songAttributes.artistName} - ${songAttributes.albumName}`
-                  ) : showArtist ? (
-                    `${songAttributes.artistName}`
-                  ) : (
-                    `${songAttributes.albumName}`
-                  )}
-                </span>
+        <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}>
+          <ContextMenuTrigger id={`song-list-item-${this.props.index}`} attributes={{className: [classes.songWrapper]}}>
+          <div className={classes.songBacker} />
+          {this.renderIcon()}
+            <span className={classes.songInfo}>
+            <span className={classes.songTitle}>
+              {songAttributes.name}{this.explicit}
+            </span>
+              {(showArtist || showAlbum) && (
+                <span className={classes.songCaption}>
+                {(showArtist && showAlbum) ? (
+                  `${songAttributes.artistName} - ${songAttributes.albumName}`
+                ) : showArtist ? (
+                  `${songAttributes.artistName}`
+                ) : (
+                  `${songAttributes.albumName}`
                 )}
-            </span>
-            <span className={classes.songDuration}>
-              <span>{duration}</span>
-            </span>
-          </li>
-        </ContextMenuTrigger>
+              </span>
+              )}
+          </span>
+          <span className={classes.songDuration}>
+            <span>{duration}</span>
+          </span>
+          </ContextMenuTrigger>
+        </li>
         <ContextMenu id={`song-list-item-${this.props.index}`}>
           <h3>{songAttributes.name}</h3>
           <MenuItem divider />

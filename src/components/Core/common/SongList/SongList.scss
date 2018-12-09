@@ -5,13 +5,21 @@
   margin-left: 15px; // Temporary for testing song page
   margin-top: 25px; // Temporary for testing song page
   .song {
-    display: flex;
-    flex-direction: row;
-    padding: 5px 5px;
     cursor: pointer;
-    position: relative;
-    font-size: 11px;
-    min-height: 25px;
+    .songWrapper {
+      display: flex;
+      flex-direction: row;
+      height: 100%;
+      padding: 5px 5px;
+      font-size: 11px;
+      min-height: 25px;
+      position: relative;
+      > span {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
     .songBacker {
       position:absolute;
       top: -1px;
@@ -78,11 +86,6 @@
         width: inherit;
         height: inherit;
       }
-    }
-    > span {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
     }
     .songIndex {
       color: #fe2851;
