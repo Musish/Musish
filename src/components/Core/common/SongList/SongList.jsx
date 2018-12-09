@@ -174,13 +174,10 @@ class SongListItem extends React.Component {
   }
 
   render() {
-    const {isPlaying, showArtist, showAlbum} = this.props;
+    const {isPlaying, showArtist, showAlbum, albumArt} = this.props;
     const songAttributes = this.props.song.attributes;
-    const inLibrary = this.props.song.attributes.playParams.isLibrary
-      ? <React.Fragment/>
-      : <img src={addImage}/>;
+    const inLibrary = this.props.song.attributes.playParams.isLibrary;
     const duration = this.getTime(this.props.song.attributes.durationInMillis);
-
     return (
       <Fragment>
         <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}>
@@ -209,10 +206,21 @@ class SongListItem extends React.Component {
           </ContextMenuTrigger>
         </li>
         <ContextMenu id={`song-list-item-${this.props.index}`}>
-          <h3>{songAttributes.name}</h3>
+          <div className={"item-info"}>
+            <div className={"artwork"}>
+              <div className={"artwork-wrapper"}>
+                <img src={this.state.artworkURL} />
+              </div>
+            </div>
+            <div className={"description"}>
+              <h1>{songAttributes.name}</h1>
+              <h2>{songAttributes.artistName}</h2>
+              <h3>{songAttributes.albumName}</h3>
+            </div>
+          </div>
           <MenuItem divider />
           <MenuItem onClick={this._playSong}>
-            Play now
+            Play
           </MenuItem>
           <MenuItem onClick={this._queueNext}>
             Play next
@@ -220,6 +228,21 @@ class SongListItem extends React.Component {
           <MenuItem onClick={this._queueLater}>
             Play later
           </MenuItem>
+          <MenuItem divider />
+          <MenuItem onClick={this._queueLater}>
+            Show Artist
+          </MenuItem>
+          <MenuItem onClick={this._queueLater}>
+            Show Album
+          </MenuItem>
+          {!inLibrary && (
+            <Fragment>
+              <MenuItem divider/>
+              <MenuItem onClick={this._queueLater}>
+                Add to library
+              </MenuItem>
+            </Fragment>
+          )}
         </ContextMenu>
       </Fragment>
       /*
