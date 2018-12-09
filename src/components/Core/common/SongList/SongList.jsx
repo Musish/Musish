@@ -142,27 +142,32 @@ class SongListItem extends React.Component {
   }
 
   renderIcon() {
-    const { albumArt, song, isPlaying } = this.props;
+    const {albumArt, song, isPlaying} = this.props;
     return (
       <React.Fragment>
         {albumArt ? (
           <span className={classes.albumArtwork}>
+            {isPlaying && (
+              <div className={classes.playingAnimation}>
+                <div><span /><span /><span /><span /><span /></div>
+              </div>
+            )}
             <span className={classes.artworkWrapper}>
-            <img src={this.state.artworkURL} alt=""/>
+              <img src={this.state.artworkURL} alt=""/>
             </span>
           </span>
         ) : (
-          <Fragment>
+          <span className={classes.songIndex}>
             {isPlaying ? (
-              <span className={classes.songIndex}>
-                {song.attributes.trackNumber}.
-              </span>
+              <div className={classes.playingAnimation}>
+                <div><span /><span /><span /><span /><span /></div>
+              </div>
             ) : (
-              <span className={classes.songIndex}>
+              <Fragment>
                 {song.attributes.trackNumber}.
-              </span>
+              </Fragment>
             )}
-          </Fragment>
+          </span>
         )}
       </React.Fragment>
     );
@@ -173,14 +178,13 @@ class SongListItem extends React.Component {
     const songAttributes = this.props.song.attributes;
     const inLibrary = this.props.song.attributes.playParams.isLibrary
       ? <React.Fragment/>
-      : <img src={addImage} />;
+      : <img src={addImage}/>;
     const duration = this.getTime(this.props.song.attributes.durationInMillis);
 
     return (
       <Fragment>
-        <ContextMenuTrigger id={`SONG_LIST_ITEM_${this.props.song.id}`}>
-          <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}>
-            {this.renderIcon()}
+        <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}>
+          {this.renderIcon()}
             <span className={classes.songInfo}>
             <span className={classes.songTitle}>
               {songAttributes.name}{this.explicit}
@@ -197,17 +201,10 @@ class SongListItem extends React.Component {
               </span>
               )}
           </span>
-            <span className={classes.songDuration}>
+          <span className={classes.songDuration}>
             <span>{duration}</span>
           </span>
-          </li>
-        </ContextMenuTrigger>
-        <ContextMenu id={`SONG_LIST_ITEM_${this.props.song.id}`}>
-          <strong>{songAttributes.name}{this.explicit}</strong>
-          <MenuItem onClick={this._playSong}>Play now</MenuItem>
-          <MenuItem onClick={this._queueNext}>Play next</MenuItem>
-          <MenuItem onClick={this._queueLater}>Play later</MenuItem>
-        </ContextMenu>
+        </li>
       </Fragment>
       /*
       <tr onClick={this._handleClick} className={`test-overlay ${isPlaying ? 'pause' : ''}`}>
