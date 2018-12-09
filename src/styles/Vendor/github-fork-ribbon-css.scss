@@ -1,0 +1,119 @@
+/*!
+ * "Fork me on GitHub" CSS ribbon v0.2.2 | MIT License
+ * https://github.com/simonwhitaker/github-fork-ribbon-css
+*/
+
+.github-fork-ribbon {
+  width: 12.1em;
+  height: 12.1em;
+  position: absolute;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  z-index: 9999;
+  pointer-events: none;
+  font-size: 13px;
+  text-decoration: none;
+  text-indent: -999999px;
+  &.fixed {
+    position: fixed;
+  }
+  &:hover, &:active {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  &:before, &:after {
+    /* The right and left classes determine the side we attach our banner to */
+    position: absolute;
+    display: block;
+    width: 15.38em;
+    height: 1.54em;
+    top: 3.23em;
+    right: -3.23em;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  &:before {
+    content: '';
+    /* Add a bit of padding to give some substance outside the "stitching" */
+    padding: .38em 0;
+    /* Set the base colour */
+    background-color: #fff;
+    box-shadow: 0 0.15em 0.23em 0 rgba(0, 0, 0, 0.25);
+    pointer-events: auto;
+  }
+  &:after {
+    /* Set the text from the data-ribbon attribute */
+    content: attr(data-ribbon);
+    /* Set the text properties */
+    color: #fe2851;
+    font-weight: 600;
+    line-height: 1.54em;
+    text-decoration: none;
+    text-align: center;
+    text-indent: 0;
+    /* Set the layout properties */
+    padding: .15em 0;
+    margin: .15em 0;
+    /* Add "stitching" effect */
+  }
+  &.left-top {
+    right: auto;
+    left: 0;
+  }
+  &.left-bottom {
+    right: auto;
+    left: 0;
+    top: auto;
+    bottom: 0;
+  }
+  &.right-bottom {
+    top: auto;
+    bottom: 0;
+  }
+  &.left-top {
+    &:before, &:after {
+      right: auto;
+      left: -3.23em;
+    }
+  }
+  &.left-bottom {
+    &:before, &:after {
+      right: auto;
+      left: -3.23em;
+    }
+    &:before, &:after {
+      top: auto;
+      bottom: 3.23em;
+    }
+  }
+  &.right-bottom {
+    &:before, &:after {
+      top: auto;
+      bottom: 3.23em;
+    }
+  }
+  &.left-top {
+    &:before, &:after {
+      -webkit-transform: rotate(-45deg);
+      -moz-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+      -o-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+    }
+  }
+  &.right-bottom {
+    &:before, &:after {
+      -webkit-transform: rotate(-45deg);
+      -moz-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+      -o-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+    }
+  }
+}
