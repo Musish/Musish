@@ -4,6 +4,7 @@ import addImage from '../../../../assets/Add.png';
 import classes from './SongList.scss';
 import {artworkForMediaItem, createMediaItem} from "../Utils";
 import {ContextMenu, ContextMenuTrigger, MenuItem} from "react-contextmenu";
+import Loader from "../../../common/Loader";
 
 export default class SongList extends React.Component {
   constructor(props) {
@@ -64,6 +65,11 @@ export default class SongList extends React.Component {
   render() {
     const {songs, album, showArtist, showAlbum} = this.props;
     const {currentSong, isPlaying} = this.state;
+
+    if(!songs) {
+      return null;
+    }
+
     return (
       <ul className={classes.songList}>
         {songs.filter(song => song.attributes.playParams && song.attributes.playParams.catalogId).map((song, i) => (
@@ -174,7 +180,7 @@ class SongListItem extends React.Component {
   }
 
   render() {
-    const {isPlaying, showArtist, showAlbum, albumArt} = this.props;
+    const {isPlaying, showArtist, showAlbum} = this.props;
     const songAttributes = this.props.song.attributes;
     const inLibrary = this.props.song.attributes.playParams.isLibrary;
     const duration = this.getTime(this.props.song.attributes.durationInMillis);
@@ -245,37 +251,6 @@ class SongListItem extends React.Component {
           )}
         </ContextMenu>
       </Fragment>
-      /*
-      <tr onClick={this._handleClick} className={`test-overlay ${isPlaying ? 'pause' : ''}`}>
-        <td>
-          <div className={classes.songTitleWrapper}>
-            <div>
-              {this.imageOrNumber}
-            </div>
-            <div>
-              <span className={classes.songName}>{songAttributes.name}</span>
-              {this.explicit}
-            </div>
-          </div>
-        </td>
-        {showArtist && (
-          <td>
-            <span>{songAttributes.artistName}</span>
-          </td>
-        )}
-        {(showAlbum && (
-          <td>
-            <div className={classes.albumName}>
-              <span>{songAttributes.albumName}</span>
-              <span>{this.inLibrary}</span> {/* If it is not in the users library, then it will just show an image to add to library  * /}
-            </div>
-          </td>
-        ))}
-        <td>
-          <span>{this.time}</span>
-        </td>
-      </tr>
-      */
     );
   }
 }

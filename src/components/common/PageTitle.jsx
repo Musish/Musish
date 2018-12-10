@@ -8,11 +8,11 @@ export default class PageTitle extends React.Component {
 
   render() {
     return (
-      <div className={styles["page-title"]}>
+      <div className={styles.pageTitle}>
         {this.props.context && (
-          <span className={styles["context-heading"]}>{ this.props.context }</span>
+          <span className={styles.contextHeading}>{this.props.context}</span>
         )}
-        <h1>{ this.props.title }</h1>
+        <h1>{this.props.title}</h1>
       </div>
     );
   }

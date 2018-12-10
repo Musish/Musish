@@ -1,15 +1,20 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import Loader from '../../common/Loader';
 
 import AlbumItem from './AlbumItem';
 
 import Classes from './Albums.scss';
 import PageTitle from "../../common/PageTitle";
-import PaginatedResults from '../common/PaginatedResults';
-import MainPaginatedResults from '../common/MainPaginatedResults';
-import Page from "../Layout/Page";
+import InfiniteScroll from '../common/InfiniteScroll';
+import PageContent from "../Layout/PageContent";
 
 export default class AlbumsPage extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.renderContent = this.renderContent.bind(this);
+  }
+
   async load(params) {
     const music = MusicKit.getInstance();
 
@@ -22,33 +27,40 @@ export default class AlbumsPage extends React.Component {
     }
 
     const albums = items.map(
-        (album, i) => {
-          const WHEIGHT = 150;
-          let url = MusicKit.formatArtworkURL(album.attributes.artwork, WHEIGHT, WHEIGHT);
+      (album, i) => {
+        const WHEIGHT = 150;
+        let url = MusicKit.formatArtworkURL(album.attributes.artwork, WHEIGHT, WHEIGHT);
 
-          return (
-              <div key={i}>
-                <AlbumItem url={url} id={album.id} title={album.attributes.name} name={album.attributes.artistName}/>
-              </div>
-          );
-        });
+        return (
+          <AlbumItem key={i} url={url} id={album.id} title={album.attributes.name} name={album.attributes.artistName}/>
+        );
+      });
 
     return (
-      <MainPaginatedResults more={more}>
-        <PageTitle title={"Albums"} context={"My Library"} />
+      <>
         <div className={Classes.albumsGrid}>
-          { albums }
+          {albums}
         </div>
         {loading && <Loader/>}
-      </MainPaginatedResults>
+      </>
+    )
+  }
+
+  renderContent(...args) {
+    return (
+      <>
+        <PageTitle title={"Albums"} context={"My Library"}/>
+
+        {this.renderItems(...args)}
+      </>
     )
   }
 
   render() {
     return (
-      <Page>
-        <PaginatedResults load={this.load} render={this.renderItems}/>
-      </Page>
+      <PageContent>
+        <InfiniteScroll load={this.load} render={this.renderContent}/>
+      </PageContent>
     );
   }
 }

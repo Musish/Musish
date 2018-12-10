@@ -15,9 +15,9 @@ body {
 a {
   color: rgb(105, 105, 105);
   text-decoration: none;
-
   transition: color 0.1s;
 }
+
 a:hover {
   color: #fe2851;
 }
@@ -45,11 +45,13 @@ button {
   #main-wrapper {
     display: flex;
     flex: 1;
+
     > aside {
       overflow-y: scroll;
     }
+
     #main-sidebar {
-      height:100%;
+      height: 100%;
       min-height: 500px;
       top: 66px;
       bottom: 0px;
@@ -57,13 +59,9 @@ button {
       padding: 10px;
       //overflow-y: scroll;
     }
+
     #main-content {
-      height:100%;
-      overflow-y: scroll;
       flex: 1;
-      > div {
-        padding: 10px;
-      }
     }
   }
 

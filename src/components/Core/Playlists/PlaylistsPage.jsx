@@ -4,9 +4,9 @@ import PlaylistItem from './PlaylistItem';
 
 import PlaylistScss from './Playlists.scss';
 import PageTitle from "../../common/PageTitle";
-import PaginatedResults from '../common/PaginatedResults';
+import InfiniteScroll from '../common/InfiniteScroll';
 import MainPaginatedResults from '../common/MainPaginatedResults';
-import Page from "../Layout/Page";
+import PageContent from "../Layout/PageContent";
 
 export default class PlaylistsPage extends React.Component {
   async load(params) {
@@ -45,9 +45,9 @@ export default class PlaylistsPage extends React.Component {
 
   render() {
     return (
-      <Page>
-        <PaginatedResults load={this.load} render={this.renderItems}/>
-      </Page>
+      <PageContent>
+        <InfiniteScroll load={this.load} render={this.renderItems}/>
+      </PageContent>
     );
   }
 }

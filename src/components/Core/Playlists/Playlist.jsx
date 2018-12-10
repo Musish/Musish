@@ -2,7 +2,7 @@ import React from 'react';
 import {withRouter} from 'react-router-dom';
 import PageTitle from '../../common/PageTitle';
 import SongList from '../common/SongList/SongList';
-import Page from "../Layout/Page";
+import PageContent from "../Layout/PageContent";
 
 class Playlist extends React.Component {
   constructor(props) {
@@ -31,7 +31,7 @@ class Playlist extends React.Component {
     }
 
     return (
-      <Page>
+      <PageContent>
         <PageTitle
           title={this.state.playlist.attributes.name}
           context={"My Library"}
@@ -42,7 +42,7 @@ class Playlist extends React.Component {
           showArtist={true}
           showAlbum={true}
         />
-      </Page>
+      </PageContent>
     );
   }
 }
