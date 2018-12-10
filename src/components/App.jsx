@@ -11,7 +11,7 @@ import AlbumsPage from './Core/Albums/AlbumsPage';
 import Layout from './Core/Layout/Layout';
 import ArtistsPage from './Core/Artists/ArtistsPage';
 import Artist from './Core/Artists/ArtistPage';
-import Playlist from './Core/Playlists/Playlist';
+import Playlist from './Core/Playlists/PlaylistPage';
 import SongsPage from './Core/Songs/SongsPage';
 import PlaylistsPage from './Core/Playlists/PlaylistsPage';
 import Album from './Core/Albums/AlbumPage';

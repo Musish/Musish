@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 
 import PlaylistItem from './PlaylistItem';
 
-import PlaylistScss from './Playlists.scss';
+import PlaylistScss from './PlaylistsPage.scss';
 import PageTitle from "../../common/PageTitle";
 import InfiniteScroll from '../common/InfiniteScroll';
 import MainPaginatedResults from '../common/MainPaginatedResults';

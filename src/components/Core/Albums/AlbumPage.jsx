@@ -15,8 +15,7 @@ class AlbumPage extends React.Component {
 
   async componentDidMount() {
     const music = MusicKit.getInstance();
-    const album = await music.api.library.album(
-        this.props.match.params.id);
+    const album = await music.api.library.album(this.props.match.params.id);
 
     console.log(album);
 
