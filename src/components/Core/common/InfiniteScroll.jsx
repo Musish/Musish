@@ -1,6 +1,7 @@
 import React from 'react';
+import css from './InfiniteScroll.scss';
 
-export default class PaginatedResults extends React.Component {
+export default class InfiniteScroll extends React.Component {
   constructor(props) {
     super(props);
 
@@ -11,15 +12,30 @@ export default class PaginatedResults extends React.Component {
       end: false,
     };
 
+    this.ref = React.createRef();
+
     this.loadMore = this.loadMore.bind(this);
+    this.onScroll = this.onScroll.bind(this);
   }
 
   componentDidMount() {
     this.loadMore();
+
+    this.ref.current.addEventListener('scroll', this.onScroll);
+  }
+
+  componentWillUnmount() {
+    this.ref.current.removeEventListener('scroll', this.onScroll);
+  }
+
+  onScroll(event) {
+    if (event.target.scrollHeight - event.target.scrollTop >= event.target.clientHeight - 500) {
+      this.loadMore()
+    }
   }
 
   async loadMore() {
-    if (this.state.end) {
+    if (this.state.end || this.state.loading) {
       return;
     }
 
@@ -48,6 +64,10 @@ export default class PaginatedResults extends React.Component {
   }
 
   render() {
-    return this.props.render(this.state.items, this.loadMore, {...this.state});
+    return (
+      <div ref={this.ref} className={css.container}>
+        {this.props.render(this.state.items, this.loadMore, {...this.state})}
+      </div>
+    );
   }
 }
