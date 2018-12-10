@@ -179,32 +179,30 @@ class SongListItem extends React.Component {
     const inLibrary = this.props.song.attributes.playParams.isLibrary;
     const duration = this.getTime(this.props.song.attributes.durationInMillis);
     return (
-      <Fragment>
-        <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}>
-          <ContextMenuTrigger id={`song-list-item-${this.props.index}`} attributes={{className: [classes.songWrapper]}}>
-          <div className={classes.songBacker} />
-          {this.renderIcon()}
-            <span className={classes.songInfo}>
-            <span className={classes.songTitle}>
-              {songAttributes.name}{this.explicit}
-            </span>
-              {(showArtist || showAlbum) && (
-                <span className={classes.songCaption}>
-                {(showArtist && showAlbum) ? (
-                  `${songAttributes.artistName} - ${songAttributes.albumName}`
-                ) : showArtist ? (
-                  `${songAttributes.artistName}`
-                ) : (
-                  `${songAttributes.albumName}`
-                )}
-              </span>
+      <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}>
+        <ContextMenuTrigger id={`song-list-item-${this.props.index}`} attributes={{className: [classes.songWrapper]}}>
+        <div className={classes.songBacker} />
+        {this.renderIcon()}
+          <span className={classes.songInfo}>
+          <span className={classes.songTitle}>
+            {songAttributes.name}{this.explicit}
+          </span>
+            {(showArtist || showAlbum) && (
+              <span className={classes.songCaption}>
+              {(showArtist && showAlbum) ? (
+                `${songAttributes.artistName} - ${songAttributes.albumName}`
+              ) : showArtist ? (
+                `${songAttributes.artistName}`
+              ) : (
+                `${songAttributes.albumName}`
               )}
-          </span>
-          <span className={classes.songDuration}>
-            <span>{duration}</span>
-          </span>
-          </ContextMenuTrigger>
-        </li>
+            </span>
+            )}
+        </span>
+        <span className={classes.songDuration}>
+          <span>{duration}</span>
+        </span>
+        </ContextMenuTrigger>
         <ContextMenu id={`song-list-item-${this.props.index}`}>
           <div className={"item-info"}>
             <div className={"artwork"}>
@@ -244,38 +242,7 @@ class SongListItem extends React.Component {
             </Fragment>
           )}
         </ContextMenu>
-      </Fragment>
-      /*
-      <tr onClick={this._handleClick} className={`test-overlay ${isPlaying ? 'pause' : ''}`}>
-        <td>
-          <div className={classes.songTitleWrapper}>
-            <div>
-              {this.imageOrNumber}
-            </div>
-            <div>
-              <span className={classes.songName}>{songAttributes.name}</span>
-              {this.explicit}
-            </div>
-          </div>
-        </td>
-        {showArtist && (
-          <td>
-            <span>{songAttributes.artistName}</span>
-          </td>
-        )}
-        {(showAlbum && (
-          <td>
-            <div className={classes.albumName}>
-              <span>{songAttributes.albumName}</span>
-              <span>{this.inLibrary}</span> {/* If it is not in the users library, then it will just show an image to add to library  * /}
-            </div>
-          </td>
-        ))}
-        <td>
-          <span>{this.time}</span>
-        </td>
-      </tr>
-      */
+      </li>
     );
   }
 }

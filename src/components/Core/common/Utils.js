@@ -8,6 +8,18 @@ export function createMediaItem(song) {
   }
 }
 
-export function artworkForMediaItem(song, size) {
-  return MusicKit.formatArtworkURL(song.attributes.artwork, size, size);
+export function artworkForMediaItem(item, size) {
+  return MusicKit.formatArtworkURL(item.attributes.artwork, size, size);
+}
+
+export function humanifyMillis(duration) {
+  let minutes = parseInt((duration / (1000 * 60)) % 60);
+  let hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+
+  let humanReadable = `${minutes} minute${minutes > 1 ? 's' : ''}`;
+  if (hours > 0) {
+    humanReadable = `${hours} hour${hours > 1 ? 's' : ''}, ${humanReadable}`;
+  }
+
+  return humanReadable;
 }

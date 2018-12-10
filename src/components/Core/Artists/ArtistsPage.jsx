@@ -5,7 +5,7 @@ import Loader from "../../common/Loader";
 
 import Classes from './Artists.scss';
 import Page from "../Layout/Page";
-import MainPaginatedResults from "../common/MainPaginatedResults";
+import AlbumPanel from "../Albums/AlbumPanel";
 
 export default class ArtistsPage extends React.Component {
   constructor(props) {
@@ -19,14 +19,9 @@ export default class ArtistsPage extends React.Component {
   render() {
     return (
       <Fragment>
-        <ArtistList setArtist={this.setArtist}>
-          D
-        </ArtistList>
+        <ArtistList setArtist={this.setArtist} />
         <Page>
-          <PageTitle title={"Artists"} context={"My Library"} />
-          <div className={Classes.container}>
-            Page contents
-          </div>
+            <ArtistAlbums id={"r.5oXQex9"}/>
         </Page>
       </Fragment>
     );
@@ -73,6 +68,45 @@ class ArtistList extends React.Component {
       <aside className={Classes.artistList}>
         <PaginatedResults load={this.load} render={this.renderList} />
       </aside>
+    );
+  }
+}
+
+class ArtistAlbums extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      artist: null,
+    };
+  }
+
+  async componentDidMount() {
+    const music = MusicKit.getInstance();
+    const artist = await music.api.library.artist(this.props.id, {include: 'albums'});
+
+    console.log(artist);
+
+    this.setState({
+      artist,
+    });
+  }
+
+  render() {
+    const {artist} = this.state;
+    if (!artist) {
+      return <Loader />;
+    }
+    console.log(artist);
+    return (
+      <Page>
+        <PageTitle title={this.state.artist.attributes.name} context={"My Library"}/>
+        {artist.relationships.albums.data.map(album => {
+          return (
+            <AlbumPanel album={album} />
+          );
+        })}
+      </Page>
     );
   }
 }
