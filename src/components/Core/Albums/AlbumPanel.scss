@@ -15,6 +15,13 @@
         height: inherit;
       }
     }
+    .albumRuntimeDescription {
+      display: block;
+      text-align: right;
+      color: #666666;
+      font-size: 12px;
+      margin-top: 5px;
+    }
   }
   .main {
     margin-left: 25px;
