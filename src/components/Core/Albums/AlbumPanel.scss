@@ -1,7 +1,9 @@
 .panel {
   display: flex;
   flex-direction: row;
-  width: 100%;
+  &:not(:first-child) {
+    margin-top: 30px;
+  }
   .aside {
     width: 220px;
     .artworkWrapper {
@@ -34,6 +36,7 @@
     .subtitle {
       display: block;
       color: #666666;
+      margin-bottom: 10px;
     }
   }
 }
