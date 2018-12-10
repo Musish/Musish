@@ -1,0 +1,32 @@
+.panel {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  .aside {
+    width: 220px;
+    .artworkWrapper {
+      border-radius: 8px;
+      width: 220px;
+      height: 220px;
+      background: #fafafa;
+      img {
+        border-radius: inherit;
+        width: inherit;
+        height: inherit;
+      }
+    }
+  }
+  .main {
+    margin-left: 25px;
+    flex: 1;
+    .title {
+      display: block;
+      font-weight: bold;
+      font-size: 2em;
+    }
+    .subtitle {
+      display: block;
+      color: #666666;
+    }
+  }
+}

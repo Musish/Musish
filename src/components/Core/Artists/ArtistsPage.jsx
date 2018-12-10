@@ -6,6 +6,7 @@ import Loader from "../../common/Loader";
 import Classes from './Artists.scss';
 import Page from "../Layout/Page";
 import MainPaginatedResults from "../common/MainPaginatedResults";
+import AlbumPanel from "../Albums/AlbumPanel";
 
 export default class ArtistsPage extends React.Component {
   constructor(props) {
@@ -19,13 +20,11 @@ export default class ArtistsPage extends React.Component {
   render() {
     return (
       <Fragment>
-        <ArtistList setArtist={this.setArtist}>
-          D
-        </ArtistList>
+        <ArtistList setArtist={this.setArtist} />
         <Page>
           <PageTitle title={"Artists"} context={"My Library"} />
           <div className={Classes.container}>
-            Page contents
+            <AlbumPanel />
           </div>
         </Page>
       </Fragment>
