@@ -1,9 +1,71 @@
 import React, {Fragment} from 'react';
-import addImage from '../../../../assets/Add.png';
 
 import classes from './SongList.scss';
 import {artworkForMediaItem, createMediaItem} from "../Utils";
-import {ContextMenu, ContextMenuTrigger, MenuItem} from "react-contextmenu";
+import {connectMenu, ContextMenu, ContextMenuTrigger, MenuItem} from "react-contextmenu";
+
+const MENU_TYPE = 'DYNAMIC';
+
+
+function DynamicMenu({id, trigger}) {
+  if (!trigger) {
+    return null
+  }
+
+  const {song: {attributes}} = trigger.song;
+  const inLibrary = attributes.playParams.isLibrary;
+
+  return (
+      <ContextMenu id={id}>
+        <div className={"item-info"}>
+          <div className={"artwork"}>
+            <div className={"artwork-wrapper"}>
+              <img src={trigger.artworkURL}/>
+            </div>
+          </div>
+          <div className={"description"}>
+            <h1>{attributes.name}</h1>
+            <h2>{attributes.artistName}</h2>
+            <h3>{attributes.albumName}</h3>
+          </div>
+        </div>
+
+        <MenuItem divider/>
+
+        <MenuItem onClick={trigger._playSong}>
+          Play
+        </MenuItem>
+        <MenuItem onClick={trigger._queueNext}>
+          Play next
+        </MenuItem>
+        <MenuItem onClick={trigger._queueLater}>
+          Play later
+        </MenuItem>
+
+        <MenuItem divider/>
+
+        <MenuItem onClick={trigger._queueLater}>
+          Show Artist
+        </MenuItem>
+        <MenuItem onClick={trigger._queueLater}>
+          Show Album
+        </MenuItem>
+        {!inLibrary && (
+            <Fragment>
+
+              <MenuItem divider/>
+
+              <MenuItem onClick={trigger._queueLater}>
+                Add to library
+              </MenuItem>
+            </Fragment>
+        )}
+      </ContextMenu>
+  )
+};
+
+const ConnectedMenu = connectMenu(MENU_TYPE)(DynamicMenu);
+
 
 export default class SongList extends React.Component {
   constructor(props) {
@@ -40,24 +102,24 @@ export default class SongList extends React.Component {
   componentDidMount() {
     const music = MusicKit.getInstance();
     music.addEventListener(
-      MusicKit.Events.mediaItemDidChange,
-      this.onMediaItemDidChange,
+        MusicKit.Events.mediaItemDidChange,
+        this.onMediaItemDidChange,
     );
     music.addEventListener(
-      MusicKit.Events.playbackStateDidChange,
-      this.playbackStateDidChange,
+        MusicKit.Events.playbackStateDidChange,
+        this.playbackStateDidChange,
     );
   }
 
   componentWillUnmount() {
     const music = MusicKit.getInstance();
     music.removeEventListener(
-      MusicKit.Events.mediaItemDidChange,
-      this.onMediaItemDidChange,
+        MusicKit.Events.mediaItemDidChange,
+        this.onMediaItemDidChange,
     );
     music.removeEventListener(
-      MusicKit.Events.playbackStateDidChange,
-      this.playbackStateDidChange,
+        MusicKit.Events.playbackStateDidChange,
+        this.playbackStateDidChange,
     );
   }
 
@@ -65,21 +127,35 @@ export default class SongList extends React.Component {
     const {songs, album, showArtist, showAlbum} = this.props;
     const {currentSong, isPlaying} = this.state;
     return (
-      <ul className={classes.songList}>
-        {songs.filter(song => song.attributes.playParams && song.attributes.playParams.catalogId).map((song, i) => (
-          <SongListItem
-            key={i}
-            song={song}
-            index={i}
-            songs={songs}
-            albumArt={!album}
-            isPlaying={song.attributes.playParams.catalogId === currentSong && isPlaying}
-            showArtist={showArtist}
-            showAlbum={showAlbum}
-          />
-        ))}
-      </ul>
+        <>
+          <ul className={classes.songList}>
+            {songs.filter(song => song.attributes.playParams && song.attributes.playParams.catalogId).map((song, i) => (
+                <SongListItem
+                    key={i}
+                    song={song}
+                    index={i}
+                    songs={songs}
+                    albumArt={!album}
+                    isPlaying={song.attributes.playParams.catalogId === currentSong && isPlaying}
+                    showArtist={showArtist}
+                    showAlbum={showAlbum}
+                />
+            ))}
+          </ul>
+          <ConnectedMenu/>
+        </>
     );
+  }
+}
+
+function collect(props, {props: song, _playSong, _queueNext, _queueLater, state: {artworkURL}}) {
+  return {
+    ...props,
+    song,
+    _playSong,
+    _queueNext,
+    _queueLater,
+    artworkURL,
   }
 }
 
@@ -134,6 +210,12 @@ class SongListItem extends React.Component {
     }
   }
 
+  onRightClick(e) {
+    e.preventDefault();
+    //
+    return false;
+  }
+
 
   getTime(ms) {
     ms = 1000 * Math.round(ms / 1000); // round to nearest second
@@ -144,32 +226,32 @@ class SongListItem extends React.Component {
   renderIcon() {
     const {albumArt, song, isPlaying} = this.props;
     return (
-      <React.Fragment>
-        {albumArt ? (
-          <span className={classes.albumArtwork}>
+        <React.Fragment>
+          {albumArt ? (
+              <span className={classes.albumArtwork}>
             {isPlaying && (
-              <div className={classes.playingAnimation}>
-                <div><span /><span /><span /><span /><span /></div>
-              </div>
+                <div className={classes.playingAnimation}>
+                  <div><span/><span/><span/><span/><span/></div>
+                </div>
             )}
-            <span className={classes.artworkWrapper}>
+                <span className={classes.artworkWrapper}>
               <img src={this.state.artworkURL} alt=""/>
             </span>
           </span>
-        ) : (
-          <span className={classes.songIndex}>
+          ) : (
+              <span className={classes.songIndex}>
             {isPlaying ? (
-              <div className={classes.playingAnimation}>
-                <div><span /><span /><span /><span /><span /></div>
-              </div>
+                <div className={classes.playingAnimation}>
+                  <div><span/><span/><span/><span/><span/></div>
+                </div>
             ) : (
-              <Fragment>
-                {song.attributes.trackNumber}.
-              </Fragment>
+                <Fragment>
+                  {song.attributes.trackNumber}.
+                </Fragment>
             )}
           </span>
-        )}
-      </React.Fragment>
+          )}
+        </React.Fragment>
     );
   }
 
@@ -179,70 +261,33 @@ class SongListItem extends React.Component {
     const inLibrary = this.props.song.attributes.playParams.isLibrary;
     const duration = this.getTime(this.props.song.attributes.durationInMillis);
     return (
-      <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}>
-        <ContextMenuTrigger id={`song-list-item-${this.props.index}`} attributes={{className: [classes.songWrapper]}}>
-        <div className={classes.songBacker} />
-        {this.renderIcon()}
-          <span className={classes.songInfo}>
-          <span className={classes.songTitle}>
-            {songAttributes.name}{this.explicit}
-          </span>
-            {(showArtist || showAlbum) && (
-              <span className={classes.songCaption}>
-              {(showArtist && showAlbum) ? (
-                `${songAttributes.artistName} - ${songAttributes.albumName}`
-              ) : showArtist ? (
-                `${songAttributes.artistName}`
-              ) : (
-                `${songAttributes.albumName}`
+        <ContextMenuTrigger id={MENU_TYPE} attributes={{className: [classes.songWrapper]}}
+                            collect={props => collect(props, this)}>
+          <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}
+              onContextMenu={this.onRightClick}>
+            <div className={classes.songBacker}/>
+            {this.renderIcon()}
+            <div className={classes.songInfo}>
+              <span className={classes.songTitle}>
+                {songAttributes.name}{this.explicit}
+              </span>
+              {(showArtist || showAlbum) && (
+                  <span className={classes.songCaption}>
+                    {(showArtist && showAlbum) ? (
+                        `${songAttributes.artistName} - ${songAttributes.albumName}`
+                    ) : showArtist ? (
+                        `${songAttributes.artistName}`
+                    ) : (
+                        `${songAttributes.albumName}`
+                    )}
+                  </span>
               )}
+            </div>
+            <span className={classes.songDuration}>
+              <span>{duration}</span>
             </span>
-            )}
-        </span>
-        <span className={classes.songDuration}>
-          <span>{duration}</span>
-        </span>
+          </li>
         </ContextMenuTrigger>
-        <ContextMenu id={`song-list-item-${this.props.index}`}>
-          <div className={"item-info"}>
-            <div className={"artwork"}>
-              <div className={"artwork-wrapper"}>
-                <img src={this.state.artworkURL} />
-              </div>
-            </div>
-            <div className={"description"}>
-              <h1>{songAttributes.name}</h1>
-              <h2>{songAttributes.artistName}</h2>
-              <h3>{songAttributes.albumName}</h3>
-            </div>
-          </div>
-          <MenuItem divider />
-          <MenuItem onClick={this._playSong}>
-            Play
-          </MenuItem>
-          <MenuItem onClick={this._queueNext}>
-            Play next
-          </MenuItem>
-          <MenuItem onClick={this._queueLater}>
-            Play later
-          </MenuItem>
-          <MenuItem divider />
-          <MenuItem onClick={this._queueLater}>
-            Show Artist
-          </MenuItem>
-          <MenuItem onClick={this._queueLater}>
-            Show Album
-          </MenuItem>
-          {!inLibrary && (
-            <Fragment>
-              <MenuItem divider/>
-              <MenuItem onClick={this._queueLater}>
-                Add to library
-              </MenuItem>
-            </Fragment>
-          )}
-        </ContextMenu>
-      </li>
     );
   }
 }
