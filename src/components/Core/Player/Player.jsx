@@ -165,6 +165,7 @@ export default class Player extends React.Component {
     return (
       <input 
         className={styles["progress-bar"]}
+        style={{"backgroundSize": `${percent}% 100%`}}
         type="range"
         value={percent}
         onChange={(event) => {this.handleSeek(event.target.value, duration)}}

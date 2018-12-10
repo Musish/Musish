@@ -48,23 +48,34 @@
     margin-top: 10px;
     border-radius: 2px;
 
-    > div {
-      width: 0%;
-      height: 100%;
+    margin: auto;
+    outline: none;
+    padding: 0;
+    // width: 640px;
+    background-color: #dedede;
+    background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fe2851), color-stop(100%, #fe2851));
+    background-repeat: no-repeat;
+    // border-radius: 10px;
+    cursor: pointer;
+    -webkit-appearance: none;
+    
+    &::-webkit-slider-runnable-track {
+        box-shadow: none;
+        border: none;
+        background: transparent;
+        -webkit-appearance: none;
+    }
+    
+    
+    &::-webkit-slider-thumb {
+      height: 10px;
+      width: 5px;
+      border: 0;
       background: rgb(100, 100, 100);
+      // border: 1px solid #777;
       border-radius: 2px;
-      position: relative;
-
-      &:after {
-        content: '';
-        background: rgb(100, 100, 100);
-        position: absolute;
-        right: -1px;
-        top: -2px;
-        height: 8px;
-        width: 3px;
-        border-radius: 2px;
-      }
+      // box-shadow: 0 0 1px 0px rgba(0,0,0,0.1);
+      -webkit-appearance: none;
     }
   }
 
