@@ -1,5 +1,7 @@
+@import '../../assets/settings/colors';
+
 .loginContainer {
-  background: #fb453f linear-gradient(290deg, #CD3C5A, #fb453f);
+  background: $login_background_color linear-gradient(290deg, #CD3C5A, $login_background_color);
   background-size: 100% 100%;
 
   width: 100%;
@@ -26,8 +28,8 @@
       margin-top: 22px;
       span {
         font-weight: 400;
-        color: #fe2851;
-        background: #fff;
+        color: $primary_color;
+        background: $main_background_color;
         border-radius: 3px;
         padding: 4px 10px;
       }
@@ -43,7 +45,7 @@
     text-align: center;
   }
   .accountCaption {
-    color: #ffffff;
+    color: $main_background_color;
     max-width: 630px;
     text-align: center;
     width: 50%;
@@ -53,30 +55,31 @@
     width: 100px;
     border: none;
     height: 2px;
-    background: rgba(255,255,255,0.4);
+    background: $main_background_color;
+    opacity: 0.4;
     animation: fadein 0.8s;
     animation: growin 0.2s;
   }
   .button {
     animation: fadein 0.8s;
-    border-color: #fff;
-    color: #fff;
+    border-color: $main_background_color;
+    color: $main_background_color;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
     padding: 10px 20px;
   }
   .button:hover {
-    background: #ffffff;
-    color: #fe2851;
+    background: $main_background_color;
+    color: $primary_color;
   }
   .disclaimer {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    color: #ffffff;
+    color: $main_background_color;
     font-size: 11px;
-    border: solid 1px #ffffff;
+    border: solid 1px $main_background_color;
     border-radius: 4px;
     display: flex;
     flex-direction: row;
@@ -84,13 +87,13 @@
     .disclaimerIcon {
       font-size: 12px;
       padding: 8px 8px;
-      background: #ffffff;
+      background: $main_background_color;
       display: inline-block;
       height: 100%;
       > span {
 
-        color: #ffffff;
-        background: #fe2851;
+        color: $main_background_color;
+        background: $primary_color;
         border-radius: 50%;
         width: 26px;
         height: 26px;
