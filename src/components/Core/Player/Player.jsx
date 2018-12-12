@@ -144,6 +144,7 @@ export default class Player extends React.Component {
     this.changePlaybackTime(time);
     this._scrubToTime(time);
   }
+  
   scrubToTime(time) {
     const music = MusicKit.getInstance();
     music.player.seekToTime(time);
@@ -155,6 +156,7 @@ export default class Player extends React.Component {
     }
     return Math.floor((time * 100) / duration);
   }
+
   percentToTime(percent, duration) {
     return Math.floor((percent * duration) / 100);
   }
