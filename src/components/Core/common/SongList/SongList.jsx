@@ -6,7 +6,6 @@ import {connectMenu, ContextMenu, ContextMenuTrigger, MenuItem} from "react-cont
 
 const MENU_TYPE = 'DYNAMIC';
 
-
 function DynamicMenu({id, trigger}) {
   if (!trigger) {
     return null
@@ -261,10 +260,10 @@ class SongListItem extends React.Component {
     const inLibrary = this.props.song.attributes.playParams.isLibrary;
     const duration = this.getTime(this.props.song.attributes.durationInMillis);
     return (
+        <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}
+            onContextMenu={this.onRightClick}>
         <ContextMenuTrigger id={MENU_TYPE} attributes={{className: [classes.songWrapper]}}
                             collect={props => collect(props, this)}>
-          <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}
-              onContextMenu={this.onRightClick}>
             <div className={classes.songBacker}/>
             {this.renderIcon()}
             <div className={classes.songInfo}>
@@ -286,8 +285,8 @@ class SongListItem extends React.Component {
             <span className={classes.songDuration}>
               <span>{duration}</span>
             </span>
-          </li>
         </ContextMenuTrigger>
+        </li>
     );
   }
 }
