@@ -1,13 +1,15 @@
+@import '../../../styles/settings/colors';
+
 .container {
   width: 200px;
-  background-color: rgb(249, 249, 249);
+  background-color: $container_background;
   border-radius: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px 0;
   cursor: pointer;
-  box-shadow: 0px 10px 15px -10px rgba(0,0,0,0.15);
+  box-shadow: 0 10px 15px -10px rgba(0,0,0,0.15);
   text-align: center;
 
   &:hover {
@@ -23,7 +25,5 @@
 	width: 160px;
 	display: block;
 	font-size: 14px;
-	font-weight: 400;
   }
 }
-

@@ -1,3 +1,5 @@
+@import '../../../styles/settings/colors';
+
 .panel {
   display: flex;
   flex-direction: row;
@@ -10,7 +12,7 @@
       border-radius: 8px;
       width: 220px;
       height: 220px;
-      background: #fafafa;
+      background: $container_background;
       img {
         border-radius: inherit;
         width: inherit;
@@ -20,7 +22,7 @@
     .albumRuntimeDescription {
       display: block;
       text-align: right;
-      color: #666666;
+      color: $tertiary_color;
       font-size: 12px;
       margin-top: 5px;
     }
@@ -35,7 +37,7 @@
     }
     .subtitle {
       display: block;
-      color: #666666;
+      color: $tertiary_color;
       margin-bottom: 10px;
     }
   }
