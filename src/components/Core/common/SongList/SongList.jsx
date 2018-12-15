@@ -50,14 +50,14 @@ function DynamicMenu({id, trigger}) {
           Show Album
         </MenuItem>
         {!inLibrary && (
-            <Fragment>
+            <>
 
               <MenuItem divider/>
 
               <MenuItem onClick={trigger._queueLater}>
                 Add to library
               </MenuItem>
-            </Fragment>
+            </>
         )}
       </ContextMenu>
   )
@@ -168,7 +168,7 @@ class SongListItem extends React.Component {
       artworkURL: artworkURL,
     };
 
-    this.explicit = <React.Fragment/>; // TODO: get if the song is explicit or not
+    this.explicit = <></>; // TODO: get if the song is explicit or not
 
     this._playSong = this._playSong.bind(this);
     this._pauseSong = this._pauseSong.bind(this);
@@ -209,13 +209,6 @@ class SongListItem extends React.Component {
     }
   }
 
-  onRightClick(e) {
-    e.preventDefault();
-    //
-    return false;
-  }
-
-
   getTime(ms) {
     ms = 1000 * Math.round(ms / 1000); // round to nearest second
     let d = new Date(ms);
@@ -225,7 +218,7 @@ class SongListItem extends React.Component {
   renderIcon() {
     const {albumArt, song, isPlaying} = this.props;
     return (
-        <React.Fragment>
+        <>
           {albumArt ? (
               <span className={classes.albumArtwork}>
             {isPlaying && (
@@ -244,13 +237,13 @@ class SongListItem extends React.Component {
                   <div><span/><span/><span/><span/><span/></div>
                 </div>
             ) : (
-                <Fragment>
+                <>
                   {song.attributes.trackNumber}.
-                </Fragment>
+                </>
             )}
           </span>
           )}
-        </React.Fragment>
+        </>
     );
   }
 
@@ -260,8 +253,7 @@ class SongListItem extends React.Component {
     const inLibrary = this.props.song.attributes.playParams.isLibrary;
     const duration = this.getTime(this.props.song.attributes.durationInMillis);
     return (
-        <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}
-            onContextMenu={this.onRightClick}>
+        <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}>
         <ContextMenuTrigger id={MENU_TYPE} attributes={{className: [classes.songWrapper]}}
                             collect={props => collect(props, this)}>
             <div className={classes.songBacker}/>
