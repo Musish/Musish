@@ -1,9 +1,11 @@
+@import '../../styles/settings/colors';
+
 .pageTitle {
   margin-top: 15px;
 
   .contextHeading {
 	text-transform: uppercase;
-	color: #fe2851;
+	color: $primary_color;
 	font-size: 12px;
   }
 }

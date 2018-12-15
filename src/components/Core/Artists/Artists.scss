@@ -1,3 +1,5 @@
+@import '../../../styles/settings/colors';
+
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -25,7 +27,7 @@
       position: relative;
       cursor: pointer;
       &:hover {
-        background: rgb(249, 249, 249);
+        background: $container_background;
       }
       &:not(:first-child):before {
         content: '';

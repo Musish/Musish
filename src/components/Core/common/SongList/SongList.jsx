@@ -1,9 +1,70 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 
 import classes from './SongList.scss';
 import {artworkForMediaItem, createMediaItem} from "../Utils";
-import {ContextMenu, ContextMenuTrigger, MenuItem} from "react-contextmenu";
 import InfiniteScroll from "../InfiniteScroll";
+import {connectMenu, ContextMenu, ContextMenuTrigger, MenuItem} from "react-contextmenu";
+
+const MENU_TYPE = 'DYNAMIC';
+
+function DynamicMenu({id, trigger}) {
+  if (!trigger) {
+    return null
+  }
+
+  const {song: {attributes}} = trigger.song;
+  const inLibrary = attributes.playParams.isLibrary;
+
+  return (
+    <ContextMenu id={id}>
+      <div className={"item-info"}>
+        <div className={"artwork"}>
+          <div className={"artwork-wrapper"}>
+            <img src={trigger.artworkURL}/>
+          </div>
+        </div>
+        <div className={"description"}>
+          <h1>{attributes.name}</h1>
+          <h2>{attributes.artistName}</h2>
+          <h3>{attributes.albumName}</h3>
+        </div>
+      </div>
+
+      <MenuItem divider/>
+
+      <MenuItem onClick={trigger._playSong}>
+        Play
+      </MenuItem>
+      <MenuItem onClick={trigger._queueNext}>
+        Play next
+      </MenuItem>
+      <MenuItem onClick={trigger._queueLater}>
+        Play later
+      </MenuItem>
+
+      <MenuItem divider/>
+
+      <MenuItem onClick={trigger._queueLater}>
+        Show Artist
+      </MenuItem>
+      <MenuItem onClick={trigger._queueLater}>
+        Show Album
+      </MenuItem>
+      {!inLibrary && (
+        <>
+
+          <MenuItem divider/>
+
+          <MenuItem onClick={trigger._queueLater}>
+            Add to library
+          </MenuItem>
+        </>
+      )}
+    </ContextMenu>
+  )
+}
+
+const ConnectedMenu = connectMenu(MENU_TYPE)(DynamicMenu);
 
 export default class SongList extends React.Component {
   constructor(props) {
@@ -85,8 +146,20 @@ export default class SongList extends React.Component {
     return (
       <div className={classes.songList}>
         <InfiniteScroll scrollElement={this.props.scrollElement} load={this.props.load} rowHeight={50} rowRenderer={this.rowRenderer}/>
+        <ConnectedMenu/>
       </div>
     );
+  }
+}
+
+function collect(props, {props: song, _playSong, _queueNext, _queueLater, state: {artworkURL}}) {
+  return {
+    ...props,
+    song,
+    _playSong,
+    _queueNext,
+    _queueLater,
+    artworkURL,
   }
 }
 
@@ -100,7 +173,7 @@ class SongListItem extends React.Component {
       artworkURL: artworkURL,
     };
 
-    this.explicit = <React.Fragment/>; // TODO: get if the song is explicit or not
+    this.explicit = <></>; // TODO: get if the song is explicit or not
 
     this._playSong = this._playSong.bind(this);
     this._pauseSong = this._pauseSong.bind(this);
@@ -141,7 +214,6 @@ class SongListItem extends React.Component {
     }
   }
 
-
   getTime(ms) {
     ms = 1000 * Math.round(ms / 1000); // round to nearest second
     let d = new Date(ms);
@@ -151,7 +223,7 @@ class SongListItem extends React.Component {
   renderIcon() {
     const {albumArt, song, isPlaying} = this.props;
     return (
-      <React.Fragment>
+      <>
         {albumArt ? (
           <span className={classes.albumArtwork}>
             {isPlaying && (
@@ -170,13 +242,13 @@ class SongListItem extends React.Component {
                 <div><span/><span/><span/><span/><span/></div>
               </div>
             ) : (
-              <Fragment>
+              <>
                 {song.attributes.trackNumber}.
-              </Fragment>
+              </>
             )}
           </span>
         )}
-      </React.Fragment>
+      </>
     );
   }
 
@@ -187,71 +259,31 @@ class SongListItem extends React.Component {
     const duration = this.getTime(attributes.durationInMillis);
 
     return (
-      <div className={`${classes.song} ${isPlaying ? 'playing' : ''}`}
-          onClick={this._handleClick}
-          style={this.props.style}>
-        <ContextMenuTrigger id={`song-list-item-${this.props.index}`} attributes={{className: [classes.songWrapper]}}>
+      <div className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick} style={this.props.style}>
+        <ContextMenuTrigger id={MENU_TYPE} attributes={{className: [classes.songWrapper]}}
+                            collect={props => collect(props, this)}>
           <div className={classes.songBacker}/>
           {this.renderIcon()}
-          <span className={classes.songInfo}>
-          <span className={classes.songTitle}>
-            {attributes.name}{this.explicit}
-          </span>
+          <div className={classes.songInfo}>
+              <span className={classes.songTitle}>
+                {attributes.name}{this.explicit}
+              </span>
             {(showArtist || showAlbum) && (
               <span className={classes.songCaption}>
-              {(showArtist && showAlbum) ? (
-                `${attributes.artistName} - ${attributes.albumName}`
-              ) : showArtist ? (
-                `${attributes.artistName}`
-              ) : (
-                `${attributes.albumName}`
-              )}
-            </span>
+                    {(showArtist && showAlbum) ? (
+                      `${attributes.artistName} - ${attributes.albumName}`
+                    ) : showArtist ? (
+                      `${attributes.artistName}`
+                    ) : (
+                      `${attributes.albumName}`
+                    )}
+                  </span>
             )}
-        </span>
-          <span className={classes.songDuration}>
-          <span>{duration}</span>
-        </span>
-        </ContextMenuTrigger>
-        <ContextMenu id={`song-list-item-${this.props.index}`}>
-          <div className={"item-info"}>
-            <div className={"artwork"}>
-              <div className={"artwork-wrapper"}>
-                <img src={this.state.artworkURL}/>
-              </div>
-            </div>
-            <div className={"description"}>
-              <h1>{attributes.name}</h1>
-              <h2>{attributes.artistName}</h2>
-              <h3>{attributes.albumName}</h3>
-            </div>
           </div>
-          <MenuItem divider/>
-          <MenuItem onClick={this._playSong}>
-            Play
-          </MenuItem>
-          <MenuItem onClick={this._queueNext}>
-            Play next
-          </MenuItem>
-          <MenuItem onClick={this._queueLater}>
-            Play later
-          </MenuItem>
-          <MenuItem divider/>
-          <MenuItem onClick={this._queueLater}>
-            Show Artist
-          </MenuItem>
-          <MenuItem onClick={this._queueLater}>
-            Show Album
-          </MenuItem>
-          {!inLibrary && (
-            <Fragment>
-              <MenuItem divider/>
-              <MenuItem onClick={this._queueLater}>
-                Add to library
-              </MenuItem>
-            </Fragment>
-          )}
-        </ContextMenu>
+          <span className={classes.songDuration}>
+              <span>{duration}</span>
+            </span>
+        </ContextMenuTrigger>
       </div>
     );
   }

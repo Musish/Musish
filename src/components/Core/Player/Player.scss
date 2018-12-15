@@ -3,18 +3,22 @@
   padding: 20px 15px;
   border-radius: 5px;
   margin-bottom: 30px;
+
   .main-info {
     display: flex;
     flex-direction: row;
     width: 100%;
+
     > div.picture {
       border-radius: 4px;
+
       > .image {
         width: 60px;
         height: 60px;
         border-radius: inherit;
       }
     }
+
     > div.track {
       flex: 1;
       padding-left: 10px;
@@ -26,14 +30,17 @@
         width: 160px;
         display: block;
       }
+
       h1 {
         font-size: 18px;
         margin-bottom: 6px;
       }
+
       h2, h3 {
         font-size: 12px;
         color: #555;
       }
+
       h3 {
         margin-top: 3px;
         font-weight: 300;
@@ -44,27 +51,35 @@
   .progress-bar {
     width: 100%;
     height: 4px;
-    background: rgb(230, 230, 230);
-    margin-top: 10px;
     border-radius: 2px;
+    margin: auto;
+    outline: none;
+    padding: 0;
+    background:
+      #dedede
+      -webkit-gradient(
+        linear, 50% 0%, 50% 100%,
+        color-stop(0%, #fe2851),
+        color-stop(100%, #fe2851)
+      ) no-repeat;
+    cursor: pointer;
+    -webkit-appearance: none;
 
-    > div {
-      width: 0%;
-      height: 100%;
+    &::-webkit-slider-runnable-track {
+      box-shadow: none;
+      border: none;
+      background: transparent;
+      -webkit-appearance: none;
+    }
+
+
+    &::-webkit-slider-thumb {
+      height: 10px;
+      width: 5px;
+      border: 0;
       background: rgb(100, 100, 100);
       border-radius: 2px;
-      position: relative;
-
-      &:after {
-        content: '';
-        background: rgb(100, 100, 100);
-        position: absolute;
-        right: -1px;
-        top: -2px;
-        height: 8px;
-        width: 3px;
-        border-radius: 2px;
-      }
+      -webkit-appearance: none;
     }
   }
 
@@ -74,17 +89,20 @@
     margin-top: 10px;
 
     > span {
-      margin: 0px 10px;
+      margin: 0 10px;
       font-size: 20px;
-      line-height:24px;
+      line-height: 24px;
       color: #111;
       cursor: pointer;
+
       &.main {
         font-size: 24px;
       }
+
       &:hover {
         color: #555555;
       }
+
       &:active {
         transform: scale(0.95);
       }
