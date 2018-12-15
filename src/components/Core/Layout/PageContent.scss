@@ -1,4 +1,7 @@
 .pageContent {
   padding: 0 1.5em;
+  width: inherit;
   height: 100%;
+  border: 3px solid blue;
+  overflow: auto;
 }
