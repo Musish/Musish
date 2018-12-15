@@ -24,8 +24,6 @@ export default class InfiniteScroll extends React.Component {
   onScroll({scrollTop}) {
     const el = this.props.scrollElement.current;
 
-    console.log(el.scrollHeight, el.clientHeight)
-
     if (el.scrollHeight - scrollTop >= el.clientHeight - 500) {
       this.loadMore()
     }
@@ -90,7 +88,7 @@ export default class InfiniteScroll extends React.Component {
               <List
                 autoHeight
                 className={this.props.listClassName}
-                height={height}
+                height={height || 0}
                 isScrolling={isScrolling}
                 onScroll={onChildScroll}
                 overscanRowCount={2}
@@ -109,7 +107,6 @@ export default class InfiniteScroll extends React.Component {
 }
 
 InfiniteScroll.defaultProps = {
-  listRenderer: list => list,
   listClassName: '',
   onSetItems: state => null,
 };
