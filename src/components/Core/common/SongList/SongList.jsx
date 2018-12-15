@@ -79,16 +79,24 @@ export default class SongList extends React.Component {
     this.state = {
       currentSong: currentSong,
       isPlaying: music.player.isPlaying,
+      songs: [],
     };
 
     this.onMediaItemDidChange = this.onMediaItemDidChange.bind(this);
     this.playbackStateDidChange = this.playbackStateDidChange.bind(this);
     this.rowRenderer = this.rowRenderer.bind(this);
+    this.onSetItems = this.onSetItems.bind(this);
   }
 
   onMediaItemDidChange(event) {
     this.setState({
       currentSong: event.item.id
+    })
+  }
+
+  onSetItems({items: songs}) {
+    this.setState({
+      songs
     })
   }
 
@@ -124,8 +132,8 @@ export default class SongList extends React.Component {
   }
 
   rowRenderer({item: song, index, isScrolling, isVisible, key, style}) {
-    const {currentSong, isPlaying} = this.state;
-    const {songs, album, showArtist, showAlbum} = this.props;
+    const {currentSong, isPlaying, songs} = this.state;
+    const {album, showArtist, showAlbum} = this.props;
 
     return (
       <SongListItem
@@ -145,7 +153,7 @@ export default class SongList extends React.Component {
   render() {
     return (
       <div className={classes.songList}>
-        <InfiniteScroll scrollElement={this.props.scrollElement} load={this.props.load} rowHeight={50} rowRenderer={this.rowRenderer}/>
+        <InfiniteScroll onSetItems={this.onSetItems} scrollElement={this.props.scrollElement} load={this.props.load} rowHeight={50} rowRenderer={this.rowRenderer}/>
         <ConnectedMenu/>
       </div>
     );
@@ -185,7 +193,7 @@ class SongListItem extends React.Component {
   async _playSong() {
     let music = MusicKit.getInstance();
     await music.setQueue({
-      startPosition: this.props.songs.indexOf(this.props.song),
+      startPosition: this.props.index,
       items: this.props.songs.map(song => createMediaItem(song)),
     });
     await music.player.play();
