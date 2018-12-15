@@ -3,6 +3,7 @@ import React, {Fragment} from 'react';
 import classes from './SongList.scss';
 import {artworkForMediaItem, createMediaItem} from "../Utils";
 import {ContextMenu, ContextMenuTrigger, MenuItem} from "react-contextmenu";
+import InfiniteScroll from "../InfiniteScroll";
 
 export default class SongList extends React.Component {
   constructor(props) {
@@ -21,6 +22,7 @@ export default class SongList extends React.Component {
 
     this.onMediaItemDidChange = this.onMediaItemDidChange.bind(this);
     this.playbackStateDidChange = this.playbackStateDidChange.bind(this);
+    this.rowRenderer = this.rowRenderer.bind(this);
   }
 
   onMediaItemDidChange(event) {
@@ -60,29 +62,30 @@ export default class SongList extends React.Component {
     );
   }
 
-  render() {
-    const {songs, album, showArtist, showAlbum} = this.props;
+  rowRenderer({item: song, index, isScrolling, isVisible, key, style}) {
     const {currentSong, isPlaying} = this.state;
-
-    if (!songs) {
-      return null;
-    }
+    const {songs, album, showArtist, showAlbum} = this.props;
 
     return (
-      <ul className={classes.songList}>
-        {songs.filter(song => song.attributes.playParams && song.attributes.playParams.catalogId).map((song, i) => (
-          <SongListItem
-            key={i}
-            song={song}
-            index={i}
-            songs={songs}
-            albumArt={!album}
-            isPlaying={song.attributes.playParams.catalogId === currentSong && isPlaying}
-            showArtist={showArtist}
-            showAlbum={showAlbum}
-          />
-        ))}
-      </ul>
+      <SongListItem
+        key={key}
+        song={song}
+        index={index}
+        songs={songs}
+        albumArt={!album}
+        isPlaying={song.attributes.playParams && song.attributes.playParams.catalogId === currentSong && isPlaying}
+        showArtist={showArtist}
+        showAlbum={showAlbum}
+        style={style}
+      />
+    )
+  }
+
+  render() {
+    return (
+      <div className={classes.songList}>
+        <InfiniteScroll scrollElement={this.props.scrollElement} load={this.props.load} rowHeight={50} rowRenderer={this.rowRenderer}/>
+      </div>
     );
   }
 }
@@ -179,26 +182,29 @@ class SongListItem extends React.Component {
 
   render() {
     const {isPlaying, showArtist, showAlbum} = this.props;
-    const songAttributes = this.props.song.attributes;
-    const inLibrary = this.props.song.attributes.playParams.isLibrary;
-    const duration = this.getTime(this.props.song.attributes.durationInMillis);
+    const attributes = this.props.song.attributes;
+    const inLibrary = attributes.playParams && attributes.playParams.isLibrary;
+    const duration = this.getTime(attributes.durationInMillis);
+
     return (
-      <li className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick}>
+      <div className={`${classes.song} ${isPlaying ? 'playing' : ''}`}
+          onClick={this._handleClick}
+          style={this.props.style}>
         <ContextMenuTrigger id={`song-list-item-${this.props.index}`} attributes={{className: [classes.songWrapper]}}>
           <div className={classes.songBacker}/>
           {this.renderIcon()}
           <span className={classes.songInfo}>
           <span className={classes.songTitle}>
-            {songAttributes.name}{this.explicit}
+            {attributes.name}{this.explicit}
           </span>
             {(showArtist || showAlbum) && (
               <span className={classes.songCaption}>
               {(showArtist && showAlbum) ? (
-                `${songAttributes.artistName} - ${songAttributes.albumName}`
+                `${attributes.artistName} - ${attributes.albumName}`
               ) : showArtist ? (
-                `${songAttributes.artistName}`
+                `${attributes.artistName}`
               ) : (
-                `${songAttributes.albumName}`
+                `${attributes.albumName}`
               )}
             </span>
             )}
@@ -215,9 +221,9 @@ class SongListItem extends React.Component {
               </div>
             </div>
             <div className={"description"}>
-              <h1>{songAttributes.name}</h1>
-              <h2>{songAttributes.artistName}</h2>
-              <h3>{songAttributes.albumName}</h3>
+              <h1>{attributes.name}</h1>
+              <h2>{attributes.artistName}</h2>
+              <h3>{attributes.albumName}</h3>
             </div>
           </div>
           <MenuItem divider/>
@@ -246,7 +252,7 @@ class SongListItem extends React.Component {
             </Fragment>
           )}
         </ContextMenu>
-      </li>
+      </div>
     );
   }
 }

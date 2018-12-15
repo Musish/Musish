@@ -1,35 +1,32 @@
 import React from 'react';
-import css from './InfiniteScroll.scss';
+import {AutoSizer, List, WindowScroller} from "react-virtualized";
 
 export default class InfiniteScroll extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      items: null,
+      items: [],
       page: 0,
       loading: false,
       end: false,
     };
 
-    this.ref = React.createRef();
-
     this.loadMore = this.loadMore.bind(this);
+    this.rowRenderer = this.rowRenderer.bind(this);
     this.onScroll = this.onScroll.bind(this);
   }
 
   componentDidMount() {
-    this.loadMore();
-
-    this.ref.current.addEventListener('scroll', this.onScroll);
+    this.loadMore()
   }
 
-  componentWillUnmount() {
-    this.ref.current.removeEventListener('scroll', this.onScroll);
-  }
+  onScroll({scrollTop}) {
+    const el = this.props.scrollElement.current;
 
-  onScroll(event) {
-    if (event.target.scrollHeight - event.target.scrollTop >= event.target.clientHeight - 500) {
+    console.log(el.scrollHeight, el.clientHeight)
+
+    if (el.scrollHeight - scrollTop >= el.clientHeight - 500) {
       this.loadMore()
     }
   }
@@ -51,11 +48,11 @@ export default class InfiniteScroll extends React.Component {
         offset: this.state.page * limit,
       });
 
-      this.setState(state => ({
-        page: state.page + 1,
-        items: [...(state.items || []), ...newItems],
+      this.setItems({
+        page: this.state.page + 1,
+        items: [...this.state.items, ...newItems],
         end: newItems.length < limit,
-      }));
+      })
     } finally {
       this.setState({
         loading: false,
@@ -63,11 +60,56 @@ export default class InfiniteScroll extends React.Component {
     }
   }
 
+  setItems(state) {
+    this.props.onSetItems(state);
+
+    this.setState(state)
+  }
+
+  rowRenderer(args) {
+    const {items} = this.state;
+
+    return this.props.rowRenderer({
+      ...args,
+      item: items[args.index],
+    })
+  }
+
   render() {
+    const {items} = this.state;
+
+    if (!this.props.scrollElement.current) {
+      return null;
+    }
+
     return (
-      <div ref={this.ref} className={css.container}>
-        {this.props.render(this.state.items, this.loadMore, {...this.state})}
-      </div>
+      <WindowScroller scrollElement={this.props.scrollElement.current} onScroll={this.onScroll}>
+        {({height, isScrolling, onChildScroll, scrollTop}) => (
+          <AutoSizer disableHeight>
+            {({width}) => (
+              <List
+                autoHeight
+                className={this.props.listClassName}
+                height={height}
+                isScrolling={isScrolling}
+                onScroll={onChildScroll}
+                overscanRowCount={2}
+                rowCount={items.length}
+                rowHeight={this.props.rowHeight}
+                rowRenderer={this.rowRenderer}
+                scrollTop={scrollTop}
+                width={width}
+              />
+            )}
+          </AutoSizer>
+        )}
+      </WindowScroller>
     );
   }
 }
+
+InfiniteScroll.defaultProps = {
+  listRenderer: list => list,
+  listClassName: '',
+  onSetItems: state => null,
+};
