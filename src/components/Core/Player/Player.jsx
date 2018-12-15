@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Player.scss'
 import {artworkForMediaItem} from "../common/Utils";
+import debounce from 'lodash/debounce';
 
 export default class Player extends React.Component {
   constructor(props) {
@@ -12,7 +13,7 @@ export default class Player extends React.Component {
       nowPlayingItem: null,
       queuePosition: null,
       queue: null,
-      playbackTime: null,
+      playbackTime: 0,
       isPlaying: music.player.isPlaying,
     };
 
@@ -24,6 +25,9 @@ export default class Player extends React.Component {
 
     this.handlePrevious = this.handlePrevious.bind(this);
     this.handleNext = this.handleNext.bind(this);
+    this.handleSeek = this.handleSeek.bind(this);
+
+    this.scrubToTime = debounce(Player.scrubToTime, 100).bind(this);
   }
 
   mediaItemDidChange(event) {
@@ -45,8 +49,11 @@ export default class Player extends React.Component {
   };
 
   playbackTimeDidChange(event) {
+    this.changePlaybackTime(event.currentPlaybackTime);
+  };
+  changePlaybackTime(time) {
     this.setState({
-      playbackTime: event,
+      playbackTime: time,
     });
   };
 
@@ -120,7 +127,7 @@ export default class Player extends React.Component {
   handlePrevious() {
     const music = MusicKit.getInstance();
 
-    if(this.state.playbackTime.currentPlaybackTime < 2) {
+    if(this.state.playbackTime < 2) {
       music.player.skipToPreviousItem();
     } else {
       music.player.seekToTime(0)
@@ -132,18 +139,41 @@ export default class Player extends React.Component {
     music.player.skipToNextItem();
   }
 
-  renderProgress() {
-    const t = this.state.playbackTime;
-    if (!t || t.currentPlaybackDuration === 0) {
-      return (<div className={styles["progress-bar"]}><div></div></div>);
+  handleSeek(percent, duration) {
+    const time = Player.percentToTime(percent, duration);
+    this.changePlaybackTime(time);
+    this.scrubToTime(time);
+  }
+  
+  static scrubToTime(time) {
+    const music = MusicKit.getInstance();
+    music.player.seekToTime(time);
+  }
+
+  static timeToPercent(time, duration) {
+    if (duration === 0) {
+      return 0; // For some reason would call this
     }
-    const percent = (t.currentPlaybackTime * 100) / t.currentPlaybackDuration;
+    return Math.floor((time * 100) / duration);
+  }
+
+  static percentToTime(percent, duration) {
+    return Math.floor((percent * duration) / 100);
+  }
+
+  renderProgress() {
+    const {nowPlayingItem, playbackTime} = this.state;
+    const duration = Math.round(nowPlayingItem.playbackDuration/1000);
+    const percent = Player.timeToPercent(playbackTime, duration);
     return (
-      <div className={styles["progress-bar"]}>
-        <div style={{
-          width: `${percent}%`
-        }}/>
-      </div>
+      <input 
+        className={styles["progress-bar"]}
+        style={{"backgroundSize": `${percent}% 100%`}}
+        type="range"
+        value={percent}
+        onChange={(event) => {this.handleSeek(event.target.value, duration)}}
+        min="0"
+      />
     );
   }
 
@@ -183,12 +213,12 @@ export default class Player extends React.Component {
           </span>
           {this.state.isPlaying ? (
             <span className={styles.main} onClick={this.handlePause}>
-            <i className="fas fa-pause" />
-          </span>
+              <i className="fas fa-pause" />
+            </span>
           ) : (
             <span className={styles.main} onClick={this.handlePlay}>
-            <i className="fas fa-play" />
-          </span>
+              <i className="fas fa-play" />
+            </span>
           )}
           <span onClick={this.handleNext}>
             <i className="fas fa-forward" />

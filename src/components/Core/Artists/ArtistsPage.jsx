@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react';
+import React, {Fragment} from 'react';
 import PageTitle from "../../common/PageTitle";
-import PaginatedResults from '../common/PaginatedResults';
+import InfiniteScroll from '../common/InfiniteScroll';
 import Loader from "../../common/Loader";
 
 import Classes from './Artists.scss';
-import Page from "../Layout/Page";
+import PageContent from "../Layout/PageContent";
 import AlbumPanel from "../Albums/AlbumPanel";
 
 export default class ArtistsPage extends React.Component {
@@ -18,12 +18,12 @@ export default class ArtistsPage extends React.Component {
 
   render() {
     return (
-      <Fragment>
+      <>
         <ArtistList setArtist={this.setArtist} />
-        <Page>
+        <PageContent>
             <ArtistAlbums id={"r.5oXQex9"}/>
-        </Page>
-      </Fragment>
+        </PageContent>
+      </>
     );
   }
 }
@@ -66,7 +66,7 @@ class ArtistList extends React.Component {
   render() {
     return (
       <aside className={Classes.artistList}>
-        <PaginatedResults load={this.load} render={this.renderList} />
+        <InfiniteScroll load={this.load} render={this.renderList} />
       </aside>
     );
   }
