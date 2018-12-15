@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Player.scss'
 import {artworkForMediaItem} from "../common/Utils";
-import _ from 'lodash';
+import debounce from 'lodash/debounce';
 
 export default class Player extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ export default class Player extends React.Component {
     this.handleNext = this.handleNext.bind(this);
     this.handleSeek = this.handleSeek.bind(this);
 
-    this._scrubToTime = _.debounce(this.scrubToTime, 100).bind(this);
+    this.scrubToTime = debounce(Player.scrubToTime, 100).bind(this);
   }
 
   mediaItemDidChange(event) {
@@ -140,30 +140,31 @@ export default class Player extends React.Component {
   }
 
   handleSeek(percent, duration) {
-    const time = this.percentToTime(percent, duration);
+    const time = Player.percentToTime(percent, duration);
     this.changePlaybackTime(time);
-    this._scrubToTime(time);
+    this.scrubToTime(time);
   }
   
-  scrubToTime(time) {
+  static scrubToTime(time) {
     const music = MusicKit.getInstance();
     music.player.seekToTime(time);
   }
 
-  timeToPercent(time, duration) {
-    if(duration === 0) {
+  static timeToPercent(time, duration) {
+    if (duration === 0) {
       return 0; // For some reason would call this
     }
     return Math.floor((time * 100) / duration);
   }
 
-  percentToTime(percent, duration) {
+  static percentToTime(percent, duration) {
     return Math.floor((percent * duration) / 100);
   }
 
   renderProgress() {
-    const duration = Math.round(this.state.nowPlayingItem.playbackDuration/1000);
-    const percent = this.timeToPercent(this.state.playbackTime, duration);
+    const {nowPlayingItem, playbackTime} = this.state;
+    const duration = Math.round(nowPlayingItem.playbackDuration/1000);
+    const percent = Player.timeToPercent(playbackTime, duration);
     return (
       <input 
         className={styles["progress-bar"]}
