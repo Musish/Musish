@@ -15,6 +15,7 @@ import Playlist from './Core/Playlists/PlaylistPage';
 import SongsPage from './Core/Songs/SongsPage';
 import PlaylistsPage from './Core/Playlists/PlaylistsPage';
 import Album from './Core/Albums/AlbumPage';
+import OverviewPage from './Core/Overview/OverviewPage';
 
 export default class App extends React.Component {
   render() {
@@ -24,7 +25,7 @@ export default class App extends React.Component {
             <Router>
               <Layout>
                 <Switch>
-                  <Route path="/" exact component={ArtistsPage}/>
+                  <Route path="/" exact component={OverviewPage}/>
                   <Route path="/albums" exact component={AlbumsPage}/>
                   <Route path="/albums/:id" exact component={Album}/>
                   <Route path="/playlists" exact component={PlaylistsPage}/>
