@@ -5,19 +5,8 @@ export default class Loader extends Component {
   render() {
     return (
         <div className={classes.container}>
-          <div className={classes.spinner}>
-            <div className={classes.spinnerBlade} />
-            <div className={classes.spinnerBlade} />
-            <div className={classes.spinnerBlade} />
-            <div className={classes.spinnerBlade} />
-            <div className={classes.spinnerBlade} />
-            <div className={classes.spinnerBlade} />
-            <div className={classes.spinnerBlade} />
-            <div className={classes.spinnerBlade} />
-            <div className={classes.spinnerBlade} />
-            <div className={classes.spinnerBlade} />
-            <div className={classes.spinnerBlade} />
-            <div className={classes.spinnerBlade} />
+          <div className={classes.loadingAnimation}>
+            <div><span/><span/><span/><span/><span/></div>
           </div>
         </div>
     );

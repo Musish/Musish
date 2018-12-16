@@ -18,7 +18,7 @@ class OverviewPage extends React.Component {
   render() {
     return (
       <div>
-        abc
+        <Loader />
       </div>
     );
   }
