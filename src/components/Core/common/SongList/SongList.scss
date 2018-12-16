@@ -87,13 +87,14 @@
 
       .artworkWrapper {
         border-radius: 3px;
+        width: 40px;
+        height: 40px;
         background: #fafafa;
-      }
-
-      img {
-        border-radius: inherit;
-        width: inherit;
-        height: inherit;
+        img {
+          border-radius: inherit;
+          width: inherit;
+          height: inherit;
+        }
       }
     }
 
