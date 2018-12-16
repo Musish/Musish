@@ -13,9 +13,6 @@ class OverviewPage extends React.Component {
 
   async componentDidMount() {
     const music = MusicKit.getInstance();
-    const playlist = await music.api.library.(
-      this.props.match.params.id
-    );
   }
 
   render() {
@@ -27,4 +24,4 @@ class OverviewPage extends React.Component {
   }
 }
 
-export default withRouter(PlaylistPage);
+export default withRouter(OverviewPage);

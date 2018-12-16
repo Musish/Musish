@@ -38,6 +38,7 @@ export default class Sidebar extends React.Component {
           <div className={classes.menu}>
             <h3>My Library</h3>
             <ul>
+              <MenuItem to={'/'} label={'Overview'}/>
               <MenuItem to={'/artists'} label={'Artists'}/>
               <MenuItem to={'/albums'} label={'Albums'}/>
               <MenuItem to={'/songs'} label={'Songs'}/>
