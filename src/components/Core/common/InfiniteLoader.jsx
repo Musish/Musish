@@ -1,11 +1,12 @@
 import React from 'react';
+import Loader from "../../common/Loader";
 
 export default class InfiniteLoader extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      items: [],
+      items: null,
       page: 0,
       loading: false,
       end: false,
@@ -13,14 +14,33 @@ export default class InfiniteLoader extends React.Component {
 
     this.loadMore = this.loadMore.bind(this);
     this.onScroll = this.onScroll.bind(this);
+    this.onElementScroll = this.onElementScroll.bind(this);
   }
 
   componentDidMount() {
-    this.loadMore()
+    this.loadMore();
+
+    const {scrollElement} = this.props;
+
+    if(scrollElement && scrollElement.current) {
+      this.scrollElement = scrollElement.current;
+
+      this.scrollElement.addEventListener('scroll', this.onElementScroll)
+    }
+  }
+
+  componentWillUnmount() {
+    if(this.scrollElement) {
+      this.scrollElement.removeEventListener('scroll', this.onElementScroll)
+    }
+  }
+
+  onElementScroll({target: {scrollTop, scrollHeight, clientHeight}}) {
+    this.onScroll({scrollTop, scrollHeight, clientHeight})
   }
 
   onScroll({scrollTop, scrollHeight, clientHeight}) {
-    if (scrollHeight - scrollTop >= clientHeight - 500) {
+    if (scrollHeight - scrollTop <= clientHeight + 500) {
       this.loadMore()
     }
   }
@@ -46,7 +66,7 @@ export default class InfiniteLoader extends React.Component {
 
       this.setItems({
         page: page + 1,
-        items: [...items, ...newItems],
+        items: [...(items || []), ...newItems],
         end: newItems.length < limit,
       })
     } finally {
@@ -63,7 +83,18 @@ export default class InfiniteLoader extends React.Component {
   }
 
   render() {
-    return this.props.render({onScroll: this.onScroll}, this.state);
+    const {loading, items} = this.state;
+
+    if (!items) {
+      return <Loader/>
+    }
+
+    return (
+      <>
+        {this.props.render({onScroll: this.onScroll}, this.state)}
+        {loading && <Loader/>}
+      </>
+    );
   }
 }
 

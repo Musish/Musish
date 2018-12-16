@@ -3,6 +3,7 @@ import {withRouter} from 'react-router-dom';
 import PageTitle from '../../common/PageTitle';
 import SongList from '../common/SongList/SongList';
 import PageContent from "../Layout/PageContent";
+import Loader from "../../common/Loader";
 
 class AlbumPage extends React.Component {
   constructor(props) {
@@ -19,8 +20,6 @@ class AlbumPage extends React.Component {
     const music = MusicKit.getInstance();
     const album = await music.api.library.album(this.props.match.params.id);
 
-    console.log(album);
-
     this.setState({
       album,
     });
@@ -28,7 +27,7 @@ class AlbumPage extends React.Component {
 
   render() {
     if (!this.state.album) {
-      return 'Loading...';
+      return <Loader />;
     }
 
     return (
