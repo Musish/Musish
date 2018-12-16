@@ -33,7 +33,6 @@ class OverviewPage extends React.Component {
 
   render() {
     const {frequentlyPlayed, recentlyPlayed} = this.state;
-    console.log(recentlyPlayed);
     return (
       <PageContent innerRef={this.ref}>
         <PageTitle
