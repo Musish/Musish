@@ -7,23 +7,28 @@
   box-shadow: 0px 3px 2px -2px rgba(0, 0, 0, 0.1);
   text-align: center;
   z-index: 100;
+
   > div.navWrapper {
     position: relative;
     width: 100%;
   }
+
   ul.navMenu {
     list-style-type: none;
     margin: 0;
     padding: 0;
     display: inline-block;
     line-height: 65px;
+
     &.pull-right {
       float: right
     }
+
     li {
       margin: 0;
       padding: 0;
       display: inline-block;
+
       a {
         color: #ffffff;
         background: none;
@@ -34,16 +39,19 @@
         letter-spacing: -0.1px;
         margin: 0 5px;
         color: rgb(105, 105, 105);
+
         &:hover {
           color: #fe2851;
         }
       }
+
       &.active a {
         color: #ffffff;
         background: #fe2851;
       }
     }
   }
+
   h1.brand {
     position: absolute;
     top: 0;
@@ -53,10 +61,12 @@
     color: #555555;
     margin: 0;
   }
+
   div.navSearch {
     position: absolute;
     top: 15px;
     right: 50px;
+
     input {
       border: none;
       -webkit-appearance: none;
