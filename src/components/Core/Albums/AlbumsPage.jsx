@@ -12,6 +12,8 @@ export default class AlbumsPage extends React.Component {
   constructor(props) {
     super(props);
 
+    this.ref = React.createRef();
+
     this.renderContent = this.renderContent.bind(this);
     this.onScroll = this.onScroll.bind(this);
   }
@@ -22,11 +24,7 @@ export default class AlbumsPage extends React.Component {
     return await music.api.library.albums(null, params);
   }
 
-  renderItems({items, loading}) {
-    if (!items) {
-      return <Loader/>
-    }
-
+  renderItems({items}) {
     const albums = items.map(
       (album, i) => {
         const WHEIGHT = 150;
@@ -38,12 +36,9 @@ export default class AlbumsPage extends React.Component {
       });
 
     return (
-      <>
-        <div className={Classes.albumsGrid}>
-          {albums}
-        </div>
-        {loading && <Loader/>}
-      </>
+      <div className={Classes.albumsGrid}>
+        {albums}
+      </div>
     )
   }
 
@@ -52,20 +47,15 @@ export default class AlbumsPage extends React.Component {
   }
 
   renderContent({onScroll}, state) {
-    return (
-      <div onScroll={e => this.onScroll(e, onScroll)}
-           style={{height: '100%', overflow: 'auto'}}>
-        <PageTitle title={"Albums"} context={"My Library"}/>
-
-        {this.renderItems(state)}
-      </div>
-    )
+    return this.renderItems(state)
   }
 
   render() {
     return (
-      <PageContent>
-        <InfiniteLoader load={this.load} render={this.renderContent}/>
+      <PageContent innerRef={this.ref}>
+        <PageTitle title={"Albums"} context={"My Library"}/>
+
+        <InfiniteLoader scrollElement={this.ref} load={this.load} render={this.renderContent}/>
       </PageContent>
     );
   }

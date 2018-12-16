@@ -4,6 +4,7 @@ import classes from './SongList.scss';
 import {artworkForMediaItem, createMediaItem} from "../Utils";
 import InfiniteScroll from "../InfiniteScroll";
 import {connectMenu, ContextMenu, ContextMenuTrigger, MenuItem} from "react-contextmenu";
+import Loader from "../../../common/Loader";
 
 const MENU_TYPE = 'DYNAMIC';
 
@@ -79,7 +80,7 @@ export default class SongList extends React.Component {
     this.state = {
       currentSong: currentSong,
       isPlaying: music.player.isPlaying,
-      songs: [],
+      songs: null,
     };
 
     this.onMediaItemDidChange = this.onMediaItemDidChange.bind(this);
@@ -235,10 +236,10 @@ class SongListItem extends React.Component {
   }
 
   renderIcon() {
-    const {albumArt, song, isPlaying} = this.props;
+    const {showAlbum, song, isPlaying} = this.props;
     return (
       <>
-        {albumArt ? (
+        {showAlbum ? (
           <span className={classes.albumArtwork}>
             {isPlaying && (
               <div className={classes.playingAnimation}>
@@ -273,7 +274,9 @@ class SongListItem extends React.Component {
     const duration = this.getTime(attributes.durationInMillis);
 
     return (
-      <div className={`${classes.song} ${isPlaying ? 'playing' : ''}`} onClick={this._handleClick} style={this.props.style}>
+      <div className={`${classes.song} ${isPlaying ? 'playing' : ''}`}
+           onClick={this._handleClick}
+           style={this.props.style}>
         <ContextMenuTrigger id={MENU_TYPE} attributes={{className: [classes.songWrapper]}}
                             collect={props => collect(props, this)}>
           <div className={classes.songBacker}/>
@@ -295,8 +298,8 @@ class SongListItem extends React.Component {
             )}
           </div>
           <span className={classes.songDuration}>
-              <span>{duration}</span>
-            </span>
+            <span>{duration}</span>
+          </span>
         </ContextMenuTrigger>
       </div>
     );
