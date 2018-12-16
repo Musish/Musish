@@ -5,14 +5,17 @@ import AlbumItem from './AlbumItem';
 
 import Classes from './Albums.scss';
 import PageTitle from "../../common/PageTitle";
-import InfiniteScroll from '../common/InfiniteScroll';
 import PageContent from "../Layout/PageContent";
+import InfiniteLoader from "../common/InfiniteLoader";
 
 export default class AlbumsPage extends React.Component {
   constructor(props) {
     super(props);
 
+    this.innerRef = React.createRef();
+
     this.renderContent = this.renderContent.bind(this);
+    this.onScroll = this.onScroll.bind(this);
   }
 
   async load(params) {
@@ -21,7 +24,7 @@ export default class AlbumsPage extends React.Component {
     return await music.api.library.albums(null, params);
   }
 
-  renderItems(items, more, {loading, end}) {
+  renderItems({items, loading}) {
     if (!items) {
       return <Loader/>
     }
@@ -46,20 +49,25 @@ export default class AlbumsPage extends React.Component {
     )
   }
 
-  renderContent(...args) {
+  onScroll({target: {scrollTop, scrollHeight, clientHeight}}, onScroll) {
+    onScroll({scrollTop, scrollHeight, clientHeight})
+  }
+
+  renderContent({onScroll}, state) {
     return (
-      <>
+      <div onScroll={e => this.onScroll(e, onScroll)}
+           style={{height: '100%', overflow: 'scroll'}}>
         <PageTitle title={"Albums"} context={"My Library"}/>
 
-        {this.renderItems(...args)}
-      </>
+        {this.renderItems(state)}
+      </div>
     )
   }
 
   render() {
     return (
-      <PageContent>
-        <InfiniteScroll load={this.load} render={this.renderContent}/>
+      <PageContent innerRef={this.innerRef}>
+        <InfiniteLoader load={this.load} render={this.renderContent}/>
       </PageContent>
     );
   }

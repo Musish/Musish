@@ -1,5 +1,4 @@
 import React from 'react';
-import InfiniteScroll from "./InfiniteScroll";
 
 export default class InfiniteLoader extends React.Component {
   constructor(props) {
