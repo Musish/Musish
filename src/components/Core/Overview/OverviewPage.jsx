@@ -4,7 +4,6 @@ import PageContent from "../Layout/PageContent";
 import PageTitle from "../../common/PageTitle";
 import classes from "./OverviewPage.scss";
 import Loader from "../../common/Loader";
-import SongList from "../common/SongList/SongList";
 
 class OverviewPage extends React.Component {
   constructor(props) {
