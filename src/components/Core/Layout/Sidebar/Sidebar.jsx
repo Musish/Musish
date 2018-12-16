@@ -37,8 +37,8 @@ export default class Sidebar extends React.Component {
           <div className="menu library">
             <h3>My Library</h3>
             <ul>
-              <MenuItem to={'/artists'} label={'Artists'}/>
-              <MenuItem to={'/albums'} label={'Albums'}/>
+              <MenuItem to={'/artists'} exact={false} label={'Artists'}/>
+              <MenuItem to={'/albums'} exact={false} label={'Albums'}/>
               <MenuItem to={'/songs'} label={'Songs'}/>
             </ul>
           </div>
@@ -59,11 +59,13 @@ export default class Sidebar extends React.Component {
 
 class MenuItem extends React.Component {
   render() {
+    const {to, label, exact = true} = this.props;
+
     return (
-      <Route path={this.props.to} exact children={({match}) => (
+      <Route path={to} exact={exact} children={({match}) => (
         <li className={cx({active: !!match})}>
-          <Link to={this.props.to}>
-            {this.props.label}
+          <Link to={to}>
+            {label}
           </Link>
         </li>
       )}/>

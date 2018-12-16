@@ -30,7 +30,7 @@ export default class App extends React.Component {
                   <Route path="/playlists" exact component={PlaylistsPage}/>
                   <Route path="/playlists/:id" exact component={props => <Playlist key={props.location.pathname} {...props} />} />
                   <Route path="/artists" exact component={ArtistsPage}/>
-                  <Route path="/artists/:id" exact component={Artist}/>
+                  <Route path="/artists/:id" exact component={ArtistsPage}/>
                   <Route path="/songs" exact component={SongsPage}/>
                   <Redirect to="/"/>
                 </Switch>

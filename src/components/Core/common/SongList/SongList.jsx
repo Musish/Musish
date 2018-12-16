@@ -151,9 +151,15 @@ export default class SongList extends React.Component {
   }
 
   render() {
+    const {showArtist, showAlbum} = this.props;
+
     return (
       <div className={classes.songList}>
-        <InfiniteScroll onSetItems={this.onSetItems} scrollElement={this.props.scrollElement} load={this.props.load} rowHeight={50} rowRenderer={this.rowRenderer}/>
+        <InfiniteScroll onSetItems={this.onSetItems}
+                        scrollElement={this.props.scrollElement}
+                        load={this.props.load}
+                        rowHeight={showAlbum || showArtist ? 50 : 37}
+                        rowRenderer={this.rowRenderer}/>
         <ConnectedMenu/>
       </div>
     );

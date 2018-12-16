@@ -12,8 +12,6 @@ export default class AlbumsPage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.innerRef = React.createRef();
-
     this.renderContent = this.renderContent.bind(this);
     this.onScroll = this.onScroll.bind(this);
   }
@@ -56,7 +54,7 @@ export default class AlbumsPage extends React.Component {
   renderContent({onScroll}, state) {
     return (
       <div onScroll={e => this.onScroll(e, onScroll)}
-           style={{height: '100%', overflow: 'scroll'}}>
+           style={{height: '100%', overflow: 'auto'}}>
         <PageTitle title={"Albums"} context={"My Library"}/>
 
         {this.renderItems(state)}
@@ -66,7 +64,7 @@ export default class AlbumsPage extends React.Component {
 
   render() {
     return (
-      <PageContent innerRef={this.innerRef}>
+      <PageContent>
         <InfiniteLoader load={this.load} render={this.renderContent}/>
       </PageContent>
     );

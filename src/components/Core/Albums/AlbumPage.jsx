@@ -11,6 +11,8 @@ class AlbumPage extends React.Component {
     this.state = {
       album: null,
     };
+
+    this.ref = React.createRef();
   }
 
   async componentDidMount() {
@@ -30,9 +32,9 @@ class AlbumPage extends React.Component {
     }
 
     return (
-        <PageContent>
+        <PageContent innerRef={this.ref}>
           <PageTitle title={this.state.album.attributes.name} context={"My Library"}/>
-          <SongList songs={this.state.album.relationships.tracks.data} album={true}/>
+          <SongList scrollElement={this.ref} load={() => this.state.album.relationships.tracks.data} showArtist={true} />
         </PageContent>
     );
   }

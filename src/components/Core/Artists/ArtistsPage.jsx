@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import PageTitle from "../../common/PageTitle";
 import InfiniteScroll from '../common/InfiniteScroll';
 import Loader from "../../common/Loader";
@@ -6,22 +6,17 @@ import Loader from "../../common/Loader";
 import Classes from './Artists.scss';
 import PageContent from "../Layout/PageContent";
 import AlbumPanel from "../Albums/AlbumPanel";
+import {Link, Route} from "react-router-dom";
 
 export default class ArtistsPage extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  setArtist(artist) {
-    console.log('set', artist);
-  };
-
   render() {
     return (
       <>
-        <ArtistList setArtist={this.setArtist} />
+        <ArtistList/>
         <PageContent>
-            <ArtistAlbums id={"r.5oXQex9"}/>
+          <Route path={'/artists/:id'} exact render={({match: {params: {id}}}) => (
+            <ArtistAlbums key={id} id={id}/>
+          )}/>
         </PageContent>
       </>
     );
@@ -29,19 +24,23 @@ export default class ArtistsPage extends React.Component {
 }
 
 class ArtistList extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.ref = React.createRef();
+
+    this.rowRenderer = this.rowRenderer.bind(this);
+  }
+
   async load(params) {
     const music = MusicKit.getInstance();
     return await music.api.library.artists(null, params);
   }
 
-  renderList(artists, more, {loading, end}) {
-    if (!artists) {
-      return <Loader/>;
-    }
-
-    const artistRows = artists && artists.map((artist) => {
-      return (
-        <li key={`artist-${artist.id}`}>
+  rowRenderer({item: artist, index, isScrolling, isVisible, key, style}) {
+    return (
+      <Link key={key} to={`/artists/${artist.id}`}>
+        <li style={style}>
           <div>
             <span className={Classes.pictureWrapper}>
 
@@ -53,20 +52,16 @@ class ArtistList extends React.Component {
             </span>
           </div>
         </li>
-      );
-    });
-
-    return (
-      <ul>
-        {artistRows}
-      </ul>
-    );
-  };
+      </Link>
+    )
+  }
 
   render() {
     return (
-      <aside className={Classes.artistList}>
-        <InfiniteScroll load={this.load} render={this.renderList} />
+      <aside className={Classes.artistList} ref={this.ref}>
+        <ul>
+          <InfiniteScroll scrollElement={this.ref} rowHeight={60} load={this.load} rowRenderer={this.rowRenderer}/>
+        </ul>
       </aside>
     );
   }
@@ -92,21 +87,28 @@ class ArtistAlbums extends React.Component {
     });
   }
 
+  renderArtists() {
+    const {artist} = this.state;
+
+    return artist.relationships.albums.data.map((album, i) => {
+      return (
+        <AlbumPanel key={i} album={album}/>
+      );
+    })
+  }
+
   render() {
     const {artist} = this.state;
+
     if (!artist) {
-      return <Loader />;
+      return <Loader/>;
     }
-    console.log(artist);
+
     return (
-      <Page>
-        <PageTitle title={this.state.artist.attributes.name} context={"My Library"}/>
-        {artist.relationships.albums.data.map(album => {
-          return (
-            <AlbumPanel album={album} />
-          );
-        })}
-      </Page>
+      <PageContent>
+        <PageTitle title={artist.attributes.name} context={"My Library"}/>
+        {this.renderArtists()}
+      </PageContent>
     );
   }
 }
