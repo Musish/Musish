@@ -14,6 +14,10 @@ git rm -rf .
 cp /tmp/CNAME ./CNAME || echo "No CNAME file"
 cd ..
 
+echo "JWT_TOKEN=$JWT_TOKEN" > .env
+
+cat .env
+
 yarn build
 
 cp -a build/. out/.
