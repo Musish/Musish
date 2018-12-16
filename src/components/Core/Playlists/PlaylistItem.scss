@@ -1,43 +1,53 @@
+@import '../../../styles/settings/colors';
+
+@mixin wrapTo($width) {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: $width;
+  display: block;
+}
+
 .container {
-  width: 200px;
-  background-color: rgb(249, 249, 249);
-  border-radius: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0;
   cursor: pointer;
-  box-shadow: 0px 10px 15px -10px rgba(0,0,0,0.15);
-  &:hover {
-    background-color: rgb(244, 244, 244);
-  }
+  margin: 15px 10px;
 
   .imageContainer {
-    width: 150px;
-    height: 150px;
-    background-color: aquamarine;
-
+    width: 100%;
+    background: $container_background;
+    border-radius: 8px;
+    height: 0;
+    padding-top: 100%;
+    position: relative;
     .image {
+      position: absolute;
+      top: 0;
       width: 100%;
       height: 100%;
+      border-radius: 8px;
+      transition: opacity 0.2s;
+    }
+  }
+
+  &:hover {
+    .image {
+      opacity: 0.8;
     }
   }
 
   .descriptionContainer {
-    text-align: center;
-    width: 200px;
-    overflow: scroll;
-    white-space: pre-wrap;
-    word-break: break-all;
-    word-wrap: break-word;
-    h3 {
-      font-weight: 400;
-      margin: 10px 0 5px 0;
-    }
-    h4 {
-      font-weight: 300;
-      margin: 0;
+    text-align: left;
+    width: 100%;
+    > span {
+      display:block;
+      @include wrapTo(100%);
+      &.playlistName {
+        font-weight: 400;
+        margin: 10px 0 5px 0;
+      }
     }
   }
 }
-
