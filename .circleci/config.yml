@@ -1,0 +1,32 @@
+version: 2
+jobs:
+  build:
+    branches:
+      only:
+        - master
+    docker:
+      - image: circleci/node:8
+    environment:
+      - TARGET_BRANCH: gh-pages
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies-
+      - run:
+          name: Install dependencies
+          command: yarn
+#      - run:
+#          name: Install Serverless CLI and dependencies
+#          command: sudo npm i -g serverless
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}
+#      - run:
+#          name: Run tests
+#          command: npm test
+      - deploy:
+          name: Deploy
+          command: ./.circleci/deploy.sh
