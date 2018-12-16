@@ -4,29 +4,50 @@ import PageContent from "../Layout/PageContent";
 import PageTitle from "../../common/PageTitle";
 import classes from "./OverviewPage.scss";
 import Loader from "../../common/Loader";
+import SongList from "../common/SongList/SongList";
 
 class OverviewPage extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      frequentlyPlayed: null,
+      recentlyPlayed: null,
+    };
+
+    this.ref = React.createRef();
   }
 
   async componentDidMount() {
     const music = MusicKit.getInstance();
+    let frequentlyPlayed = music.api.historyHeavyRotation();
+    let recentlyPlayed = music.api.recentPlayed();
+
+    frequentlyPlayed = await frequentlyPlayed;
+    recentlyPlayed = await recentlyPlayed;
+
+    this.setState({
+      frequentlyPlayed,
+      recentlyPlayed
+    })
   }
 
   render() {
+    const {frequentlyPlayed, recentlyPlayed} = this.state;
+    console.log(recentlyPlayed);
     return (
-      <PageContent>
+      <PageContent innerRef={this.ref}>
         <PageTitle
           title={"Overview"}
           context={"My Library"}
         />
-        <p>Browse your Musi.sh library...</p>
         <div className={classes.flexGrid}>
           <div>
-            abc
+            <h3>Frequently played</h3>
+            <Loader/>
           </div>
           <div>
+            <h3>Recently played</h3>
             <Loader/>
           </div>
         </div>

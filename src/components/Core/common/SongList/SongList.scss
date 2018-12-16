@@ -67,6 +67,7 @@
       align-items: center;
       position: relative;
       border-radius: 3px;
+      margin-left: 5px;
 
       .playingAnimation {
         position: absolute;
@@ -105,8 +106,9 @@
     .songInfo {
       flex: 1;
       display: flex;
+      flex-direction: column;
       margin: 0 10px;
-      align-items: center;
+      justify-content: center;
 
       > span {
         display: block;

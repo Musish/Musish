@@ -1,12 +1,13 @@
 import React from 'react';
+import classes from './NavigationBar.scss';
 
 export default class NavigationBar extends React.Component {
   render() {
     return (
-      <nav className="navigation-bar">
-        <div className="nav-wrapper">
-          <h1 className="brand"> Musi.sh</h1>
-          <div className="nav-search">
+      <nav className={classes.navigationBar}>
+        <div className={classes.navWrapper}>
+          <h1 className={classes.brand}> Musi.sh</h1>
+          <div className={classes.navSearch}>
             <input type="text" placeholder="Search music" />
           </div>
         </div>

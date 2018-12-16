@@ -10,7 +10,7 @@ export default class AlbumsPanel extends React.Component {
     super(props);
 
     this.state = {
-      album: null,
+      album: this.props.album,
     };
 
     this.ref = React.createRef();
@@ -31,10 +31,6 @@ export default class AlbumsPanel extends React.Component {
   render() {
     const {album, runtime} = this.state;
 
-    if (!album) {
-      return <Loader />;
-    }
-
     const artworkURL = artworkForMediaItem(album, 220);
 
     return (
@@ -48,7 +44,12 @@ export default class AlbumsPanel extends React.Component {
         <div className={classes.main} ref={this.ref}>
           <span className={classes.title}>{album.attributes.name}</span>
           <span className={classes.subtitle}>{album.attributes.artistName}</span>
-          <SongList scrollElement={this.ref} load={() => album.relationships.tracks.data} album={true}/>
+          {album.relationships ? (
+            <SongList scrollElement={this.ref} load={() => album.relationships.tracks.data} album={true}/>
+          ) : (
+            <Loader/>
+          )}
+
         </div>
       </div>
     );

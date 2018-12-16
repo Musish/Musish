@@ -60,13 +60,7 @@ button {
     }
   }
 
-  @import './styles/NavigationBar';
   @import './styles/Vendor/react-contextmenu';
   @import './styles/Vendor/react-contextmenu';
   @import './styles/Vendor/github-fork-ribbon-css';
-}
-
-::-webkit-scrollbar {
-  width: 0px;
-  background: transparent; /* make scrollbar transparent */
 }

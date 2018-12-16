@@ -22,8 +22,6 @@ class PlaylistPage extends React.Component {
       this.props.match.params.id
     );
 
-    console.log(playlist);
-
     this.setState({
       playlist,
     });
