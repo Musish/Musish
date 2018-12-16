@@ -33,6 +33,7 @@
         position: relative;
         cursor: pointer;
         align-items: center;
+        font-weight: 500;
       }
 
       .artistBacker {
@@ -71,6 +72,13 @@
 
       &:first-child .artistBacker:before {
         background: none;
+      }
+
+      .activeArtist {
+        color: $primary_color;
+        .artistBacker:after {
+          background: $container_background;
+        }
       }
 
       > div {
