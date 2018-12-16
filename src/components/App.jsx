@@ -16,6 +16,7 @@ import SongsPage from './Core/Songs/SongsPage';
 import PlaylistsPage from './Core/Playlists/PlaylistsPage';
 import Album from './Core/Albums/AlbumPage';
 import OverviewPage from './Core/Overview/OverviewPage';
+import BrowsePage from "./Core/Browse/BrowsePage";
 
 export default class App extends React.Component {
   render() {
@@ -33,6 +34,7 @@ export default class App extends React.Component {
                   <Route path="/artists" exact component={ArtistsPage}/>
                   <Route path="/artists/:id" exact component={ArtistsPage}/>
                   <Route path="/songs" exact component={SongsPage}/>
+                  <Route path="/browse" exact component={BrowsePage}/>
                   <Redirect to="/"/>
                 </Switch>
               </Layout>
