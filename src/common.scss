@@ -1,15 +1,13 @@
 body {
   min-height: 100vh;
   margin: 0;
-  font-weight: 300;
   background: #ffffff;
   color: #333333;
   overflow: hidden;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Roboto', sans-serif;;
-  color: initial;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Roboto', sans-serif;
 }
 
 a {
@@ -54,30 +52,13 @@ button {
       overflow-y: scroll;
     }
 
-    #main-sidebar {
-      height: 100%;
-      min-height: 500px;
-      top: 66px;
-      bottom: 0px;
-      width: 260px;
-      padding: 10px;
-      //overflow-y: scroll;
-    }
-
     #main-content {
       display: flex;
       flex: 1;
     }
   }
 
-  @import './styles/NavigationBar';
-  @import './styles/Sidebar';
   @import './styles/Vendor/react-contextmenu';
   @import './styles/Vendor/react-contextmenu';
   @import './styles/Vendor/github-fork-ribbon-css';
-}
-
-::-webkit-scrollbar {
-  width: 0px;
-  background: transparent; /* make scrollbar transparent */
 }

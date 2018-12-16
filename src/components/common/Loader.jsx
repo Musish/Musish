@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
-import LoaderScss from "./Loader.scss";
+import classes from "./Loader.scss";
 
 export default class Loader extends Component {
   render() {
     return (
-        <div className={LoaderScss.container}>
-          <div className={LoaderScss.ldsRipple}>
-            <div/>
-            <div/>
+        <div className={classes.container}>
+          <div className={classes.loadingAnimation}>
+            <div><span/><span/><span/><span/><span/></div>
           </div>
         </div>
     );
