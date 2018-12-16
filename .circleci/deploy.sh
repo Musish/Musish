@@ -16,8 +16,6 @@ cd ..
 
 echo "JWT_TOKEN=$JWT_TOKEN" > .env
 
-cat .env
-
 yarn build
 
 cp -a build/. out/.
