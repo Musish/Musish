@@ -2,6 +2,7 @@ import React from 'react';
 import styles from './Player.scss'
 import {artworkForMediaItem} from "../common/Utils";
 import debounce from 'lodash/debounce';
+import cx from 'classnames';
 
 export default class Player extends React.Component {
   constructor(props) {
@@ -231,19 +232,22 @@ export default class Player extends React.Component {
         <div className={styles.buttons}>
 
           <span className={styles.controls}>
+            <i className={"fas fa-plus"}/>
+          </span>
+
+          <span className={styles.controls}>
             <i className={"fas fa-redo-alt"}/>
           </span>
 
           <span className={styles.controls}>
-              <i className={"fas fa-plus"}/>
+            <i className={"fas fa-random"}/>
           </span>
 
-          <span className={styles.controls}>
-              <i className={"fas fa-random"}/>
-          </span>
-
-          <span className={styles.controls}>
-              <i className={"fas fa-volume-up"}/>
+          <span className={cx(styles.controls, styles.volumeControlWrapper)}>
+            <i className={"fas fa-volume-up"}/>
+            <div className={styles.volumeControlContainer}>
+              a
+            </div>
           </span>
 
         </div>

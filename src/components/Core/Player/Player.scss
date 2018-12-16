@@ -101,10 +101,11 @@
 
       &.controls {
         font-size: 14px;
-        margin-top: 40px;
+        margin-top: 20px;
         display: flex;
         flex: 1;
         justify-content: center;
+        color: #888888;
       }
 
       &:hover {
@@ -115,5 +116,27 @@
         transform: scale(0.95);
       }
     }
+  }
+}
+
+.volumeControlWrapper {
+  position: relative;
+  > i {
+    position: absolute;
+    z-index: 10;
+  }
+  > .volumeControlContainer {
+    position: absolute;
+    display: none;
+    z-index: 5;
+    background: #f7f7f7;
+    border-radius: 5px;
+    width: 30px;
+    height: 100px;
+    bottom: -5px;
+    box-shadow: 0px 3px 10px -3px rgba(0,0,0,0.25);
+  }
+  &:hover > .volumeControlContainer {
+    display: block;
   }
 }
