@@ -157,6 +157,26 @@ export default class Player extends React.Component {
     music.player.skipToNextItem();
   }
 
+  handleAddToLibrary() {
+    const music = MusicKit.getInstance();
+    music.player.addToLibrary();
+  }
+
+  handleRepeat() {
+    const music = MusicKit.getInstance();
+    music.player.repeatMode();
+  }
+
+  handleShuffle() {
+    const music = MusicKit.getInstance();
+    music.player.shuffleMode();
+  }
+
+  handleVolume() {
+    const music = MusicKit.getInstance();
+    music.player.volume();
+  }
+
   handleSeek(percent, duration) {
     const time = Player.percentToTime(percent, duration);
     this.changePlaybackTime(time);
@@ -231,7 +251,7 @@ export default class Player extends React.Component {
 
         <div className={styles.buttons}>
 
-          <span className={styles.controls}>
+          <span className={styles.controls} onClick={this.handleAddToLibrary}>
             <i className={"fas fa-plus"}/>
           </span>
 
@@ -246,7 +266,7 @@ export default class Player extends React.Component {
           <span className={cx(styles.controls, styles.volumeControlWrapper)}>
             <i className={"fas fa-volume-up"}/>
             <div className={styles.volumeControlContainer}>
-              a
+              |
             </div>
           </span>
 
