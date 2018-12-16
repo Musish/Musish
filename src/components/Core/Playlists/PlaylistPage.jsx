@@ -1,7 +1,6 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
 import Loader from "../../common/Loader";
-import InfiniteScroll from "../common/InfiniteScroll";
 import PageContent from "../Layout/PageContent";
 import PageTitle from "../../common/PageTitle";
 import SongList from "../common/SongList/SongList";
@@ -13,6 +12,8 @@ class PlaylistPage extends React.Component {
     this.state = {
       playlist: null,
     };
+
+    this.ref = React.createRef();
   }
 
   async componentDidMount() {
@@ -34,20 +35,19 @@ class PlaylistPage extends React.Component {
     }
 
     return (
-      <InfiniteScroll load={() => []} render={() => (
-        <PageContent>
-          <PageTitle
-            title={this.state.playlist.attributes.name}
-            context={"My Library"}
-          />
-          <p>{this.state.playlist.attributes.description && this.state.playlist.attributes.description.standard}</p>
-          <SongList
-            songs={this.state.playlist.relationships.tracks.data}
-            showArtist={true}
-            showAlbum={true}
-          />
-        </PageContent>
-      )}/>
+      <PageContent innerRef={this.ref}>
+        <PageTitle
+          title={this.state.playlist.attributes.name}
+          context={"My Library"}
+        />
+        <p>{this.state.playlist.attributes.description && this.state.playlist.attributes.description.standard}</p>
+        <SongList
+          scrollElement={this.ref}
+          load={() => this.state.playlist.relationships.tracks.data}
+          showArtist={true}
+          showAlbum={true}
+        />
+      </PageContent>
     );
   }
 }
