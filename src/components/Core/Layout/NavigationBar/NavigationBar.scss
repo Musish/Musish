@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   background: rgb(247, 247, 247);
-  box-shadow: 0px 3px 2px -2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 2px -2px rgba(0, 0, 0, 0.1);
   text-align: center;
   z-index: 100;
 
@@ -30,7 +30,7 @@
       display: inline-block;
 
       a {
-        color: #ffffff;
+        color: rgb(105, 105, 105);
         background: none;
         font-weight: 300;
         font-size: 14px;
@@ -38,7 +38,6 @@
         border-radius: 4px;
         letter-spacing: -0.1px;
         margin: 0 5px;
-        color: rgb(105, 105, 105);
 
         &:hover {
           color: #fe2851;
@@ -68,13 +67,12 @@
     right: 50px;
 
     input {
-      border: none;
       -webkit-appearance: none;
       outline: none;
       padding: 8px 15px;
       text-align: center;
-      border-radius: 5px;
       border: solid 1px #eee;
+      border-radius: 5px;
       font-size: 11px;
       line-height: 15px;
     }

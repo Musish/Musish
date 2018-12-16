@@ -9,14 +9,17 @@
   bottom: 0;
   width: 260px;
   padding: 10px;
+
   .menus {
     flex: 1;
     overflow: scroll;
+
     .menu {
       background: #ffffff;
       padding: 10px 15px;
       border-radius: 5px;
       margin-top: 15px;
+
       h3 {
         color: #fe2851;
         font-weight: 500;
@@ -24,13 +27,16 @@
         margin: 0;
         padding: 0;
       }
+
       ul {
         list-style-type: none;
         margin: 15px 0 0;
         padding: 0;
+
         li {
           color: #333;
           margin: 10px 0px;
+
           a {
             margin: -10px 0;
             padding: 5px 12px;
@@ -40,6 +46,7 @@
             width: 210px;
             display: block;
           }
+
           &.active a {
             border-radius: 4px;
             background: #fe2851;

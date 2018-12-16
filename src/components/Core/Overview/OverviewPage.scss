@@ -1,7 +1,8 @@
 .flexGrid {
   display: flex;
-  flex-direction:row;
+  flex-direction: row;
   margin: 0 -10px;
+
   > div {
     flex: 1 1 auto;
     margin: 0 10px;
