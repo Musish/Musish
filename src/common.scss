@@ -36,6 +36,10 @@ button {
 }
 
 :global {
+  * {
+    outline: none !important;
+  }
+
   #app-root {
     height: 100vh;
     display: flex;
@@ -61,6 +65,7 @@ button {
     }
 
     #main-content {
+      display: flex;
       flex: 1;
     }
   }

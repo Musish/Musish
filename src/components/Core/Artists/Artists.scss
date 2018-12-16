@@ -4,8 +4,9 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+
   > div {
-	margin: 15px 10px;
+    margin: 15px 10px;
   }
 }
 
@@ -13,22 +14,26 @@
   width: 250px;
   height: 100%;
   border-right: solid 1px rgb(241, 241, 241);
+  overflow: auto;
+
   ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
     width: 100%;
+
     li {
       margin: 0;
       width: 100%;
       display: flex;
       flex-direction: row;
-      padding: 5px 0;
       position: relative;
       cursor: pointer;
+
       &:hover {
         background: $container_background;
       }
+
       &:not(:first-child):before {
         content: '';
         position: absolute;
@@ -36,13 +41,15 @@
         top: 0;
         right: 5px;
         height: 1px;
-        background: rgb(241,241,241);
+        background: rgb(241, 241, 241);
       }
+
       > div {
         display: flex;
         flex-direction: column;
         justify-content: center;
       }
+
       .pictureWrapper {
         display: inline-block;
         width: 41px;
@@ -50,10 +57,12 @@
         margin-left: 15px;
         background: #cccccc;
         border-radius: 50%;
+
         > img {
           border-radius: inherit;
         }
       }
+
       .artistName {
         margin-left: 10px;
         font-size: 12px;

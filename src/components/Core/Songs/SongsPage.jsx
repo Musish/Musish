@@ -1,36 +1,33 @@
 import React from 'react';
-import SongList from '../common/SongList/SongList';
-import InfiniteScroll from '../common/InfiniteScroll';
-import Loader from '../../common/Loader';
-import PageTitle from '../../common/PageTitle';
 import PageContent from "../Layout/PageContent";
+import PageTitle from "../../common/PageTitle";
+import SongList from "../common/SongList/SongList";
 
 export default class SongsPage extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.scrollRef = React.createRef();
+  }
+
   async load(params) {
     const music = MusicKit.getInstance();
 
     return await music.api.library.songs(null, params);
   }
 
-  renderItems(items, more, {loading, end}) {
+  render() {
     return (
-      <>
+      <PageContent innerRef={this.scrollRef}>
         <PageTitle title={"Songs"} context={"My Library"}/>
+
         <SongList
-          songs={items}
+          load={this.load}
+          scrollElement={this.scrollRef}
           album={false}
           showAlbum={true}
           showArtist={true}
         />
-        {loading && <Loader/>}
-      </>
-    );
-  }
-
-  render() {
-    return (
-      <PageContent>
-        <InfiniteScroll load={this.load} render={this.renderItems}/>
       </PageContent>
     );
   }

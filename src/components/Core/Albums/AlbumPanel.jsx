@@ -1,9 +1,9 @@
-import React, {Fragment} from 'react';
-import Loader from '../../common/Loader';
+import React from 'react';
 
 import classes from './AlbumPanel.scss';
 import {artworkForMediaItem, humanifyMillis} from "../common/Utils";
 import SongList from "../common/SongList/SongList";
+import Loader from "../../common/Loader";
 
 export default class AlbumsPanel extends React.Component {
   constructor(props) {
@@ -12,13 +12,15 @@ export default class AlbumsPanel extends React.Component {
     this.state = {
       album: null,
     };
+
+    this.ref = React.createRef();
   }
 
   async componentDidMount() {
     const music = MusicKit.getInstance();
     const album = await music.api.library.album(this.props.album.id);
 
-    const albumLength = album.relationships.tracks.data.reduce((a, b) => (a + b.attributes.durationInMillis), 0);
+    const albumLength = album.relationships.tracks.data.reduce((totalDuration, track) => (totalDuration + track.attributes.durationInMillis), 0);
 
     this.setState({
       album,
@@ -28,23 +30,25 @@ export default class AlbumsPanel extends React.Component {
 
   render() {
     const {album, runtime} = this.state;
+
     if (!album) {
-      return "Loading...";
+      return <Loader />;
     }
-    console.log(album);
+
     const artworkURL = artworkForMediaItem(album, 220);
+
     return (
       <div className={classes.panel}>
         <div className={classes.aside}>
           <div className={classes.artworkWrapper}>
-            <img src={artworkURL} />
+            <img src={artworkURL}/>
           </div>
           <span className={classes.albumRuntimeDescription}>{album.attributes.trackCount} songs, {runtime}</span>
         </div>
-        <div className={classes.main}>
+        <div className={classes.main} ref={this.ref}>
           <span className={classes.title}>{album.attributes.name}</span>
           <span className={classes.subtitle}>{album.attributes.artistName}</span>
-          <SongList songs={album.relationships.tracks.data} album={true}/>
+          <SongList scrollElement={this.ref} load={() => album.relationships.tracks.data} album={true}/>
         </div>
       </div>
     );
