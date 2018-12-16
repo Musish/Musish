@@ -26,8 +26,10 @@ config.plugins.push(new HtmlWebpackPlugin({  // Also generate a test.html
 
 config.plugins.push(new Dotenv());
 
-config.devServer.historyApiFallback = {
-  disableDotRule: true,
-};
+if(!Encore.isProduction()) {
+  config.devServer.historyApiFallback = {
+    disableDotRule: true,
+  };
+}
 
 module.exports = config;
