@@ -33,7 +33,7 @@ export default class AlbumsPage extends React.Component {
         let url = MusicKit.formatArtworkURL(album.attributes.artwork, WHEIGHT, WHEIGHT);
 
         return (
-          <AlbumItem key={i} url={url} id={album.id} title={album.attributes.name} name={album.attributes.artistName}/>
+          <AlbumItem key={i} album={album} size={170} />
         );
       });
 
