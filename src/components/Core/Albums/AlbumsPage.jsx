@@ -7,6 +7,9 @@ import Classes from './Albums.scss';
 import PageTitle from "../../common/PageTitle";
 import PageContent from "../Layout/PageContent";
 import InfiniteLoader from "../common/InfiniteLoader";
+import Modal from "../../common/Modal/Modal";
+import ArtistsPage from "../Artists/ArtistsPage";
+import AlbumsPanel from "./AlbumPanel";
 
 export default class AlbumsPage extends React.Component {
   constructor(props) {
@@ -29,9 +32,6 @@ export default class AlbumsPage extends React.Component {
 
     const albums = items.map(
       (album, i) => {
-        const WHEIGHT = 150;
-        let url = MusicKit.formatArtworkURL(album.attributes.artwork, WHEIGHT, WHEIGHT);
-
         return (
           <AlbumItem key={i} album={album} size={170} />
         );
@@ -42,7 +42,7 @@ export default class AlbumsPage extends React.Component {
         <div className={Classes.albumsGrid}>
           {albums}
         </div>
-        {loading && <Loader/>}
+        {loading && <Loader />}
       </>
     )
   }
@@ -65,6 +65,9 @@ export default class AlbumsPage extends React.Component {
   render() {
     return (
       <PageContent>
+        <Modal render={() => (
+          <AlbumsPanel id={"l.3nJoOaz"}  />
+        )} />
         <InfiniteLoader load={this.load} render={this.renderContent}/>
       </PageContent>
     );

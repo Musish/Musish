@@ -17,8 +17,9 @@ export default class AlbumsPanel extends React.Component {
   }
 
   async componentDidMount() {
+    const albumId = this.props.id || this.props.album.id;
     const music = MusicKit.getInstance();
-    const album = await music.api.library.album(this.props.album.id);
+    const album = await music.api.library.album(albumId);
 
     const albumLength = album.relationships.tracks.data.reduce((totalDuration, track) => (totalDuration + track.attributes.durationInMillis), 0);
 
@@ -30,6 +31,10 @@ export default class AlbumsPanel extends React.Component {
 
   render() {
     const {album, runtime} = this.state;
+
+    if (!album) {
+      return (<Loader />);
+    }
 
     const artworkURL = artworkForMediaItem(album, 220);
 
