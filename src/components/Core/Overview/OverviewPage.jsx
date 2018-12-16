@@ -1,10 +1,9 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
-import Loader from "../../common/Loader";
-import InfiniteScroll from "../common/InfiniteScroll";
 import PageContent from "../Layout/PageContent";
 import PageTitle from "../../common/PageTitle";
-import SongList from "../common/SongList/SongList";
+import classes from "./OverviewPage.scss";
+import Loader from "../../common/Loader";
 
 class OverviewPage extends React.Component {
   constructor(props) {
@@ -17,9 +16,21 @@ class OverviewPage extends React.Component {
 
   render() {
     return (
-      <div>
-        <Loader />
-      </div>
+      <PageContent>
+        <PageTitle
+          title={"Overview"}
+          context={"My Library"}
+        />
+        <p>Browse your Musi.sh library...</p>
+        <div className={classes.flexGrid}>
+          <div>
+            abc
+          </div>
+          <div>
+            <Loader/>
+          </div>
+        </div>
+      </PageContent>
     );
   }
 }
