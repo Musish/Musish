@@ -39,8 +39,9 @@ class ArtistList extends React.Component {
 
   rowRenderer({item: artist, index, isScrolling, isVisible, key, style}) {
     return (
-      <Link key={key} to={`/artists/${artist.id}`}>
-        <li style={style}>
+      <li style={style}>
+        <Link key={key} to={`/artists/${artist.id}`} className={Classes.artist}>
+          <div className={Classes.artistBacker} />
           <div>
             <span className={Classes.pictureWrapper}>
 
@@ -51,8 +52,8 @@ class ArtistList extends React.Component {
               {artist.attributes.name}
             </span>
           </div>
-        </li>
-      </Link>
+        </Link>
+      </li>
     )
   }
 
