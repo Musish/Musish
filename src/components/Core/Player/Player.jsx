@@ -77,7 +77,9 @@ class Player extends React.Component {
   }
 
   handleAddToLibrary() {
-    this.props.mk.instance.player.addToLibrary = 1;
+    console.log('Add to library');
+
+    // this.props.mk.instance.addToLibrary();
   }
 
   handleRepeat() {
@@ -88,18 +90,22 @@ class Player extends React.Component {
     } else if (player.repeatMode === RepeatModeOne) {
       player.repeatMode = RepeatModeAll;
     } else {
-      player.repeatMode = RepeatModeAll;
+      player.repeatMode = RepeatModeNone;
     }
+
+    this.forceUpdate()
   }
 
   handleShuffle() {
-    const music = this.props.mk.instance.player;
+    const player = this.props.mk.instance.player;
 
-    if (music.shuffleMode === ShuffleModeOff) {
-      music.shuffleMode = ShuffleModeSongs;
+    if (player.shuffleMode === ShuffleModeOff) {
+      player.shuffleMode = ShuffleModeSongs;
     } else {
-      music.shuffleMode = ShuffleModeOff;
+      player.shuffleMode = ShuffleModeOff;
     }
+
+    this.forceUpdate()
   }
 
   handleVolumeChange(e) {
@@ -190,8 +196,10 @@ class Player extends React.Component {
 
     const artworkURL = artworkForMediaItem(nowPlayingItem, 40);
 
-    const repeatMode = this.props.mk.instance.player.repeatMode;
-    const shuffleMode = this.props.mk.instance.player.shuffleMode;
+    const repeatMode = mk.instance.player.repeatMode;
+    const shuffleMode = mk.instance.player.shuffleMode;
+
+    const isShuffle = repeatMode === RepeatModeOne || repeatMode === RepeatModeAll;
 
     return (
       <div className={styles.player}>
@@ -232,8 +240,9 @@ class Player extends React.Component {
           </span>
 
           <span
-            className={cx(styles.controls, {[styles.shuffle]: (repeatMode === RepeatModeOne || repeatMode === RepeatModeAll)})}
-            onClick={this.handleRepeat}>
+            className={cx(styles.controls, {[styles.shuffle]: isShuffle, [styles.one]: repeatMode === RepeatModeOne})}
+            onClick={this.handleRepeat}
+          >
             <i className={"fas fa-redo-alt"}/>
           </span>
 
@@ -248,9 +257,9 @@ class Player extends React.Component {
               <div className={styles.volumeBarWrapper}>
                 <input
                   className={cx(styles['progress-bar'], styles.volumeBar)}
-                  style={{backgroundSize: `${this.props.mk.instance.player.volume * 100}% 100%`}}
+                  style={{backgroundSize: `${mk.instance.player.volume * 100}% 100%`}}
                   type={'range'}
-                  value={this.props.mk.instance.player.volume}
+                  value={mk.instance.player.volume}
                   onChange={this.handleVolumeChange}
                   min={0}
                   max={1}
