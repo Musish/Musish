@@ -28,7 +28,7 @@ class Player extends React.Component {
     this.handleAddToLibrary = this.handleAddToLibrary.bind(this);
     this.handleRepeat = this.handleRepeat.bind(this);
     this.handleShuffle = this.handleShuffle.bind(this);
-    this.onVolumeChange = this.onVolumeChange.bind(this);
+    this.handleVolumeChange = this.handleVolumeChange.bind(this);
     this.getVolumeIconClasses = this.getVolumeIconClasses.bind(this);
   }
 
@@ -63,11 +63,11 @@ class Player extends React.Component {
   }
 
   handleNext() {
-    const song = this.props.mk.instance.player
-    song.skipToNextItem();
+    const player = this.props.mk.instance.player
+    player.skipToNextItem();
 
-    if (song.repeatMode === 1) {
-      song.seekToTime(0);
+    if (player.repeatMode === 1) {
+      player.seekToTime(0);
     }
   }
 
@@ -78,24 +78,14 @@ class Player extends React.Component {
 
   handleRepeat() {
     const music = this.props.mk.instance;
-    const {isRepeatOn} = this.state;
 
     if (music.player.repeatMode === 0) {
-      this.setState({
-        isRepeatOn: true,
-      });
       music.player.repeatMode = 1;
     }
     else if (music.player.repeatMode === 1) {
-      this.setState({
-        isRepeatOn: true,
-      });
       music.player.repeatMode = 2;
     }
     else {
-      this.setState({
-        isRepeatOn: false,
-      });
       music.player.repeatMode = 0;
     }
   }
@@ -117,7 +107,7 @@ class Player extends React.Component {
     }
   }
 
-  onVolumeChange(e) {
+  handleVolumeChange(e) {
     this.props.mk.instance.player.volume = e.target.value;
   }
 
@@ -200,6 +190,9 @@ class Player extends React.Component {
 
     const artworkURL = artworkForMediaItem(nowPlayingItem, 40);
 
+    const repeatMode = this.props.mk.instance.player.repeatMode;
+    const shuffleMode = this.props.mk.instance.player.shuffleMode;
+
     return (
       <div className={styles.player}>
         <div className={styles['main-info']}>
@@ -238,7 +231,7 @@ class Player extends React.Component {
             <i className={"fas fa-plus"}/>
           </span>
 
-          <span className={cx(styles.controls, {[styles.shuffle]: this.state.isRepeatOn})} onClick={this.handleRepeat}>
+          <span className={cx(styles.controls, {[styles.shuffle]: (repeatMode === 1 || repeatMode === 2)})} onClick={this.handleRepeat}>
             <i className={"fas fa-redo-alt"}/>
           </span>
 
@@ -256,7 +249,7 @@ class Player extends React.Component {
                   style={{backgroundSize: `${this.props.mk.instance.player.volume * 100}% 100%`}}
                   type={'range'}
                   value={this.props.mk.instance.player.volume}
-                  onChange={this.onVolumeChange}
+                  onChange={this.handleVolumeChange}
                   min={0}
                   max={1}
                   step={0.01}
@@ -264,9 +257,7 @@ class Player extends React.Component {
               </div>
             </div>
           </span>
-
         </div>
-
       </div>
     );
   }

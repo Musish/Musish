@@ -59,9 +59,9 @@
     outline: none;
     padding: 0;
     background: #dedede -webkit-gradient(
-                    linear, 50% 0%, 50% 100%,
-                    color-stop(0%, #fe2851),
-                    color-stop(100%, #fe2851)
+      linear, 50% 0%, 50% 100%,
+      color-stop(0%, #fe2851),
+      color-stop(100%, #fe2851)
     ) no-repeat;
     cursor: pointer;
     -webkit-appearance: none;
@@ -125,10 +125,12 @@
 
 .volumeControlWrapper {
   position: relative;
+
   > i {
     position: absolute;
     z-index: 10;
   }
+
   > .volumeControlContainer {
     position: absolute;
     display: none;
@@ -141,6 +143,7 @@
     box-shadow: 0 3px 10px -3px rgba(0, 0, 0, 0.25);
     align-items: center;
   }
+
   &:hover > .volumeControlContainer {
     display: block;
   }
