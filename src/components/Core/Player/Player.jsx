@@ -1,6 +1,13 @@
 import React from 'react';
 import styles from './Player.scss'
-import {artworkForMediaItem} from "../common/Utils";
+import {
+  artworkForMediaItem,
+  RepeatModeAll,
+  RepeatModeNone,
+  RepeatModeOne,
+  ShuffleModeOff,
+  ShuffleModeSongs
+} from "../common/Utils";
 import cx from 'classnames';
 import withMK from '../../../hoc/withMK';
 
@@ -61,7 +68,7 @@ class Player extends React.Component {
   }
 
   handleNext() {
-    const player = this.props.mk.instance.player
+    const player = this.props.mk.instance.player;
     player.skipToNextItem();
 
     if (player.repeatMode === 1) {
@@ -70,32 +77,28 @@ class Player extends React.Component {
   }
 
   handleAddToLibrary() {
-    const music = this.props.mk.instance.player;
-    music.addToLibrary = 1;
+    this.props.mk.instance.player.addToLibrary = 1;
   }
 
   handleRepeat() {
-    const music = this.props.mk.instance.player;
+    const player = this.props.mk.instance.player;
 
-    if (music.repeatMode === 0) {
-      music.repeatMode = 1;
-    }
-    else if (music.repeatMode === 1) {
-      music.repeatMode = 2;
-    }
-    else {
-      music.repeatMode = 0;
+    if (player.repeatMode === RepeatModeNone) {
+      player.repeatMode = RepeatModeOne;
+    } else if (player.repeatMode === RepeatModeOne) {
+      player.repeatMode = RepeatModeAll;
+    } else {
+      player.repeatMode = RepeatModeAll;
     }
   }
 
   handleShuffle() {
     const music = this.props.mk.instance.player;
 
-    if (music.shuffleMode === 0) {
-      music.shuffleMode = 1;
-    }
-    else {
-      music.shuffleMode = 0;
+    if (music.shuffleMode === ShuffleModeOff) {
+      music.shuffleMode = ShuffleModeSongs;
+    } else {
+      music.shuffleMode = ShuffleModeOff;
     }
   }
 
@@ -223,11 +226,13 @@ class Player extends React.Component {
             <i className={"fas fa-plus"}/>
           </span>
 
-          <span className={cx(styles.controls, {[styles.shuffle]: (repeatMode === 1 || repeatMode === 2)})} onClick={this.handleRepeat}>
+          <span
+            className={cx(styles.controls, {[styles.shuffle]: (repeatMode === RepeatModeOne || repeatMode === RepeatModeAll)})}
+            onClick={this.handleRepeat}>
             <i className={"fas fa-redo-alt"}/>
           </span>
 
-          <span className={cx(styles.controls, {[styles.shuffle]: (shuffleMode === 1)})}
+          <span className={cx(styles.controls, {[styles.shuffle]: shuffleMode === ShuffleModeSongs})}
                 onClick={this.handleShuffle}>
             <i className={"fas fa-random"}/>
           </span>

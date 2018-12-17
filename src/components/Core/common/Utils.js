@@ -23,3 +23,10 @@ export function humanifyMillis(duration) {
 
   return humanReadable;
 }
+
+export const RepeatModeNone = 0;
+export const RepeatModeOne = 1;
+export const RepeatModeAll = 2;
+
+export const ShuffleModeOff = 0;
+export const ShuffleModeSongs = 1;
