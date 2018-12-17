@@ -3,6 +3,7 @@ import styles from './Player.scss'
 import {artworkForMediaItem} from "../common/Utils";
 import cx from 'classnames';
 import withMK from '../../../hoc/withMK';
+import Queue from "./Queue/Queue";
 
 class Player extends React.Component {
   constructor(props) {
@@ -223,8 +224,11 @@ class Player extends React.Component {
 
         <div className={styles.buttons}>
 
-          <span className={styles.controls} onClick={this.handleAddToLibrary}>
-            <i className={"fas fa-plus"}/>
+          <span className={cx(styles.controls, styles.volumeControlWrapper)}>
+            <i className={"fas fa-volume-up"}/>
+            <div className={styles.volumeControlContainer}>
+              |
+            </div>
           </span>
 
           <span className={cx(styles.controls, {[styles.shuffle]: this.state.isRepeatOn})} onClick={this.handleRepeat}>
@@ -235,15 +239,16 @@ class Player extends React.Component {
             <i className={"fas fa-random"}/>
           </span>
 
-          <span className={cx(styles.controls, styles.volumeControlWrapper)}>
-            <i className={"fas fa-volume-up"}/>
-            <div className={styles.volumeControlContainer}>
-              |
+          <span className={cx(styles.controls, styles.queueWrapper)}>
+            <i className={"fas fa-list-ol"}/>
+            <div className={styles.queueContainer}>
+              <div className={styles.queueInner}>
+                <h3>Up next</h3>
+                <Queue />
+              </div>
             </div>
           </span>
-
         </div>
-
       </div>
     );
   }

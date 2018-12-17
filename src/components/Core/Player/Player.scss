@@ -115,11 +115,11 @@
         color: $primary_color;
       }
 
-      &:hover {
+      &:hover i {
         color: #555555;
       }
 
-      &:active {
+      &:active i {
         transform: scale(0.95);
       }
     }
@@ -145,5 +145,43 @@
   }
   &:hover > .volumeControlContainer {
     display: block;
+  }
+}
+
+.queueWrapper {
+  position: relative;
+  > i {
+    z-index: 752;
+  }
+  .queueContainer {
+    position: absolute;
+    bottom: -9px;
+    right: -250px;
+    width: 250px;
+
+    &:before {
+      position: absolute;
+      height: 35px;
+      bottom: 0;
+      z-index: 751;
+      left: -35px;
+      width: 35px;
+      content: '';
+      background: #ffffff;
+      border: solid 1px #eee;
+      border-right: none;
+      border-radius: 8px 0 0 8px;
+    }
+    .queueInner {
+      position: relative;
+      z-index: 750;
+      bottom: 0;
+      background: #fff;
+      border: solid 1px #eee;
+      border-radius: 4px 4px 4px 0;
+      width: 250px;
+      height: 400px;
+      overflow: auto;
+    }
   }
 }
