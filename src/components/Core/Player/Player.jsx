@@ -1,6 +1,13 @@
 import React from 'react';
 import styles from './Player.scss'
-import {artworkForMediaItem} from "../common/Utils";
+import {
+  artworkForMediaItem,
+  RepeatModeAll,
+  RepeatModeNone,
+  RepeatModeOne,
+  ShuffleModeOff,
+  ShuffleModeSongs
+} from "../common/Utils";
 import cx from 'classnames';
 import withMK from '../../../hoc/withMK';
 import Queue from "./Queue/Queue";
@@ -12,8 +19,7 @@ class Player extends React.Component {
     this.state = {
       isScrubbing: false,
       scrubbingPosition: 0,
-      isShuffleOn: false,
-      isRepeatOn: false,
+      volume: 0,
     };
 
     this.handlePrevious = this.handlePrevious.bind(this);
@@ -28,6 +34,8 @@ class Player extends React.Component {
     this.handleAddToLibrary = this.handleAddToLibrary.bind(this);
     this.handleRepeat = this.handleRepeat.bind(this);
     this.handleShuffle = this.handleShuffle.bind(this);
+    this.handleVolumeChange = this.handleVolumeChange.bind(this);
+    this.getVolumeIconClasses = this.getVolumeIconClasses.bind(this);
   }
 
   static timeToPercent(time, duration) {
@@ -61,74 +69,77 @@ class Player extends React.Component {
   }
 
   handleNext() {
-    const song = this.props.mk.instance.player
-    song.skipToNextItem();
+    const player = this.props.mk.instance.player;
+    player.skipToNextItem();
 
-    if (song.repeatMode === 1) {
-      song.seekToTime(0);
+    if (player.repeatMode === 1) {
+      player.seekToTime(0);
     }
   }
 
   handleAddToLibrary() {
-    const music = this.props.mk.instance;
-    music.player.addToLibrary = 1;
+    console.log('Add to library');
+
+    // this.props.mk.instance.addToLibrary();
   }
 
   handleRepeat() {
-    const music = this.props.mk.instance;
-    const {isRepeatOn} = this.state;
+    const player = this.props.mk.instance.player;
 
-    if (music.player.repeatMode === 0) {
-      this.setState({
-        isRepeatOn: true,
-      });
-      music.player.repeatMode = 1;
+    if (player.repeatMode === RepeatModeNone) {
+      player.repeatMode = RepeatModeOne;
+    } else if (player.repeatMode === RepeatModeOne) {
+      player.repeatMode = RepeatModeAll;
+    } else {
+      player.repeatMode = RepeatModeNone;
     }
-    else if (music.player.repeatMode === 1) {
-      this.setState({
-        isRepeatOn: true,
-      });
-      music.player.repeatMode = 2;
-    }
-    else {
-      this.setState({
-        isRepeatOn: false,
-      });
-      music.player.repeatMode = 0;
-    }
+
+    this.forceUpdate()
   }
 
   handleShuffle() {
-    const music = this.props.mk.instance;
+    const player = this.props.mk.instance.player;
 
-    if (this.state.isShuffleOn === false) {
-      this.setState({
-        isShuffleOn: true,
-      });
-      music.player.shuffleMode = 1;
+    if (player.shuffleMode === ShuffleModeOff) {
+      player.shuffleMode = ShuffleModeSongs;
+    } else {
+      player.shuffleMode = ShuffleModeOff;
     }
-    else {
-      this.setState({
-        isShuffleOn: false,
-      });
-      music.player.shuffleMode = 0;
-    }
+
+    this.forceUpdate()
   }
 
-  handleVolume(volume) {
-    const music = MusicKit.getInstance();
-    music.player.volume();
+  handleVolumeChange(e) {
+    this.props.mk.instance.player.volume = e.target.value;
+  }
+
+  getVolumeIconClasses() {
+    const volume = this.props.mk.instance.player.volume * 100;
+
+    if (volume === 0) {
+      return 'fas fa-times';
+    }
+
+    if (volume > 0 && volume < 30) {
+      return 'fas fa-volume-off';
+    }
+
+    if (volume >= 30 && volume < 60) {
+      return 'fas fa-volume-down';
+    }
+
+    return 'fas fa-volume-up';
   }
 
   renderProgress() {
     const {mediaItem: {item: nowPlayingItem}, playbackTime} = this.props.mk;
     const duration = nowPlayingItem.playbackDuration / 1000;
-    const percent = Player.timeToPercent(playbackTime.currentPlaybackTime, duration);
+    const percent = playbackTime ? Player.timeToPercent(playbackTime.currentPlaybackTime, duration) : 0;
 
     return (
       <input
         className={styles['progress-bar']}
-        style={{'backgroundSize': `${percent}% 100%`}}
+        style={{backgroundSize: `${percent}% 100%`}}
         type={'range'}
         value={this.getScrubberValue()}
         onChange={this.onScrub}
@@ -136,6 +147,7 @@ class Player extends React.Component {
         onMouseUp={this.onEndScrubbing}
         min={0}
         max={nowPlayingItem.playbackDuration}
+        step={0.01}
       />
     );
   }
@@ -167,18 +179,12 @@ class Player extends React.Component {
       return this.state.scrubbingPosition;
     }
 
-    return this.props.mk.playbackTime.currentPlaybackTime * 1000;
-  }
+    const {playbackTime} = this.props.mk;
+    if (playbackTime) {
+      return playbackTime.currentPlaybackTime * 1000
+    }
 
-  renderVolume() {
-    const percent = 50;
-    return (
-      <div className={styles['progress-bar']}>
-        <div style={{
-          width: `${percent}%`
-        }}/>
-      </div>
-    );
+    return 0;
   }
 
   render() {
@@ -190,6 +196,12 @@ class Player extends React.Component {
     }
 
     const artworkURL = artworkForMediaItem(nowPlayingItem, 40);
+
+    const repeatMode = mk.instance.player.repeatMode;
+    const shuffleMode = mk.instance.player.shuffleMode;
+
+    const isShuffle = repeatMode === RepeatModeOne || repeatMode === RepeatModeAll;
+
     return (
       <div className={styles.player}>
         <div className={styles['main-info']}>
@@ -225,17 +237,32 @@ class Player extends React.Component {
         <div className={styles.buttons}>
 
           <span className={cx(styles.controls, styles.volumeControlWrapper)}>
-            <i className={"fas fa-volume-up"}/>
+            <i className={this.getVolumeIconClasses()}/>
             <div className={styles.volumeControlContainer}>
-              |
+              <div className={styles.volumeBarWrapper}>
+                <input
+                  className={cx(styles['progress-bar'], styles.volumeBar)}
+                  style={{backgroundSize: `${mk.instance.player.volume * 100}% 100%`}}
+                  type={'range'}
+                  value={mk.instance.player.volume}
+                  onChange={this.handleVolumeChange}
+                  min={0}
+                  max={1}
+                  step={0.01}
+                />
+              </div>
             </div>
           </span>
 
-          <span className={cx(styles.controls, {[styles.shuffle]: this.state.isRepeatOn})} onClick={this.handleRepeat}>
+          <span
+            className={cx(styles.controls, {[styles.shuffle]: isShuffle, [styles.one]: repeatMode === RepeatModeOne})}
+            onClick={this.handleRepeat}
+          >
             <i className={"fas fa-redo-alt"}/>
           </span>
 
-          <span className={cx(styles.controls, {[styles.shuffle]: this.state.isShuffleOn})} onClick={this.handleShuffle}>
+          <span className={cx(styles.controls, {[styles.shuffle]: shuffleMode === ShuffleModeSongs})}
+                onClick={this.handleShuffle}>
             <i className={"fas fa-random"}/>
           </span>
 
@@ -260,6 +287,7 @@ const bindings = {
   [MusicKit.Events.queuePositionDidChange]: 'queuePosition',
   [MusicKit.Events.playbackTimeDidChange]: 'playbackTime',
   [MusicKit.Events.playbackStateDidChange]: 'playbackState',
+  [MusicKit.Events.playbackVolumeDidChange]: 'playbackVolume',
 };
 
 export default withMK(Player, bindings);
