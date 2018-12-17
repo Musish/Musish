@@ -11,8 +11,6 @@ class Player extends React.Component {
     this.state = {
       isScrubbing: false,
       scrubbingPosition: 0,
-      isShuffleOn: false,
-      isRepeatOn: false,
       volume: 0,
     };
 
@@ -93,16 +91,10 @@ class Player extends React.Component {
   handleShuffle() {
     const music = this.props.mk.instance;
 
-    if (this.state.isShuffleOn === false) {
-      this.setState({
-        isShuffleOn: true,
-      });
+    if (music.player.shuffleMode === 0) {
       music.player.shuffleMode = 1;
     }
     else {
-      this.setState({
-        isShuffleOn: false,
-      });
       music.player.shuffleMode = 0;
     }
   }
@@ -235,7 +227,7 @@ class Player extends React.Component {
             <i className={"fas fa-redo-alt"}/>
           </span>
 
-          <span className={cx(styles.controls, {[styles.shuffle]: this.state.isShuffleOn})}
+          <span className={cx(styles.controls, {[styles.shuffle]: (shuffleMode === 1)})}
                 onClick={this.handleShuffle}>
             <i className={"fas fa-random"}/>
           </span>
