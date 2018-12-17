@@ -15,11 +15,9 @@ export default class ArtistsPage extends React.Component {
     return (
       <>
         <ArtistList/>
-        <PageContent>
-          <Route path={'/artists/:id'} exact render={({match: {params: {id}}}) => (
-            <ArtistAlbums key={id} id={id}/>
-          )}/>
-        </PageContent>
+        <Route path={'/artists/:id'} exact render={({match: {params: {id}}}) => (
+          <ArtistAlbums key={id} id={id}/>
+        )}/>
       </>
     );
   }
@@ -101,7 +99,7 @@ class ArtistAlbums extends React.Component {
     })
   }
 
-  render() {
+  renderContent() {
     const {artist} = this.state;
 
     if (!artist) {
@@ -109,9 +107,19 @@ class ArtistAlbums extends React.Component {
     }
 
     return (
-      <PageContent>
+      <>
         <PageTitle title={artist.attributes.name} context={"My Library"}/>
         {this.renderArtists()}
+      </>
+    )
+  }
+
+  render() {
+
+
+    return (
+      <PageContent>
+        {this.renderContent()}
       </PageContent>
     );
   }

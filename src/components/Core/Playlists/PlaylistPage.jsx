@@ -27,13 +27,13 @@ class PlaylistPage extends React.Component {
     });
   }
 
-  render() {
+  renderContent() {
     if (!this.state.playlist) {
       return <Loader/>;
     }
 
     return (
-      <PageContent innerRef={this.ref}>
+      <>
         <PageTitle
           title={this.state.playlist.attributes.name}
           context={"My Library"}
@@ -45,6 +45,14 @@ class PlaylistPage extends React.Component {
           showArtist={true}
           showAlbum={true}
         />
+      </>
+    )
+  }
+
+  render() {
+    return (
+      <PageContent innerRef={this.ref}>
+        {this.renderContent()}
       </PageContent>
     );
   }

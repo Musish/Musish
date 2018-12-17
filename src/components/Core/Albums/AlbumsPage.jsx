@@ -4,19 +4,23 @@ import Loader from '../../common/Loader';
 import AlbumItem from './AlbumItem';
 
 import Classes from './Albums.scss';
-import PageTitle from "../../common/PageTitle";
-import PageContent from "../Layout/PageContent";
-import InfiniteLoader from "../common/InfiniteLoader";
-import Modal from "../../common/Modal/Modal";
-import ArtistsPage from "../Artists/ArtistsPage";
-import AlbumsPanel from "./AlbumPanel";
+import PageTitle from '../../common/PageTitle';
+import PageContent from '../Layout/PageContent';
+import InfiniteLoader from '../common/InfiniteLoader';
+import Modal from '../../common/Modal/Modal';
+import ArtistsPage from '../Artists/ArtistsPage';
+import AlbumsPanel from './AlbumPanel';
+import {Route} from 'react-router-dom';
 
 export default class AlbumsPage extends React.Component {
   constructor(props) {
     super(props);
 
+    this.ref = React.createRef();
+
     this.renderContent = this.renderContent.bind(this);
     this.onScroll = this.onScroll.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
 
   async load(params) {
@@ -25,11 +29,15 @@ export default class AlbumsPage extends React.Component {
     return await music.api.library.albums(null, params);
   }
 
-  renderItems({items, loading}) {
-    if (!items) {
-      return <Loader/>
-    }
+  onScroll({target: {scrollTop, scrollHeight, clientHeight}}, onScroll) {
+    onScroll({scrollTop, scrollHeight, clientHeight})
+  }
 
+  handleClose() {
+    this.props.history.push('/albums');
+  }
+
+  renderItems({items}) {
     const albums = items.map(
       (album, i) => {
         return (
@@ -38,38 +46,30 @@ export default class AlbumsPage extends React.Component {
       });
 
     return (
-      <>
-        <div className={Classes.albumsGrid}>
-          {albums}
-        </div>
-        {loading && <Loader />}
-      </>
-    )
-  }
-
-  onScroll({target: {scrollTop, scrollHeight, clientHeight}}, onScroll) {
-    onScroll({scrollTop, scrollHeight, clientHeight})
-  }
-
-  renderContent({onScroll}, state) {
-    return (
-      <div onScroll={e => this.onScroll(e, onScroll)}
-           style={{height: '100%', overflow: 'auto'}}>
-        <PageTitle title={"Albums"} context={"My Library"}/>
-
-        {this.renderItems(state)}
+      <div className={Classes.albumsGrid}>
+        {albums}
       </div>
     )
   }
 
+  renderContent({onScroll}, state) {
+    return this.renderItems(state)
+  }
+
   render() {
     return (
-      <PageContent>
-        <Modal render={() => (
-          <AlbumsPanel id={"l.3nJoOaz"}  />
+      <>
+        <Route path={'/albums/:id'} exact render={({match: {params: {id}}}) => (
+          <Modal open={true} handleClose={this.handleClose} render={() => (
+            <AlbumsPanel id={id} />
+          )} />
         )} />
-        <InfiniteLoader load={this.load} render={this.renderContent}/>
-      </PageContent>
+        <PageContent innerRef={this.ref}>
+          <PageTitle title={'Albums'} context={'My Library'}/>
+
+          <InfiniteLoader scrollElement={this.ref} load={this.load} render={this.renderContent}/>
+        </PageContent>
+      </>
     );
   }
 }

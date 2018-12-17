@@ -10,11 +10,9 @@ import {
 import AlbumsPage from './Core/Albums/AlbumsPage';
 import Layout from './Core/Layout/Layout';
 import ArtistsPage from './Core/Artists/ArtistsPage';
-import Artist from './Core/Artists/ArtistPage';
 import Playlist from './Core/Playlists/PlaylistPage';
 import SongsPage from './Core/Songs/SongsPage';
 import PlaylistsPage from './Core/Playlists/PlaylistsPage';
-import Album from './Core/Albums/AlbumPage';
 import OverviewPage from './Core/Overview/OverviewPage';
 import BrowsePage from "./Core/Browse/BrowsePage";
 
@@ -27,8 +25,7 @@ export default class App extends React.Component {
               <Layout>
                 <Switch>
                   <Route path="/" exact component={OverviewPage}/>
-                  <Route path="/albums" exact component={AlbumsPage}/>
-                  <Route path="/albums/:id" exact component={Album}/>
+                  <Route path="/albums" component={AlbumsPage}/>
                   <Route path="/playlists" exact component={PlaylistsPage}/>
                   <Route path="/playlists/:id" exact component={props => <Playlist key={props.location.pathname} {...props} />} />
                   <Route path="/artists" exact component={ArtistsPage}/>
