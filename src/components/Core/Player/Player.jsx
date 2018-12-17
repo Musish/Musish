@@ -118,7 +118,7 @@ class Player extends React.Component {
   }
 
   render() {
-        const {mk} = this.props;
+    const {mk} = this.props;
     const nowPlayingItem = mk.mediaItem && mk.mediaItem.item;
 
     if (!nowPlayingItem) {
