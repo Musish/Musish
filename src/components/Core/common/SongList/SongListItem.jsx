@@ -80,7 +80,7 @@ class SongListItem extends React.Component {
     }
 
     if (song.id == mediaItem.item.id) {
-
+      return true;
     }
 
     const {playParams} = song.attributes;
@@ -92,13 +92,16 @@ class SongListItem extends React.Component {
     return playParams.catalogId == mediaItem.item.id
   }
 
-  renderIcon() {
+  isPlaying() {
+    return this.isCurrentItem() && this.props.mk.instance.player.isPlaying;
+  }
 
-    const {showAlbum, song, isPlaying, mk: {mediaItem}} = this.props;
+  renderIcon() {
+    const {showAlbum, song} = this.props;
     const isCurrentItem = this.isCurrentItem();
 
     const playingAnimation = (
-      <div className={cx(classes.playingAnimation, {[classes.animated]: isPlaying})}>
+      <div className={cx(classes.playingAnimation, {[classes.animated]: this.isPlaying()})}>
         <div><span/><span/><span/><span/><span/></div>
       </div>
     );
@@ -122,7 +125,7 @@ class SongListItem extends React.Component {
   }
 
   render() {
-    const {isPlaying, showArtist, showAlbum, song} = this.props;
+    const {showArtist, showAlbum, song} = this.props;
     const {attributes} = song;
     const inLibrary = attributes.playParams && attributes.playParams.isLibrary;
     const duration = this.getTime(attributes.durationInMillis);
@@ -130,7 +133,7 @@ class SongListItem extends React.Component {
     const explicit = <></>; // TODO: get if the song is explicit or not
 
     return (
-      <div className={`${classes.song} ${isPlaying ? 'playing' : ''}`}
+      <div className={`${classes.song} ${this.isPlaying() ? 'playing' : ''}`}
            onClick={this.handleClick}
            style={this.props.style}>
         <ContextMenuTrigger id={MENU_TYPE}
@@ -168,13 +171,13 @@ SongListItem.propTypes = {
   index: PropTypes.number.isRequired,
   songs: PropTypes.array.isRequired,
   albumArt: PropTypes.bool.isRequired,
-  isPlaying: PropTypes.bool.isRequired,
   showArtist: PropTypes.bool.isRequired,
   showAlbum: PropTypes.bool.isRequired,
 };
 
 const bindings = {
   [MusicKit.Events.mediaItemDidChange]: 'mediaItem',
+  [MusicKit.Events.playbackStateDidChange]: 'playbackState',
 };
 
 export default withMK(SongListItem, bindings);

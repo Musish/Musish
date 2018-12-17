@@ -70,28 +70,12 @@ export default class SongList extends React.Component {
   constructor(props) {
     super(props);
 
-    const music = MusicKit.getInstance();
-    let currentSong = null;
-    if (music.player.isPlaying) {
-      currentSong = music.player.nowPlayingItem.id;
-    }
-
     this.state = {
-      currentSong: currentSong,
-      isPlaying: music.player.isPlaying,
       songs: null,
     };
 
-    this.onMediaItemDidChange = this.onMediaItemDidChange.bind(this);
-    this.playbackStateDidChange = this.playbackStateDidChange.bind(this);
     this.rowRenderer = this.rowRenderer.bind(this);
     this.onSetItems = this.onSetItems.bind(this);
-  }
-
-  onMediaItemDidChange(event) {
-    this.setState({
-      currentSong: event.item.id
-    })
   }
 
   onSetItems({items: songs}) {
@@ -100,39 +84,8 @@ export default class SongList extends React.Component {
     })
   }
 
-  playbackStateDidChange(_) {
-    const music = MusicKit.getInstance();
-    this.setState({
-      isPlaying: music.player.isPlaying,
-    });
-  };
-
-  componentDidMount() {
-    const music = MusicKit.getInstance();
-    music.addEventListener(
-      MusicKit.Events.mediaItemDidChange,
-      this.onMediaItemDidChange,
-    );
-    music.addEventListener(
-      MusicKit.Events.playbackStateDidChange,
-      this.playbackStateDidChange,
-    );
-  }
-
-  componentWillUnmount() {
-    const music = MusicKit.getInstance();
-    music.removeEventListener(
-      MusicKit.Events.mediaItemDidChange,
-      this.onMediaItemDidChange,
-    );
-    music.removeEventListener(
-      MusicKit.Events.playbackStateDidChange,
-      this.playbackStateDidChange,
-    );
-  }
-
   rowRenderer({item: song, index, isScrolling, isVisible, key, style}) {
-    const {currentSong, isPlaying, songs} = this.state;
+    const {songs} = this.state;
     const {album, showArtist, showAlbum} = this.props;
 
     return (
@@ -142,7 +95,6 @@ export default class SongList extends React.Component {
         index={index}
         songs={songs}
         albumArt={!album}
-        isPlaying={song.attributes.playParams && song.attributes.playParams.catalogId === currentSong && isPlaying}
         showArtist={showArtist}
         showAlbum={showAlbum}
         style={style}
