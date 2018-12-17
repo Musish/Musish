@@ -70,7 +70,7 @@ class Player extends React.Component {
 
   handleAddToLibrary() {
     const music = this.props.mk.instance;
-    music.player.addToLibrary();
+    music.player.addToLibrary = 1;
   }
 
   handleRepeat() {
