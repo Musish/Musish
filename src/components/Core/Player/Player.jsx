@@ -13,6 +13,7 @@ class Player extends React.Component {
       scrubbingPosition: 0,
       isShuffleOn: false,
       isRepeatOn: false,
+      volume: 0,
     };
 
     this.handlePrevious = this.handlePrevious.bind(this);
@@ -27,6 +28,7 @@ class Player extends React.Component {
     this.handleAddToLibrary = this.handleAddToLibrary.bind(this);
     this.handleRepeat = this.handleRepeat.bind(this);
     this.handleShuffle = this.handleShuffle.bind(this);
+    this.onVolumeChange = this.onVolumeChange.bind(this);
   }
 
   static timeToPercent(time, duration) {
@@ -114,9 +116,8 @@ class Player extends React.Component {
     }
   }
 
-  handleVolume(volume) {
-    const music = MusicKit.getInstance();
-    music.player.volume();
+  onVolumeChange(e) {
+    this.props.mk.instance.player.volume = e.target.value;
   }
 
   renderProgress() {
@@ -127,7 +128,7 @@ class Player extends React.Component {
     return (
       <input
         className={styles['progress-bar']}
-        style={{'backgroundSize': `${percent}% 100%`}}
+        style={{backgroundSize: `${percent}% 100%`}}
         type={'range'}
         value={this.getScrubberValue()}
         onChange={this.onScrub}
@@ -135,6 +136,7 @@ class Player extends React.Component {
         onMouseUp={this.onEndScrubbing}
         min={0}
         max={nowPlayingItem.playbackDuration}
+        step={0.01}
       />
     );
   }
@@ -169,17 +171,6 @@ class Player extends React.Component {
     return this.props.mk.playbackTime.currentPlaybackTime * 1000;
   }
 
-  renderVolume() {
-    const percent = 50;
-    return (
-      <div className={styles['progress-bar']}>
-        <div style={{
-          width: `${percent}%`
-        }}/>
-      </div>
-    );
-  }
-
   render() {
     const {mk} = this.props;
     const nowPlayingItem = mk.mediaItem && mk.mediaItem.item;
@@ -189,6 +180,7 @@ class Player extends React.Component {
     }
 
     const artworkURL = artworkForMediaItem(nowPlayingItem, 40);
+
     return (
       <div className={styles.player}>
         <div className={styles['main-info']}>
@@ -231,14 +223,27 @@ class Player extends React.Component {
             <i className={"fas fa-redo-alt"}/>
           </span>
 
-          <span className={cx(styles.controls, {[styles.shuffle]: this.state.isShuffleOn})} onClick={this.handleShuffle}>
+          <span className={cx(styles.controls, {[styles.shuffle]: this.state.isShuffleOn})}
+                onClick={this.handleShuffle}>
             <i className={"fas fa-random"}/>
           </span>
 
           <span className={cx(styles.controls, styles.volumeControlWrapper)}>
             <i className={"fas fa-volume-up"}/>
             <div className={styles.volumeControlContainer}>
-              |
+              <div className={styles.volumeBarWrapper}>
+                <input
+                  onClick={this.handleVolume}
+                  className={cx(styles['progress-bar'], styles.volumeBar)}
+                  style={{backgroundSize: `${this.props.mk.instance.player.volume * 100}% 100%`}}
+                  type={'range'}
+                  value={this.props.mk.instance.player.volume}
+                  onChange={this.onVolumeChange}
+                  min={0}
+                  max={1}
+                  step={0.01}
+                />
+              </div>
             </div>
           </span>
 
@@ -255,6 +260,7 @@ const bindings = {
   [MusicKit.Events.queuePositionDidChange]: 'queuePosition',
   [MusicKit.Events.playbackTimeDidChange]: 'playbackTime',
   [MusicKit.Events.playbackStateDidChange]: 'playbackState',
+  [MusicKit.Events.playbackVolumeDidChange]: 'playbackVolume',
 };
 
 export default withMK(Player, bindings);
