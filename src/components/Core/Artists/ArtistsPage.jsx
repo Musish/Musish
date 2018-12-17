@@ -40,12 +40,12 @@ class ArtistList extends React.Component {
   rowRenderer({item: artist, index, isScrolling, isVisible, key, style}) {
     const path = `/artists/${artist.id}`;
     return (
-      <li style={style}>
+      <li key={key} style={style}>
         <Route path={path} exact children={({match}) => (
-          <Link key={key} to={path} className={cx(classes.artist, (!!match ? classes.activeArtist : null))}>
+          <Link to={path} className={cx(classes.artist, (!!match ? classes.activeArtist : null))}>
             <div className={classes.artistBacker} />
             <div>
-              <span className={classes.pictureWrapper}></span>
+              <span className={classes.pictureWrapper} />
             </div>
             <div>
               <span className={classes.artistName}>

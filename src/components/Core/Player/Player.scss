@@ -1,3 +1,5 @@
+@import '../../../styles/settings/colors';
+
 .player {
   background: #ffffff;
   padding: 20px 15px;
@@ -56,13 +58,11 @@
     margin: auto;
     outline: none;
     padding: 0;
-    background:
-      #dedede
-      -webkit-gradient(
-        linear, 50% 0%, 50% 100%,
-        color-stop(0%, #fe2851),
-        color-stop(100%, #fe2851)
-      ) no-repeat;
+    background: #dedede -webkit-gradient(
+      linear, 50% 0%, 50% 100%,
+      color-stop(0%, #fe2851),
+      color-stop(100%, #fe2851)
+    ) no-repeat;
     cursor: pointer;
     -webkit-appearance: none;
 
@@ -72,7 +72,6 @@
       background: transparent;
       -webkit-appearance: none;
     }
-
 
     &::-webkit-slider-thumb {
       height: 10px;
@@ -100,6 +99,19 @@
         font-size: 24px;
       }
 
+      &.controls {
+        font-size: 14px;
+        margin-top: 20px;
+        display: flex;
+        flex: 1;
+        justify-content: center;
+        color: #888888;
+      }
+
+      &.shuffle {
+        color: $primary_color;
+      }
+
       &:hover {
         color: #555555;
       }
@@ -107,6 +119,45 @@
       &:active {
         transform: scale(0.95);
       }
+    }
+  }
+}
+
+.volumeControlWrapper {
+  position: relative;
+
+  > i {
+    position: absolute;
+    z-index: 10;
+  }
+
+  > .volumeControlContainer {
+    position: absolute;
+    display: none;
+    z-index: 5;
+    background: #f7f7f7;
+    border-radius: 5px;
+    width: 30px;
+    height: 120px;
+    bottom: -5px;
+    box-shadow: 0 3px 10px -3px rgba(0, 0, 0, 0.25);
+    align-items: center;
+  }
+
+  &:hover > .volumeControlContainer {
+    display: block;
+  }
+
+  .volumeBarWrapper {
+    display: flex;
+    width: 100%;
+    height: 100px;
+    align-items: center;
+    justify-content: center;
+
+    .volumeBar {
+      transform: rotate(-90deg);
+      width: 80px;
     }
   }
 }

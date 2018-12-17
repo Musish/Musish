@@ -1,6 +1,14 @@
 import React from 'react';
 import styles from './Player.scss'
-import {artworkForMediaItem} from '../common/Utils';
+import {
+  artworkForMediaItem,
+  RepeatModeAll,
+  RepeatModeNone,
+  RepeatModeOne,
+  ShuffleModeOff,
+  ShuffleModeSongs
+} from "../common/Utils";
+import cx from 'classnames';
 import withMK from '../../../hoc/withMK';
 
 class Player extends React.Component {
@@ -10,6 +18,7 @@ class Player extends React.Component {
     this.state = {
       isScrubbing: false,
       scrubbingPosition: 0,
+      volume: 0,
     };
 
     this.handlePrevious = this.handlePrevious.bind(this);
@@ -20,6 +29,12 @@ class Player extends React.Component {
     this.onScrub = this.onScrub.bind(this);
     this.handlePlay = this.handlePlay.bind(this);
     this.handlePause = this.handlePause.bind(this);
+
+    this.handleAddToLibrary = this.handleAddToLibrary.bind(this);
+    this.handleRepeat = this.handleRepeat.bind(this);
+    this.handleShuffle = this.handleShuffle.bind(this);
+    this.handleVolumeChange = this.handleVolumeChange.bind(this);
+    this.getVolumeIconClasses = this.getVolumeIconClasses.bind(this);
   }
 
   static timeToPercent(time, duration) {
@@ -53,7 +68,60 @@ class Player extends React.Component {
   }
 
   handleNext() {
-    this.props.mk.instance.player.skipToNextItem();
+    const player = this.props.mk.instance.player;
+    player.skipToNextItem();
+
+    if (player.repeatMode === 1) {
+      player.seekToTime(0);
+    }
+  }
+
+  handleAddToLibrary() {
+    this.props.mk.instance.player.addToLibrary = 1;
+  }
+
+  handleRepeat() {
+    const player = this.props.mk.instance.player;
+
+    if (player.repeatMode === RepeatModeNone) {
+      player.repeatMode = RepeatModeOne;
+    } else if (player.repeatMode === RepeatModeOne) {
+      player.repeatMode = RepeatModeAll;
+    } else {
+      player.repeatMode = RepeatModeAll;
+    }
+  }
+
+  handleShuffle() {
+    const music = this.props.mk.instance.player;
+
+    if (music.shuffleMode === ShuffleModeOff) {
+      music.shuffleMode = ShuffleModeSongs;
+    } else {
+      music.shuffleMode = ShuffleModeOff;
+    }
+  }
+
+  handleVolumeChange(e) {
+    this.props.mk.instance.player.volume = e.target.value;
+  }
+
+  getVolumeIconClasses() {
+    const volume = this.props.mk.instance.player.volume * 100;
+
+    if (volume === 0) {
+      return 'fas fa-times';
+    }
+
+    if (volume > 0 && volume < 30) {
+      return 'fas fa-volume-off';
+    }
+
+    if (volume >= 30 && volume < 60) {
+      return 'fas fa-volume-down';
+    }
+
+    return 'fas fa-volume-up';
   }
 
   renderProgress() {
@@ -64,7 +132,7 @@ class Player extends React.Component {
     return (
       <input
         className={styles['progress-bar']}
-        style={{'backgroundSize': `${percent}% 100%`}}
+        style={{backgroundSize: `${percent}% 100%`}}
         type={'range'}
         value={this.getScrubberValue()}
         onChange={this.onScrub}
@@ -72,6 +140,7 @@ class Player extends React.Component {
         onMouseUp={this.onEndScrubbing}
         min={0}
         max={nowPlayingItem.playbackDuration}
+        step={0.01}
       />
     );
   }
@@ -111,17 +180,6 @@ class Player extends React.Component {
     return 0;
   }
 
-  renderVolume() {
-    const percent = 50;
-    return (
-      <div className={styles['progress-bar']}>
-        <div style={{
-          width: `${percent}%`
-        }}/>
-      </div>
-    );
-  }
-
   render() {
     const {mk} = this.props;
     const nowPlayingItem = mk.mediaItem && mk.mediaItem.item;
@@ -131,6 +189,10 @@ class Player extends React.Component {
     }
 
     const artworkURL = artworkForMediaItem(nowPlayingItem, 40);
+
+    const repeatMode = this.props.mk.instance.player.repeatMode;
+    const shuffleMode = this.props.mk.instance.player.shuffleMode;
+
     return (
       <div className={styles.player}>
         <div className={styles['main-info']}>
@@ -146,19 +208,56 @@ class Player extends React.Component {
         {this.renderProgress()}
         <div className={styles.buttons}>
           <span onClick={this.handlePrevious}>
-            <i className='fas fa-backward'/>
+            <i className={'fas fa-backward'}/>
           </span>
           {mk.instance.player.isPlaying ? (
             <span className={styles.main} onClick={this.handlePause}>
-              <i className='fas fa-pause'/>
+
+              <i className={"fas fa-pause"}/>
             </span>
           ) : (
             <span className={styles.main} onClick={this.handlePlay}>
-              <i className='fas fa-play'/>
+              <i className={"fas fa-play"}/>
             </span>
           )}
           <span onClick={this.handleNext}>
-            <i className='fas fa-forward'/>
+            <i className={"fas fa-forward"}/>
+          </span>
+        </div>
+
+        <div className={styles.buttons}>
+
+          <span className={styles.controls} onClick={this.handleAddToLibrary}>
+            <i className={"fas fa-plus"}/>
+          </span>
+
+          <span
+            className={cx(styles.controls, {[styles.shuffle]: (repeatMode === RepeatModeOne || repeatMode === RepeatModeAll)})}
+            onClick={this.handleRepeat}>
+            <i className={"fas fa-redo-alt"}/>
+          </span>
+
+          <span className={cx(styles.controls, {[styles.shuffle]: shuffleMode === ShuffleModeSongs})}
+                onClick={this.handleShuffle}>
+            <i className={"fas fa-random"}/>
+          </span>
+
+          <span className={cx(styles.controls, styles.volumeControlWrapper)}>
+            <i className={this.getVolumeIconClasses()}/>
+            <div className={styles.volumeControlContainer}>
+              <div className={styles.volumeBarWrapper}>
+                <input
+                  className={cx(styles['progress-bar'], styles.volumeBar)}
+                  style={{backgroundSize: `${this.props.mk.instance.player.volume * 100}% 100%`}}
+                  type={'range'}
+                  value={this.props.mk.instance.player.volume}
+                  onChange={this.handleVolumeChange}
+                  min={0}
+                  max={1}
+                  step={0.01}
+                />
+              </div>
+            </div>
           </span>
         </div>
       </div>
@@ -172,6 +271,7 @@ const bindings = {
   [MusicKit.Events.queuePositionDidChange]: 'queuePosition',
   [MusicKit.Events.playbackTimeDidChange]: 'playbackTime',
   [MusicKit.Events.playbackStateDidChange]: 'playbackState',
+  [MusicKit.Events.playbackVolumeDidChange]: 'playbackVolume',
 };
 
 export default withMK(Player, bindings);
