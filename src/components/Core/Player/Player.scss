@@ -1,3 +1,5 @@
+@import '../../../styles/settings/colors';
+
 .player {
   background: #ffffff;
   padding: 20px 15px;
@@ -106,6 +108,10 @@
         flex: 1;
         justify-content: center;
         color: #888888;
+      }
+
+      &.shuffle {
+        color: $primary_color;
       }
 
       &:hover {

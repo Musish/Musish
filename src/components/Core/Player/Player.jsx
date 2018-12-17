@@ -29,6 +29,10 @@ export default class Player extends React.Component {
     this.handleSeek = this.handleSeek.bind(this);
 
     this.scrubToTime = debounce(Player.scrubToTime, 100).bind(this);
+
+    this.handleAddToLibrary = this.handleAddToLibrary.bind(this);
+    this.handleRepeat = this.handleRepeat.bind(this);
+    this.handleShuffle = this.handleShuffle.bind(this);
   }
 
   static scrubToTime(time) {
@@ -169,10 +173,17 @@ export default class Player extends React.Component {
 
   handleShuffle() {
     const music = MusicKit.getInstance();
-    music.player.shuffleMode();
+
+    if (this.state.isShuffleOn === 0) {
+      music.player.shuffleMode = 1;
+    }
+    else {
+      music.player.shuffleMode = 0;
+    }
   }
 
-  handleVolume() {
+
+  handleVolume(volume) {
     const music = MusicKit.getInstance();
     music.player.volume();
   }
@@ -255,11 +266,11 @@ export default class Player extends React.Component {
             <i className={"fas fa-plus"}/>
           </span>
 
-          <span className={styles.controls}>
+          <span className={styles.controls} onClick={this.handleRepeat}>
             <i className={"fas fa-redo-alt"}/>
           </span>
 
-          <span className={styles.controls}>
+          <span className={cx(styles.controls, {[styles.shuffle]: MusicKit.getInstance().player.shuffleMode})} onClick={this.handleShuffle}>
             <i className={"fas fa-random"}/>
           </span>
 
