@@ -25,23 +25,60 @@
     li {
       margin: 0;
       width: 100%;
-      display: flex;
-      flex-direction: row;
-      position: relative;
-      cursor: pointer;
 
-      &:hover {
+      .artist {
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        cursor: pointer;
+        align-items: center;
+        font-weight: 500;
+      }
+
+      .artistBacker {
+        position: absolute;
+        top: -1px;
+        bottom: -1px;
+        left: 0;
+        right: 0;
+
+        &:before {
+          content: '';
+          position: absolute;
+          z-index: -2;
+          left: 70px;
+          right: 10px;
+          top: 1px;
+          height: 1px;
+          display: block;
+          background: rgba(220, 220, 220, 0.5);
+        }
+      }
+
+      & .artistBacker:after {
+        content: '';
+        background: none;
+        transition: background 0.15s;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+      }
+
+      &:hover .artistBacker:after {
         background: $container_background;
       }
 
-      &:not(:first-child):before {
-        content: '';
-        position: absolute;
-        left: 65px;
-        top: 0;
-        right: 5px;
-        height: 1px;
-        background: rgb(241, 241, 241);
+      &:first-child .artistBacker:before {
+        background: none;
+      }
+
+      .activeArtist {
+        color: $primary_color;
+        .artistBacker:after {
+          background: $container_background;
+        }
       }
 
       > div {

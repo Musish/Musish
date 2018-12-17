@@ -13,6 +13,7 @@
   .menus {
     flex: 1;
     overflow: scroll;
+    padding-bottom: 15px;
 
     .menu {
       background: #ffffff;
@@ -35,6 +36,7 @@
 
         li {
           color: #333;
+          font-weight: 500;
           margin: 10px 0px;
 
           a {

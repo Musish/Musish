@@ -1,221 +1,193 @@
 import React from 'react';
 import styles from './Player.scss'
 import {artworkForMediaItem} from "../common/Utils";
-import debounce from 'lodash/debounce';
 import cx from 'classnames';
+import withMK from '../../../hoc/withMK';
 
-export default class Player extends React.Component {
+class Player extends React.Component {
   constructor(props) {
     super(props);
 
-    const music = MusicKit.getInstance();
-
     this.state = {
-      nowPlayingItem: null,
-      queuePosition: null,
-      queue: null,
-      playbackTime: 0,
-      isPlaying: music.player.isPlaying,
+      isScrubbing: false,
+      scrubbingPosition: 0,
+      isShuffleOn: false,
+      isRepeatOn: false,
     };
-
-    this.mediaItemDidChange = this.mediaItemDidChange.bind(this);
-    this.queueItemsDidChange = this.queueItemsDidChange.bind(this);
-    this.queuePositionDidChange = this.queuePositionDidChange.bind(this);
-    this.playbackTimeDidChange = this.playbackTimeDidChange.bind(this);
-    this.playbackStateDidChange = this.playbackStateDidChange.bind(this);
 
     this.handlePrevious = this.handlePrevious.bind(this);
     this.handleNext = this.handleNext.bind(this);
-    this.handleSeek = this.handleSeek.bind(this);
-
-    this.scrubToTime = debounce(Player.scrubToTime, 100).bind(this);
+    this.scrubToTime = this.scrubToTime.bind(this);
+    this.onStartScrubbing = this.onStartScrubbing.bind(this);
+    this.onEndScrubbing = this.onEndScrubbing.bind(this);
+    this.onScrub = this.onScrub.bind(this);
+    this.handlePlay = this.handlePlay.bind(this);
+    this.handlePause = this.handlePause.bind(this);
 
     this.handleAddToLibrary = this.handleAddToLibrary.bind(this);
     this.handleRepeat = this.handleRepeat.bind(this);
     this.handleShuffle = this.handleShuffle.bind(this);
   }
 
-  static scrubToTime(time) {
-    const music = MusicKit.getInstance();
-    music.player.seekToTime(time);
-  }
-
   static timeToPercent(time, duration) {
     if (duration === 0) {
       return 0; // For some reason would call this
     }
+
     return Math.floor((time * 100) / duration);
   }
 
-  static percentToTime(percent, duration) {
-    return Math.floor((percent * duration) / 100);
-  }
-
-  mediaItemDidChange(event) {
-    this.setState({
-      nowPlayingItem: event.item,
-    });
-  };
-
-  queueItemsDidChange(event) {
-    this.setState({
-      queue: event.items,
-    });
-  };
-
-  queuePositionDidChange(event) {
-    this.setState({
-      queuePosition: event,
-    });
-  };
-
-  playbackTimeDidChange(event) {
-    this.changePlaybackTime(event.currentPlaybackTime);
-  };
-
-  changePlaybackTime(time) {
-    this.setState({
-      playbackTime: time,
-    });
-  };
-
-  playbackStateDidChange(event) {
-    const music = MusicKit.getInstance();
-    this.setState({
-      isPlaying: music.player.isPlaying,
-    });
-  };
-
-  async componentDidMount() {
-    const music = MusicKit.getInstance();
-
-    music.addEventListener(
-      MusicKit.Events.mediaItemDidChange,
-      this.mediaItemDidChange,
-    );
-    music.addEventListener(
-      MusicKit.Events.queueItemsDidChange,
-      this.queueItemsDidChange,
-    );
-    music.addEventListener(
-      MusicKit.Events.queuePositionDidChange,
-      this.queuePositionDidChange,
-    );
-    music.addEventListener(
-      MusicKit.Events.playbackTimeDidChange,
-      this.playbackTimeDidChange,
-    );
-    music.addEventListener(
-      MusicKit.Events.playbackStateDidChange,
-      this.playbackStateDidChange,
-    );
-  }
-
-  componentWillUnmount() {
-    const music = MusicKit.getInstance();
-
-    music.removeEventListener(
-      MusicKit.Events.mediaItemDidChange,
-      this.mediaItemDidChange,
-    );
-    music.removeEventListener(
-      MusicKit.Events.queueItemsDidChange,
-      this.queueItemsDidChange,
-    );
-    music.removeEventListener(
-      MusicKit.Events.queuePositionDidChange,
-      this.queuePositionDidChange,
-    );
-    music.removeEventListener(
-      MusicKit.Events.playbackTimeDidChange,
-      this.playbackTimeDidChange,
-    );
-    music.removeEventListener(
-      MusicKit.Events.playbackStateDidChange,
-      this.playbackStateDidChange,
-    );
+  async scrubToTime(time) {
+    await this.props.mk.instance.player.seekToTime(time);
   }
 
   handlePlay() {
-    const music = MusicKit.getInstance();
-    music.player.play();
+    this.props.mk.instance.player.play();
   }
 
   handlePause() {
-    const music = MusicKit.getInstance();
-    music.player.pause();
+    this.props.mk.instance.player.pause();
   }
 
   handlePrevious() {
-    const music = MusicKit.getInstance();
+    const player = this.props.mk.instance.player;
 
     if (this.state.playbackTime < 2) {
-      music.player.skipToPreviousItem();
+      player.skipToPreviousItem();
     } else {
-      music.player.seekToTime(0)
+      player.seekToTime(0)
     }
   }
 
   handleNext() {
-    const music = MusicKit.getInstance();
-    music.player.skipToNextItem();
+    const song = this.props.mk.instance.player
+    song.skipToNextItem();
+
+    if (song.repeatMode === 1) {
+      song.seekToTime(0);
+    }
   }
 
   handleAddToLibrary() {
-    const music = MusicKit.getInstance();
+    const music = this.props.mk.instance;
     music.player.addToLibrary();
   }
 
   handleRepeat() {
-    const music = MusicKit.getInstance();
-    music.player.repeatMode();
+    const music = this.props.mk.instance;
+    const {isRepeatOn} = this.state;
+
+    if (music.player.repeatMode === 0) {
+      this.setState({
+        isRepeatOn: true,
+      });
+      music.player.repeatMode = 1;
+    }
+    else if (music.player.repeatMode === 1) {
+      this.setState({
+        isRepeatOn: true,
+      });
+      music.player.repeatMode = 2;
+    }
+    else {
+      this.setState({
+        isRepeatOn: false,
+      });
+      music.player.repeatMode = 0;
+    }
+
+    // const nextRepeatMode = (music.player.repeatMode + 1) % 3;
+    //
+    // if (isRepeatOn === false || nextRepeatMode !== 0) {
+    //   this.setState({
+    //     isRepeatOn: true,
+    //   });
+    //   music.player.repeatMode = nextRepeatMode;
+    // }
+    // else {
+    //   this.setState({
+    //     isRepeatOn: false,
+    //   });
+    // }
+    // music.player.repeatMode = 0;
   }
 
   handleShuffle() {
-    const music = MusicKit.getInstance();
+    const music = this.props.mk.instance;
 
-    if (this.state.isShuffleOn === 0) {
+    if (this.state.isShuffleOn === false) {
+      this.setState({
+        isShuffleOn: true,
+      });
       music.player.shuffleMode = 1;
     }
     else {
+      this.setState({
+        isShuffleOn: false,
+      });
       music.player.shuffleMode = 0;
     }
   }
-
 
   handleVolume(volume) {
     const music = MusicKit.getInstance();
     music.player.volume();
   }
 
-  handleSeek(percent, duration) {
-    const time = Player.percentToTime(percent, duration);
-    this.changePlaybackTime(time);
-    this.scrubToTime(time);
-  }
-
   renderProgress() {
-    const {nowPlayingItem, playbackTime} = this.state;
-    const duration = Math.round(nowPlayingItem.playbackDuration / 1000);
-    const percent = Player.timeToPercent(playbackTime, duration);
+    const {mediaItem: {item: nowPlayingItem}, playbackTime} = this.props.mk;
+    const duration = nowPlayingItem.playbackDuration / 1000;
+    const percent = Player.timeToPercent(playbackTime.currentPlaybackTime, duration);
+
     return (
       <input
-        className={styles["progress-bar"]}
-        style={{"backgroundSize": `${percent}% 100%`}}
-        type="range"
-        value={percent}
-        onChange={(event) => {
-          this.handleSeek(event.target.value, duration)
-        }}
-        min="0"
+        className={styles['progress-bar']}
+        style={{'backgroundSize': `${percent}% 100%`}}
+        type={'range'}
+        value={this.getScrubberValue()}
+        onChange={this.onScrub}
+        onMouseDown={this.onStartScrubbing}
+        onMouseUp={this.onEndScrubbing}
+        min={0}
+        max={nowPlayingItem.playbackDuration}
       />
     );
+  }
+
+  onScrub(e) {
+    this.setState({
+      scrubbingPosition: e.target.value
+    })
+  }
+
+  onStartScrubbing(e) {
+    this.setState({
+      isScrubbing: true,
+      scrubbingPosition: e.target.value,
+    })
+  }
+
+  async onEndScrubbing(e) {
+    await this.scrubToTime(e.target.value / 1000);
+
+    this.setState({
+      isScrubbing: false,
+      scrubbingPosition: null,
+    });
+  }
+
+  getScrubberValue() {
+    if (this.state.isScrubbing) {
+      return this.state.scrubbingPosition;
+    }
+
+    return this.props.mk.playbackTime.currentPlaybackTime * 1000;
   }
 
   renderVolume() {
     const percent = 50;
     return (
-      <div className={styles["progress-bar"]}>
+      <div className={styles['progress-bar']}>
         <div style={{
           width: `${percent}%`
         }}/>
@@ -224,14 +196,17 @@ export default class Player extends React.Component {
   }
 
   render() {
-    if (!this.state.nowPlayingItem) {
-      return "";
+    const {mk} = this.props;
+    const nowPlayingItem = mk.mediaItem && mk.mediaItem.item;
+
+    if (!nowPlayingItem) {
+      return null;
     }
-    const nowPlayingItem = this.state.nowPlayingItem;
+
     const artworkURL = artworkForMediaItem(nowPlayingItem, 40);
     return (
       <div className={styles.player}>
-        <div className={styles["main-info"]}>
+        <div className={styles['main-info']}>
           <div className={styles.picture}>
             <img src={artworkURL} className={styles.image} alt={'album artwork'}/>
           </div>
@@ -244,10 +219,11 @@ export default class Player extends React.Component {
         {this.renderProgress()}
         <div className={styles.buttons}>
           <span onClick={this.handlePrevious}>
-            <i className={"fas fa-backward"}/>
+            <i className={'fas fa-backward'}/>
           </span>
-          {this.state.isPlaying ? (
+          {mk.instance.player.isPlaying ? (
             <span className={styles.main} onClick={this.handlePause}>
+
               <i className={"fas fa-pause"}/>
             </span>
           ) : (
@@ -266,11 +242,11 @@ export default class Player extends React.Component {
             <i className={"fas fa-plus"}/>
           </span>
 
-          <span className={styles.controls} onClick={this.handleRepeat}>
+          <span className={cx(styles.controls, {[styles.shuffle]: this.state.isRepeatOn})} onClick={this.handleRepeat}>
             <i className={"fas fa-redo-alt"}/>
           </span>
 
-          <span className={cx(styles.controls, {[styles.shuffle]: MusicKit.getInstance().player.shuffleMode})} onClick={this.handleShuffle}>
+          <span className={cx(styles.controls, {[styles.shuffle]: this.state.isShuffleOn})} onClick={this.handleShuffle}>
             <i className={"fas fa-random"}/>
           </span>
 
@@ -287,3 +263,13 @@ export default class Player extends React.Component {
     );
   }
 }
+
+const bindings = {
+  [MusicKit.Events.mediaItemDidChange]: 'mediaItem',
+  [MusicKit.Events.queueItemsDidChange]: 'queueItems',
+  [MusicKit.Events.queuePositionDidChange]: 'queuePosition',
+  [MusicKit.Events.playbackTimeDidChange]: 'playbackTime',
+  [MusicKit.Events.playbackStateDidChange]: 'playbackState',
+};
+
+export default withMK(Player, bindings);

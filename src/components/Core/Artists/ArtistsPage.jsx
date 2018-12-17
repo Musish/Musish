@@ -1,12 +1,14 @@
 import React from 'react';
+import {Link, Route} from "react-router-dom";
+import cx from 'classnames';
+
+
 import PageTitle from "../../common/PageTitle";
 import InfiniteScroll from '../common/InfiniteScroll';
 import Loader from "../../common/Loader";
-
-import Classes from './Artists.scss';
+import classes from './Artists.scss';
 import PageContent from "../Layout/PageContent";
 import AlbumPanel from "../Albums/AlbumPanel";
-import {Link, Route} from "react-router-dom";
 
 export default class ArtistsPage extends React.Component {
   render() {
@@ -36,27 +38,29 @@ class ArtistList extends React.Component {
   }
 
   rowRenderer({item: artist, index, isScrolling, isVisible, key, style}) {
+    const path = `/artists/${artist.id}`;
     return (
-      <Link key={key} to={`/artists/${artist.id}`}>
-        <li style={style}>
-          <div>
-            <span className={Classes.pictureWrapper}>
-
-            </span>
-          </div>
-          <div>
-            <span className={Classes.artistName}>
-              {artist.attributes.name}
-            </span>
-          </div>
-        </li>
-      </Link>
+      <li style={style}>
+        <Route path={path} exact children={({match}) => (
+          <Link key={key} to={path} className={cx(classes.artist, (!!match ? classes.activeArtist : null))}>
+            <div className={classes.artistBacker} />
+            <div>
+              <span className={classes.pictureWrapper}></span>
+            </div>
+            <div>
+              <span className={classes.artistName}>
+                {artist.attributes.name}
+              </span>
+            </div>
+          </Link>
+        )}/>
+      </li>
     )
   }
 
   render() {
     return (
-      <aside className={Classes.artistList} ref={this.ref}>
+      <aside className={classes.artistList} ref={this.ref}>
         <ul>
           <InfiniteScroll scrollElement={this.ref} rowHeight={60} load={this.load} rowRenderer={this.rowRenderer}/>
         </ul>
