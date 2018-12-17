@@ -95,21 +95,6 @@ class Player extends React.Component {
       });
       music.player.repeatMode = 0;
     }
-
-    // const nextRepeatMode = (music.player.repeatMode + 1) % 3;
-    //
-    // if (isRepeatOn === false || nextRepeatMode !== 0) {
-    //   this.setState({
-    //     isRepeatOn: true,
-    //   });
-    //   music.player.repeatMode = nextRepeatMode;
-    // }
-    // else {
-    //   this.setState({
-    //     isRepeatOn: false,
-    //   });
-    // }
-    // music.player.repeatMode = 0;
   }
 
   handleShuffle() {
