@@ -1,25 +1,26 @@
 import React, {Component} from 'react';
-import PlaylistScss from "./PlaylistItem.scss";
+import classes from "./PlaylistItem.scss";
 import {Link} from 'react-router-dom';
 
 export default class PlaylistItem extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      playlist: null,
-    }
-  }
-
   render() {
+    const {playlist, size} = this.props;
+    const artwork = MusicKit.formatArtworkURL(playlist.attributes.artwork, size, size);
+
     return (
-        <Link to={`/playlists/${this.props.id}`} className={PlaylistScss.container}>
-          <div className={PlaylistScss.imageContainer}>
-            <img src={this.props.url} className={PlaylistScss.image} alt={"image"}/>
+        <Link to={`/playlists/${this.props.id}`} className={classes.container}>
+          <div className={classes.imageContainer} style={{width: size}}>
+            <img
+              src={artwork}
+              className={classes.image}
+              style={{width: size, height: size}}
+            />
           </div>
 
-          <div className={PlaylistScss.descriptionContainer}>
-            <h3>{this.props.title}</h3>
+          <div className={classes.descriptionContainer}>
+            <span className={classes.playlistName} style={{width: size}}>
+              {playlist.attributes.name}
+            </span>
           </div>
         </Link>
     );
