@@ -29,6 +29,7 @@ class Player extends React.Component {
     this.handleRepeat = this.handleRepeat.bind(this);
     this.handleShuffle = this.handleShuffle.bind(this);
     this.onVolumeChange = this.onVolumeChange.bind(this);
+    this.getVolumeIconClasses = this.getVolumeIconClasses.bind(this);
   }
 
   static timeToPercent(time, duration) {
@@ -118,6 +119,21 @@ class Player extends React.Component {
 
   onVolumeChange(e) {
     this.props.mk.instance.player.volume = e.target.value;
+  }
+
+  getVolumeIconClasses() {
+    const volume = this.props.mk.instance.player.volume * 100;
+
+    if (volume === 0) {
+      return 'fas fa-volume-mute';
+    }
+    if (volume >= 0 && volume < 30) {
+      return 'fas fa-volume-off';
+    }
+    if (volume >= 30 && volume < 60) {
+      return 'fas fa-volume-down';
+    }
+    return 'fas fa-volume-up';
   }
 
   renderProgress() {
@@ -229,11 +245,10 @@ class Player extends React.Component {
           </span>
 
           <span className={cx(styles.controls, styles.volumeControlWrapper)}>
-            <i className={"fas fa-volume-up"}/>
+            <i className={this.getVolumeIconClasses()}/>
             <div className={styles.volumeControlContainer}>
               <div className={styles.volumeBarWrapper}>
                 <input
-                  onClick={this.handleVolume}
                   className={cx(styles['progress-bar'], styles.volumeBar)}
                   style={{backgroundSize: `${this.props.mk.instance.player.volume * 100}% 100%`}}
                   type={'range'}
