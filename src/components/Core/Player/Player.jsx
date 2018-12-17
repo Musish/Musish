@@ -1,186 +1,115 @@
 import React from 'react';
 import styles from './Player.scss'
-import {artworkForMediaItem} from "../common/Utils";
-import debounce from 'lodash/debounce';
+import {artworkForMediaItem} from '../common/Utils';
+import withMK from '../../../hoc/withMK';
 
-export default class Player extends React.Component {
+class Player extends React.Component {
   constructor(props) {
     super(props);
 
-    const music = MusicKit.getInstance();
-
     this.state = {
-      nowPlayingItem: null,
-      queuePosition: null,
-      queue: null,
-      playbackTime: 0,
-      isPlaying: music.player.isPlaying,
+      isScrubbing: false,
+      scrubbingPosition: 0,
     };
-
-    this.mediaItemDidChange = this.mediaItemDidChange.bind(this);
-    this.queueItemsDidChange = this.queueItemsDidChange.bind(this);
-    this.queuePositionDidChange = this.queuePositionDidChange.bind(this);
-    this.playbackTimeDidChange = this.playbackTimeDidChange.bind(this);
-    this.playbackStateDidChange = this.playbackStateDidChange.bind(this);
 
     this.handlePrevious = this.handlePrevious.bind(this);
     this.handleNext = this.handleNext.bind(this);
-    this.handleSeek = this.handleSeek.bind(this);
-
-    this.scrubToTime = debounce(Player.scrubToTime, 100).bind(this);
-  }
-
-  mediaItemDidChange(event) {
-    this.setState({
-      nowPlayingItem: event.item,
-    });
-  };
-
-  queueItemsDidChange(event) {
-    this.setState({
-      queue: event.items,
-    });
-  };
-
-  queuePositionDidChange(event) {
-    this.setState({
-      queuePosition: event,
-    });
-  };
-
-  playbackTimeDidChange(event) {
-    this.changePlaybackTime(event.currentPlaybackTime);
-  };
-  changePlaybackTime(time) {
-    this.setState({
-      playbackTime: time,
-    });
-  };
-
-  playbackStateDidChange(event) {
-    const music = MusicKit.getInstance();
-    this.setState({
-      isPlaying: music.player.isPlaying,
-    });
-  };
-
-  async componentDidMount() {
-    const music = MusicKit.getInstance();
-
-    music.addEventListener(
-        MusicKit.Events.mediaItemDidChange,
-        this.mediaItemDidChange,
-    );
-    music.addEventListener(
-        MusicKit.Events.queueItemsDidChange,
-        this.queueItemsDidChange,
-    );
-    music.addEventListener(
-        MusicKit.Events.queuePositionDidChange,
-        this.queuePositionDidChange,
-    );
-    music.addEventListener(
-        MusicKit.Events.playbackTimeDidChange,
-        this.playbackTimeDidChange,
-    );
-    music.addEventListener(
-        MusicKit.Events.playbackStateDidChange,
-        this.playbackStateDidChange,
-    );
-  }
-
-  componentWillUnmount() {
-    const music = MusicKit.getInstance();
-
-    music.removeEventListener(
-        MusicKit.Events.mediaItemDidChange,
-        this.mediaItemDidChange,
-    );
-    music.removeEventListener(
-        MusicKit.Events.queueItemsDidChange,
-        this.queueItemsDidChange,
-    );
-    music.removeEventListener(
-        MusicKit.Events.queuePositionDidChange,
-        this.queuePositionDidChange,
-    );
-    music.removeEventListener(
-        MusicKit.Events.playbackTimeDidChange,
-        this.playbackTimeDidChange,
-    );
-    music.removeEventListener(
-      MusicKit.Events.playbackStateDidChange,
-      this.playbackStateDidChange,
-    );
-  }
-
-  handlePlay() {
-    const music = MusicKit.getInstance();
-    music.player.play();
-  }
-
-  handlePause() {
-    const music = MusicKit.getInstance();
-    music.player.pause();
-  }
-
-  handlePrevious() {
-    const music = MusicKit.getInstance();
-
-    if(this.state.playbackTime < 2) {
-      music.player.skipToPreviousItem();
-    } else {
-      music.player.seekToTime(0)
-    }
-  }
-
-  handleNext() {
-    const music = MusicKit.getInstance();
-    music.player.skipToNextItem();
-  }
-
-  handleSeek(percent, duration) {
-    const time = Player.percentToTime(percent, duration);
-    this.changePlaybackTime(time);
-    this.scrubToTime(time);
-  }
-  
-  static scrubToTime(time) {
-    const music = MusicKit.getInstance();
-    music.player.seekToTime(time);
+    this.scrubToTime = this.scrubToTime.bind(this);
+    this.onStartScrubbing = this.onStartScrubbing.bind(this);
+    this.onEndScrubbing = this.onEndScrubbing.bind(this);
+    this.onScrub = this.onScrub.bind(this);
+    this.handlePlay = this.handlePlay.bind(this);
+    this.handlePause = this.handlePause.bind(this);
   }
 
   static timeToPercent(time, duration) {
     if (duration === 0) {
       return 0; // For some reason would call this
     }
+
     return Math.floor((time * 100) / duration);
   }
 
-  static percentToTime(percent, duration) {
-    return Math.floor((percent * duration) / 100);
+  async scrubToTime(time) {
+    await this.props.mk.instance.player.seekToTime(time);
+  }
+
+  handlePlay() {
+    this.props.mk.instance.player.play();
+  }
+
+  handlePause() {
+    this.props.mk.instance.player.pause();
+  }
+
+  handlePrevious() {
+    const player = this.props.mk.instance.player;
+
+    if (this.state.playbackTime < 2) {
+      player.skipToPreviousItem();
+    } else {
+      player.seekToTime(0)
+    }
+  }
+
+  handleNext() {
+    this.props.mk.instance.player.skipToNextItem();
   }
 
   renderProgress() {
-    const {nowPlayingItem, playbackTime} = this.state;
-    const duration = Math.round(nowPlayingItem.playbackDuration/1000);
-    const percent = Player.timeToPercent(playbackTime, duration);
+    const {mediaItem: {item: nowPlayingItem}, playbackTime} = this.props.mk;
+    const duration = nowPlayingItem.playbackDuration / 1000;
+    const percent = Player.timeToPercent(playbackTime.currentPlaybackTime, duration);
+
     return (
-      <input 
-        className={styles["progress-bar"]}
-        style={{"backgroundSize": `${percent}% 100%`}}
-        type="range"
-        value={percent}
-        onChange={(event) => {this.handleSeek(event.target.value, duration)}}
-        min="0"
+      <input
+        className={styles['progress-bar']}
+        style={{'backgroundSize': `${percent}% 100%`}}
+        type={'range'}
+        value={this.getScrubberValue()}
+        onChange={this.onScrub}
+        onMouseDown={this.onStartScrubbing}
+        onMouseUp={this.onEndScrubbing}
+        min={0}
+        max={nowPlayingItem.playbackDuration}
       />
     );
+  }
+
+  onScrub(e) {
+    this.setState({
+      scrubbingPosition: e.target.value
+    })
+  }
+
+  onStartScrubbing(e) {
+    this.setState({
+      isScrubbing: true,
+      scrubbingPosition: e.target.value,
+    })
+  }
+
+  async onEndScrubbing(e) {
+    await this.scrubToTime(e.target.value / 1000);
+
+    this.setState({
+      isScrubbing: false,
+      scrubbingPosition: null,
+    });
+  }
+
+  getScrubberValue() {
+    if (this.state.isScrubbing) {
+      return this.state.scrubbingPosition;
+    }
+
+    return this.props.mk.playbackTime.currentPlaybackTime * 1000;
   }
 
   renderVolume() {
     const percent = 50;
     return (
-      <div className={styles["progress-bar"]}>
+      <div className={styles['progress-bar']}>
         <div style={{
           width: `${percent}%`
         }}/>
@@ -189,16 +118,19 @@ export default class Player extends React.Component {
   }
 
   render() {
-    if (!this.state.nowPlayingItem) {
-      return "";
+        const {mk} = this.props;
+    const nowPlayingItem = mk.mediaItem && mk.mediaItem.item;
+
+    if (!nowPlayingItem) {
+      return null;
     }
-    const nowPlayingItem = this.state.nowPlayingItem;
+
     const artworkURL = artworkForMediaItem(nowPlayingItem, 40);
     return (
       <div className={styles.player}>
-        <div className={styles["main-info"]}>
+        <div className={styles['main-info']}>
           <div className={styles.picture}>
-            <img src={artworkURL} className={styles.image} alt={'album artwork'} />
+            <img src={artworkURL} className={styles.image} alt={'album artwork'}/>
           </div>
           <div className={styles.track}>
             <h1>{nowPlayingItem.title}</h1>
@@ -209,22 +141,32 @@ export default class Player extends React.Component {
         {this.renderProgress()}
         <div className={styles.buttons}>
           <span onClick={this.handlePrevious}>
-            <i className="fas fa-backward" />
+            <i className='fas fa-backward'/>
           </span>
-          {this.state.isPlaying ? (
+          {mk.instance.player.isPlaying ? (
             <span className={styles.main} onClick={this.handlePause}>
-              <i className="fas fa-pause" />
+              <i className='fas fa-pause'/>
             </span>
           ) : (
             <span className={styles.main} onClick={this.handlePlay}>
-              <i className="fas fa-play" />
+              <i className='fas fa-play'/>
             </span>
           )}
           <span onClick={this.handleNext}>
-            <i className="fas fa-forward" />
+            <i className='fas fa-forward'/>
           </span>
         </div>
       </div>
     );
   }
 }
+
+const bindings = {
+  [MusicKit.Events.mediaItemDidChange]: 'mediaItem',
+  [MusicKit.Events.queueItemsDidChange]: 'queueItems',
+  [MusicKit.Events.queuePositionDidChange]: 'queuePosition',
+  [MusicKit.Events.playbackTimeDidChange]: 'playbackTime',
+  [MusicKit.Events.playbackStateDidChange]: 'playbackState',
+};
+
+export default withMK(Player, bindings);
