@@ -66,15 +66,23 @@
     top: 15px;
     right: 50px;
 
-    input {
-      -webkit-appearance: none;
-      outline: none;
-      padding: 8px 15px;
-      text-align: center;
-      border: solid 1px #eee;
-      border-radius: 5px;
-      font-size: 11px;
-      line-height: 15px;
+    .searchWrapper {
+      position: relative;
+
+      input {
+        -webkit-appearance: none;
+        outline: none;
+        padding: 8px 15px;
+        text-align: center;
+        border: solid 1px #eee;
+        border-radius: 5px;
+        font-size: 11px;
+        line-height: 15px;
+      }
+
+      .searchHints {
+        margin-top: 35px;
+      }
     }
   }
 }
