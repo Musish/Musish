@@ -32,22 +32,22 @@ function DynamicMenu({id, trigger}) {
 
       <MenuItem divider/>
 
-      <MenuItem onClick={trigger._playSong}>
+      <MenuItem onClick={trigger.playSong}>
         Play
       </MenuItem>
-      <MenuItem onClick={trigger._queueNext}>
+      <MenuItem onClick={trigger.queueNext}>
         Play next
       </MenuItem>
-      <MenuItem onClick={trigger._queueLater}>
+      <MenuItem onClick={trigger.queueLater}>
         Play later
       </MenuItem>
 
       <MenuItem divider/>
 
-      <MenuItem onClick={trigger._queueLater}>
+      <MenuItem onClick={trigger.queueLater}>
         Show Artist
       </MenuItem>
-      <MenuItem onClick={trigger._queueLater}>
+      <MenuItem onClick={trigger.queueLater}>
         Show Album
       </MenuItem>
       {!inLibrary && (
@@ -55,7 +55,7 @@ function DynamicMenu({id, trigger}) {
 
           <MenuItem divider/>
 
-          <MenuItem onClick={trigger._queueLater}>
+          <MenuItem onClick={trigger.queueLater}>
             Add to library
           </MenuItem>
         </>

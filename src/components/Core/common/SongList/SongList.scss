@@ -133,6 +133,14 @@
 }
 
 .playingAnimation {
+  &.animated {
+    > div {
+      span {
+        animation-play-state: running;
+      }
+    }
+  }
+
   > div {
     display: flex;
     align-items: flex-end;
@@ -145,6 +153,7 @@
       height: 5px;
       background: #fe2851;
       animation: audio-wave 0.95s infinite ease-in-out;
+      animation-play-state: paused;
       margin-left: 1px;
 
       &:nth-child(2) {

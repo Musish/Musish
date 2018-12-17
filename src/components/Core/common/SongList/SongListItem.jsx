@@ -5,19 +5,21 @@ import classes from "./SongList.scss";
 import {ContextMenuTrigger} from "react-contextmenu";
 import PropTypes from 'prop-types';
 import {MENU_TYPE} from "./SongList";
+import cx from 'classnames';
+import withMK from "../../../../hoc/withMK";
 
-function collect(props, {props: song, _playSong, _queueNext, _queueLater, state: {artworkURL}}) {
+function collect(props, {props: song, playSong, queueNext, queueLater, state: {artworkURL}}) {
   return {
     ...props,
     song,
-    _playSong,
-    _queueNext,
-    _queueLater,
+    playSong,
+    queueNext,
+    queueLater,
     artworkURL,
   }
 }
 
-export default class SongListItem extends React.Component {
+class SongListItem extends React.Component {
   constructor(props) {
     super(props);
 
@@ -27,17 +29,15 @@ export default class SongListItem extends React.Component {
       artworkURL: artworkURL,
     };
 
-    this.explicit = <></>; // TODO: get if the song is explicit or not
-
-    this._playSong = this._playSong.bind(this);
-    this._pauseSong = this._pauseSong.bind(this);
-    this._queueNext = this._queueNext.bind(this);
-    this._queueLater = this._queueLater.bind(this);
-    this._handleClick = this._handleClick.bind(this);
+    this.playSong = this.playSong.bind(this);
+    this.pauseSong = this.pauseSong.bind(this);
+    this.queueNext = this.queueNext.bind(this);
+    this.queueLater = this.queueLater.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  async _playSong() {
-    let music = MusicKit.getInstance();
+  async playSong() {
+    let music = this.props.mk.instance;
     await music.setQueue({
       startPosition: this.props.index,
       items: this.props.songs.map(song => createMediaItem(song)),
@@ -45,61 +45,76 @@ export default class SongListItem extends React.Component {
     await music.player.play();
   }
 
-  async _pauseSong() {
-    let music = MusicKit.getInstance();
-    await music.player.pause();
+  async pauseSong() {
+    await this.props.mk.instance.player.pause();
   }
 
-  async _queueNext() {
-    let music = MusicKit.getInstance();
-    await music.player.queue.prepend({items: [createMediaItem(this.props.song)]});
+  async queueNext() {
+    await this.props.mk.instance.player.queue.prepend({items: [createMediaItem(this.props.song)]});
   }
 
-  async _queueLater() {
-    let music = MusicKit.getInstance();
-    await music.player.queue.append({items: [createMediaItem(this.props.song)]});
+  async queueLater() {
+    await this.props.mk.instance.player.queue.append({items: [createMediaItem(this.props.song)]});
   }
 
-  async _handleClick() {
+  async handleClick() {
     if (this.props.isPlaying) {
-      this._pauseSong();
+      this.pauseSong();
     } else {
-      this._playSong();
+      this.playSong();
     }
   }
 
   getTime(ms) {
-    ms = 1000 * Math.round(ms / 1000); // round to nearest second
-    let d = new Date(ms);
-    return d.getUTCMinutes() + ':' + String('0' + d.getUTCSeconds()).slice(-2); // gets a nice minutes and seconds formatting of the time
+    const s = 1000 * Math.round(ms / 1000);
+    let d = new Date(s);
+
+    return d.getUTCMinutes() + ':' + String('0' + d.getUTCSeconds()).slice(-2);
+  }
+
+  isCurrentItem() {
+    const {song, mk: {mediaItem}} = this.props;
+
+    if (!mediaItem || !mediaItem.item) {
+      return false;
+    }
+
+    if (song.id == mediaItem.item.id) {
+
+    }
+
+    const {playParams} = song.attributes;
+
+    if (!playParams) {
+      return false;
+    }
+
+    return playParams.catalogId == mediaItem.item.id
   }
 
   renderIcon() {
-    const {showAlbum, song, isPlaying} = this.props;
+
+    const {showAlbum, song, isPlaying, mk: {mediaItem}} = this.props;
+    const isCurrentItem = this.isCurrentItem();
+
+    const playingAnimation = (
+      <div className={cx(classes.playingAnimation, {[classes.animated]: isPlaying})}>
+        <div><span/><span/><span/><span/><span/></div>
+      </div>
+    );
+
     return (
       <>
         {showAlbum ? (
           <span className={classes.albumArtwork}>
-            {isPlaying && (
-              <div className={classes.playingAnimation}>
-                <div><span/><span/><span/><span/><span/></div>
-              </div>
-            )}
+            {isCurrentItem && playingAnimation}
             <span className={classes.artworkWrapper}>
               <img src={this.state.artworkURL} alt=""/>
             </span>
           </span>
         ) : (
           <span className={classes.songIndex}>
-            {isPlaying ? (
-              <div className={classes.playingAnimation}>
-                <div><span/><span/><span/><span/><span/></div>
-              </div>
-            ) : (
-              <>
-                {song.attributes.trackNumber}.
-              </>
-            )}
+            {isCurrentItem ? playingAnimation : song.attributes.trackNumber}
           </span>
         )}
       </>
@@ -107,33 +122,36 @@ export default class SongListItem extends React.Component {
   }
 
   render() {
-    const {isPlaying, showArtist, showAlbum} = this.props;
-    const attributes = this.props.song.attributes;
+    const {isPlaying, showArtist, showAlbum, song} = this.props;
+    const {attributes} = song;
     const inLibrary = attributes.playParams && attributes.playParams.isLibrary;
     const duration = this.getTime(attributes.durationInMillis);
 
+    const explicit = <></>; // TODO: get if the song is explicit or not
+
     return (
       <div className={`${classes.song} ${isPlaying ? 'playing' : ''}`}
-           onClick={this._handleClick}
+           onClick={this.handleClick}
            style={this.props.style}>
-        <ContextMenuTrigger id={MENU_TYPE} attributes={{className: [classes.songWrapper]}}
+        <ContextMenuTrigger id={MENU_TYPE}
+                            attributes={{className: [classes.songWrapper]}}
                             collect={props => collect(props, this)}>
           <div className={classes.songBacker}/>
           {this.renderIcon()}
           <div className={classes.songInfo}>
-              <span className={classes.songTitle}>
-                {attributes.name}{this.explicit}
-              </span>
+            <span className={classes.songTitle}>
+              {attributes.name}{explicit}
+            </span>
             {(showArtist || showAlbum) && (
-              <span className={classes.songCaption}>
-                    {(showArtist && showAlbum) ? (
-                      `${attributes.artistName} - ${attributes.albumName}`
-                    ) : showArtist ? (
-                      `${attributes.artistName}`
-                    ) : (
-                      `${attributes.albumName}`
-                    )}
-                  </span>
+              <span>
+                {(showArtist && showAlbum) ? (
+                  `${attributes.artistName} - ${attributes.albumName}`
+                ) : showArtist ? (
+                  `${attributes.artistName}`
+                ) : (
+                  `${attributes.albumName}`
+                )}
+              </span>
             )}
           </div>
           <span className={classes.songDuration}>
@@ -154,3 +172,9 @@ SongListItem.propTypes = {
   showArtist: PropTypes.bool.isRequired,
   showAlbum: PropTypes.bool.isRequired,
 };
+
+const bindings = {
+  [MusicKit.Events.mediaItemDidChange]: 'mediaItem',
+};
+
+export default withMK(SongListItem, bindings);
