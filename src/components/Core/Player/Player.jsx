@@ -125,14 +125,17 @@ class Player extends React.Component {
     const volume = this.props.mk.instance.player.volume * 100;
 
     if (volume === 0) {
-      return 'fas fa-volume-mute';
+      return 'fas fa-times';
     }
-    if (volume >= 0 && volume < 30) {
+
+    if (volume > 0 && volume < 30) {
       return 'fas fa-volume-off';
     }
+
     if (volume >= 30 && volume < 60) {
       return 'fas fa-volume-down';
     }
+
     return 'fas fa-volume-up';
   }
 
