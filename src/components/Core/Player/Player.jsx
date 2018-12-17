@@ -70,32 +70,32 @@ class Player extends React.Component {
   }
 
   handleAddToLibrary() {
-    const music = this.props.mk.instance;
-    music.player.addToLibrary = 1;
+    const music = this.props.mk.instance.player;
+    music.addToLibrary = 1;
   }
 
   handleRepeat() {
-    const music = this.props.mk.instance;
+    const music = this.props.mk.instance.player;
 
-    if (music.player.repeatMode === 0) {
-      music.player.repeatMode = 1;
+    if (music.repeatMode === 0) {
+      music.repeatMode = 1;
     }
-    else if (music.player.repeatMode === 1) {
-      music.player.repeatMode = 2;
+    else if (music.repeatMode === 1) {
+      music.repeatMode = 2;
     }
     else {
-      music.player.repeatMode = 0;
+      music.repeatMode = 0;
     }
   }
 
   handleShuffle() {
-    const music = this.props.mk.instance;
+    const music = this.props.mk.instance.player;
 
-    if (music.player.shuffleMode === 0) {
-      music.player.shuffleMode = 1;
+    if (music.shuffleMode === 0) {
+      music.shuffleMode = 1;
     }
     else {
-      music.player.shuffleMode = 0;
+      music.shuffleMode = 0;
     }
   }
 
