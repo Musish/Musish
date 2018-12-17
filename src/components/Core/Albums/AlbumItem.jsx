@@ -4,10 +4,6 @@ import classes from './AlbumItem.scss';
 import {Link} from 'react-router-dom';
 
 export default class AlbumItem extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const {album, size} = this.props;
     const artwork = MusicKit.formatArtworkURL(album.attributes.artwork, size, size);

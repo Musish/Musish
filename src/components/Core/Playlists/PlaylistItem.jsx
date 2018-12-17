@@ -3,10 +3,6 @@ import classes from "./PlaylistItem.scss";
 import {Link} from 'react-router-dom';
 
 export default class PlaylistItem extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const {playlist, size} = this.props;
     const artwork = MusicKit.formatArtworkURL(playlist.attributes.artwork, size, size);
