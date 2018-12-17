@@ -11,15 +11,6 @@ export default class MusicKitAuthorizeProvider extends React.Component {
     };
   }
 
-  // async componentDidMount() {
-  //   const music = MusicKit.getInstance();
-  //   await music.authorize();
-  //
-  //   this.setState({
-  //     ready: true
-  //   })
-  // }
-
   async authorize() {
     const music = MusicKit.getInstance();
     await music.authorize();
@@ -31,7 +22,6 @@ export default class MusicKitAuthorizeProvider extends React.Component {
 
   render() {
     if (!this.state.ready) {
-      // return 'Authorizing...';
       return <Login onClick={() => this.authorize()}/>;
     }
 

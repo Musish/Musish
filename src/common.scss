@@ -42,17 +42,21 @@ button {
     height: 100vh;
     display: flex;
     flex-direction: column;
+    width: 100%;
   }
 
   #main-wrapper {
     display: flex;
     flex: 1;
+    width: 100%;
 
     > aside {
       overflow-y: scroll;
+      flex-shrink: 0;
     }
 
     #main-content {
+      position: relative;
       display: flex;
       flex: 1;
     }
