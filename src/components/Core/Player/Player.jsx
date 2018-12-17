@@ -59,7 +59,7 @@ class Player extends React.Component {
   renderProgress() {
     const {mediaItem: {item: nowPlayingItem}, playbackTime} = this.props.mk;
     const duration = nowPlayingItem.playbackDuration / 1000;
-    const percent = Player.timeToPercent(playbackTime.currentPlaybackTime, duration);
+    const percent = playbackTime ? Player.timeToPercent(playbackTime.currentPlaybackTime, duration) : 0;
 
     return (
       <input
@@ -103,7 +103,12 @@ class Player extends React.Component {
       return this.state.scrubbingPosition;
     }
 
-    return this.props.mk.playbackTime.currentPlaybackTime * 1000;
+    const {playbackTime} = this.props.mk;
+    if (playbackTime) {
+      return playbackTime.currentPlaybackTime * 1000
+    }
+
+    return 0;
   }
 
   renderVolume() {
