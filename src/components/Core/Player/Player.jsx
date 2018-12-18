@@ -59,8 +59,9 @@ class Player extends React.Component {
 
   handlePrevious() {
     const player = this.props.mk.instance.player;
+    const {playbackTime} = this.props.mk;
 
-    if (this.state.playbackTime < 2) {
+    if (playbackTime.currentPlaybackTime < 2) {
       player.skipToPreviousItem();
     } else {
       player.seekToTime(0)
