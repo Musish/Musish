@@ -194,7 +194,7 @@ class Player extends React.Component {
       return null;
     }
 
-    const artworkURL = artworkForMediaItem(nowPlayingItem, 40);
+    const artworkURL = artworkForMediaItem(nowPlayingItem, 60);
 
     const repeatMode = mk.instance.player.repeatMode;
     const shuffleMode = mk.instance.player.shuffleMode;
