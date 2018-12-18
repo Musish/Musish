@@ -174,8 +174,8 @@
   .queueContainer {
     position: absolute;
     bottom: -9px;
-    right: -250px;
-    width: 250px;
+    right: -275px;
+    width: 275px;
 
     &:before {
       position: absolute;
@@ -197,7 +197,7 @@
       background: #fff;
       border: solid 1px #eee;
       border-radius: 4px 4px 4px 0;
-      width: 250px;
+      width: 275px;
       height: 400px;
       overflow: auto;
     }

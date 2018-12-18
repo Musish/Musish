@@ -4,27 +4,50 @@
   padding: 0;
 }
 .SortableItem {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
   width: 100%;
-  height: 60px;
-  padding: 0 20px;
-  background-color: #FFF;
-  border-bottom: 1px solid #EFEFEF;
-  box-sizing: border-box;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
+  height: 54px;
+  margin-top: 1px;
+  border-bottom: 1px solid #efefef;
+  background: #ffffff;
   user-select: none;
   color: #333;
-  font-weight: 500;
   z-index: 10000;
+
+  box-sizing: border-box;
+
+  &.played {
+    color: #999999;
+  }
+  &.playing {
+    color: #fe2851;
+    font-weight: 500;
+  }
+  &.queued {
+  }
+
+  > span {
+    display: block;
+    width: 245px;
+    margin-left: 15px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+    user-select: none;
+  }
+  .title {
+    margin-top: 5px;
+    font-size: 14px;
+    line-height: 14px;
+  }
+  .artistName {
+    font-size: 12px;
+    line-height: 12px;
+  }
+  .albumName {
+    font-size: 10px;
+    line-height: 10px;
+  }
 }
 .SortableHelper {
   cursor: row-resize;
