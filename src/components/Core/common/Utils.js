@@ -10,7 +10,7 @@ export function createMediaItem(song) {
 
 export function artworkForMediaItem(item, size) {
   if (!item.attributes || !item.attributes.artwork) {
-    return `https://is4-ssl.mzstatic.com/image/thumb/Features19/v4/50/f0/d1/50f0d1ac-cf2d-de77-c5c2-73a3170c098e/source/${size}x${size}bb.jpeg`
+    return `https://is1-ssl.mzstatic.com/image/thumb/Features127/v4/75/f9/6f/75f96fa5-99ca-0854-3aae-8f76f5cb7fb5/source/${size}x${size}bb.jpeg`
   }
   return MusicKit.formatArtworkURL(item.attributes.artwork, size, size);
 }
