@@ -58,7 +58,7 @@ class SongListItem extends React.Component {
   }
 
   async handleClick() {
-    if (this.props.isPlaying) {
+    if (this.isPlaying()) {
       this.pauseSong();
     } else {
       this.playSong();
@@ -73,23 +73,14 @@ class SongListItem extends React.Component {
   }
 
   isCurrentItem() {
-    const {song, mk: {mediaItem}} = this.props;
+    const {song, mk} = this.props;
+    const mediaItem = mk.instance.player && mk.instance.player.nowPlayingItem;
 
-    if (!mediaItem || !mediaItem.item) {
+    if (!mediaItem) {
       return false;
     }
 
-    if (song.id == mediaItem.item.id) {
-      return true;
-    }
-
-    const {playParams} = song.attributes;
-
-    if (!playParams) {
-      return false;
-    }
-
-    return playParams.catalogId == mediaItem.item.id
+    return song.id === mediaItem.container.id;
   }
 
   isPlaying() {
