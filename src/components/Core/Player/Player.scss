@@ -112,7 +112,21 @@
         color: $primary_color;
 
         &.one {
-
+          position:relative;
+          &:after {
+            content: '1';
+            position: absolute;
+            top: 8px;
+            right: 9px;
+            height: 14px;
+            width: 9px;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 2px;
+            text-align: center;
+          }
         }
       }
 
