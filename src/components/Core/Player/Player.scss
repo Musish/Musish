@@ -113,6 +113,7 @@
 
         &.one {
           position:relative;
+
           &:after {
             content: '1';
             position: absolute;
