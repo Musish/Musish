@@ -18,21 +18,29 @@ class OverviewPage extends React.Component {
   }
 
   async componentDidMount() {
+    console.log("BRYCHAN SUCKS")
     const music = MusicKit.getInstance();
-    let frequentlyPlayed = music.api.historyHeavyRotation();
+
+    // let frequentlyPlayed = music.api.historyHeavyRotation();
     let recentlyPlayed = music.api.recentPlayed();
 
-    frequentlyPlayed = await frequentlyPlayed;
+    // frequentlyPlayed = await frequentlyPlayed;
     recentlyPlayed = await recentlyPlayed;
 
+    console.log(recentlyPlayed);
+
+
     this.setState({
-      frequentlyPlayed,
+      // frequentlyPlayed,
       recentlyPlayed
     })
   }
 
   render() {
     const {frequentlyPlayed, recentlyPlayed} = this.state;
+
+    console.log(recentlyPlayed);
+
     return (
       <PageContent innerRef={this.ref}>
         <PageTitle

@@ -1,10 +1,9 @@
-.flexGrid {
+.albumsGrid {
   display: flex;
-  flex-direction: row;
-  margin: 0 -10px;
+  flex-wrap: wrap;
+  justify-content: space-between;
 
   > div {
-    flex: 1 1 auto;
-    margin: 0 10px;
+    margin: 15px 10px;
   }
 }
