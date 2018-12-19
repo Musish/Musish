@@ -51,7 +51,7 @@ class QueueList extends Component {
     const items = queue.items.map((item, index) => {
       item.queueState = this.queueState(index, queue.position);
       return item;
-    }).filter(item => item.queueState !== QueueItemState.Played);
+    });
 
     return (
       <List
@@ -81,23 +81,35 @@ const bindings = {
 
 const SortableList = withMK(SortableContainer(QueueList, {withRef: true}), bindings);
 
-export default class Queue extends Component {
+class Queue extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      items: [],
-    };
-
     this.onSortEnd = this.onSortEnd.bind(this);
   }
-  onSortEnd({oldIndex, newIndex}) {
-    if (oldIndex !== newIndex) {
-      const {items} = this.state;
 
-      this.setState({
-        items: arrayMove(items, oldIndex, newIndex),
-      });
+  onSortEnd({oldIndex, newIndex}) {
+    const {player} = this.props.mk.instance;
+
+    if (oldIndex !== newIndex) {
+      const {items, _itemIDs} = player.queue;
+      let {position} = player.queue;
+
+      // Update queue order
+      items.splice(newIndex, 0, items.splice(oldIndex, 1)[0]);
+      _itemIDs.splice(newIndex, 0, _itemIDs.splice(oldIndex, 1)[0]);
+
+      if (oldIndex === position) {
+        // If moving now playing song...
+        player.queue.position = newIndex;
+      }
+      if ((oldIndex > position) && (newIndex <= position)) {
+        // If was after current song, but now before or at same then increment position
+        player.queue.position++;
+      } else if ((oldIndex < position) && (newIndex >= position)) {
+        // If was before current song, but now after or at the same then decrement position
+        player.queue.position--;
+      }
 
       const instance = this.SortableList.getWrappedInstance();
       instance.List.recomputeRowHeights();
@@ -105,17 +117,19 @@ export default class Queue extends Component {
     }
   };
   render() {
-    const {items} = this.state;
-
     return (
       <SortableList
         ref={(instance) => {
           this.SortableList = instance;
         }}
-        items={items}
+        items={this.props.mk.instance.player.queue.items}
         onSortEnd={this.onSortEnd}
         helperClass="SortableHelper"
       />
     );
   }
 }
+
+const queueBindings = {
+};
+export default withMK(Queue, queueBindings);

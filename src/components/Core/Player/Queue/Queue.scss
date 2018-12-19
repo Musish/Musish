@@ -9,11 +9,16 @@
   margin-top: 1px;
   border-bottom: 1px solid #efefef;
   background: #ffffff;
-  user-select: none;
   color: #333;
   z-index: 10000;
 
   box-sizing: border-box;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 
   &.played {
     color: #999999;
