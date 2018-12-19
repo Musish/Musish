@@ -1,9 +1,10 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
 import PageContent from "../Layout/PageContent";
 import PageTitle from "../../common/PageTitle";
 import classes from "./OverviewPage.scss";
 import Loader from "../../common/Loader";
+import AlbumItem from "../Albums/AlbumItem";
+import {withRouter} from "react-router-dom";
 
 class OverviewPage extends React.Component {
   constructor(props) {
@@ -18,17 +19,12 @@ class OverviewPage extends React.Component {
   }
 
   async componentDidMount() {
-    console.log("BRYCHAN SUCKS")
     const music = MusicKit.getInstance();
-
     // let frequentlyPlayed = music.api.historyHeavyRotation();
     let recentlyPlayed = music.api.recentPlayed();
 
     // frequentlyPlayed = await frequentlyPlayed;
     recentlyPlayed = await recentlyPlayed;
-
-    console.log(recentlyPlayed);
-
 
     this.setState({
       // frequentlyPlayed,
@@ -39,6 +35,10 @@ class OverviewPage extends React.Component {
   render() {
     const {frequentlyPlayed, recentlyPlayed} = this.state;
 
+    if (!recentlyPlayed) {
+      return null;
+    }
+
     console.log(recentlyPlayed);
 
     return (
@@ -47,15 +47,26 @@ class OverviewPage extends React.Component {
           title={"Overview"}
           context={"My Library"}
         />
+        <h3>Frequently played</h3>
+        <Loader/>
+        <h3>Recently played</h3>
         <div className={classes.flexGrid}>
-          <div>
-            <h3>Frequently played</h3>
-            <Loader/>
-          </div>
-          <div>
-            <h3>Recently played</h3>
-            <Loader/>
-          </div>
+          {
+            recentlyPlayed ?
+              recentlyPlayed.map((item, i) => {
+                console.log(item);
+                switch (item.type) {
+                  case 'playlists':
+                    break;
+                  case 'albums':
+                    return (
+                      <AlbumItem key={i} album={item} size={120}/>
+                    );
+                  default:
+                    return null
+                }
+              }) : <Loader/>
+          }
         </div>
       </PageContent>
     );
