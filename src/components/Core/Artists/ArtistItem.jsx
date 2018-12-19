@@ -16,7 +16,6 @@ export default class ArtistItem extends Component {
 
   async getImgUrl() {
     if(this.imgUrl !== null) {
-      console.log(this.imgUrl);
       return this.imgUrl;
     }
     const music = MusicKit.getInstance();
