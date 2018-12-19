@@ -32,6 +32,7 @@ export default class App extends React.Component {
                   <Route path="/artists/:id" exact component={ArtistsPage}/>
                   <Route path="/songs" exact component={SongsPage}/>
                   <Route path="/browse" exact component={BrowsePage}/>
+                  <Route path="/radio" exact component={RadioPage}/>
                   <Redirect to="/"/>
                 </Switch>
               </Layout>
