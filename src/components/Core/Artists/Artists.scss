@@ -13,7 +13,7 @@
 .artistList {
   width: 250px;
   height: 100%;
-  border-right: solid 1px $main_background_color;
+  border-right: solid 1px $container_background;
   overflow: auto;
 
   ul {
