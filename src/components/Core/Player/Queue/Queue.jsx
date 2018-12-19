@@ -12,19 +12,8 @@ const QueueItemState = {
   Queued: 2,
 };
 
-const SortableItem = SortableElement(({value, style, item}) => {
-  let stateClass;
-  switch (item.queueState) {
-    case QueueItemState.Played:
-      stateClass = classes.played;
-      break;
-    case QueueItemState.Playing:
-      stateClass = classes.playing;
-      break;
-    default:
-      stateClass = classes.queued;
-      break;
-  }
+const SortableItem = SortableElement(({value, style, item, index}) => {
+  let stateClass = item.queueState === QueueItemState.Playing ? classes.playing : classes.queued;
 
   return (
     <div className={cx(classes.SortableItem, stateClass)} style={style}>
@@ -37,7 +26,13 @@ const SortableItem = SortableElement(({value, style, item}) => {
 });
 
 class QueueList extends Component {
-  queueState(index, position) {
+  constructor(props) {
+    super(props);
+
+    this.state = QueueList.getDerivedStateFromProps(this.props, {});
+  }
+
+  static queueState(index, position) {
     if (index < position) {
       return QueueItemState.Played;
     } else if (index === position) {
@@ -47,12 +42,20 @@ class QueueList extends Component {
     }
   }
 
-  render() {
-    const queue = this.props.mk.instance.player.queue;
-    const items = queue.items.map((item, index) => {
-      item.queueState = this.queueState(index, queue.position);
+  static getDerivedStateFromProps(props) {
+    const {queue} = props.mk.instance.player;
+    const filteredItems = queue.items.map((item, index) => {
+      item.queueState = QueueList.queueState(index, queue.position);
       return item;
-    });
+    }).filter(item => item.queueState !== QueueItemState.Played);
+
+    return {
+      filteredItems,
+    }
+  }
+
+  render() {
+    const {filteredItems: items} = this.state;
 
     return (
       <List
@@ -63,7 +66,7 @@ class QueueList extends Component {
         rowRenderer={(args) => {
           const {index, key} = args;
           const item = items[index];
-          return <SortableItem key={key} item={item} {...args} />;
+          return <SortableItem key={key} item={item} {...args} disabled={index === 0}/>;
         }}
         rowCount={items.length}
         width={300}
@@ -93,28 +96,20 @@ class Queue extends Component {
     const {player} = this.props.mk.instance;
 
     if (oldIndex !== newIndex) {
-      const {items, _itemIDs} = player.queue;
+      const {items} = player.queue;
       let {position} = player.queue;
 
-      // Update queue orderh
-      items.splice(newIndex, 0, items.splice(oldIndex, 1)[0]);
-      player.queue._itemIDs = items.map(item => item.container.id);
+      const newOldIndex = oldIndex + position;
+      const newNewIndex = newIndex + position;
 
-      if (oldIndex === position) {
-        // If moving now playing song...
-        player.queue.position = newIndex;
-      }
-      if ((oldIndex > position) && (newIndex <= position)) {
-        // If was after current song, but now before or at same then increment position
-        player.queue.position++;
-      } else if ((oldIndex < position) && (newIndex >= position)) {
-        // If was before current song, but now after or at the same then decrement position
-        player.queue.position--;
-      }
+      // Update queue order
+      items.splice(newNewIndex, 0, items.splice(newOldIndex, 1)[0]);
+      player.queue._reindex();
 
       this.forceUpdate();
     }
-  };
+  }
+
   render() {
     return (
       <Draggable
@@ -128,10 +123,10 @@ class Queue extends Component {
               <span>Next up</span>
             </div>
             <div className={classes.icons}>
-              <span><i className="fas fa-grip-horizontal" /></span>
+              <span><i className="fas fa-grip-horizontal"/></span>
             </div>
             <div className={classes.icons}>
-              <span><i className="fas fa-times" /></span>
+              <span><i className="fas fa-times"/></span>
             </div>
           </div>
           <SortableList
@@ -148,5 +143,5 @@ class Queue extends Component {
   }
 }
 
-const queueBindings = { };
+const queueBindings = {};
 export default withMK(Queue, queueBindings);

@@ -3,7 +3,6 @@ import {withRouter} from 'react-router-dom';
 import PageContent from "../Layout/PageContent";
 import PageTitle from "../../common/PageTitle";
 import classes from "./BrowsePage.scss";
-import Loader from "../../common/Loader";
 import AlbumItem from "../Albums/AlbumItem";
 import PlaylistItem from "../Playlists/PlaylistItem";
 import SongList from "../common/SongList/SongList";
@@ -65,7 +64,8 @@ class BrowsePage extends React.Component {
             <SongList
               scrollElement={this.ref}
               load={() => charts.songs[0].data.slice(0, 10)}
-              showArtist={true}
+              showArtist
+              showAlbum
             />
           )}
         </div>
