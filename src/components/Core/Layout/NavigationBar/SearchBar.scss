@@ -1,0 +1,16 @@
+.navSearch {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  input {
+    -webkit-appearance: none;
+    outline: none;
+    padding: 8px 15px;
+    text-align: center;
+    border: solid 1px #eee;
+    border-radius: 5px;
+    font-size: 11px;
+    line-height: 15px;
+  }
+}
