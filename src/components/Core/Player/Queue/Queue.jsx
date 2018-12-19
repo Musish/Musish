@@ -21,7 +21,6 @@ const SortableItem = SortableElement(({value, style, item, index}) => {
       <span className={classes.title}>{item.attributes.name}</span>
       <span className={classes.artistName}>{item.attributes.artistName}</span>
       <span className={classes.albumName}>{item.attributes.albumName}</span>
-
     </div>
   );
 });
