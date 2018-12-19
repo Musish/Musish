@@ -12,7 +12,9 @@ export default class RadioPage extends Component {
   render() {
 
     return (
-      <div>Coming Soon!</div>
+      <div className={classes.container}>
+        <span className={classes.comingSoon}>Coming Soon!</span>
+      </div>
     );
   }
 }

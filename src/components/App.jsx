@@ -15,6 +15,7 @@ import SongsPage from './Core/Songs/SongsPage';
 import PlaylistsPage from './Core/Playlists/PlaylistsPage';
 import OverviewPage from './Core/Overview/OverviewPage';
 import BrowsePage from "./Core/Browse/BrowsePage";
+import RadioPage from "./Core/Radio/RadioPage";
 
 export default class App extends React.Component {
   render() {
