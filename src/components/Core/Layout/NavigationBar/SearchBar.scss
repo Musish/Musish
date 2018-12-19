@@ -1,16 +1,48 @@
+@import "../../../../styles/settings/colors";
+
 .navSearch {
   display: flex;
   flex-direction: column;
   justify-content: center;
 
-  input {
-    -webkit-appearance: none;
-    outline: none;
-    padding: 8px 15px;
-    text-align: center;
-    border: solid 1px #eee;
-    border-radius: 5px;
-    font-size: 11px;
-    line-height: 15px;
+  &.active {
+    .navSearchWrapper {
+      input {
+        border-bottom-right-radius: 0;
+      }
+
+      .results {
+        display: block;
+      }
+    }
+  }
+
+  .navSearchWrapper {
+    position: relative;
+
+    input {
+      -webkit-appearance: none;
+      outline: none;
+      padding: 8px 15px;
+      text-align: center;
+      border: solid 1px #eee;
+      border-radius: 5px;
+      font-size: 11px;
+      line-height: 15px;
+    }
+
+    .results {
+      display: none;
+
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: white;
+      width: 300px;
+      height: 500px;
+      box-shadow: 0 8px 36px -10px rgba(150, 150, 150, 0.75);
+      border-radius: 10px 0 10px 10px;
+      margin-right: 1px;
+    }
   }
 }
