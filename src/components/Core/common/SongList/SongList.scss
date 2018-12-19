@@ -126,16 +126,16 @@
         display: flex;
 
         .explicit {
-          border: 1px solid $secondary_color;
-          color: $secondary_color;
+          background: $secondary_color;
+          color: $main_background_color;
           display: flex;
-          width: 14px;
-          height: 14px;
+          width: 12px;
+          height: 12px;
           align-items: center;
           justify-content: center;
-          font-weight: bold;
+          font-weight: 300;
           border-radius: 3px;
-          font-size: 10px;
+          font-size: 9px;
           margin-left: 5px;
         }
       }
