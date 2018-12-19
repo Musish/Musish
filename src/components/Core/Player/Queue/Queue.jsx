@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
+import {SortableContainer, SortableElement} from 'react-sortable-hoc';
 import {List} from 'react-virtualized';
 import Draggable from 'react-draggable';
 import cx from 'classnames';
 import classes from './Queue.scss';
 import withMK from "../../../../hoc/withMK";
+import QueueContext from './QueueContext';
 
 const QueueItemState = {
   Played: 0,
@@ -112,36 +113,48 @@ class Queue extends Component {
 
   render() {
     return (
-      <Draggable
-        handle={".handle"}
-        defaultPosition={{x: 0, y: 0}}
-        position={null}
-      >
-        <div className={classes.modal} onClick={e => e.stopPropagation()}>
-          <div className={cx(classes.header, 'handle')}>
-            <div className={classes.title}>
-              <span>Next up</span>
+      <QueueContext.Consumer>
+        {({doHide}) => (
+          <Draggable
+            handle={".handle"}
+            defaultPosition={{x: 0, y: 0}}
+            position={null}
+          >
+            <div className={classes.modal} onClick={e => e.stopPropagation()}>
+              <div className={cx(classes.header, 'handle')}>
+                <div className={classes.title}>
+                  <span>Next up</span>
+                </div>
+                <div className={classes.icons}>
+                  <span><i className="fas fa-grip-horizontal"/></span>
+                </div>
+                <div className={classes.icons} onClick={doHide}>
+                  <span><i className="fas fa-times"/></span>
+                </div>
+              </div>
+              <SortableList
+                ref={(instance) => {
+                  this.SortableList = instance;
+                }}
+                items={this.props.mk.instance.player.queue.items}
+                onSortEnd={this.onSortEnd}
+                helperClass="SortableHelper"
+              />
             </div>
-            <div className={classes.icons}>
-              <span><i className="fas fa-grip-horizontal"/></span>
-            </div>
-            <div className={classes.icons}>
-              <span><i className="fas fa-times"/></span>
-            </div>
-          </div>
-          <SortableList
-            ref={(instance) => {
-              this.SortableList = instance;
-            }}
-            items={this.props.mk.instance.player.queue.items}
-            onSortEnd={this.onSortEnd}
-            helperClass="SortableHelper"
-          />
-        </div>
-      </Draggable>
+          </Draggable>
+        )}
+      </QueueContext.Consumer>
     );
   }
 }
 
 const queueBindings = {};
-export default withMK(Queue, queueBindings);
+const MKQueue = withMK(Queue, queueBindings);
+
+export default function QueueWrapper() {
+  return (
+    <QueueContext.Consumer>
+      {({show}) => show && <MKQueue/>}
+    </QueueContext.Consumer>
+  );
+}

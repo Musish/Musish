@@ -10,7 +10,7 @@ import {
 } from "../common/Utils";
 import cx from 'classnames';
 import withMK from '../../../hoc/withMK';
-import Queue from "./Queue/Queue";
+import QueueContext from './Queue/QueueContext';
 
 class Player extends React.Component {
   constructor(props) {
@@ -267,9 +267,13 @@ class Player extends React.Component {
             <i className={"fas fa-random"}/>
           </span>
 
-          <span className={cx(styles.controls, styles.queueWrapper)}>
-            <i className={"fas fa-list-ol"}/>
-          </span>
+          <QueueContext.Consumer>
+            {({doShow}) => (
+              <span className={cx(styles.controls, styles.queueWrapper)} onClick={doShow}>
+                <i className={"fas fa-list-ol"}/>
+              </span>
+            )}
+          </QueueContext.Consumer>
         </div>
       </div>
     );
