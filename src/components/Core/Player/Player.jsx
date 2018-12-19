@@ -59,8 +59,9 @@ class Player extends React.Component {
 
   handlePrevious() {
     const player = this.props.mk.instance.player;
+    const {playbackTime} = this.props.mk;
 
-    if (this.state.playbackTime < 2) {
+    if (playbackTime.currentPlaybackTime < 2) {
       player.skipToPreviousItem();
     } else {
       player.seekToTime(0)
@@ -194,7 +195,7 @@ class Player extends React.Component {
       return null;
     }
 
-    const artworkURL = artworkForMediaItem(nowPlayingItem, 40);
+    const artworkURL = artworkForMediaItem(nowPlayingItem, 60);
 
     const repeatMode = mk.instance.player.repeatMode;
     const shuffleMode = mk.instance.player.shuffleMode;

@@ -40,7 +40,7 @@ export default class InfiniteLoader extends React.Component {
   }
 
   onScroll({scrollTop, scrollHeight, clientHeight}) {
-    if (scrollHeight - scrollTop <= clientHeight + 500) {
+    if (scrollTop >= (scrollHeight - (clientHeight * 3))) {
       this.loadMore()
     }
   }
