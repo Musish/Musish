@@ -15,6 +15,7 @@ import SongsPage from './Core/Songs/SongsPage';
 import PlaylistsPage from './Core/Playlists/PlaylistsPage';
 import OverviewPage from './Core/Overview/OverviewPage';
 import BrowsePage from "./Core/Browse/BrowsePage";
+import RadioPage from "./Core/Radio/RadioPage";
 
 export default class App extends React.Component {
   render() {
@@ -32,6 +33,7 @@ export default class App extends React.Component {
                   <Route path="/artists/:id" exact component={ArtistsPage}/>
                   <Route path="/songs" exact component={SongsPage}/>
                   <Route path="/browse" exact component={BrowsePage}/>
+                  <Route path="/radio" exact component={RadioPage}/>
                   <Redirect to="/"/>
                 </Switch>
               </Layout>

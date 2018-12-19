@@ -1,7 +1,7 @@
 @import '../../../styles/settings/colors';
 
 .player {
-  background: #ffffff;
+  background: $main_background_color;
   padding: 20px 15px;
   border-radius: 5px;
   margin-bottom: 30px;
@@ -77,7 +77,7 @@
       height: 10px;
       width: 5px;
       border: 0;
-      background: rgb(100, 100, 100);
+      background: $tertiary_color;
       border-radius: 2px;
       -webkit-appearance: none;
     }
@@ -112,12 +112,27 @@
         color: $primary_color;
 
         &.one {
+          position:relative;
 
+          &:after {
+            content: '1';
+            position: absolute;
+            top: 8px;
+            right: 9px;
+            height: 14px;
+            width: 9px;
+            font-weight: 500;
+            font-size: 12px;
+            line-height: 12px;
+            background: $main_background_color;
+            border-radius: 2px;
+            text-align: center;
+          }
         }
       }
 
       &:hover i {
-        color: #555555;
+        color: $tertiary_color;
       }
 
       &:active i {
@@ -139,7 +154,7 @@
     position: absolute;
     display: none;
     z-index: 5;
-    background: #f7f7f7;
+    background: $container_background;
     border-radius: 5px;
     width: 30px;
     height: 120px;

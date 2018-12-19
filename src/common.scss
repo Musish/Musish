@@ -36,6 +36,7 @@ button {
 :global {
   * {
     outline: none !important;
+    box-sizing: border-box;
   }
 
   #app-root {
@@ -51,6 +52,7 @@ button {
     width: 100%;
 
     > aside {
+      overflow-y: auto;
       flex-shrink: 0;
     }
 
