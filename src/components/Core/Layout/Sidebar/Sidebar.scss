@@ -1,8 +1,10 @@
+@import '../../../../styles/settings/colors';
+
 .sidebar {
   display: flex;
   flex-direction: column;
-  background: #f9f9f9;
-  border-right: solid 1px #f3f3f3;
+  background: $sidebar_color;
+  border-right: solid 1px $main_background_color;
   height: 100%;
   min-height: 500px;
   top: 66px;
@@ -12,17 +14,17 @@
 
   .menus {
     flex: 1;
-    overflow: scroll;
+    overflow: auto;
     padding-bottom: 15px;
 
     .menu {
-      background: #ffffff;
+      background: $main_background_color;
       padding: 10px 15px;
       border-radius: 5px;
       margin-top: 15px;
 
       h3 {
-        color: #fe2851;
+        color: $primary_color;
         font-weight: 500;
         font-size: 14px;
         margin: 0;
@@ -35,9 +37,9 @@
         padding: 0;
 
         li {
-          color: #333;
+          color: #333333;
           font-weight: 500;
-          margin: 10px 0px;
+          margin: 10px 0;
 
           a {
             margin: -10px 0;
@@ -51,8 +53,8 @@
 
           &.active a {
             border-radius: 4px;
-            background: #fe2851;
-            color: #ffffff;
+            background: $primary_color;
+            color: $main_background_color;
             font-weight: 500;
           }
         }

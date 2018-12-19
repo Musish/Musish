@@ -1,9 +1,11 @@
+@import '../../../../styles/settings/colors';
+
 .navigationBar {
   height: 65px;
   top: 0;
   left: 0;
   right: 0;
-  background: rgb(247, 247, 247);
+  background: $container_background;
   box-shadow: 0 3px 2px -2px rgba(0, 0, 0, 0.1);
   text-align: center;
   z-index: 100;
@@ -30,7 +32,7 @@
       display: inline-block;
 
       a {
-        color: rgb(105, 105, 105);
+        color: $tertiary_color;
         background: none;
         font-weight: 300;
         font-size: 14px;
@@ -40,13 +42,13 @@
         margin: 0 5px;
 
         &:hover {
-          color: #fe2851;
+          color: $primary_color;
         }
       }
 
       &.active a {
-        color: #ffffff;
-        background: #fe2851;
+        color: $container_background;
+        background: $primary_color;
       }
     }
   }
@@ -57,7 +59,7 @@
     left: 30px;
     line-height: 65px;
     font-size: 20px;
-    color: #555555;
+    color: $tertiary_color;
     margin: 0;
   }
 
@@ -71,7 +73,7 @@
       outline: none;
       padding: 8px 15px;
       text-align: center;
-      border: solid 1px #eee;
+      border: solid 1px $main_background_color;
       border-radius: 5px;
       font-size: 11px;
       line-height: 15px;
