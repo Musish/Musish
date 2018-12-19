@@ -62,6 +62,12 @@
       background: none;
     }
 
+    &.indexedSong {
+      .songBacker:before {
+        left: 35px;
+      }
+    }
+
     .albumArtwork {
       width: 40px;
       height: 40px;

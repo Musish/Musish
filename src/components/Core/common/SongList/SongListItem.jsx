@@ -129,7 +129,7 @@ class SongListItem extends React.Component {
 
 
     return (
-      <div className={`${classes.song} ${this.isPlaying() ? 'playing' : ''}`}
+      <div className={`${!showAlbum ? classes.indexedSong : ''} ${classes.song} ${this.isPlaying() ? 'playing' : ''}`}
            onClick={this.handleClick}
            style={this.props.style}>
         <ContextMenuTrigger id={MENU_TYPE}
