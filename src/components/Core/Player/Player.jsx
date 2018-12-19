@@ -268,12 +268,6 @@ class Player extends React.Component {
 
           <span className={cx(styles.controls, styles.queueWrapper)}>
             <i className={"fas fa-list-ol"}/>
-            <div className={styles.queueContainer}>
-              <div className={styles.queueInner}>
-                <h3>Up next</h3>
-                <Queue />
-              </div>
-            </div>
           </span>
         </div>
       </div>

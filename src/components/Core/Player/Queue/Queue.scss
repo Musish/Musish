@@ -1,8 +1,70 @@
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 400px;
+  margin-top: -200px;
+  margin-left: -137.5px;
+  z-index: 500;
+  overflow: hidden;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 8px 36px -10px rgba(150, 150, 150, 0.75);
+  animation: fadein 0.1s;
+}
+
+.header {
+  height: 45px;
+  display: flex;
+  flex-direction: row;
+  background: #f5f5f5;
+  border-bottom: solid 1px #eeeeee;
+  cursor: pointer;
+  padding: 0 15px;
+
+  > div {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+
+    &.title {
+      flex: 1;
+      color: #fe2851;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    &.icons {
+      font-size: 16px;
+      color: #666666;
+      cursor: pointer;
+      margin-left: 20px;
+    }
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
 .SortableList {
   position: relative;
   width: 400px;
   padding: 0;
 }
+
 .SortableItem {
   width: 100%;
   height: 54px;
@@ -23,10 +85,12 @@
   &.played {
     color: #999999;
   }
+
   &.playing {
     color: #fe2851;
     font-weight: 500;
   }
+
   &.queued {
   }
 
@@ -40,20 +104,24 @@
     display: block;
     user-select: none;
   }
+
   .title {
     margin-top: 5px;
     font-size: 14px;
     line-height: 14px;
   }
+
   .artistName {
     font-size: 12px;
     line-height: 12px;
   }
+
   .albumName {
     font-size: 10px;
     line-height: 10px;
   }
 }
+
 .SortableHelper {
   cursor: row-resize;
   z-index: 1752;
