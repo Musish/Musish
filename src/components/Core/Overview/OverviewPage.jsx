@@ -50,11 +50,11 @@ class OverviewPage extends React.Component {
         <h3>Frequently played</h3>
         <Loader/>
         <h3>Recently played</h3>
+        <h4 className={classes.albumHeading}>Albums</h4>
         <div className={classes.flexGrid}>
           {
             recentlyPlayed ?
               recentlyPlayed.map((item, i) => {
-                console.log(item);
                 switch (item.type) {
                   case 'playlists':
                     break;
@@ -62,6 +62,24 @@ class OverviewPage extends React.Component {
                     return (
                       <AlbumItem key={i} album={item} size={120}/>
                     );
+                  default:
+                    return null
+                }
+              }) : <Loader/>
+          }
+        </div>
+        <h4 className={classes.playlistHeading}>Playlists</h4>
+        <div className={classes.flexGrid}>
+          {
+            recentlyPlayed ?
+              recentlyPlayed.map((item, i) => {
+                switch (item.type) {
+                  case 'playlists':
+                    return (
+                      <AlbumItem key={i} album={item} size={120}/>
+                    );
+                  case 'albums':
+                    break;
                   default:
                     return null
                 }
