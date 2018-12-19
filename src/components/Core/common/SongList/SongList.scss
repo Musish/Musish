@@ -1,3 +1,5 @@
+@import "../../../../styles/settings/colors";
+
 .songList {
   list-style-type: none;
   padding: 0;
@@ -121,6 +123,21 @@
       .songTitle {
         font-size: 12px;
         color: #333333;
+        display: flex;
+
+        .explicit {
+          border: 1px solid $secondary_color;
+          color: $secondary_color;
+          display: flex;
+          width: 14px;
+          height: 14px;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          border-radius: 3px;
+          font-size: 10px;
+          margin-left: 5px;
+        }
       }
     }
 

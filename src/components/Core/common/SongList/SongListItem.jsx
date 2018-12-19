@@ -121,7 +121,12 @@ class SongListItem extends React.Component {
     const inLibrary = attributes.playParams && attributes.playParams.isLibrary;
     const duration = this.getTime(attributes.durationInMillis);
 
-    const explicit = <></>; // TODO: get if the song is explicit or not
+    const explicit = attributes.contentRating === "explicit" && (
+      <div className={classes.explicit}>
+        <span>E</span>
+      </div>
+    );
+
 
     return (
       <div className={`${classes.song} ${this.isPlaying() ? 'playing' : ''}`}
