@@ -6,7 +6,7 @@ export default class RadioPage extends Component {
   render() {
 
     return (
-      <div className={classes.container}>
+      <div className={classes.radioContainer}>
         <span className={classes.comingSoon}>Coming Soon!</span>
       </div>
     );
