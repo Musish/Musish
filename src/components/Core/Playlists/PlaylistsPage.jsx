@@ -53,13 +53,10 @@ export default class PlaylistsPage extends React.Component {
 
   render() {
     return (
-      <>
-        <PageContent innerRef={this.ref}>
-          <PageTitle title={'Playlists'} context={'My Library'}/>
-
-          <InfiniteLoader scrollElement={this.ref} load={this.load} render={this.renderContent}/>
-        </PageContent>
-      </>
+      <PageContent innerRef={this.ref}>
+        <PageTitle title={'Playlists'} context={'My Library'}/>
+        <InfiniteLoader scrollElement={this.ref} load={this.load} render={this.renderContent}/>
+      </PageContent>
     );
   }
 }
