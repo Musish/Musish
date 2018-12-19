@@ -13,7 +13,7 @@
 .artistList {
   width: 250px;
   height: 100%;
-  border-right: solid 1px rgb(241, 241, 241);
+  border-right: solid 1px $main_background_color;
   overflow: auto;
 
   ul {
@@ -52,7 +52,7 @@
           top: 1px;
           height: 1px;
           display: block;
-          background: rgba(220, 220, 220, 0.5);
+          background: $song_background_color;
         }
       }
 

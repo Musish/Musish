@@ -40,7 +40,7 @@
         top: 1px;
         height: 1px;
         display: block;
-        background: rgba(220, 220, 220, 0.5);
+        background: $song_background_color;
       }
     }
 
@@ -55,7 +55,7 @@
     }
 
     &:hover .songBacker:after {
-      background: rgb(249, 249, 249);
+      background: $container_background;
     }
 
     &:first-child .songBacker:before {
@@ -92,7 +92,7 @@
         border-radius: 3px;
         width: 40px;
         height: 40px;
-        background: #fafafa;
+        background: $container_background;
         img {
           border-radius: inherit;
           width: inherit;
@@ -102,7 +102,7 @@
     }
 
     .songIndex {
-      color: #fe2851;
+      color: $primary_color;
     }
 
     .songInfo {
@@ -117,7 +117,7 @@
         width: 100%;
         overflow: hidden;
         white-space: nowrap;
-        color: #aaaaaa;
+        color: $secondary_color;
       }
 
       .songTitle {
@@ -144,7 +144,7 @@
     .songDuration {
       width: 60px;
       align-items: center;
-      color: #777777;
+      color: $tertiary_color;
     }
   }
 }
@@ -168,7 +168,7 @@
       bottom: 0;
       width: 3px;
       height: 5px;
-      background: #fe2851;
+      background: $primary_color;
       animation: audio-wave 0.95s infinite ease-in-out;
       animation-play-state: paused;
       margin-left: 1px;

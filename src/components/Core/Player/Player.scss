@@ -1,7 +1,7 @@
 @import '../../../styles/settings/colors';
 
 .player {
-  background: #ffffff;
+  background: $main_background_color;
   padding: 20px 15px;
   border-radius: 5px;
   margin-bottom: 30px;
@@ -77,7 +77,7 @@
       height: 10px;
       width: 5px;
       border: 0;
-      background: rgb(100, 100, 100);
+      background: $tertiary_color;
       border-radius: 2px;
       -webkit-appearance: none;
     }
@@ -124,7 +124,7 @@
             font-weight: 500;
             font-size: 12px;
             line-height: 12px;
-            background: rgba(255, 255, 255, 0.8);
+            background: $main_background_color;
             border-radius: 2px;
             text-align: center;
           }
@@ -132,7 +132,7 @@
       }
 
       &:hover {
-        color: #555555;
+        color: $tertiary_color;
       }
 
       &:active {
@@ -154,7 +154,7 @@
     position: absolute;
     display: none;
     z-index: 5;
-    background: #f7f7f7;
+    background: $container_background;
     border-radius: 5px;
     width: 30px;
     height: 120px;

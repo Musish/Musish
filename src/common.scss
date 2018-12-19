@@ -52,7 +52,7 @@ button {
     width: 100%;
 
     > aside {
-      overflow-y: scroll;
+      overflow-y: auto;
       flex-shrink: 0;
     }
 
