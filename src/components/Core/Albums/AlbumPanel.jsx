@@ -54,7 +54,6 @@ export default class AlbumsPanel extends React.Component {
           ) : (
             <Loader/>
           )}
-
         </div>
       </div>
     );
