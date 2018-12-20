@@ -1,18 +1,22 @@
 export function createMediaItem(song) {
-  return {
-    id: song.id,
-    attributes: song.attributes,
-    container: {
-      id: song.id
-    }
-  }
+  song.container = {id: song.id};
+
+  return song;
 }
 
 export function artworkForMediaItem(item, size) {
   if (!item.attributes || !item.attributes.artwork) {
     return `https://is1-ssl.mzstatic.com/image/thumb/Features127/v4/75/f9/6f/75f96fa5-99ca-0854-3aae-8f76f5cb7fb5/source/${size}x${size}bb.jpeg`
   }
+
   return MusicKit.formatArtworkURL(item.attributes.artwork, size, size);
+}
+
+export function getTime(ms) {
+  const s = 1000 * Math.round(ms / 1000);
+  let d = new Date(s);
+
+  return d.getUTCMinutes() + ':' + String('0' + d.getUTCSeconds()).slice(-2);
 }
 
 export function humanifyMillis(duration) {

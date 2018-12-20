@@ -18,8 +18,9 @@ export default class AlbumsPanel extends React.Component {
 
   async componentDidMount() {
     const albumId = this.props.id || this.props.album.id;
+    const isLibrary = isNaN(albumId);
     const music = MusicKit.getInstance();
-    const album = await music.api.library.album(albumId);
+    const album = isLibrary ? await music.api.library.album(albumId) : await music.api.album(albumId);
 
     const albumLength = album.relationships.tracks.data.reduce((totalDuration, track) => (totalDuration + track.attributes.durationInMillis), 0);
 
@@ -50,7 +51,7 @@ export default class AlbumsPanel extends React.Component {
           <span className={classes.title}>{album.attributes.name}</span>
           <span className={classes.subtitle}>{album.attributes.artistName}</span>
           {album.relationships ? (
-            <SongList scrollElement={this.ref} load={() => album.relationships.tracks.data} album={true}/>
+            <SongList scrollElement={this.ref} load={() => album.relationships.tracks.data} />
           ) : (
             <Loader/>
           )}

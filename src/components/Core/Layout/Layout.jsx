@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react';
 import NavigationBar from './NavigationBar/NavigationBar';
 import Sidebar from './Sidebar/Sidebar';
+import Queue from "../Player/Queue/Queue";
 
 export default class Layout extends React.Component {
   render() {
@@ -9,6 +10,7 @@ export default class Layout extends React.Component {
           <NavigationBar/>
 
           <div id="main-wrapper">
+            <Queue/>
             <Sidebar/>
             <main id="main-content" className={this.props.className}>
               {this.props.children}

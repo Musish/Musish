@@ -7,6 +7,11 @@
 
   .song {
     cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 
     .songWrapper {
       display: flex;
@@ -20,6 +25,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
         height: 100%;
       }
     }
@@ -40,7 +46,7 @@
         top: 1px;
         height: 1px;
         display: block;
-        background: rgba(220, 220, 220, 0.5);
+        background: $song_background_color;
       }
     }
 
@@ -55,12 +61,13 @@
     }
 
     &:hover .songBacker:after {
-      background: rgb(249, 249, 249);
+      background: $container_background;
     }
 
     &:first-child .songBacker:before {
       background: none;
     }
+
 
     .songInfo {
       flex: 1;
@@ -74,7 +81,7 @@
         width: 100%;
         overflow: hidden;
         white-space: nowrap;
-        color: #aaaaaa;
+        color: $secondary_color;
       }
 
       .songTitle {
@@ -101,7 +108,7 @@
     .songDuration {
       width: 60px;
       align-items: center;
-      color: #777777;
+      color: $tertiary_color;
     }
   }
 }

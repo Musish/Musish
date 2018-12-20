@@ -19,14 +19,10 @@ export default function withMK(WrappedComponent, bindings = {}) {
     };
 
     async componentDidMount() {
-
       for (const event of Object.keys(bindings)) {
         const state = bindings[event];
-
         const handler = e => this.handleEvent(state, e);
-
         this.bindingFunctions[event] = handler;
-
         MusicKit.getInstance().addEventListener(
           event,
           handler,

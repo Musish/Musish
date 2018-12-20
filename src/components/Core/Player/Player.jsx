@@ -10,6 +10,8 @@ import {
 } from "../common/Utils";
 import cx from 'classnames';
 import withMK from '../../../hoc/withMK';
+import QueueContext from './Queue/QueueContext';
+import {getTime} from '../common/Utils';
 
 class Player extends React.Component {
   constructor(props) {
@@ -34,7 +36,11 @@ class Player extends React.Component {
     this.handleRepeat = this.handleRepeat.bind(this);
     this.handleShuffle = this.handleShuffle.bind(this);
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
+    this.toggleVolume = this.toggleVolume.bind(this);
     this.getVolumeIconClasses = this.getVolumeIconClasses.bind(this);
+
+    this.getCurrentPlaybackDuration = this.getCurrentPlaybackDuration.bind(this);
+    this.getCurrentPlaybackTime = this.getCurrentPlaybackTime.bind(this);
   }
 
   static timeToPercent(time, duration) {
@@ -79,7 +85,6 @@ class Player extends React.Component {
 
   handleAddToLibrary() {
     console.log('Add to library');
-
     // this.props.mk.instance.addToLibrary();
   }
 
@@ -113,22 +118,37 @@ class Player extends React.Component {
     this.props.mk.instance.player.volume = e.target.value;
   }
 
+  toggleVolume() {
+    const {player} = this.props.mk.instance;
+    player.volume = player.volume <= 0.5 ? 1 : 0;
+  }
+
   getVolumeIconClasses() {
-    const volume = this.props.mk.instance.player.volume * 100;
+    const volume = this.props.mk.instance.player.volume;
 
     if (volume === 0) {
       return 'fas fa-times';
     }
 
-    if (volume > 0 && volume < 30) {
+    if (volume < 0.30) {
       return 'fas fa-volume-off';
     }
 
-    if (volume >= 30 && volume < 60) {
+    if (volume < 0.60) {
       return 'fas fa-volume-down';
     }
 
     return 'fas fa-volume-up';
+  }
+
+  getCurrentPlaybackDuration() {
+    const {player} = this.props.mk.instance;
+    return getTime(player.currentPlaybackDuration * 1000);
+  }
+
+  getCurrentPlaybackTime() {
+    const {player} = this.props.mk.instance;
+    return getTime(player.currentPlaybackTime * 1000);
   }
 
   renderProgress() {
@@ -200,7 +220,8 @@ class Player extends React.Component {
     const repeatMode = mk.instance.player.repeatMode;
     const shuffleMode = mk.instance.player.shuffleMode;
 
-    const isShuffle = repeatMode === RepeatModeOne || repeatMode === RepeatModeAll;
+    const isRepeating = repeatMode === RepeatModeOne || repeatMode === RepeatModeAll;
+    const isShuffling = shuffleMode === ShuffleModeSongs;
 
     return (
       <div className={styles.player}>
@@ -214,7 +235,11 @@ class Player extends React.Component {
             <h3>{nowPlayingItem.attributes.albumName}</h3>
           </div>
         </div>
-        {this.renderProgress()}
+        <div className={styles.progressBarWrapper}>
+          <span>{this.getCurrentPlaybackTime()}</span>
+          {this.renderProgress()}
+          <span>{this.getCurrentPlaybackDuration()}</span>
+        </div>
         <div className={styles.buttons}>
           <span onClick={this.handlePrevious}>
             <i className={'fas fa-backward'}/>
@@ -236,24 +261,8 @@ class Player extends React.Component {
 
         <div className={styles.buttons}>
 
-          <span className={styles.controls} onClick={this.handleAddToLibrary}>
-            <i className={"fas fa-plus"}/>
-          </span>
-
-          <span
-            className={cx(styles.controls, {[styles.shuffle]: isShuffle, [styles.one]: repeatMode === RepeatModeOne})}
-            onClick={this.handleRepeat}
-          >
-            <i className={"fas fa-redo-alt"}/>
-          </span>
-
-          <span className={cx(styles.controls, {[styles.shuffle]: shuffleMode === ShuffleModeSongs})}
-                onClick={this.handleShuffle}>
-            <i className={"fas fa-random"}/>
-          </span>
-
           <span className={cx(styles.controls, styles.volumeControlWrapper)}>
-            <i className={this.getVolumeIconClasses()}/>
+            <i className={this.getVolumeIconClasses()} onClick={this.toggleVolume}/>
             <div className={styles.volumeControlContainer}>
               <div className={styles.volumeBarWrapper}>
                 <input
@@ -269,6 +278,29 @@ class Player extends React.Component {
               </div>
             </div>
           </span>
+
+          <span
+            className={cx(styles.controls, styles.shuffle, {
+              [styles.enabled]: isRepeating,
+              [styles.one]: repeatMode === RepeatModeOne
+            })}
+            onClick={this.handleRepeat}
+          >
+            <i className={"fas fa-redo-alt"}/>
+          </span>
+
+          <span className={cx(styles.controls, {[styles.enabled]: isShuffling})}
+                onClick={this.handleShuffle}>
+            <i className={"fas fa-random"}/>
+          </span>
+
+          <QueueContext.Consumer>
+            {({doShow}) => (
+              <span className={cx(styles.controls, styles.queueWrapper)} onClick={doShow}>
+                <i className={"fas fa-list-ol"}/>
+              </span>
+            )}
+          </QueueContext.Consumer>
         </div>
       </div>
     );

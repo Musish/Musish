@@ -1,4 +1,5 @@
-$spinner-color: #fe2851 !default
+@import '../../styles/settings/colors';
+
 $spinner-size: 32px !default;
 
 .container {
@@ -20,8 +21,9 @@ $spinner-size: 32px !default;
       bottom: 0;
       width: 3px;
       height: 5px;
-      background: #fe2851;
+      background: $primary_color;
       animation: audio-wave 0.5s infinite ease-in-out alternate;
+      transform: translateZ(0);
       margin-left: 1px;
 
       &:nth-child(2) {

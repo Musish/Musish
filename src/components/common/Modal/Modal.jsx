@@ -17,9 +17,15 @@ class Modal extends Component {
       return null;
     }
 
+    const {style, width} = this.props;
+    const inlineStyles = {
+      ...style,
+      width: width
+    };
+
     return (
       <div className={classes.container} onClick={this.props.handleClose}>
-        <div className={classes.modal} onClick={e => e.stopPropagation()}>
+        <div className={classes.modal} onClick={e => e.stopPropagation()} style={inlineStyles}>
           {this.props.render()}
         </div>
       </div>
@@ -29,10 +35,14 @@ class Modal extends Component {
 
 Modal.propTypes = {
   handleClose: PropTypes.func.isRequired,
+  style: PropTypes.object,
+  width: PropTypes.number,
 };
 
 Modal.defaultProps = {
   open: false,
+  style: {},
+  width: 900,
 };
 
 export default Modal;
