@@ -2,7 +2,11 @@
   "extends": ["airbnb", "prettier", "react-app", "plugin:prettier/recommended"],
   "plugins": ["prettier"],
   "rules": {
-    "prettier/prettier": ["error"],
+    "prettier/prettier": ["error", {
+      "printWidth": 100,
+      "singleQuote": true,
+      "trailingComma": "es5"
+    }],
     "jsx-a11y/href-no-hash": [0],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "react/sort-comp": false,
