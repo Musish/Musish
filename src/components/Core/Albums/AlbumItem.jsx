@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import classes from './AlbumItem.scss';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import Modal from "../../common/Modal/Modal";
 import AlbumPanel from "./AlbumPanel";
 
