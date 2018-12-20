@@ -201,7 +201,8 @@ class Player extends React.Component {
     const repeatMode = mk.instance.player.repeatMode;
     const shuffleMode = mk.instance.player.shuffleMode;
 
-    const isShuffle = repeatMode === RepeatModeOne || repeatMode === RepeatModeAll;
+    const isRepeating = repeatMode === RepeatModeOne || repeatMode === RepeatModeAll;
+    const isShuffling = shuffleMode === ShuffleModeSongs;
 
     return (
       <div className={styles.player}>
@@ -256,13 +257,13 @@ class Player extends React.Component {
           </span>
 
           <span
-            className={cx(styles.controls, {[styles.shuffle]: isShuffle, [styles.one]: repeatMode === RepeatModeOne})}
+            className={cx(styles.controls, styles.shuffle, {[styles.enabled]: isRepeating, [styles.one]: repeatMode === RepeatModeOne})}
             onClick={this.handleRepeat}
           >
             <i className={"fas fa-redo-alt"}/>
           </span>
 
-          <span className={cx(styles.controls, {[styles.shuffle]: shuffleMode === ShuffleModeSongs})}
+          <span className={cx(styles.controls, {[styles.enabled]: isShuffling})}
                 onClick={this.handleShuffle}>
             <i className={"fas fa-random"}/>
           </span>
