@@ -1,8 +1,8 @@
 import React from 'react';
 import classes from "./SearchBar.scss";
 import cx from 'classnames';
-import withMK from "../../../../hoc/withMK";
-import Loader from "../../../common/Loader";
+import withMK from "../../../../../hoc/withMK";
+import Loader from "../../../../common/Loader";
 
 class SearchBar extends React.Component {
   constructor(props) {

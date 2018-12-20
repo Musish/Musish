@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './NavigationBar.scss';
-import SearchBar from "./SearchBar";
+import SearchBar from "./Search/SearchBar";
 
 export default class NavigationBar extends React.Component {
   render() {
