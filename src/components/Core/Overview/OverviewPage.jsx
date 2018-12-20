@@ -55,13 +55,12 @@ class OverviewPage extends React.Component {
               recentlyPlayed.map((item, i) => {
                 switch (item.type) {
                   case 'playlists':
+                  default:
                     return null;
                   case 'albums':
                     return (
                       <AlbumItem key={i} album={item} size={120}/>
                     );
-                  default:
-                    return null
                 }
               }) : <Loader/>
           }
@@ -77,9 +76,8 @@ class OverviewPage extends React.Component {
                       <AlbumItem key={i} album={item} size={120}/>
                     );
                   case 'albums':
-                    return null;
                   default:
-                    return null
+                    return null;
                 }
               }) : <Loader/>
           }
