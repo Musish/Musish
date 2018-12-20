@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import classes from './AlbumItem.scss';
-import {Link, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import Modal from "../../common/Modal/Modal";
 import AlbumPanel from "./AlbumPanel";
 
@@ -52,8 +52,8 @@ class AlbumItem extends Component {
     return (
       <>
         {this.renderModal()}
-        <div className={classes.container} onClick={this.handleOpen}>
-          <div className={classes.imageContainer} style={{width: size}}>
+        <div className={classes.container} onClick={this.handleOpen} style={{width: size}}>
+          <div className={classes.imageContainer} style={{width: size, height: size}}>
             <img
               src={artwork}
               className={classes.image}
