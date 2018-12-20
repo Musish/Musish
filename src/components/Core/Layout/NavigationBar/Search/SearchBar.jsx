@@ -1,11 +1,12 @@
 import React from 'react';
-import classes from "./SearchBar.scss";
 import cx from 'classnames';
-import withMK from "../../../../../hoc/withMK";
-import Loader from "../../../../common/Loader";
-import SongResultItem from "./SongResultItem";
-import AlbumResultItem from "./AlbumResultItem";
-import ArtistResultItem from "./ArtistResultItem";
+import PropTypes from 'prop-types';
+import classes from './SearchBar.scss';
+import withMK from '../../../../../hoc/withMK';
+import Loader from '../../../../common/Loader';
+import SongResultItem from './SongResultItem';
+import AlbumResultItem from './AlbumResultItem';
+import ArtistResultItem from './ArtistResultItem';
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -26,27 +27,27 @@ class SearchBar extends React.Component {
   handleShowResults() {
     this.setState({
       showResults: true,
-    })
+    });
   }
 
   handleHideResults() {
     this.setState({
       showResults: false,
-    })
+    });
   }
 
-  async handleSearch({target: {value: query}}) {
+  async handleSearch({ target: { value: query } }) {
     this.setState({
-      query
+      query,
     });
 
-    query = query.replace(' ', '+');
+    const searchQuery = query.replace(' ', '+');
 
-    await this.search(query)
+    await this.search(searchQuery);
   }
 
   async search(query) {
-    if(query.length === 0) {
+    if (query.length === 0) {
       this.setState({
         catalogData: null,
         libraryData: null,
@@ -58,10 +59,7 @@ class SearchBar extends React.Component {
       loading: true,
     });
 
-    await Promise.all([
-      this.searchCatalog(query),
-      this.searchLibrary(query)
-    ]);
+    await Promise.all([this.searchCatalog(query), this.searchLibrary(query)]);
 
     this.setState({
       loading: false,
@@ -79,7 +77,7 @@ class SearchBar extends React.Component {
     });
 
     this.setState({
-      catalogData
+      catalogData,
     });
   }
 
@@ -94,14 +92,14 @@ class SearchBar extends React.Component {
     });
 
     this.setState({
-      libraryData
+      libraryData,
     });
   }
 
   getItems(type) {
     let songs = [];
 
-    const {catalogData, libraryData} = this.state;
+    const { catalogData, libraryData } = this.state;
 
     if (libraryData && libraryData[`library-${type}`]) {
       songs = [...songs, ...libraryData[`library-${type}`].data];
@@ -123,45 +121,49 @@ class SearchBar extends React.Component {
 
     return (
       <div className={classes.section}>
-        <div className={classes.title}>
-          {label}
-        </div>
+        <div className={classes.title}>{label}</div>
 
         {songs.map(rowRenderer)}
 
-        {this.state.loading && <Loader/>}
+        {this.state.loading && <Loader />}
       </div>
-    )
+    );
   }
 
   render() {
-    const {query, showResults} = this.state;
+    const { query, showResults } = this.state;
 
     return (
-      <div className={cx(classes.navSearch, {[classes.active]: showResults})}>
+      <div className={cx(classes.navSearch, { [classes.active]: showResults })}>
         <div className={classes.navSearchWrapper}>
-          <input type="text"
-                 placeholder="Search music"
-                 value={query}
-                 onChange={this.handleSearch}
-                 onFocus={this.handleShowResults}
-                 onBlur={this.handleHideResults}/>
+          <input
+            type="text"
+            placeholder="Search music"
+            value={query}
+            onChange={this.handleSearch}
+            onFocus={this.handleShowResults}
+            onBlur={this.handleHideResults}
+          />
 
           <div className={classes.results}>
-            {this.renderResults('Songs', 'songs', (song) => (
+            {this.renderResults('Songs', 'songs', song => (
               <SongResultItem key={song.id} song={song} />
             ))}
-            {this.renderResults('Albums', 'albums', (album) => (
+            {this.renderResults('Albums', 'albums', album => (
               <AlbumResultItem key={album.id} album={album} size={30} />
             ))}
-            {this.renderResults('Artists', 'artists', (artist) => (
-              <ArtistResultItem key={artist.id} artist={artist}/>
+            {this.renderResults('Artists', 'artists', artist => (
+              <ArtistResultItem key={artist.id} artist={artist} />
             ))}
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
+
+SearchBar.propTypes = {
+  mk: PropTypes.any.isRequired,
+};
 
 export default withMK(SearchBar);

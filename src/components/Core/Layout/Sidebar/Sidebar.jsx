@@ -1,11 +1,10 @@
 import React from 'react';
-import cx from 'classnames';
-import {Link, Route} from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Player from '../../Player/Player';
 import classes from './Sidebar.scss';
 
 export default class Sidebar extends React.Component {
-
   constructor(props) {
     super(props);
 
@@ -24,13 +23,15 @@ export default class Sidebar extends React.Component {
   }
 
   render() {
-    const playlists = this.state.playlists && this.state.playlists.map((playlist, i) => (
-      <MenuItem
-        to={`/playlists/${playlist.id}`}
-        label={playlist.attributes.name}
-        key={i}
-      />
-    ));
+    const playlists =
+      this.state.playlists &&
+      this.state.playlists.map(playlist => (
+        <MenuItem
+          to={`/playlists/${playlist.id}`}
+          label={playlist.attributes.name}
+          key={playlist.id}
+        />
+      ));
 
     return (
       <aside className={classes.sidebar}>
@@ -38,46 +39,52 @@ export default class Sidebar extends React.Component {
           <div className={classes.menu}>
             <h3>My Library</h3>
             <ul>
-              <MenuItem to={'/'} label={'For You'}/>
-              <MenuItem to={'/artists'} exact={false} label={'Artists'}/>
-              <MenuItem to={'/albums'} exact={false} label={'Albums'}/>
-              <MenuItem to={'/songs'} label={'Songs'}/>
+              <MenuItem to={'/'} label={'For You'} />
+              <MenuItem to={'/artists'} exact={false} label={'Artists'} />
+              <MenuItem to={'/albums'} exact={false} label={'Albums'} />
+              <MenuItem to={'/songs'} label={'Songs'} />
             </ul>
           </div>
           <div className={classes.menu}>
             <h3>Apple Music</h3>
             <ul>
-              <MenuItem to={'/browse'} label={'Browse'}/>
-              <MenuItem to={'/radio'} label={'Radio'}/>
+              <MenuItem to={'/browse'} label={'Browse'} />
+              <MenuItem to={'/radio'} label={'Radio'} />
             </ul>
           </div>
           {playlists && (
             <div className={classes.menu}>
               <h3>Playlists</h3>
-              <ul>
-                {playlists}
-              </ul>
+              <ul>{playlists}</ul>
             </div>
           )}
         </div>
-        <Player/>
+        <Player />
       </aside>
     );
   }
 }
 
-class MenuItem extends React.Component {
-  render() {
-    const {to, label, exact = true} = this.props;
+function MenuItem(props) {
+  const { to, label, exact } = props;
 
-    return (
-      <Route path={to} exact={exact} children={({match}) => (
-        <li className={!!match ? classes.active : ''}>
-          <Link to={to}>
-            {label}
-          </Link>
+  return (
+    <Route path={to} exact={exact}>
+      {({ match }) => (
+        <li className={match ? classes.active : ''}>
+          <Link to={to}>{label}</Link>
         </li>
-      )}/>
-    );
-  }
+      )}
+    </Route>
+  );
 }
+
+MenuItem.propTypes = {
+  to: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  exact: PropTypes.bool,
+};
+
+MenuItem.defaultProps = {
+  exact: true,
+};

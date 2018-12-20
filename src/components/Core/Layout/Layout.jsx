@@ -1,22 +1,30 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import NavigationBar from './NavigationBar/NavigationBar';
 import Sidebar from './Sidebar/Sidebar';
-import Queue from "../Player/Queue/Queue";
+import Queue from '../Player/Queue/Queue';
 
-export default class Layout extends React.Component {
-  render() {
-    return (
-        <Fragment>
-          <NavigationBar/>
+export default function Layout(props) {
+  return (
+    <Fragment>
+      <NavigationBar />
 
-          <div id="main-wrapper">
-            <Queue/>
-            <Sidebar/>
-            <main id="main-content" className={this.props.className}>
-              {this.props.children}
-            </main>
-          </div>
-        </Fragment>
-    );
-  }
+      <div id="main-wrapper">
+        <Queue />
+        <Sidebar />
+        <main id="main-content" className={props.className}>
+          {props.children}
+        </main>
+      </div>
+    </Fragment>
+  );
 }
+
+Layout.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+  className: PropTypes.string,
+};
+
+Layout.defaultProps = {
+  className: '',
+};

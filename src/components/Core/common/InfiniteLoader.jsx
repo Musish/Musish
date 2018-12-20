@@ -1,5 +1,6 @@
 import React from 'react';
-import Loader from "../../common/Loader";
+import PropTypes from 'prop-types';
+import Loader from '../../common/Loader';
 
 export default class InfiniteLoader extends React.Component {
   constructor(props) {
@@ -20,33 +21,33 @@ export default class InfiniteLoader extends React.Component {
   componentDidMount() {
     this.loadMore();
 
-    const {scrollElement} = this.props;
+    const { scrollElement } = this.props;
 
-    if(scrollElement && scrollElement.current) {
+    if (scrollElement && scrollElement.current) {
       this.scrollElement = scrollElement.current;
 
-      this.scrollElement.addEventListener('scroll', this.onElementScroll)
+      this.scrollElement.addEventListener('scroll', this.onElementScroll);
     }
   }
 
   componentWillUnmount() {
-    if(this.scrollElement) {
-      this.scrollElement.removeEventListener('scroll', this.onElementScroll)
+    if (this.scrollElement) {
+      this.scrollElement.removeEventListener('scroll', this.onElementScroll);
     }
   }
 
-  onElementScroll({target: {scrollTop, scrollHeight, clientHeight}}) {
-    this.onScroll({scrollTop, scrollHeight, clientHeight})
+  onElementScroll({ target: { scrollTop, scrollHeight, clientHeight } }) {
+    this.onScroll({ scrollTop, scrollHeight, clientHeight });
   }
 
-  onScroll({scrollTop, scrollHeight, clientHeight}) {
-    if (scrollTop >= (scrollHeight - (clientHeight * 3))) {
-      this.loadMore()
+  onScroll({ scrollTop, scrollHeight, clientHeight }) {
+    if (scrollTop >= scrollHeight - clientHeight * 3) {
+      this.loadMore();
     }
   }
 
   async loadMore() {
-    const {end, loading, page, items} = this.state;
+    const { end, loading, page, items } = this.state;
 
     if (end || loading) {
       return;
@@ -68,7 +69,7 @@ export default class InfiniteLoader extends React.Component {
         page: page + 1,
         items: [...(items || []), ...newItems],
         end: newItems.length < limit,
-      })
+      });
     } finally {
       this.setState({
         loading: false,
@@ -79,25 +80,33 @@ export default class InfiniteLoader extends React.Component {
   setItems(state) {
     this.props.onSetItems(state);
 
-    this.setState(state)
+    this.setState(state);
   }
 
   render() {
-    const {loading, items} = this.state;
+    const { loading, items } = this.state;
 
     if (!items) {
-      return <Loader/>
+      return <Loader />;
     }
 
     return (
       <>
-        {this.props.render({onScroll: this.onScroll}, this.state)}
-        {loading && <Loader/>}
+        {this.props.render({ onScroll: this.onScroll }, this.state)}
+        {loading && <Loader />}
       </>
     );
   }
 }
 
+InfiniteLoader.propTypes = {
+  load: PropTypes.func.isRequired,
+  render: PropTypes.func.isRequired,
+  onSetItems: PropTypes.func,
+  scrollElement: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+};
+
 InfiniteLoader.defaultProps = {
   onSetItems: state => null,
+  scrollElement: null,
 };

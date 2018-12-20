@@ -1,19 +1,21 @@
 import React from 'react';
-import styles from './PageTitle.scss'
+import PropTypes from 'prop-types';
+import styles from './PageTitle.scss';
 
-export default class PageTitle extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <div className={styles.pageTitle}>
-        {this.props.context && (
-          <span className={styles.contextHeading}>{this.props.context}</span>
-        )}
-        <h1>{this.props.title}</h1>
-      </div>
-    );
-  }
+export default function PageTitle(props) {
+  return (
+    <div className={styles.pageTitle}>
+      {props.context && <span className={styles.contextHeading}>{props.context}</span>}
+      <h1>{props.title}</h1>
+    </div>
+  );
 }
+
+PageTitle.propTypes = {
+  context: PropTypes.any,
+  title: PropTypes.any.isRequired,
+};
+
+PageTitle.defaultProps = {
+  context: null,
+};

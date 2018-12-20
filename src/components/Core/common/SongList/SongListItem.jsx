@@ -1,15 +1,15 @@
 import React from 'react';
 
-import {artworkForMediaItem, createMediaItem, isCurrentItem, isPlaying, getTime} from "../Utils";
-import classes from "./SongList.scss";
-import {ContextMenuTrigger} from "react-contextmenu";
+import { ContextMenuTrigger } from 'react-contextmenu';
 import PropTypes from 'prop-types';
-import {MENU_TYPE} from "./SongList";
 import cx from 'classnames';
-import withMK from "../../../../hoc/withMK";
-import SongDecoration from "./SongDecoration";
+import { createMediaItem, isPlaying, getTime } from '../Utils';
+import classes from './SongList.scss';
+import { MENU_TYPE } from './SongList';
+import withMK from '../../../../hoc/withMK';
+import SongDecoration from './SongDecoration';
 
-function collect(props, {props: song, playSong, queueNext, queueLater, state: {artworkURL}}) {
+function collect(props, { props: song, playSong, queueNext, queueLater, state: { artworkURL } }) {
   return {
     ...props,
     song,
@@ -17,7 +17,7 @@ function collect(props, {props: song, playSong, queueNext, queueLater, state: {a
     queueNext,
     queueLater,
     artworkURL,
-  }
+  };
 }
 
 class SongListItem extends React.Component {
@@ -32,7 +32,7 @@ class SongListItem extends React.Component {
   }
 
   async playSong() {
-    let music = this.props.mk.instance;
+    const music = this.props.mk.instance;
     await music.setQueue({
       startPosition: this.props.index,
       items: this.props.songs.map(song => createMediaItem(song)),
@@ -45,11 +45,13 @@ class SongListItem extends React.Component {
   }
 
   async queueNext() {
-    await this.props.mk.instance.player.queue.prepend({items: [createMediaItem(this.props.song)]});
+    await this.props.mk.instance.player.queue.prepend({
+      items: [createMediaItem(this.props.song)],
+    });
   }
 
   async queueLater() {
-    await this.props.mk.instance.player.queue.append({items: [createMediaItem(this.props.song)]});
+    await this.props.mk.instance.player.queue.append({ items: [createMediaItem(this.props.song)] });
   }
 
   async handleClick() {
@@ -61,52 +63,54 @@ class SongListItem extends React.Component {
   }
 
   isPlaying() {
-    const {song} = this.props;
+    const { song } = this.props;
 
     return isPlaying(song);
   }
 
   renderIcon() {
-    const {showAlbum, song} = this.props;
+    const { showAlbum, song } = this.props;
 
-
-    return <SongDecoration song={song} showAlbum={showAlbum}/>
+    return <SongDecoration song={song} showAlbum={showAlbum} />;
   }
 
   render() {
-    const {showArtist, showAlbum, song} = this.props;
-    const {attributes} = song;
-    const inLibrary = attributes.playParams && attributes.playParams.isLibrary;
+    const { showArtist, showAlbum, song } = this.props;
+    const { attributes } = song;
     const duration = getTime(attributes.durationInMillis);
 
-    const explicit = attributes.contentRating === "explicit" && (
+    const explicit = attributes.contentRating === 'explicit' && (
       <div className={classes.explicit}>
         <span>E</span>
       </div>
     );
 
     return (
-      <div className={cx({[classes.indexedSong]: !showAlbum, [classes.playing]: this.isPlaying()}, classes.song)}
-           onClick={this.handleClick}
-           style={this.props.style}>
-        <ContextMenuTrigger id={MENU_TYPE}
-                            attributes={{className: [classes.songWrapper]}}
-                            collect={props => collect(props, this)}>
-          <div className={classes.songBacker}/>
+      <div
+        className={cx(
+          { [classes.indexedSong]: !showAlbum, [classes.playing]: this.isPlaying() },
+          classes.song
+        )}
+        onClick={this.handleClick}
+        style={this.props.style}
+      >
+        <ContextMenuTrigger
+          id={MENU_TYPE}
+          attributes={{ className: [classes.songWrapper] }}
+          collect={props => collect(props, this)}
+        >
+          <div className={classes.songBacker} />
           {this.renderIcon()}
           <div className={classes.songInfo}>
             <span className={classes.songTitle}>
-              {attributes.name}{explicit}
+              {attributes.name}
+              {explicit}
             </span>
             {(showArtist || showAlbum) && (
               <span>
-                {(showArtist && showAlbum) ? (
-                  `${attributes.artistName} - ${attributes.albumName}`
-                ) : showArtist ? (
-                  `${attributes.artistName}`
-                ) : (
-                  `${attributes.albumName}`
-                )}
+                {showArtist && attributes.artistName}
+                {showArtist && showAlbum && ' - '}
+                {showAlbum && attributes.albumName}
               </span>
             )}
           </div>
@@ -123,9 +127,14 @@ SongListItem.propTypes = {
   song: PropTypes.any.isRequired,
   index: PropTypes.number.isRequired,
   songs: PropTypes.array.isRequired,
-  albumArt: PropTypes.bool.isRequired,
+  style: PropTypes.object,
   showArtist: PropTypes.bool.isRequired,
   showAlbum: PropTypes.bool.isRequired,
+  mk: PropTypes.any.isRequired,
+};
+
+SongListItem.defaultProps = {
+  style: {},
 };
 
 const bindings = {

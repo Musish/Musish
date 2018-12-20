@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
 export default function withMK(WrappedComponent, bindings = {}) {
@@ -16,26 +16,20 @@ export default function withMK(WrappedComponent, bindings = {}) {
       this.setState({
         [v]: event,
       });
-    };
+    }
 
     async componentDidMount() {
       for (const event of Object.keys(bindings)) {
         const state = bindings[event];
         const handler = e => this.handleEvent(state, e);
         this.bindingFunctions[event] = handler;
-        MusicKit.getInstance().addEventListener(
-          event,
-          handler,
-        );
+        MusicKit.getInstance().addEventListener(event, handler);
       }
     }
 
     componentWillUnmount() {
       for (const event of Object.keys(bindings)) {
-        MusicKit.getInstance().removeEventListener(
-          event,
-          this.bindingFunctions[event],
-        );
+        MusicKit.getInstance().removeEventListener(event, this.bindingFunctions[event]);
         delete this.bindingFunctions[event];
       }
     }

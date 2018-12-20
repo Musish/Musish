@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Login from './Login/Login';
 
 export default class MusicKitAuthorizeProvider extends React.Component {
@@ -16,15 +17,19 @@ export default class MusicKitAuthorizeProvider extends React.Component {
     await music.authorize();
 
     this.setState({
-      ready: true
-    })
+      ready: true,
+    });
   }
 
   render() {
     if (!this.state.ready) {
-      return <Login onClick={() => this.authorize()}/>;
+      return <Login onClick={() => this.authorize()} />;
     }
 
     return this.props.children;
   }
 }
+
+MusicKitAuthorizeProvider.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+};
