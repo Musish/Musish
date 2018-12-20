@@ -54,7 +54,7 @@ class Queue extends Component {
           <Draggable handle={'.handle'} defaultPosition={{ x: 0, y: 0 }} position={null}>
             <div className={classes.modal} onClick={e => e.stopPropagation()}>
               <div className={cx(classes.header, 'handle')}>
-                <div className={classes.title}>
+                 <div className={classes.title}>
                   <span>Next up</span>
                 </div>
                 <div className={classes.icons}>
