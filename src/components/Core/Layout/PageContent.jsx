@@ -6,28 +6,28 @@ export default class PageContent extends React.Component {
     super(props);
 
     this.state = {
-      mounted: !this.props.innerRef
-    }
+      mounted: !this.props.innerRef,
+    };
   }
 
   componentDidMount() {
-    const {innerRef} = this.props;
+    const { innerRef } = this.props;
 
     if (innerRef) {
       this.setState({
         mounted: true,
-      })
+      });
     }
   }
 
   render() {
-    const {innerRef, ...rest} = this.props;
-    const {mounted} = this.state;
+    const { innerRef, ...rest } = this.props;
+    const { mounted } = this.state;
 
     return (
       <div className={css.pageContent} ref={innerRef} {...rest}>
         {mounted && this.props.children}
       </div>
-    )
+    );
   }
 }

@@ -1,14 +1,18 @@
-import React, {Component} from 'react';
-import classes from "./Loader.scss";
+import React from 'react';
+import classes from './Loader.scss';
 
-export default class Loader extends Component {
-  render() {
-    return (
-      <div className={classes.container}>
-        <div className={classes.loadingAnimation}>
-          <div><span/><span/><span/><span/><span/></div>
+export default function Loader() {
+  return (
+    <div className={classes.container}>
+      <div className={classes.loadingAnimation}>
+        <div>
+          <span />
+          <span />
+          <span />
+          <span />
+          <span />
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }

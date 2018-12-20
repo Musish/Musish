@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Loader from './common/Loader';
 
 export default class MusicKitProvider extends React.Component {
@@ -26,9 +27,13 @@ export default class MusicKitProvider extends React.Component {
 
   render() {
     if (!this.state.ready) {
-      return <Loader/>
+      return <Loader />;
     }
 
     return this.props.children;
   }
 }
+
+MusicKitProvider.propTypes = {
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+};

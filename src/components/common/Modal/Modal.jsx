@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import classes from "./Modal.scss";
+import classes from './Modal.scss';
 
 class Modal extends Component {
   constructor(props) {
@@ -17,10 +17,10 @@ class Modal extends Component {
       return null;
     }
 
-    const {style, width} = this.props;
+    const { style, width } = this.props;
     const inlineStyles = {
       ...style,
-      width: width
+      width,
     };
 
     return (
@@ -37,6 +37,8 @@ Modal.propTypes = {
   handleClose: PropTypes.func.isRequired,
   style: PropTypes.object,
   width: PropTypes.number,
+  render: PropTypes.func.isRequired,
+  open: PropTypes.bool,
 };
 
 Modal.defaultProps = {

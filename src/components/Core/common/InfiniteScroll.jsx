@@ -1,7 +1,7 @@
 import React from 'react';
-import {AutoSizer, List, WindowScroller} from "react-virtualized";
-import InfiniteLoader from "./InfiniteLoader";
+import { AutoSizer, List, WindowScroller } from 'react-virtualized';
 import PropTypes from 'prop-types';
+import InfiniteLoader from './InfiniteLoader';
 
 export default class InfiniteScroll extends React.Component {
   constructor(props) {
@@ -12,22 +12,20 @@ export default class InfiniteScroll extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-      mounted: true
-    })
+    this.forceUpdate();
   }
 
-  onScroll({scrollTop}, onScroll) {
-    const {scrollHeight, clientHeight} = this.getElement();
+  onScroll({ scrollTop }, onScroll) {
+    const { scrollHeight, clientHeight } = this.getElement();
 
-    onScroll({scrollTop, scrollHeight, clientHeight})
+    onScroll({ scrollTop, scrollHeight, clientHeight });
   }
 
-  rowRenderer(args, {items}) {
+  rowRenderer(args, { items }) {
     return this.props.rowRenderer({
       ...args,
       item: items[args.index],
-    })
+    });
   }
 
   getElement() {
@@ -43,12 +41,14 @@ export default class InfiniteScroll extends React.Component {
       <InfiniteLoader
         load={this.props.load}
         onSetItems={this.props.onSetItems}
-        render={({onScroll}, state) => (
-          <WindowScroller scrollElement={this.getElement()}
-                          onScroll={args => this.onScroll(args, onScroll)}>
-            {({height, isScrolling, onChildScroll, scrollTop}) => (
+        render={({ onScroll }, state) => (
+          <WindowScroller
+            scrollElement={this.getElement()}
+            onScroll={args => this.onScroll(args, onScroll)}
+          >
+            {({ height, isScrolling, onChildScroll, scrollTop }) => (
               <AutoSizer disableHeight>
-                {({width}) => (
+                {({ width }) => (
                   <List
                     autoHeight
                     className={this.props.listClassName}
@@ -66,18 +66,22 @@ export default class InfiniteScroll extends React.Component {
               </AutoSizer>
             )}
           </WindowScroller>
-        )}/>
+        )}
+      />
     );
   }
 }
 
 InfiniteScroll.propTypes = {
   load: PropTypes.func.isRequired,
+  rowRenderer: PropTypes.func.isRequired,
   onSetItems: PropTypes.func,
   listClassName: PropTypes.string,
-  rowHeight: PropTypes.number,
+  rowHeight: PropTypes.number.isRequired,
+  scrollElement: PropTypes.shape({ current: PropTypes.instanceOf(Element) }).isRequired,
 };
 
 InfiniteScroll.defaultProps = {
   listClassName: '',
+  onSetItems: state => null,
 };

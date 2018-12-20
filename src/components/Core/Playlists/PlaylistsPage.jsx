@@ -3,9 +3,10 @@ import React from 'react';
 import PlaylistItem from './PlaylistItem';
 
 import classes from './PlaylistsPage.scss';
-import PageTitle from "../../common/PageTitle";
-import PageContent from "../Layout/PageContent";
-import InfiniteLoader from "../common/InfiniteLoader";
+import PageTitle from '../../common/PageTitle';
+import PageContent from '../Layout/PageContent';
+import InfiniteLoader from '../common/InfiniteLoader';
+import PropTypes from 'prop-types';
 
 export default class PlaylistsPage extends React.Component {
   constructor(props) {
@@ -13,50 +14,45 @@ export default class PlaylistsPage extends React.Component {
 
     this.ref = React.createRef();
 
-    this.renderContent = this.renderContent.bind(this);
-    this.onScroll = this.onScroll.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
-  async load(params) {
+  static async load(params) {
     const music = MusicKit.getInstance();
 
-    return await music.api.library.playlists(null, params);
-  }
-
-  onScroll({target: {scrollTop, scrollHeight, clientHeight}}, onScroll) {
-    onScroll({scrollTop, scrollHeight, clientHeight})
+    return music.api.library.playlists(null, params);
   }
 
   handleClose() {
     this.props.history.push('/albums');
   }
 
-  renderItems({items}) {
-    const playlists = items.map(
-      (playlist, i) => {
-        return (
-          <PlaylistItem key={i} playlist={playlist} size={170}/>
-        );
-      });
+  static renderItems({ items }) {
+    const playlists = items.map(playlist => (
+      <PlaylistItem key={playlist.id} playlist={playlist} size={170} />
+    ));
 
-    return (
-      <div className={classes.playlistsGrid}>
-        {playlists}
-      </div>
-    )
+    return <div className={classes.playlistsGrid}>{playlists}</div>;
   }
 
-  renderContent({onScroll}, state) {
-    return this.renderItems(state)
+  static renderContent({ onScroll }, state) {
+    return PlaylistsPage.renderItems(state);
   }
 
   render() {
     return (
       <PageContent innerRef={this.ref}>
-        <PageTitle title={'Playlists'} context={'My Library'}/>
-        <InfiniteLoader scrollElement={this.ref} load={this.load} render={this.renderContent}/>
+        <PageTitle title={'Playlists'} context={'My Library'} />
+        <InfiniteLoader
+          scrollElement={this.ref}
+          load={PlaylistsPage.load}
+          render={PlaylistsPage.renderContent}
+        />
       </PageContent>
     );
   }
 }
+
+PlaylistsPage.propTypes = {
+  history: PropTypes.any.isRequired,
+};

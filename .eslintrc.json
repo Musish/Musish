@@ -1,0 +1,18 @@
+{
+  "extends": ["airbnb", "prettier", "react-app", "plugin:prettier/recommended"],
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": ["error"],
+    "jsx-a11y/href-no-hash": [0],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/sort-comp": false,
+    "react/jsx-curly-brace-presence": false,
+    "jsx-a11y/no-static-element-interactions": false,
+    "jsx-a11y/click-events-have-key-events": false,
+    "react/forbid-prop-types": false,
+    "react/destructuring-assignment": false
+  },
+  "globals": {
+    "MusicKit": true
+  }
+}

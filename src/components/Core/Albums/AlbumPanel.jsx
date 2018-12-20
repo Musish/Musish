@@ -1,9 +1,10 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
 import classes from './AlbumPanel.scss';
-import {artworkForMediaItem, humanifyMillis} from "../common/Utils";
-import SongList from "../common/SongList/SongList";
-import Loader from "../../common/Loader";
+import { artworkForMediaItem, humanifyMillis } from '../common/Utils';
+import SongList from '../common/SongList/SongList';
+import Loader from '../../common/Loader';
 
 export default class AlbumsPanel extends React.Component {
   constructor(props) {
@@ -20,9 +21,14 @@ export default class AlbumsPanel extends React.Component {
     const albumId = this.props.id || this.props.album.id;
     const isLibrary = isNaN(albumId);
     const music = MusicKit.getInstance();
-    const album = isLibrary ? await music.api.library.album(albumId) : await music.api.album(albumId);
+    const album = isLibrary
+      ? await music.api.library.album(albumId)
+      : await music.api.album(albumId);
 
-    const albumLength = album.relationships.tracks.data.reduce((totalDuration, track) => (totalDuration + track.attributes.durationInMillis), 0);
+    const albumLength = album.relationships.tracks.data.reduce(
+      (totalDuration, track) => totalDuration + track.attributes.durationInMillis,
+      0
+    );
 
     this.setState({
       album,
@@ -31,10 +37,10 @@ export default class AlbumsPanel extends React.Component {
   }
 
   render() {
-    const {album, runtime} = this.state;
+    const { album, runtime } = this.state;
 
     if (!album) {
-      return (<Loader />);
+      return <Loader />;
     }
 
     const artworkURL = artworkForMediaItem(album, 220);
@@ -43,9 +49,13 @@ export default class AlbumsPanel extends React.Component {
       <div className={classes.panel}>
         <div className={classes.aside}>
           <div className={classes.artworkWrapper}>
-            <img src={artworkURL}/>
+            <img src={artworkURL} />
           </div>
-          <span className={classes.albumRuntimeDescription}>{album.attributes.trackCount} songs, {runtime}</span>
+          <span className={classes.albumRuntimeDescription}>
+            {album.attributes.trackCount}
+            songs,
+            {runtime}
+          </span>
         </div>
         <div className={classes.main} ref={this.ref}>
           <span className={classes.title}>{album.attributes.name}</span>
@@ -53,10 +63,20 @@ export default class AlbumsPanel extends React.Component {
           {album.relationships ? (
             <SongList scrollElement={this.ref} load={() => album.relationships.tracks.data} />
           ) : (
-            <Loader/>
+            <Loader />
           )}
         </div>
       </div>
     );
   }
 }
+
+AlbumsPanel.propTypes = {
+  id: PropTypes.any,
+  album: PropTypes.any,
+};
+
+AlbumsPanel.defaultProps = {
+  id: null,
+  album: null,
+};

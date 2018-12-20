@@ -1,15 +1,21 @@
 import React from 'react';
-import withMK from "../../../../hoc/withMK";
-import cx from "classnames";
-import classes from "./SongDecoration.scss";
-import {artworkForMediaItem, isCurrentItem, isPlaying} from "../Utils";
+import cx from 'classnames';
+import withMK from '../../../../hoc/withMK';
+import classes from './SongDecoration.scss';
+import { artworkForMediaItem, isCurrentItem, isPlaying } from '../Utils';
 
-function SongDecoration({song, showAlbum, size = 40}) {
+function SongDecoration({ song, showAlbum, size = 40 }) {
   const currentItem = isCurrentItem(song);
 
   const playingAnimation = (
-    <div className={cx(classes.playingAnimation, {[classes.animated]: isPlaying(song)})}>
-      <div><span/><span/><span/><span/><span/></div>
+    <div className={cx(classes.playingAnimation, { [classes.animated]: isPlaying(song) })}>
+      <div>
+        <span />
+        <span />
+        <span />
+        <span />
+        <span />
+      </div>
     </div>
   );
 
@@ -17,9 +23,9 @@ function SongDecoration({song, showAlbum, size = 40}) {
     <>
       {showAlbum ? (
         <span className={classes.albumArtwork}>
-            {currentItem && playingAnimation}
-          <span className={classes.artworkWrapper} style={{width: size, height: size}}>
-            <img src={artworkForMediaItem(song, size)} alt=""/>
+          {currentItem && playingAnimation}
+          <span className={classes.artworkWrapper} style={{ width: size, height: size }}>
+            <img src={artworkForMediaItem(song, size)} alt="" />
           </span>
         </span>
       ) : (

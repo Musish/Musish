@@ -1,67 +1,57 @@
 import React from 'react';
 
+import { connectMenu, ContextMenu, MenuItem } from 'react-contextmenu';
+import PropTypes from 'prop-types';
 import classes from './SongList.scss';
-import InfiniteScroll from "../InfiniteScroll";
-import {connectMenu, ContextMenu, MenuItem} from "react-contextmenu";
-import SongListItem from "./SongListItem";
+import InfiniteScroll from '../InfiniteScroll';
+import SongListItem from './SongListItem';
 
 export const MENU_TYPE = 'DYNAMIC';
 
-function DynamicMenu({id, trigger}) {
+function DynamicMenu({ id, trigger }) {
   if (!trigger) {
-    return null
+    return null;
   }
 
-  const {song: {attributes}} = trigger.song;
+  const {
+    song: { attributes },
+  } = trigger.song;
   const inLibrary = attributes.playParams.isLibrary;
 
   return (
     <ContextMenu id={id}>
-      <div className={"item-info"}>
-        <div className={"artwork"}>
-          <div className={"artwork-wrapper"}>
-            <img src={trigger.artworkURL}/>
+      <div className={'item-info'}>
+        <div className={'artwork'}>
+          <div className={'artwork-wrapper'}>
+            <img src={trigger.artworkURL} />
           </div>
         </div>
-        <div className={"description"}>
+        <div className={'description'}>
           <h1>{attributes.name}</h1>
           <h2>{attributes.artistName}</h2>
           <h3>{attributes.albumName}</h3>
         </div>
       </div>
 
-      <MenuItem divider/>
+      <MenuItem divider />
 
-      <MenuItem onClick={trigger.playSong}>
-        Play
-      </MenuItem>
-      <MenuItem onClick={trigger.queueNext}>
-        Play next
-      </MenuItem>
-      <MenuItem onClick={trigger.queueLater}>
-        Play later
-      </MenuItem>
+      <MenuItem onClick={trigger.playSong}>Play</MenuItem>
+      <MenuItem onClick={trigger.queueNext}>Play next</MenuItem>
+      <MenuItem onClick={trigger.queueLater}>Play later</MenuItem>
 
-      <MenuItem divider/>
+      <MenuItem divider />
 
-      <MenuItem onClick={trigger.queueLater}>
-        Show Artist
-      </MenuItem>
-      <MenuItem onClick={trigger.queueLater}>
-        Show Album
-      </MenuItem>
+      <MenuItem onClick={trigger.queueLater}>Show Artist</MenuItem>
+      <MenuItem onClick={trigger.queueLater}>Show Album</MenuItem>
       {!inLibrary && (
         <>
+          <MenuItem divider />
 
-          <MenuItem divider/>
-
-          <MenuItem onClick={trigger.queueLater}>
-            Add to library
-          </MenuItem>
+          <MenuItem onClick={trigger.queueLater}>Add to library</MenuItem>
         </>
       )}
     </ContextMenu>
-  )
+  );
 }
 
 const ConnectedMenu = connectMenu(MENU_TYPE)(DynamicMenu);
@@ -78,15 +68,15 @@ export default class SongList extends React.Component {
     this.onSetItems = this.onSetItems.bind(this);
   }
 
-  onSetItems({items: songs}) {
+  onSetItems({ items: songs }) {
     this.setState({
-      songs
-    })
+      songs,
+    });
   }
 
-  rowRenderer({item: song, index, isScrolling, isVisible, key, style}) {
-    const {songs} = this.state;
-    const {album, showArtist, showAlbum} = this.props;
+  rowRenderer({ item: song, index, isScrolling, isVisible, key, style }) {
+    const { songs } = this.state;
+    const { showArtist, showAlbum } = this.props;
 
     return (
       <SongListItem
@@ -94,31 +84,40 @@ export default class SongList extends React.Component {
         song={song}
         index={index}
         songs={songs}
-        albumArt={!album}
         showArtist={showArtist}
         showAlbum={showAlbum}
         style={style}
       />
-    )
+    );
   }
 
   render() {
-    const {showArtist, showAlbum, scrollElement, load} = this.props;
+    const { showArtist, showAlbum, scrollElement, load } = this.props;
 
     return (
       <div className={classes.songList}>
-        <InfiniteScroll onSetItems={this.onSetItems}
-                        scrollElement={scrollElement}
-                        load={load}
-                        rowHeight={showAlbum || showArtist ? 50 : 37}
-                        rowRenderer={this.rowRenderer}/>
-        <ConnectedMenu/>
+        <InfiniteScroll
+          onSetItems={this.onSetItems}
+          scrollElement={scrollElement}
+          load={load}
+          rowHeight={showAlbum || showArtist ? 50 : 37}
+          rowRenderer={this.rowRenderer}
+        />
+        <ConnectedMenu />
       </div>
     );
   }
 }
 
+SongList.propTypes = {
+  showArtist: PropTypes.bool,
+  showAlbum: PropTypes.bool,
+  scrollElement: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  load: PropTypes.func.isRequired,
+};
+
 SongList.defaultProps = {
   showArtist: false,
-  showAlbum: false
+  showAlbum: false,
+  scrollElement: null,
 };
