@@ -203,6 +203,7 @@ class Player extends React.Component {
     if (playbackTime) {
       return playbackTime.currentPlaybackTime * 1000
     }
+
     return 0;
   }
 
