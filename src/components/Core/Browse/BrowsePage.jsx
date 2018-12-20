@@ -38,11 +38,6 @@ class BrowsePage extends React.Component {
           title={'Browse'}
           context={'Apple Music'}
         />
-          <Modal open={true} handleClose={(event) => console.log('close')} render={() => {
-            // const id = 'pl.b0e04e25887741ea845e1d5c88397fd4'; //apple music
-            const id = 'p.eoJvckDeb7m'; //library
-            return (<PlaylistPanel id={id} />);
-          }} />
 
         <h3>Hot playlists</h3>
         <div className={classes.scrollWrapper}>
