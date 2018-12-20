@@ -13,7 +13,6 @@
     "hoist-non-react-statics": "^3.2.1",
     "html-webpack-plugin": "^3.2.0",
     "include-media": "^1.4.9",
-    "moment": "^2.23.0",
     "node-sass": "^4.10.0",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.6.2",

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {artworkForMediaItem, createMediaItem} from "../Utils";
+import {artworkForMediaItem, createMediaItem, getTime} from "../Utils";
 import classes from "./SongList.scss";
 import {ContextMenuTrigger} from "react-contextmenu";
 import PropTypes from 'prop-types';
@@ -65,13 +65,6 @@ class SongListItem extends React.Component {
     }
   }
 
-  getTime(ms) {
-    const s = 1000 * Math.round(ms / 1000);
-    let d = new Date(s);
-
-    return d.getUTCMinutes() + ':' + String('0' + d.getUTCSeconds()).slice(-2);
-  }
-
   isCurrentItem() {
     const {song, mk} = this.props;
     const mediaItem = mk.instance.player && mk.instance.player.nowPlayingItem;
@@ -119,7 +112,7 @@ class SongListItem extends React.Component {
     const {showArtist, showAlbum, song} = this.props;
     const {attributes} = song;
     const inLibrary = attributes.playParams && attributes.playParams.isLibrary;
-    const duration = this.getTime(attributes.durationInMillis);
+    const duration = getTime(attributes.durationInMillis);
 
     const explicit = attributes.contentRating === "explicit" && (
       <div className={classes.explicit}>

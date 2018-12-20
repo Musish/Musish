@@ -11,6 +11,7 @@ import {
 import cx from 'classnames';
 import withMK from '../../../hoc/withMK';
 import QueueContext from './Queue/QueueContext';
+import {getTime} from '../common/Utils';
 
 class Player extends React.Component {
   constructor(props) {
@@ -84,7 +85,6 @@ class Player extends React.Component {
 
   handleAddToLibrary() {
     console.log('Add to library');
-
     // this.props.mk.instance.addToLibrary();
   }
 
@@ -138,21 +138,14 @@ class Player extends React.Component {
     return 'fas fa-volume-up';
   }
 
-  getTime(ms) {
-    const s = 1000 * Math.round(ms / 1000);
-    let d = new Date(s);
-
-    return d.getUTCMinutes() + ':' + String('0' + d.getUTCSeconds()).slice(-2);
-  }
-
   getCurrentPlaybackDuration() {
     const {player} = this.props.mk.instance;
-    return this.getTime(player.currentPlaybackDuration * 1000);
+    return getTime(player.currentPlaybackDuration * 1000);
   }
 
   getCurrentPlaybackTime() {
     const {player} = this.props.mk.instance;
-    return this.getTime(player.currentPlaybackTime * 1000);
+    return getTime(player.currentPlaybackTime * 1000);
   }
 
   renderProgress() {
@@ -225,8 +218,6 @@ class Player extends React.Component {
 
     const isRepeating = repeatMode === RepeatModeOne || repeatMode === RepeatModeAll;
     const isShuffling = shuffleMode === ShuffleModeSongs;
-
-    console.log(this.props.mk.instance.player);
 
     return (
       <div className={styles.player}>
