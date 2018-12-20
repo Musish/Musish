@@ -4,6 +4,7 @@ import PageTitle from "../../common/PageTitle";
 import classes from "./OverviewPage.scss";
 import Loader from "../../common/Loader";
 import AlbumItem from "../Albums/AlbumItem";
+import PlaylistItem from "../Playlists/PlaylistItem";
 import {withRouter} from "react-router-dom";
 
 class OverviewPage extends React.Component {
@@ -20,71 +21,123 @@ class OverviewPage extends React.Component {
 
   async componentDidMount() {
     const music = MusicKit.getInstance();
-    // let frequentlyPlayed = music.api.historyHeavyRotation();
+    let heavyRotation = music.api.historyHeavyRotation();
     let recentlyPlayed = music.api.recentPlayed();
+    let recommendations = music.api.recommendations();
+    // ID 6: favourites, chill, new music mix
+    // ID 2: this days playlists
+    // ID 5: this days albums
+    // ID 3: artist spotlight playlists
+    // ID 9: new release albums
+    // There doesnt seem to be an order for this - so it may be user specific?
 
-    // frequentlyPlayed = await frequentlyPlayed;
+    heavyRotation = await heavyRotation;
     recentlyPlayed = await recentlyPlayed;
+    recommendations = await recommendations;
+    console.log(recommendations);
 
     this.setState({
-      // frequentlyPlayed,
-      recentlyPlayed
+      heavyRotation,
+      recentlyPlayed,
+      recommendations
     })
   }
 
   render() {
-    const {frequentlyPlayed, recentlyPlayed} = this.state;
+    const {heavyRotation, recentlyPlayed, recommendations} = this.state;
 
     if (!recentlyPlayed) {
       return null;
     }
 
-    console.log(recentlyPlayed);
-
     return (
       <PageContent innerRef={this.ref}>
         <PageTitle
-          title={"Overview"}
-          context={"My Library"}
+          title={"For You"}
+          context={"Apple Music"}
         />
-        <h3>Frequently played</h3>
-        <Loader/>
-        <h3>Recently played</h3>
-        <h4 className={classes.albumHeading}>Albums</h4>
+        {recommendations.map((recList) => {
+          
+          const items = recList.relationships.contents == undefined ? recList.relationships.recommendations : recList.relationships.contents;
+          console.log(items);
+
+          return (
+            <>
+              <h3>{recList.attributes.title.stringForDisplay}</h3>
+              <div className={classes.scrollWrapper}>
+                <div className={classes.scrollGrid}>
+                  {items.data.map((item, i) => {
+                    switch (item.type) {
+                      case 'playlists':
+                        return (
+                          <PlaylistItem key={i} playlist={item} size={120}/>
+                        );
+                      case 'albums':
+                        return (
+                          <AlbumItem key={i} album={item} size={120}/>
+                        );
+                      case 'personal-recommendation':
+                        return (
+                          <div>
+                            <h4>{item.attributes.reason.stringForDisplay}</h4>
+                            <div className={classes.flexGrid}>
+                              {item.relationships.contents.data.map((item) => {
+                                
+                              })}
+                            </div>
+                          </div>
+                        );
+                      default:
+                        return null
+                    }
+                  })}
+                </div>
+              </div>
+            </>
+          );
+        })}
+
+        <h3>Heavy Rotation</h3>
         <div className={classes.flexGrid}>
-          {
-            recentlyPlayed ?
-              recentlyPlayed.map((item, i) => {
-                switch (item.type) {
-                  case 'playlists':
-                    break;
-                  case 'albums':
-                    return (
-                      <AlbumItem key={i} album={item} size={120}/>
-                    );
-                  default:
-                    return null
-                }
-              }) : <Loader/>
-          }
+          {heavyRotation ? (
+            heavyRotation.map((item, i) => {
+              switch (item.type) {
+                case 'playlists':
+                  return (
+                    <PlaylistItem key={i} playlist={item} size={120}/>
+                  );
+                case 'albums':
+                  return (
+                    <AlbumItem key={i} album={item} size={120}/>
+                  );
+                default:
+                  return null
+              }
+            }) 
+          ) : (
+            <Loader/>
+          )}
         </div>
-        <h4 className={classes.playlistHeading}>Playlists</h4>
+        <h3>Recently played</h3>
         <div className={classes.flexGrid}>
-          {
-            recentlyPlayed ?
-              recentlyPlayed.map((item, i) => {
-                switch (item.type) {
-                  case 'playlists':
-                    return (
-                      <AlbumItem key={i} album={item} size={120}/>
-                    );
-                  case 'albums':
-                    break;
-                  default:
-                    return null
-                }
-              }) : <Loader/>
-          }
+          {recentlyPlayed ? (
+            recentlyPlayed.map((item, i) => {
+              switch (item.type) {
+                case 'playlists':
+                  return (
+                    <PlaylistItem key={i} playlist={item} size={120}/>
+                  );
+                case 'albums':
+                  return (
+                    <AlbumItem key={i} album={item} size={120}/>
+                  );
+                default:
+                  return null
+              }
+            }) 
+          ) : (
+            <Loader/>
+          )}
         </div>
       </PageContent>
     );

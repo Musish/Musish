@@ -9,9 +9,33 @@
 .flexGrid {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  // justify-content: space-between;
 
   > div {
     margin: 15px 10px;
+  }
+}
+
+.scrollWrapper {
+  width: 100%;
+  position: relative;
+  height: 190px;
+}
+
+.scrollGrid {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  overflow: auto;
+  margin: 0 -10px;
+  padding-right: 20px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  align-items: flex-start;
+
+  > div {
+    flex: 0 0 auto;
+    margin: 0 10px;
   }
 }
