@@ -3,6 +3,7 @@ import classes from "./SearchBar.scss";
 import cx from 'classnames';
 import withMK from "../../../../../hoc/withMK";
 import Loader from "../../../../common/Loader";
+import SongResultItem from "./SongResultItem";
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -144,9 +145,7 @@ class SearchBar extends React.Component {
 
           <div className={classes.results}>
             {this.renderResults('Songs', 'songs', (song) => (
-              <div className={cx(classes.result, classes.song)} key={song.id}>
-                {song.attributes.name}
-              </div>
+              <SongResultItem key={song.id} song={song} />
             ))}
             {this.renderResults('Albums', 'albums', (song) => (
               <div className={cx(classes.result, classes.song)} key={song.id}>
