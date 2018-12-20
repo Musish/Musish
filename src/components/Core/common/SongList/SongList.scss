@@ -183,6 +183,7 @@
       height: 5px;
       background: $primary_color;
       animation: audio-wave 0.95s infinite ease-in-out;
+      transform: translateZ(0);
       animation-play-state: paused;
       margin-left: 1px;
 
