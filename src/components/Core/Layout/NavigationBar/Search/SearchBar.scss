@@ -57,10 +57,7 @@
       }
 
       .result {
-        padding: 7px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
+        padding-right: 7px;
         cursor: pointer;
 
         &:hover {
@@ -69,7 +66,20 @@
         }
 
         &.song {
+          display: flex;
+          flex-direction: row;
 
+          .name {
+            display: flex;
+            align-items: center;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+
+          .artwork {
+            padding: 7px;
+          }
         }
       }
     }
