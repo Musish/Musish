@@ -50,56 +50,29 @@ class ForYouPage extends React.Component {
           title={"For You"}
           context={"Apple Music"}
         />
-        {recommendations.map((recList) => {
-          
-          const items = recList.relationships.contents == undefined ? recList.relationships.recommendations : recList.relationships.contents;
-          const isGroup = recList.attributes.isGroupRecommendation;
-          return (
-            <React.Fragment key={recList.id}>
-              <h3>{recList.attributes.title.stringForDisplay}</h3>
-              <div className={cx(classes.scrollWrapper, {[classes.groupedScroller]: isGroup})}>
-                <div className={classes.scrollGrid}>
-                  {items.data.map((item, i) => {
-                    switch (item.type) {
-                      case 'playlists':
-                        return (
-                          <PlaylistItem key={item.id} playlist={item} size={120}/>
-                        );
-                      case 'albums':
-                        return (
-                          <AlbumItem key={item.id} album={item} size={120}/>
-                        );
-                      case 'personal-recommendation':
-                        return (
-                          <div className={classes.recommendationGroup}>
-                            <h4>{item.attributes.reason.stringForDisplay}</h4>
-                            <div className={classes.personalRecommendationsGrid}>
-                              {item.relationships.contents.data.map((item) => {
-                                switch (item.type) {
-                                  case 'playlists':
-                                    return (
-                                      <PlaylistItem key={item.id} playlist={item} size={100} />
-                                    );
-                                  case 'albums':
-                                    return (
-                                      <AlbumItem key={item.id} album={item} size={100} />
-                                    );
-                                  default:
-                                    return null
-                                }
-                              })}
-                            </div>
-                          </div>
-                        );
-                      default:
-                        return null
-                    }
-                  })}
-                </div>
-              </div>
-            </React.Fragment>
-          );
-        })}
+        <h3>Recently played</h3>
+        <div className={cx(classes.scrollWrapper)}>
+          <div className={classes.scrollGrid}>
+            {recentlyPlayed ? (
+              recentlyPlayed.map((item, i) => {
+                switch (item.type) {
+                  case 'playlists':
+                    return (
+                      <PlaylistItem key={item.id} playlist={item} size={120} />
+                    );
+                  case 'albums':
+                    return (
+                      <AlbumItem key={item.id} album={item} size={120} />
+                    );
+                  default:
+                    return null
+                }
+              })
+            ) : (
+              <Loader />
+            )}
+          </div>
+        </div>
 
         <h3>Heavy Rotation</h3>
         <div className={classes.scrollWrapper}>
@@ -125,30 +98,60 @@ class ForYouPage extends React.Component {
           </div>
         </div>
 
+        {recommendations.map((recList) => {
 
-        <h3>Recently played</h3>
-        <div className={cx(classes.scrollWrapper)}>
-          <div className={classes.scrollGrid}>
-            {recentlyPlayed ? (
-              recentlyPlayed.map((item, i) => {
-                switch (item.type) {
-                  case 'playlists':
-                    return (
-                      <PlaylistItem key={item.id} playlist={item} size={120} />
-                    );
-                  case 'albums':
-                    return (
-                      <AlbumItem key={item.id} album={item} size={120} />
-                    );
-                  default:
-                    return null
-                }
-              })
-            ) : (
-                <Loader />
-              )}
-          </div>
-        </div>
+          const items = recList.relationships.contents == undefined ? recList.relationships.recommendations : recList.relationships.contents;
+          const isGroup = recList.attributes.isGroupRecommendation;
+          return (
+            <React.Fragment key={recList.id}>
+              <h3>{recList.attributes.title.stringForDisplay}</h3>
+              <div className={cx(classes.scrollWrapper)}>
+                <div className={cx(classes.scrollWrapper, {[classes.groupedScroller]: isGroup})}>
+                  <div className={classes.scrollGrid}>
+                    {items.data.map((item, i) => {
+                      switch (item.type) {
+                        case 'playlists':
+                          return (
+                            <PlaylistItem key={item.id} playlist={item} size={120}/>
+                          );
+                        case 'albums':
+                          return (
+                            <AlbumItem key={item.id} album={item} size={120}/>
+                          );
+                        case 'personal-recommendation':
+                          const recommendationName = item.attributes.reason.stringForDisplay;
+                          return (
+                            <div key={`${item.id}-${recommendationName}`} className={classes.recommendationGroup}>
+                              <h4>{recommendationName}</h4>
+                              <div className={classes.personalRecommendationsGrid}>
+                                {item.relationships.contents.data.map((subItem) => {
+                                  const subId = `${item.id}-${subItem.id}`;
+                                  switch (subItem.type) {
+                                    case 'playlists':
+                                      return (
+                                        <PlaylistItem key={subId} playlist={subItem} size={100} />
+                                      );
+                                    case 'albums':
+                                      return (
+                                        <AlbumItem key={subId} album={subItem} size={100} />
+                                      );
+                                    default:
+                                      return null
+                                  }
+                                })}
+                              </div>
+                            </div>
+                          );
+                        default:
+                          return null
+                      }
+                    })}
+                  </div>
+                </div>
+              </div>
+            </React.Fragment>
+          );
+        })}
       </PageContent>
     );
   }
