@@ -1,9 +1,10 @@
 .container {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
+  position: absolute !important; // Forcefully define size
+  width: 100% !important; // Forcefully define size
+  height: 100% !important; // Forcefully define size
+  margin: 0 !important; // Forcefully define size
+  top: 0 !important; // Forcefully define size
+  left: 0 !important; // Forcefully define size
   z-index: 250;
   background: rgba(255, 255, 255, 0.5);
   display: flex;
