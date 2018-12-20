@@ -1,0 +1,62 @@
+@import '../../../styles/settings/colors';
+
+.panel {
+  display: flex;
+  flex-direction: row;
+
+  &:not(:first-child) {
+    margin-top: 30px;
+  }
+
+  .aside {
+    width: 220px;
+
+    .artworkWrapper {
+      border-radius: 8px;
+      width: 220px;
+      height: 220px;
+      background: $container_background;
+
+      img {
+        border-radius: inherit;
+        width: inherit;
+        height: inherit;
+      }
+    }
+
+    .albumRuntimeDescription {
+      display: block;
+      text-align: right;
+      color: $tertiary_color;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+
+    .playlistExtraInfo {
+      & > h5 {
+        margin-top: 10px;
+      }
+
+      & > span {
+        font-size: 0.85em;
+      }
+    }
+  }
+
+  .main {
+    margin-left: 25px;
+    flex: 1;
+
+    .title {
+      display: block;
+      font-weight: bold;
+      font-size: 2em;
+    }
+
+    .subtitle {
+      display: block;
+      color: $tertiary_color;
+      margin-bottom: 10px;
+    }
+  }
+}

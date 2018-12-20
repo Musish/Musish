@@ -34,6 +34,7 @@ class BrowsePage extends React.Component {
     return (
       <PageContent innerRef={this.ref}>
         <PageTitle title={'Browse'} context={'Apple Music'} />
+
         <h3>Hot playlists</h3>
         <div className={classes.scrollWrapper}>
           <div className={cx(classes.scrollGrid, classes.doubleRow)}>
