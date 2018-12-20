@@ -6,6 +6,7 @@ import Loader from "../../common/Loader";
 import AlbumItem from "../Albums/AlbumItem";
 import PlaylistItem from "../Playlists/PlaylistItem";
 import {withRouter} from "react-router-dom";
+import cx from 'classnames';
 
 class OverviewPage extends React.Component {
   constructor(props) {
@@ -60,11 +61,12 @@ class OverviewPage extends React.Component {
           
           const items = recList.relationships.contents == undefined ? recList.relationships.recommendations : recList.relationships.contents;
           console.log(items);
+          const isGroup = recList.attributes.isGroupRecommendation;
 
           return (
             <>
               <h3>{recList.attributes.title.stringForDisplay}</h3>
-              <div className={classes.scrollWrapper}>
+              <div className={cx(classes.scrollWrapper, {[classes.groupedScroller]: isGroup})}>
                 <div className={classes.scrollGrid}>
                   {items.data.map((item, i) => {
                     switch (item.type) {
@@ -78,11 +80,22 @@ class OverviewPage extends React.Component {
                         );
                       case 'personal-recommendation':
                         return (
-                          <div>
+                          <div className={classes.recommendationGroup}>
                             <h4>{item.attributes.reason.stringForDisplay}</h4>
-                            <div className={classes.flexGrid}>
+                            <div className={classes.personalRecommendationsGrid}>
                               {item.relationships.contents.data.map((item) => {
-                                
+                                switch (item.type) {
+                                  case 'playlists':
+                                    return (
+                                      <PlaylistItem key={i} playlist={item} size={100} />
+                                    );
+                                  case 'albums':
+                                    return (
+                                      <AlbumItem key={i} album={item} size={100} />
+                                    );
+                                  default:
+                                    return null
+                                }
                               })}
                             </div>
                           </div>

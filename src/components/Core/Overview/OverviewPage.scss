@@ -1,3 +1,4 @@
+
 .albumHeading {
   margin-top: 20px;
 }
@@ -6,26 +7,32 @@
   margin-top: 10px;
 }
 
-.flexGrid {
-  display: flex;
-  flex-wrap: wrap;
-  // justify-content: space-between;
+.recommendationGroup {
+  padding-top: 10px;
+}
 
-  > div {
-    margin: 15px 10px;
+.personalRecommendationsGrid {
+  column-count: 2;
+  margin-right: 20px;
+  margin-top: 10px;
+
+  > a {
+    margin: 0 0 20px;
   }
 }
 
 .scrollWrapper {
   width: 100%;
   position: relative;
-  height: 190px;
+  height: 200px;
+  &.groupedScroller {
+    height: 370px;
+  }
 }
 
 .scrollGrid {
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+  flex-direction: row;
   overflow: auto;
   margin: 0 -10px;
   padding-right: 20px;
@@ -38,4 +45,8 @@
     flex: 0 0 auto;
     margin: 0 10px;
   }
+}
+
+h4 {
+  font-weight: lighter;
 }
