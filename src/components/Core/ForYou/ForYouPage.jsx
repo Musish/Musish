@@ -1,14 +1,14 @@
 import React from 'react';
 import PageContent from "../Layout/PageContent";
 import PageTitle from "../../common/PageTitle";
-import classes from "./OverviewPage.scss";
+import classes from "./ForYouPage.scss";
 import Loader from "../../common/Loader";
 import AlbumItem from "../Albums/AlbumItem";
 import PlaylistItem from "../Playlists/PlaylistItem";
 import {withRouter} from "react-router-dom";
 import cx from 'classnames';
 
-class OverviewPage extends React.Component {
+class ForYouPage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -60,9 +60,8 @@ class OverviewPage extends React.Component {
           
           const items = recList.relationships.contents == undefined ? recList.relationships.recommendations : recList.relationships.contents;
           const isGroup = recList.attributes.isGroupRecommendation;
-
           return (
-            <>
+            <React.Fragment key={recList.id}>
               <h3>{recList.attributes.title.stringForDisplay}</h3>
               <div className={cx(classes.scrollWrapper, {[classes.groupedScroller]: isGroup})}>
                 <div className={classes.scrollGrid}>
@@ -70,11 +69,11 @@ class OverviewPage extends React.Component {
                     switch (item.type) {
                       case 'playlists':
                         return (
-                          <PlaylistItem key={i} playlist={item} size={120}/>
+                          <PlaylistItem key={item.id} playlist={item} size={120}/>
                         );
                       case 'albums':
                         return (
-                          <AlbumItem key={i} album={item} size={120}/>
+                          <AlbumItem key={item.id} album={item} size={120}/>
                         );
                       case 'personal-recommendation':
                         return (
@@ -85,11 +84,11 @@ class OverviewPage extends React.Component {
                                 switch (item.type) {
                                   case 'playlists':
                                     return (
-                                      <PlaylistItem key={i} playlist={item} size={100} />
+                                      <PlaylistItem key={item.id} playlist={item} size={100} />
                                     );
                                   case 'albums':
                                     return (
-                                      <AlbumItem key={i} album={item} size={100} />
+                                      <AlbumItem key={item.id} album={item} size={100} />
                                     );
                                   default:
                                     return null
@@ -104,7 +103,7 @@ class OverviewPage extends React.Component {
                   })}
                 </div>
               </div>
-            </>
+            </React.Fragment>
           );
         })}
 
@@ -112,15 +111,15 @@ class OverviewPage extends React.Component {
         <div className={cx(classes.scrollWrapper)}>
           <div className={classes.scrollGrid}>
             {heavyRotation ? (
-              heavyRotation.map((item, i) => {
+              heavyRotation.map((item) => {
                 switch (item.type) {
                   case 'playlists':
                     return (
-                      <PlaylistItem key={i} playlist={item} size={120} />
+                      <PlaylistItem key={item.id} playlist={item} size={120} />
                     );
                   case 'albums':
                     return (
-                      <AlbumItem key={i} album={item} size={120} />
+                      <AlbumItem key={item.id} album={item} size={120} />
                     );
                   default:
                     return null
@@ -140,11 +139,11 @@ class OverviewPage extends React.Component {
                 switch (item.type) {
                   case 'playlists':
                     return (
-                      <PlaylistItem key={i} playlist={item} size={120} />
+                      <PlaylistItem key={item.id} playlist={item} size={120} />
                     );
                   case 'albums':
                     return (
-                      <AlbumItem key={i} album={item} size={120} />
+                      <AlbumItem key={item.id} album={item} size={120} />
                     );
                   default:
                     return null
@@ -160,4 +159,4 @@ class OverviewPage extends React.Component {
   }
 }
 
-export default withRouter(OverviewPage);
+export default withRouter(ForYouPage);
