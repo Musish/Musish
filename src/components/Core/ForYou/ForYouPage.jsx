@@ -25,12 +25,6 @@ class ForYouPage extends React.Component {
     let heavyRotation = music.api.historyHeavyRotation();
     let recentlyPlayed = music.api.recentPlayed();
     let recommendations = music.api.recommendations();
-    // ID 6: favourites, chill, new music mix
-    // ID 2: this days playlists
-    // ID 5: this days albums
-    // ID 3: artist spotlight playlists
-    // ID 9: new release albums
-    // There doesnt seem to be an order for this - so it may be user specific?
 
     heavyRotation = await heavyRotation;
     recentlyPlayed = await recentlyPlayed;
@@ -108,7 +102,7 @@ class ForYouPage extends React.Component {
         })}
 
         <h3>Heavy Rotation</h3>
-        <div className={cx(classes.scrollWrapper)}>
+        <div className={classes.scrollWrapper}>
           <div className={classes.scrollGrid}>
             {heavyRotation ? (
               heavyRotation.map((item) => {
@@ -126,11 +120,12 @@ class ForYouPage extends React.Component {
                 }
               })
             ) : (
-                <Loader />
-              )}
+              <Loader />
+            )}
           </div>
         </div>
-        
+
+
         <h3>Recently played</h3>
         <div className={cx(classes.scrollWrapper)}>
           <div className={classes.scrollGrid}>

@@ -21,28 +21,15 @@
   }
 }
 
-.scrollWrapper {
-  width: 100%;
-  position: relative;
-  height: 200px;
-  &.groupedScroller {
-    height: 370px;
-  }
-}
-
 .scrollGrid {
+  width: 100%;
   display: flex;
   flex-direction: row;
-  overflow: auto;
+  min-width: min-content;
+  flex-wrap: wrap;
   margin: 0 -10px;
-  padding-right: 20px;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  align-items: flex-start;
 
-  > div {
-    flex: 0 0 auto;
+  > * {
     margin: 0 10px;
   }
 }
