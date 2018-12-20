@@ -13,7 +13,7 @@ import ArtistsPage from './Core/Artists/ArtistsPage';
 import Playlist from './Core/Playlists/PlaylistPage';
 import SongsPage from './Core/Songs/SongsPage';
 import PlaylistsPage from './Core/Playlists/PlaylistsPage';
-import OverviewPage from './Core/Overview/OverviewPage';
+import ForYouPage from './Core/ForYou/ForYouPage';
 import BrowsePage from "./Core/Browse/BrowsePage";
 import RadioPage from "./Core/Radio/RadioPage";
 import QueueContext from "./Core/Player/Queue/QueueContext";
@@ -49,7 +49,7 @@ export default class App extends React.Component {
               <QueueContext.Provider value={queueState}>
                 <Layout>
                   <Switch>
-                    <Route path="/" exact component={OverviewPage}/>
+                    <Route path="/" exact component={ForYouPage}/>
                     <Route path="/albums" component={AlbumsPage}/>
                     <Route path="/playlists" exact component={PlaylistsPage}/>
                     <Route path="/playlists/:id" exact component={props => <Playlist key={props.location.pathname} {...props} />} />

@@ -86,7 +86,7 @@ class SongListItem extends React.Component {
     );
 
     return (
-      <div className={`${classes.song} ${this.isPlaying() ? 'playing' : ''}`}
+      <div className={cx({[classes.indexedSong]: !showAlbum, [classes.playing]: this.isPlaying()}, classes.song)}
            onClick={this.handleClick}
            style={this.props.style}>
         <ContextMenuTrigger id={MENU_TYPE}

@@ -8,8 +8,8 @@ export default class PlaylistItem extends Component {
     const artwork = MusicKit.formatArtworkURL(playlist.attributes.artwork, size, size);
 
     return (
-        <Link to={`/playlists/${playlist.id}`} className={classes.container}>
-          <div className={classes.imageContainer} style={{width: size}}>
+        <Link to={`/playlists/${playlist.id}`} className={classes.container} style={{width: size}}>
+          <div className={classes.imageContainer} style={{width: size, height: size}}>
             <img
               src={artwork}
               className={classes.image}

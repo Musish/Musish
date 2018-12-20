@@ -1,23 +1,15 @@
 .scrollWrapper {
-  width: 100%;
-  position: relative;
-  height: 360px;
+  overflow: scroll;
 }
 
 .scrollGrid {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  overflow: auto;
-  margin: 0 -10px;
-  padding-right: 20px;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  align-items: flex-start;
-
-  > div {
-    flex: 0 0 auto;
-    margin: 0 10px;
+  display: grid;
+  grid-auto-flow: column dense;
+  grid-template-rows: auto;
+  grid-gap: 0 10px;
+  justify-content: left;
+  width: 0; // WTF, this shouldn't work but it makes it work and nothing else does. One day it may break, but until that day lets just completely forget that this is a thing...
+  &.doubleRow {
+    grid-template-rows: auto auto;
   }
 }
