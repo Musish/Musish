@@ -241,12 +241,11 @@ class Player extends React.Component {
             <h3>{nowPlayingItem.attributes.albumName}</h3>
           </div>
         </div>
-        <div className={styles.playerProgressBar}>
+        <div className={styles.progressBarWrapper}>
           <span>{this.getCurrentPlaybackTime()}</span>
           {this.renderProgress()}
           <span>{this.getCurrentPlaybackDuration()}</span>
         </div>
-
         <div className={styles.buttons}>
           <span onClick={this.handlePrevious}>
             <i className={'fas fa-backward'}/>

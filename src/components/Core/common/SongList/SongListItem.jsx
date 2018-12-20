@@ -127,7 +127,6 @@ class SongListItem extends React.Component {
       </div>
     );
 
-
     return (
       <div className={`${classes.song} ${this.isPlaying() ? 'playing' : ''}`}
            onClick={this.handleClick}
