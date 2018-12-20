@@ -1,17 +1,15 @@
 .scrollWrapper {
   overflow: scroll;
 }
+
 .scrollGrid {
   display: grid;
   grid-auto-flow: column dense;
   grid-template-rows: auto;
+  grid-gap: 0 10px;
   justify-content: left;
-  margin: 0 -10px;
   width: 0; // WTF, this shouldn't work but it makes it work and nothing else does. One day it may break, but until that day lets just completely forget that this is a thing...
   &.doubleRow {
     grid-template-rows: auto auto;
-  }
-  > * {
-    margin: 0 10px;
   }
 }

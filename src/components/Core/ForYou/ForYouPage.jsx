@@ -54,7 +54,7 @@ class ForYouPage extends React.Component {
         <div className={cx(classes.scrollWrapper)}>
           <div className={classes.scrollGrid}>
             {recentlyPlayed ? (
-              recentlyPlayed.map((item, i) => {
+              recentlyPlayed.map((item) => {
                 switch (item.type) {
                   case 'playlists':
                     return (
@@ -122,7 +122,7 @@ class ForYouPage extends React.Component {
                           const recommendationName = item.attributes.reason.stringForDisplay;
                           return (
                             <div key={`${item.id}-${recommendationName}`} className={classes.recommendationGroup}>
-                              <h4>{recommendationName}</h4>
+                              <span className={classes.personalRecommendationsTitle}>{recommendationName}</span>
                               <div className={classes.personalRecommendationsGrid}>
                                 {item.relationships.contents.data.map((subItem) => {
                                   const subId = `${item.id}-${subItem.id}`;
