@@ -1,11 +1,13 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
-import PageContent from "../Layout/PageContent";
-import PageTitle from "../../common/PageTitle";
-import classes from "./BrowsePage.scss";
-import AlbumItem from "../Albums/AlbumItem";
-import PlaylistItem from "../Playlists/PlaylistItem";
-import SongList from "../common/SongList/SongList";
+import PageContent from '../Layout/PageContent';
+import PageTitle from '../../common/PageTitle';
+import classes from './BrowsePage.scss';
+import AlbumItem from '../Albums/AlbumItem';
+import PlaylistItem from '../Playlists/PlaylistItem';
+import SongList from '../common/SongList/SongList';
+import Modal from '../../common/Modal/Modal';
+import PlaylistPanel from '../Playlists/PlaylistPanel';
 
 class BrowsePage extends React.Component {
   constructor(props) {
@@ -35,9 +37,15 @@ class BrowsePage extends React.Component {
     return (
       <PageContent innerRef={this.ref}>
         <PageTitle
-          title={"Browse"}
-          context={"Apple Music"}
+          title={'Browse'}
+          context={'Apple Music'}
         />
+          <Modal open={true} handleClose={(event) => console.log('close')} render={() => {
+            // const id = 'pl.b0e04e25887741ea845e1d5c88397fd4'; //apple music
+            const id = 'p.eoJvckDeb7m'; //library
+            return (<PlaylistPanel id={id} />);
+          }} />
+
         <h3>Hot playlists</h3>
         <div className={classes.scrollWrapper}>
           <div className={classes.scrollGrid}>
