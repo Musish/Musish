@@ -2,61 +2,63 @@
 
 .panel {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 
   &:not(:first-child) {
     margin-top: 30px;
   }
 
-  .aside {
-    width: 220px;
+  .header {
 
-    .artworkWrapper {
-      border-radius: 8px;
-      width: 220px;
-      height: 220px;
-      background: $container_background;
+    .headerMain {
+      display: flex;
+      flex-direction: row;
+      margin: 15px;
+      align-items: center;
 
-      img {
-        border-radius: inherit;
-        width: inherit;
-        height: inherit;
+      .artworkWrapper {
+        border-radius: 8px;
+        width: 80px;
+        height: 80px;
+        background: $container_background;
+
+        img {
+          border-radius: inherit;
+          width: inherit;
+          height: inherit;
+        }
+      }
+
+      .titleWrapper {
+        margin-left: 15px;
+
+        .name {
+          display: block;
+          font-weight: bold;
+          font-size: 2em;
+        }
+
+        .curator {
+          display: block;
+          color: $tertiary_color;
+        }
+
+        .titleMeta {
+          display: block;
+          margin-top: 4px;
+          color: $tertiary_color;
+          font-size: 12px;
+        }
       }
     }
 
-    .albumRuntimeDescription {
-      display: block;
-      text-align: right;
-      color: $tertiary_color;
-      font-size: 12px;
-      margin-top: 5px;
-    }
-
-    .playlistExtraInfo {
-      & > h5 {
-        margin-top: 10px;
-      }
-
-      & > span {
-        font-size: 0.85em;
-      }
+    .description {
+      margin: 20px 15px;
     }
   }
 
   .main {
-    margin-left: 25px;
+    margin-left: 15px;
     flex: 1;
-
-    .title {
-      display: block;
-      font-weight: bold;
-      font-size: 2em;
-    }
-
-    .subtitle {
-      display: block;
-      color: $tertiary_color;
-      margin-bottom: 10px;
-    }
   }
 }
