@@ -6,6 +6,7 @@ import PlaylistItem from '../Playlists/PlaylistItem';
 import SongList from '../common/SongList/SongList';
 import React from 'react';
 import {withRouter} from 'react-router-dom';
+import cx from 'classnames';
 
 class BrowsePage extends React.Component {
   constructor(props) {

@@ -41,34 +41,34 @@ export default class PlaylistPanel extends React.Component {
       return (<Loader />);
     }
 
-    const artworkURL = artworkForMediaItem(playlist, 220);
-    const date = new Date(playlist.attributes.lastModifiedDate);
+    const artworkURL = artworkForMediaItem(playlist, 80);
+    // const date = new Date(playlist.attributes.lastModifiedDate).toLocaleDateString('en-US'); // TODO: Where to put?
+    const trackCount = playlist.attributes.trackCount || playlist.relationships.tracks.data.length;
 
     return (
       <div className={classes.panel}>
-        <div className={classes.aside}>
-          <div className={classes.artworkWrapper}>
-            <img src={artworkURL}/>
+        <div className={classes.header}>
+          <div className={classes.headerMain}>
+            <div className={classes.artworkWrapper}>
+              <img src={artworkURL}/>
+            </div>
+            <div className={classes.titleWrapper}>
+              <span className={classes.name}>{playlist.attributes.name}</span>
+              <span className={classes.curator}>Playlist by {playlist.attributes.curatorName}</span>
+              <span className={classes.titleMeta}>{trackCount} songs, {runtime}</span>
+            </div>
           </div>
-          <span className={classes.albumRuntimeDescription}>{playlist.attributes.trackCount} songs, {runtime}</span>
           {isLibrary ? (
             ''
           ) : (
               <>
-                <div className={classes.playlistExtraInfo}>
-                  <h5>Last updated</h5>
-                  <span>{date.toLocaleDateString('en-US')}</span>
-                </div>
-                <div className={classes.playlistExtraInfo}>
-                  <h5>Description</h5>
+                <div className={classes.description}>
                   <span>{playlist.attributes.description.standard}</span>
                 </div>
               </>
             )}
         </div>
         <div className={classes.main} ref={this.ref}>
-          <span className={classes.title}>{playlist.attributes.name}</span>
-          <span className={classes.subtitle}>{playlist.attributes.curatorName}</span>
           {playlist.relationships ? (
             <SongList scrollElement={this.ref} load={() => playlist.relationships.tracks.data} album={false} showArtist={true} showAlbum={true}/>
           ) : (
