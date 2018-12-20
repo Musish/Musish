@@ -9,7 +9,7 @@ import PageContent from '../Layout/PageContent';
 import InfiniteLoader from '../common/InfiniteLoader';
 import Modal from '../../common/Modal/Modal';
 import ArtistsPage from '../Artists/ArtistsPage';
-import AlbumsPanel from './AlbumPanel';
+import AlbumPanel from './AlbumPanel';
 import {Route} from 'react-router-dom';
 
 export default class AlbumsPage extends React.Component {
@@ -41,7 +41,7 @@ export default class AlbumsPage extends React.Component {
     const albums = items.map(
       (album, i) => {
         return (
-          <AlbumItem key={i} album={album} size={170} />
+          <AlbumItem key={i} album={album} size={170} navigate />
         );
       });
 
@@ -61,7 +61,7 @@ export default class AlbumsPage extends React.Component {
       <>
         <Route path={'/albums/:id'} exact render={({match: {params: {id}}}) => (
           <Modal open={true} handleClose={this.handleClose} render={() => (
-            <AlbumsPanel id={id} />
+            <AlbumPanel id={id} />
           )} />
         )} />
         <PageContent innerRef={this.ref}>
