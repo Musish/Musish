@@ -35,7 +35,6 @@ class OverviewPage extends React.Component {
     heavyRotation = await heavyRotation;
     recentlyPlayed = await recentlyPlayed;
     recommendations = await recommendations;
-    console.log(recommendations);
 
     this.setState({
       heavyRotation,
@@ -60,7 +59,6 @@ class OverviewPage extends React.Component {
         {recommendations.map((recList) => {
           
           const items = recList.relationships.contents == undefined ? recList.relationships.recommendations : recList.relationships.contents;
-          console.log(items);
           const isGroup = recList.attributes.isGroupRecommendation;
 
           return (
@@ -111,46 +109,51 @@ class OverviewPage extends React.Component {
         })}
 
         <h3>Heavy Rotation</h3>
-        <div className={classes.flexGrid}>
-          {heavyRotation ? (
-            heavyRotation.map((item, i) => {
-              switch (item.type) {
-                case 'playlists':
-                  return (
-                    <PlaylistItem key={i} playlist={item} size={120}/>
-                  );
-                case 'albums':
-                  return (
-                    <AlbumItem key={i} album={item} size={120}/>
-                  );
-                default:
-                  return null
-              }
-            }) 
-          ) : (
-            <Loader/>
-          )}
+        <div className={cx(classes.scrollWrapper)}>
+          <div className={classes.scrollGrid}>
+            {heavyRotation ? (
+              heavyRotation.map((item, i) => {
+                switch (item.type) {
+                  case 'playlists':
+                    return (
+                      <PlaylistItem key={i} playlist={item} size={120} />
+                    );
+                  case 'albums':
+                    return (
+                      <AlbumItem key={i} album={item} size={120} />
+                    );
+                  default:
+                    return null
+                }
+              })
+            ) : (
+                <Loader />
+              )}
+          </div>
         </div>
+        
         <h3>Recently played</h3>
-        <div className={classes.flexGrid}>
-          {recentlyPlayed ? (
-            recentlyPlayed.map((item, i) => {
-              switch (item.type) {
-                case 'playlists':
-                  return (
-                    <PlaylistItem key={i} playlist={item} size={120}/>
-                  );
-                case 'albums':
-                  return (
-                    <AlbumItem key={i} album={item} size={120}/>
-                  );
-                default:
-                  return null
-              }
-            }) 
-          ) : (
-            <Loader/>
-          )}
+        <div className={cx(classes.scrollWrapper)}>
+          <div className={classes.scrollGrid}>
+            {recentlyPlayed ? (
+              recentlyPlayed.map((item, i) => {
+                switch (item.type) {
+                  case 'playlists':
+                    return (
+                      <PlaylistItem key={i} playlist={item} size={120} />
+                    );
+                  case 'albums':
+                    return (
+                      <AlbumItem key={i} album={item} size={120} />
+                    );
+                  default:
+                    return null
+                }
+              })
+            ) : (
+                <Loader />
+              )}
+          </div>
         </div>
       </PageContent>
     );
