@@ -16,27 +16,52 @@ import PlaylistsPage from './Core/Playlists/PlaylistsPage';
 import OverviewPage from './Core/Overview/OverviewPage';
 import BrowsePage from "./Core/Browse/BrowsePage";
 import RadioPage from "./Core/Radio/RadioPage";
+import QueueContext from "./Core/Player/Queue/QueueContext";
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      show: false
+    };
+
+    this.contextSetState = this.contextSetState.bind(this);
+  }
+
+  contextSetState(k, v) {
+    this.setState({
+      [k]: v,
+    })
+  }
+
   render() {
+    const queueState = {
+      show: this.state.show,
+      doShow: () => this.contextSetState('show', true),
+      doHide: () => this.contextSetState('show', false)
+    };
+
     return (
         <MusicKitProvider>
           <MusicKitAuthorizeProvider>
             <Router>
-              <Layout>
-                <Switch>
-                  <Route path="/" exact component={OverviewPage}/>
-                  <Route path="/albums" component={AlbumsPage}/>
-                  <Route path="/playlists" exact component={PlaylistsPage}/>
-                  <Route path="/playlists/:id" exact component={props => <Playlist key={props.location.pathname} {...props} />} />
-                  <Route path="/artists" exact component={ArtistsPage}/>
-                  <Route path="/artists/:id" exact component={ArtistsPage}/>
-                  <Route path="/songs" exact component={SongsPage}/>
-                  <Route path="/browse" exact component={BrowsePage}/>
-                  <Route path="/radio" exact component={RadioPage}/>
-                  <Redirect to="/"/>
-                </Switch>
-              </Layout>
+              <QueueContext.Provider value={queueState}>
+                <Layout>
+                  <Switch>
+                    <Route path="/" exact component={OverviewPage}/>
+                    <Route path="/albums" component={AlbumsPage}/>
+                    <Route path="/playlists" exact component={PlaylistsPage}/>
+                    <Route path="/playlists/:id" exact component={props => <Playlist key={props.location.pathname} {...props} />} />
+                    <Route path="/artists" exact component={ArtistsPage}/>
+                    <Route path="/artists/:id" exact component={ArtistsPage}/>
+                    <Route path="/songs" exact component={SongsPage}/>
+                    <Route path="/browse" exact component={BrowsePage}/>
+                    <Route path="/radio" exact component={RadioPage}/>
+                    <Redirect to="/"/>
+                  </Switch>
+                </Layout>
+              </QueueContext.Provider>
             </Router>
           </MusicKitAuthorizeProvider>
         </MusicKitProvider>

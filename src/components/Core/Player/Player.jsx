@@ -10,6 +10,7 @@ import {
 } from "../common/Utils";
 import cx from 'classnames';
 import withMK from '../../../hoc/withMK';
+import QueueContext from './Queue/QueueContext';
 
 class Player extends React.Component {
   constructor(props) {
@@ -236,22 +237,6 @@ class Player extends React.Component {
 
         <div className={styles.buttons}>
 
-          <span className={styles.controls} onClick={this.handleAddToLibrary}>
-            <i className={"fas fa-plus"}/>
-          </span>
-
-          <span
-            className={cx(styles.controls, {[styles.shuffle]: isShuffle, [styles.one]: repeatMode === RepeatModeOne})}
-            onClick={this.handleRepeat}
-          >
-            <i className={"fas fa-redo-alt"}/>
-          </span>
-
-          <span className={cx(styles.controls, {[styles.shuffle]: shuffleMode === ShuffleModeSongs})}
-                onClick={this.handleShuffle}>
-            <i className={"fas fa-random"}/>
-          </span>
-
           <span className={cx(styles.controls, styles.volumeControlWrapper)}>
             <i className={this.getVolumeIconClasses()}/>
             <div className={styles.volumeControlContainer}>
@@ -269,6 +254,26 @@ class Player extends React.Component {
               </div>
             </div>
           </span>
+
+          <span
+            className={cx(styles.controls, {[styles.shuffle]: isShuffle, [styles.one]: repeatMode === RepeatModeOne})}
+            onClick={this.handleRepeat}
+          >
+            <i className={"fas fa-redo-alt"}/>
+          </span>
+
+          <span className={cx(styles.controls, {[styles.shuffle]: shuffleMode === ShuffleModeSongs})}
+                onClick={this.handleShuffle}>
+            <i className={"fas fa-random"}/>
+          </span>
+
+          <QueueContext.Consumer>
+            {({doShow}) => (
+              <span className={cx(styles.controls, styles.queueWrapper)} onClick={doShow}>
+                <i className={"fas fa-list-ol"}/>
+              </span>
+            )}
+          </QueueContext.Consumer>
         </div>
       </div>
     );
