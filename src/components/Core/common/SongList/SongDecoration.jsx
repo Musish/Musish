@@ -2,7 +2,7 @@ import React from 'react';
 import withMK from "../../../../hoc/withMK";
 import cx from "classnames";
 import classes from "./SongDecoration.scss";
-import {artworkForMediaItem, isPlaying, isCurrentItem} from "../Utils";
+import {artworkForMediaItem, isCurrentItem, isPlaying} from "../Utils";
 
 function SongDecoration({song, showAlbum, size = 40}) {
   const currentItem = isCurrentItem(song);
@@ -19,13 +19,13 @@ function SongDecoration({song, showAlbum, size = 40}) {
         <span className={classes.albumArtwork}>
             {currentItem && playingAnimation}
           <span className={classes.artworkWrapper} style={{width: size, height: size}}>
-              <img src={artworkForMediaItem(song, size)} alt=""/>
-            </span>
+            <img src={artworkForMediaItem(song, size)} alt=""/>
           </span>
+        </span>
       ) : (
         <span className={classes.songIndex}>
-            {currentItem ? playingAnimation : song.attributes.trackNumber}
-          </span>
+          {currentItem ? playingAnimation : song.attributes.trackNumber}
+        </span>
       )}
     </>
   );

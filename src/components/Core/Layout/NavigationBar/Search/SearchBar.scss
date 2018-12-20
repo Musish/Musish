@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: center;
 
-  &.active {
+  &:hover, &.active {
     .navSearchWrapper {
       input {
         border-bottom-right-radius: 0;
@@ -57,7 +57,7 @@
       }
 
       .result {
-        padding-right: 7px;
+        padding-right: 10px;
         cursor: pointer;
 
         &:hover {
@@ -65,7 +65,7 @@
           color: $primary_color
         }
 
-        &.song {
+        &.song, &.album {
           display: flex;
           flex-direction: row;
 
@@ -78,8 +78,17 @@
           }
 
           .artwork {
-            padding: 7px;
+            padding: 7px 10px;
+            flex-shrink: 0;
+
+            img {
+              border-radius: 3px;
+            }
           }
+        }
+
+        &.artist {
+          padding: 10px;
         }
       }
     }

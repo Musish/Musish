@@ -4,6 +4,8 @@ import cx from 'classnames';
 import withMK from "../../../../../hoc/withMK";
 import Loader from "../../../../common/Loader";
 import SongResultItem from "./SongResultItem";
+import AlbumResultItem from "./AlbumResultItem";
+import ArtistResultItem from "./ArtistResultItem";
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -19,10 +21,6 @@ class SearchBar extends React.Component {
     this.handleShowResults = this.handleShowResults.bind(this);
     this.handleHideResults = this.handleHideResults.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
-  }
-
-  componentDidMount() {
-    this.search("despacito")
   }
 
   handleShowResults() {
@@ -42,10 +40,20 @@ class SearchBar extends React.Component {
       query
     });
 
+    query = query.replace(' ', '+');
+
     await this.search(query)
   }
 
   async search(query) {
+    if(query.length === 0) {
+      this.setState({
+        catalogData: null,
+        libraryData: null,
+      });
+      return;
+    }
+
     this.setState({
       loading: true,
     });
@@ -73,8 +81,6 @@ class SearchBar extends React.Component {
     this.setState({
       catalogData
     });
-
-    console.log("CATALOG", catalogData)
   }
 
   async searchLibrary(query) {
@@ -90,8 +96,6 @@ class SearchBar extends React.Component {
     this.setState({
       libraryData
     });
-
-    console.log("LIBRARY", libraryData)
   }
 
   getItems(type) {
@@ -113,7 +117,7 @@ class SearchBar extends React.Component {
   renderResults(label, type, rowRenderer) {
     const songs = this.getItems(type);
 
-    if (!songs) {
+    if (!songs || songs.length === 0) {
       return null;
     }
 
@@ -134,7 +138,7 @@ class SearchBar extends React.Component {
     const {query, showResults} = this.state;
 
     return (
-      <div className={cx(classes.navSearch, {[classes.active]: true || showResults})}>
+      <div className={cx(classes.navSearch, {[classes.active]: showResults})}>
         <div className={classes.navSearchWrapper}>
           <input type="text"
                  placeholder="Search music"
@@ -147,15 +151,11 @@ class SearchBar extends React.Component {
             {this.renderResults('Songs', 'songs', (song) => (
               <SongResultItem key={song.id} song={song} />
             ))}
-            {this.renderResults('Albums', 'albums', (song) => (
-              <div className={cx(classes.result, classes.song)} key={song.id}>
-                {song.attributes.name}
-              </div>
+            {this.renderResults('Albums', 'albums', (album) => (
+              <AlbumResultItem key={album.id} album={album} size={30} />
             ))}
-            {this.renderResults('Artists', 'artists', (song) => (
-              <div className={cx(classes.result, classes.song)} key={song.id}>
-                {song.attributes.name}
-              </div>
+            {this.renderResults('Artists', 'artists', (artist) => (
+              <ArtistResultItem key={artist.id} artist={artist}/>
             ))}
           </div>
         </div>

@@ -4,6 +4,8 @@ import classes from "./SearchBar.scss";
 import withMK from "../../../../../hoc/withMK";
 import {createMediaItem} from "../../../common/Utils";
 import SongDecoration from "../../../common/SongList/SongDecoration";
+import * as PropTypes from "prop-types";
+import AlbumResultItem from "./AlbumResultItem";
 
 function SongResultItem({song, mk}) {
   const play = async () => {
@@ -29,5 +31,9 @@ function SongResultItem({song, mk}) {
     </div>
   )
 }
+
+AlbumResultItem.propTypes = {
+  song: PropTypes.any.isRequired,
+};
 
 export default withMK(SongResultItem);
