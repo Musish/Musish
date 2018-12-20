@@ -108,35 +108,38 @@
         color: #888888;
       }
 
-      &.shuffle {
-        color: $primary_color;
-
-        &.one {
-          position:relative;
-
-          &:after {
-            content: '1';
-            position: absolute;
-            top: 8px;
-            right: 9px;
-            height: 14px;
-            width: 9px;
-            font-weight: 500;
-            font-size: 12px;
-            line-height: 12px;
-            background: $main_background_color;
-            border-radius: 2px;
-            text-align: center;
-          }
-        }
-      }
-
-      &:hover i {
+      &:hover {
         color: $tertiary_color;
       }
 
       &:active i {
         transform: scale(0.95);
+      }
+
+      &.enabled {
+        color: $primary_color;
+        &:hover {
+          color: darken($primary_color, 10%);
+        }
+      }
+
+      &.shuffle.one {
+        position:relative;
+
+        &:after {
+          content: '1';
+          position: absolute;
+          top: 8px;
+          right: 9px;
+          height: 14px;
+          width: 9px;
+          font-weight: 500;
+          font-size: 12px;
+          line-height: 12px;
+          background: $main_background_color;
+          border-radius: 2px;
+          text-align: center;
+        }
       }
     }
   }
@@ -148,13 +151,17 @@
   > i {
     position: absolute;
     z-index: 10;
+    width: 100%;
+    text-align: center;
+    padding: 5px 0;
+    margin-top: -5px;
   }
 
   > .volumeControlContainer {
     position: absolute;
     display: none;
     z-index: 5;
-    background: $container_background;
+    background: rgba(255, 255, 255, 0.8);
     border-radius: 5px;
     width: 30px;
     height: 120px;
@@ -177,44 +184,6 @@
     .volumeBar {
       transform: rotate(-90deg);
       width: 80px;
-    }
-  }
-}
-
-.queueWrapper {
-  position: relative;
-  > i {
-    z-index: 752;
-  }
-  .queueContainer {
-    position: absolute;
-    bottom: -9px;
-    right: -275px;
-    width: 275px;
-
-    &:before {
-      position: absolute;
-      height: 35px;
-      bottom: 0;
-      z-index: 751;
-      left: -35px;
-      width: 35px;
-      content: '';
-      background: #ffffff;
-      border: solid 1px #eee;
-      border-right: none;
-      border-radius: 8px 0 0 8px;
-    }
-    .queueInner {
-      position: relative;
-      z-index: 750;
-      bottom: 0;
-      background: #fff;
-      border: solid 1px #eee;
-      border-radius: 4px 4px 4px 0;
-      width: 275px;
-      height: 400px;
-      overflow: auto;
     }
   }
 }

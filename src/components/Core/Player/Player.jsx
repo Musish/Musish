@@ -35,6 +35,7 @@ class Player extends React.Component {
     this.handleRepeat = this.handleRepeat.bind(this);
     this.handleShuffle = this.handleShuffle.bind(this);
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
+    this.toggleVolume = this.toggleVolume.bind(this);
     this.getVolumeIconClasses = this.getVolumeIconClasses.bind(this);
   }
 
@@ -114,18 +115,23 @@ class Player extends React.Component {
     this.props.mk.instance.player.volume = e.target.value;
   }
 
+  toggleVolume() {
+    const {player} = this.props.mk.instance;
+    player.volume = player.volume <= 0.5 ? 1 : 0;
+  }
+
   getVolumeIconClasses() {
-    const volume = this.props.mk.instance.player.volume * 100;
+    const volume = this.props.mk.instance.player.volume;
 
     if (volume === 0) {
       return 'fas fa-times';
     }
 
-    if (volume > 0 && volume < 30) {
+    if (volume < 0.30) {
       return 'fas fa-volume-off';
     }
 
-    if (volume >= 30 && volume < 60) {
+    if (volume < 0.60) {
       return 'fas fa-volume-down';
     }
 
@@ -201,7 +207,8 @@ class Player extends React.Component {
     const repeatMode = mk.instance.player.repeatMode;
     const shuffleMode = mk.instance.player.shuffleMode;
 
-    const isShuffle = repeatMode === RepeatModeOne || repeatMode === RepeatModeAll;
+    const isRepeating = repeatMode === RepeatModeOne || repeatMode === RepeatModeAll;
+    const isShuffling = shuffleMode === ShuffleModeSongs;
 
     return (
       <div className={styles.player}>
@@ -238,7 +245,7 @@ class Player extends React.Component {
         <div className={styles.buttons}>
 
           <span className={cx(styles.controls, styles.volumeControlWrapper)}>
-            <i className={this.getVolumeIconClasses()}/>
+            <i className={this.getVolumeIconClasses()} onClick={this.toggleVolume} />
             <div className={styles.volumeControlContainer}>
               <div className={styles.volumeBarWrapper}>
                 <input
@@ -256,13 +263,13 @@ class Player extends React.Component {
           </span>
 
           <span
-            className={cx(styles.controls, {[styles.shuffle]: isShuffle, [styles.one]: repeatMode === RepeatModeOne})}
+            className={cx(styles.controls, styles.shuffle, {[styles.enabled]: isRepeating, [styles.one]: repeatMode === RepeatModeOne})}
             onClick={this.handleRepeat}
           >
             <i className={"fas fa-redo-alt"}/>
           </span>
 
-          <span className={cx(styles.controls, {[styles.shuffle]: shuffleMode === ShuffleModeSongs})}
+          <span className={cx(styles.controls, {[styles.enabled]: isShuffling})}
                 onClick={this.handleShuffle}>
             <i className={"fas fa-random"}/>
           </span>
