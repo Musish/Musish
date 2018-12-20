@@ -11,7 +11,6 @@ import {
 import cx from 'classnames';
 import withMK from '../../../hoc/withMK';
 import QueueContext from './Queue/QueueContext';
-import moment from "moment";
 
 class Player extends React.Component {
   constructor(props) {
