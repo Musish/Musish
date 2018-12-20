@@ -12,6 +12,13 @@ export function artworkForMediaItem(item, size) {
   return MusicKit.formatArtworkURL(item.attributes.artwork, size, size);
 }
 
+export function getTime(ms) {
+  const s = 1000 * Math.round(ms / 1000);
+  let d = new Date(s);
+
+  return d.getUTCMinutes() + ':' + String('0' + d.getUTCSeconds()).slice(-2);
+}
+
 export function humanifyMillis(duration) {
   let minutes = parseInt((duration / (1000 * 60)) % 60);
   let hours = parseInt((duration / (1000 * 60 * 60)) % 24);
@@ -22,6 +29,22 @@ export function humanifyMillis(duration) {
   }
 
   return humanReadable;
+}
+
+export function isCurrentItem(song) {
+  const music = MusicKit.getInstance();
+
+  const mediaItem = music.player && music.player.nowPlayingItem;
+
+  if (!mediaItem) {
+    return false;
+  }
+
+  return song.id === mediaItem.container.id;
+}
+
+export function isPlaying(song) {
+  return isCurrentItem(song) && MusicKit.getInstance().player.isPlaying;
 }
 
 export const RepeatModeNone = 0;

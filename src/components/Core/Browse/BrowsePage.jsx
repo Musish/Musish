@@ -1,13 +1,11 @@
-import React from 'react';
-import {withRouter} from 'react-router-dom';
 import PageContent from '../Layout/PageContent';
 import PageTitle from '../../common/PageTitle';
 import classes from './BrowsePage.scss';
 import AlbumItem from '../Albums/AlbumItem';
 import PlaylistItem from '../Playlists/PlaylistItem';
 import SongList from '../common/SongList/SongList';
-import Modal from '../../common/Modal/Modal';
-import PlaylistPanel from '../Playlists/PlaylistPanel';
+import React from 'react';
+import {withRouter} from 'react-router-dom';
 
 class BrowsePage extends React.Component {
   constructor(props) {
@@ -48,7 +46,7 @@ class BrowsePage extends React.Component {
 
         <h3>Hot playlists</h3>
         <div className={classes.scrollWrapper}>
-          <div className={classes.scrollGrid}>
+          <div className={cx(classes.scrollGrid, classes.doubleRow)}>
             {charts && charts.playlists[0].data.map((playlist, i) => {
               return (
                 <PlaylistItem key={i} playlist={playlist} size={100}/>
@@ -58,7 +56,7 @@ class BrowsePage extends React.Component {
         </div>
         <h3>Popular albums</h3>
         <div className={classes.scrollWrapper}>
-          <div className={classes.scrollGrid}>
+          <div className={cx(classes.scrollGrid, classes.doubleRow)}>
             {charts && charts.albums[0].data.map((album, i) => {
               return (
                 <AlbumItem key={i} album={album} size={100}/>

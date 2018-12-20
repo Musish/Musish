@@ -22,7 +22,7 @@ export default class PlaylistItem extends Component {
       return null;
     }
 
-    const id = this.props.id || this.props.album.id;
+    const id = this.props.id || this.props.playlist.id;
 
     return (
       <Modal open={true} handleClose={this.handleClose} render={() => (
@@ -33,8 +33,8 @@ export default class PlaylistItem extends Component {
 
   handleOpen() {
     if (this.props.navigate) {
-      const id = this.props.id || this.props.album.id;
-      this.props.history.push(`/albums/${id}`);
+      const id = this.props.id || this.props.playlist.id;
+      this.props.history.push(`/playlists/${id}`);
       return;
     }
 

@@ -2,4 +2,7 @@
   padding: 0 1.5em;
   flex: 1;
   overflow: auto;
+  > h1, h2, h3, h3, h4, h5 {
+    margin: 15px 0 5px 0;
+  }
 }

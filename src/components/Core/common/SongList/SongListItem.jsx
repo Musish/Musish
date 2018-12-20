@@ -1,12 +1,13 @@
 import React from 'react';
 
-import {artworkForMediaItem, createMediaItem} from "../Utils";
+import {artworkForMediaItem, createMediaItem, isCurrentItem, isPlaying, getTime} from "../Utils";
 import classes from "./SongList.scss";
 import {ContextMenuTrigger} from "react-contextmenu";
 import PropTypes from 'prop-types';
 import {MENU_TYPE} from "./SongList";
 import cx from 'classnames';
 import withMK from "../../../../hoc/withMK";
+import SongDecoration from "./SongDecoration";
 
 function collect(props, {props: song, playSong, queueNext, queueLater, state: {artworkURL}}) {
   return {
@@ -22,12 +23,6 @@ function collect(props, {props: song, playSong, queueNext, queueLater, state: {a
 class SongListItem extends React.Component {
   constructor(props) {
     super(props);
-
-    const artworkURL = artworkForMediaItem(this.props.song, 40);
-
-    this.state = {
-      artworkURL: artworkURL,
-    };
 
     this.playSong = this.playSong.bind(this);
     this.pauseSong = this.pauseSong.bind(this);
@@ -65,61 +60,24 @@ class SongListItem extends React.Component {
     }
   }
 
-  getTime(ms) {
-    const s = 1000 * Math.round(ms / 1000);
-    let d = new Date(s);
-
-    return d.getUTCMinutes() + ':' + String('0' + d.getUTCSeconds()).slice(-2);
-  }
-
-  isCurrentItem() {
-    const {song, mk} = this.props;
-    const mediaItem = mk.instance.player && mk.instance.player.nowPlayingItem;
-
-    if (!mediaItem) {
-      return false;
-    }
-
-    return song.id === mediaItem.container.id;
-  }
-
   isPlaying() {
-    return this.isCurrentItem() && this.props.mk.instance.player.isPlaying;
+    const {song} = this.props;
+
+    return isPlaying(song);
   }
 
   renderIcon() {
     const {showAlbum, song} = this.props;
-    const isCurrentItem = this.isCurrentItem();
 
-    const playingAnimation = (
-      <div className={cx(classes.playingAnimation, {[classes.animated]: this.isPlaying()})}>
-        <div><span/><span/><span/><span/><span/></div>
-      </div>
-    );
 
-    return (
-      <>
-        {showAlbum ? (
-          <span className={classes.albumArtwork}>
-            {isCurrentItem && playingAnimation}
-            <span className={classes.artworkWrapper}>
-              <img src={this.state.artworkURL} alt=""/>
-            </span>
-          </span>
-        ) : (
-          <span className={classes.songIndex}>
-            {isCurrentItem ? playingAnimation : song.attributes.trackNumber}
-          </span>
-        )}
-      </>
-    );
+    return <SongDecoration song={song} showAlbum={showAlbum}/>
   }
 
   render() {
     const {showArtist, showAlbum, song} = this.props;
     const {attributes} = song;
     const inLibrary = attributes.playParams && attributes.playParams.isLibrary;
-    const duration = this.getTime(attributes.durationInMillis);
+    const duration = getTime(attributes.durationInMillis);
 
     const explicit = attributes.contentRating === "explicit" && (
       <div className={classes.explicit}>
@@ -127,9 +85,8 @@ class SongListItem extends React.Component {
       </div>
     );
 
-
     return (
-      <div className={`${classes.song} ${this.isPlaying() ? 'playing' : ''}`}
+      <div className={cx({[classes.indexedSong]: !showAlbum, [classes.playing]: this.isPlaying()}, classes.song)}
            onClick={this.handleClick}
            style={this.props.style}>
         <ContextMenuTrigger id={MENU_TYPE}
