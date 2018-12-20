@@ -11,6 +11,7 @@ import {
 import cx from 'classnames';
 import withMK from '../../../hoc/withMK';
 import QueueContext from './Queue/QueueContext';
+import moment from "moment";
 
 class Player extends React.Component {
   constructor(props) {
@@ -138,16 +139,21 @@ class Player extends React.Component {
     return 'fas fa-volume-up';
   }
 
+  getTime(ms) {
+    const s = 1000 * Math.round(ms / 1000);
+    let d = new Date(s);
+
+    return d.getUTCMinutes() + ':' + String('0' + d.getUTCSeconds()).slice(-2);
+  }
+
   getCurrentPlaybackDuration() {
     const {player} = this.props.mk.instance;
-    const time =  (player.currentPlaybackDuration/60).toFixed(2);
-    return time;
+    return this.getTime(player.currentPlaybackDuration * 1000);
   }
 
   getCurrentPlaybackTime() {
     const {player} = this.props.mk.instance;
-    const time =  (player.currentPlaybackTime/60).toFixed(2);
-    return time;
+    return this.getTime(player.currentPlaybackTime * 1000);
   }
 
   renderProgress() {
