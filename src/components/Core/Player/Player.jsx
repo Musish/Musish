@@ -11,6 +11,7 @@ import {
 import cx from 'classnames';
 import withMK from '../../../hoc/withMK';
 import QueueContext from './Queue/QueueContext';
+import {getTime} from '../common/Utils';
 
 class Player extends React.Component {
   constructor(props) {
@@ -37,6 +38,9 @@ class Player extends React.Component {
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
     this.toggleVolume = this.toggleVolume.bind(this);
     this.getVolumeIconClasses = this.getVolumeIconClasses.bind(this);
+
+    this.getCurrentPlaybackDuration = this.getCurrentPlaybackDuration.bind(this);
+    this.getCurrentPlaybackTime = this.getCurrentPlaybackTime.bind(this);
   }
 
   static timeToPercent(time, duration) {
@@ -81,7 +85,6 @@ class Player extends React.Component {
 
   handleAddToLibrary() {
     console.log('Add to library');
-
     // this.props.mk.instance.addToLibrary();
   }
 
@@ -136,6 +139,16 @@ class Player extends React.Component {
     }
 
     return 'fas fa-volume-up';
+  }
+
+  getCurrentPlaybackDuration() {
+    const {player} = this.props.mk.instance;
+    return getTime(player.currentPlaybackDuration * 1000);
+  }
+
+  getCurrentPlaybackTime() {
+    const {player} = this.props.mk.instance;
+    return getTime(player.currentPlaybackTime * 1000);
   }
 
   renderProgress() {
@@ -222,7 +235,11 @@ class Player extends React.Component {
             <h3>{nowPlayingItem.attributes.albumName}</h3>
           </div>
         </div>
-        {this.renderProgress()}
+        <div className={styles.progressBarWrapper}>
+          <span>{this.getCurrentPlaybackTime()}</span>
+          {this.renderProgress()}
+          <span>{this.getCurrentPlaybackDuration()}</span>
+        </div>
         <div className={styles.buttons}>
           <span onClick={this.handlePrevious}>
             <i className={'fas fa-backward'}/>
@@ -245,7 +262,7 @@ class Player extends React.Component {
         <div className={styles.buttons}>
 
           <span className={cx(styles.controls, styles.volumeControlWrapper)}>
-            <i className={this.getVolumeIconClasses()} onClick={this.toggleVolume} />
+            <i className={this.getVolumeIconClasses()} onClick={this.toggleVolume}/>
             <div className={styles.volumeControlContainer}>
               <div className={styles.volumeBarWrapper}>
                 <input
@@ -263,7 +280,10 @@ class Player extends React.Component {
           </span>
 
           <span
-            className={cx(styles.controls, styles.shuffle, {[styles.enabled]: isRepeating, [styles.one]: repeatMode === RepeatModeOne})}
+            className={cx(styles.controls, styles.shuffle, {
+              [styles.enabled]: isRepeating,
+              [styles.one]: repeatMode === RepeatModeOne
+            })}
             onClick={this.handleRepeat}
           >
             <i className={"fas fa-redo-alt"}/>

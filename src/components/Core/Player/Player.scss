@@ -51,8 +51,20 @@
     }
   }
 
+  .progressBarWrapper {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+
+    span {
+      font-size: 11px;
+      padding: 0 8px;
+      color: $player_icon_color;
+    }
+  }
+
   .progress-bar {
-    width: 100%;
+    width: 80%;
     height: 4px;
     border-radius: 2px;
     margin: auto;
@@ -105,7 +117,7 @@
         display: flex;
         flex: 1;
         justify-content: center;
-        color: #888888;
+        color: $player_icon_color;
       }
 
       &:hover {
