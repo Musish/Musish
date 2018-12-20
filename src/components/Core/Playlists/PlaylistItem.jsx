@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 
-import classes from "./PlaylistItem.scss";
-import Modal from "../../common/Modal/Modal";
-import PlaylistPanel from "./PlaylistPanel";
+import classes from './PlaylistItem.scss';
+import Modal from '../../common/Modal/Modal';
+import PlaylistPanel from './PlaylistPanel';
 
 export default class PlaylistItem extends Component {
   constructor(props) {

@@ -22,6 +22,7 @@
     height: 0;
     padding-top: 100%;
     position: relative;
+
     .image {
       position: absolute;
       top: 0;
@@ -41,9 +42,11 @@
   .descriptionContainer {
     text-align: left;
     width: 100%;
+
     > span {
-      display:block;
+      display: block;
       @include wrapTo(100%);
+
       &.playlistName {
         font-weight: 400;
         margin: 10px 0 5px 0;

@@ -1,9 +1,9 @@
 import React from 'react';
 
 import classes from './PlaylistPanel.scss';
-import {artworkForMediaItem, humanifyMillis} from "../common/Utils";
-import SongList from "../common/SongList/SongList";
-import Loader from "../../common/Loader";
+import {artworkForMediaItem, humanifyMillis} from '../common/Utils';
+import SongList from '../common/SongList/SongList';
+import Loader from '../../common/Loader';
 
 export default class PlaylistPanel extends React.Component {
   constructor(props) {
