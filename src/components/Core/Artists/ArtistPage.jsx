@@ -1,7 +1,6 @@
 import React from 'react';
 import {withRouter} from 'react-router-dom';
 import PageTitle from '../../common/PageTitle';
-import SongList from '../common/SongList/SongList';
 import PageContent from "../Layout/PageContent";
 
 class ArtistPage extends React.Component {
@@ -15,7 +14,16 @@ class ArtistPage extends React.Component {
 
   async componentDidMount() {
     const music = MusicKit.getInstance();
-    const artist = await music.api.library.artist(this.props.match.params.id);
+
+    const id = this.props.match.params.id;
+    const isCatalog = /^\d+$/.test(id);
+
+    let artist;
+    if (isCatalog) {
+      artist = await music.api.artist(id);
+    } else {
+      artist = await music.api.library.artist(id);
+    }
 
     console.log(artist);
 
@@ -29,9 +37,9 @@ class ArtistPage extends React.Component {
       return 'Loading...';
     }
     return (
-        <PageContent>
-          <PageTitle title={this.state.artist.attributes.name} context={"My Library"}/>
-        </PageContent>
+      <PageContent>
+        <PageTitle title={this.state.artist.attributes.name} context={"My Library"}/>
+      </PageContent>
     );
   }
 }
