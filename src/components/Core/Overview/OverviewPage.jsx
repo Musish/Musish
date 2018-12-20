@@ -20,14 +20,14 @@ class OverviewPage extends React.Component {
 
   async componentDidMount() {
     const music = MusicKit.getInstance();
-    // let frequentlyPlayed = music.api.historyHeavyRotation();
+    let frequentlyPlayed = music.api.historyHeavyRotation();
     let recentlyPlayed = music.api.recentPlayed();
 
-    // frequentlyPlayed = await frequentlyPlayed;
+    frequentlyPlayed = await frequentlyPlayed;
     recentlyPlayed = await recentlyPlayed;
 
     this.setState({
-      // frequentlyPlayed,
+      frequentlyPlayed,
       recentlyPlayed
     })
   }
@@ -38,8 +38,6 @@ class OverviewPage extends React.Component {
     if (!recentlyPlayed) {
       return null;
     }
-
-    console.log(recentlyPlayed);
 
     return (
       <PageContent innerRef={this.ref}>
@@ -57,7 +55,7 @@ class OverviewPage extends React.Component {
               recentlyPlayed.map((item, i) => {
                 switch (item.type) {
                   case 'playlists':
-                    break;
+                    return null;
                   case 'albums':
                     return (
                       <AlbumItem key={i} album={item} size={120}/>
@@ -79,7 +77,7 @@ class OverviewPage extends React.Component {
                       <AlbumItem key={i} album={item} size={120}/>
                     );
                   case 'albums':
-                    break;
+                    return null;
                   default:
                     return null
                 }
