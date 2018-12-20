@@ -51,8 +51,20 @@
     }
   }
 
+  .playerProgressBar {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+
+    span {
+      font-size: 11px;
+      padding: 0 8px;
+      color: #888888;
+    }
+  }
+
   .progress-bar {
-    width: 100%;
+    width: 80%;
     height: 4px;
     border-radius: 2px;
     margin: auto;
