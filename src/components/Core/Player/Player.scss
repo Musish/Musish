@@ -58,13 +58,20 @@
 
     span {
       font-size: 11px;
-      padding: 0 8px;
       color: $player_icon_color;
+    }
+
+    .playbackTime {
+      margin-right: 8px;
+    }
+
+    .playbackDuration {
+      margin-left: 8px;
     }
   }
 
   .progress-bar {
-    width: 80%;
+    width: 100%;
     height: 4px;
     border-radius: 2px;
     margin: auto;

@@ -236,9 +236,9 @@ class Player extends React.Component {
           </div>
         </div>
         <div className={styles.progressBarWrapper}>
-          <span>{this.getCurrentPlaybackTime()}</span>
+          <span className={styles.playbackTime}>{this.getCurrentPlaybackTime()}</span>
           {this.renderProgress()}
-          <span>{this.getCurrentPlaybackDuration()}</span>
+          <span className={styles.playbackDuration}>{this.getCurrentPlaybackDuration()}</span>
         </div>
         <div className={styles.buttons}>
           <span onClick={this.handlePrevious}>
