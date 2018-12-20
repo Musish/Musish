@@ -1,12 +1,12 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
 import PlaylistItem from './PlaylistItem';
 
 import classes from './PlaylistsPage.scss';
 import PageTitle from '../../common/PageTitle';
 import PageContent from '../Layout/PageContent';
 import InfiniteLoader from '../common/InfiniteLoader';
-import PropTypes from 'prop-types';
 
 export default class PlaylistsPage extends React.Component {
   constructor(props) {

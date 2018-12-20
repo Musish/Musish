@@ -85,7 +85,7 @@ class Player extends React.Component {
 
   // eslint-disable-next-line class-methods-use-this
   handleAddToLibrary() {
-    console.log('Add to library');
+    // console.log('Add to library');
     // this.props.mk.instance.addToLibrary();
   }
 

@@ -49,7 +49,7 @@ export default class AlbumsPanel extends React.Component {
       <div className={classes.panel}>
         <div className={classes.aside}>
           <div className={classes.artworkWrapper}>
-            <img src={artworkURL} />
+            <img src={artworkURL} alt={album.attributes.name} />
           </div>
           <span className={classes.albumRuntimeDescription}>
             {album.attributes.trackCount}

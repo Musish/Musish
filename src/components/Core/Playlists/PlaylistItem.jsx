@@ -10,7 +10,12 @@ export default function PlaylistItem(props) {
   return (
     <Link to={`/playlists/${playlist.id}`} className={classes.container} style={{ width: size }}>
       <div className={classes.imageContainer} style={{ width: size, height: size }}>
-        <img src={artwork} className={classes.image} style={{ width: size, height: size }} />
+        <img
+          src={artwork}
+          className={classes.image}
+          style={{ width: size, height: size }}
+          alt={playlist.attributes.name}
+        />
       </div>
 
       <div className={classes.descriptionContainer}>

@@ -25,8 +25,12 @@ export default class Sidebar extends React.Component {
   render() {
     const playlists =
       this.state.playlists &&
-      this.state.playlists.map((playlist, i) => (
-        <MenuItem to={`/playlists/${playlist.id}`} label={playlist.attributes.name} key={i} />
+      this.state.playlists.map(playlist => (
+        <MenuItem
+          to={`/playlists/${playlist.id}`}
+          label={playlist.attributes.name}
+          key={playlist.id}
+        />
       ));
 
     return (
@@ -61,20 +65,18 @@ export default class Sidebar extends React.Component {
   }
 }
 
-class MenuItem extends React.Component {
-  render() {
-    const { to, label, exact } = this.props;
+function MenuItem(props) {
+  const { to, label, exact } = props;
 
-    return (
-      <Route path={to} exact={exact}>
-        {({ match }) => (
-          <li className={match ? classes.active : ''}>
-            <Link to={to}>{label}</Link>
-          </li>
-        )}
-      </Route>
-    );
-  }
+  return (
+    <Route path={to} exact={exact}>
+      {({ match }) => (
+        <li className={match ? classes.active : ''}>
+          <Link to={to}>{label}</Link>
+        </li>
+      )}
+    </Route>
+  );
 }
 
 MenuItem.propTypes = {

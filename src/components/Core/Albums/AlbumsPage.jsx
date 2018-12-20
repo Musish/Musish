@@ -18,7 +18,7 @@ export default class AlbumsPage extends React.Component {
     this.handleClose = this.handleClose.bind(this);
   }
 
-  async load(params) {
+  static async load(params) {
     const music = MusicKit.getInstance();
 
     return music.api.library.albums(null, params);
@@ -29,9 +29,9 @@ export default class AlbumsPage extends React.Component {
   }
 
   static renderItems({ items }) {
-    const albums = items.map((album, i) => {
-      return <AlbumItem key={album.id} album={album} size={170} navigate />;
-    });
+    const albums = items.map(album => (
+      <AlbumItem key={album.id} album={album} size={170} navigate />
+    ));
 
     return <div className={Classes.albumsGrid}>{albums}</div>;
   }
@@ -57,7 +57,7 @@ export default class AlbumsPage extends React.Component {
 
           <InfiniteLoader
             scrollElement={this.ref}
-            load={this.load}
+            load={AlbumsPage.load}
             render={AlbumsPage.renderContent}
           />
         </PageContent>

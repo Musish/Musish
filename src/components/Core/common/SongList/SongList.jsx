@@ -23,7 +23,7 @@ function DynamicMenu({ id, trigger }) {
       <div className={'item-info'}>
         <div className={'artwork'}>
           <div className={'artwork-wrapper'}>
-            <img src={trigger.artworkURL} />
+            <img src={trigger.artworkURL} alt={attributes.name} />
           </div>
         </div>
         <div className={'description'}>
@@ -53,6 +53,15 @@ function DynamicMenu({ id, trigger }) {
     </ContextMenu>
   );
 }
+
+DynamicMenu.propTypes = {
+  id: PropTypes.string.isRequired,
+  trigger: PropTypes.any,
+};
+
+DynamicMenu.defaultProps = {
+  trigger: null,
+};
 
 const ConnectedMenu = connectMenu(MENU_TYPE)(DynamicMenu);
 

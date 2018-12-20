@@ -1,5 +1,6 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
 import classes from './Login.scss';
 
 export default function Login(props) {
@@ -23,7 +24,9 @@ export default function Login(props) {
         </div>
       </div>
       <h5 className={classes.subheading}>
-        Just like <i className="fab fa-apple" /> Music... ish.
+        Just like
+        <i className="fab fa-apple" />
+        Music... ish.
       </h5>
       <hr />
       <p className={classes.accountCaption}>
@@ -47,3 +50,7 @@ export default function Login(props) {
     </div>
   );
 }
+
+Login.propTypes = {
+  onClick: PropTypes.func.isRequired,
+};

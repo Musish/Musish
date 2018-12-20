@@ -1,12 +1,12 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import cx from 'classnames';
 import PageContent from '../Layout/PageContent';
 import PageTitle from '../../common/PageTitle';
 import classes from './ForYouPage.scss';
 import Loader from '../../common/Loader';
 import AlbumItem from '../Albums/AlbumItem';
 import PlaylistItem from '../Playlists/PlaylistItem';
-import { withRouter } from 'react-router-dom';
-import cx from 'classnames';
 
 class ForYouPage extends React.Component {
   constructor(props) {

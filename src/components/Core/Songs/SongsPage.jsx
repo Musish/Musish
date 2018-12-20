@@ -21,12 +21,7 @@ export default class SongsPage extends React.Component {
       <PageContent innerRef={this.scrollRef}>
         <PageTitle title={'Songs'} context={'My Library'} />
 
-        <SongList
-          load={SongsPage.load}
-          scrollElement={this.scrollRef}
-          showAlbum
-          showArtist
-        />
+        <SongList load={SongsPage.load} scrollElement={this.scrollRef} showAlbum showArtist />
       </PageContent>
     );
   }

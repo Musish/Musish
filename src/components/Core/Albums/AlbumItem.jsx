@@ -52,7 +52,12 @@ class AlbumItem extends Component {
         {this.renderModal()}
         <div className={classes.container} onClick={this.handleOpen} style={{ width: size }}>
           <div className={classes.imageContainer} style={{ width: size, height: size }}>
-            <img src={artwork} className={classes.image} style={{ width: size, height: size }} />
+            <img
+              src={artwork}
+              className={classes.image}
+              style={{ width: size, height: size }}
+              alt={album.attributes.name}
+            />
           </div>
 
           <div className={classes.descriptionContainer}>
