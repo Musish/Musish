@@ -126,16 +126,23 @@ class Player extends React.Component {
     if (volume === 0) {
       return 'fas fa-times';
     }
-
     if (volume < 0.30) {
       return 'fas fa-volume-off';
     }
-
     if (volume < 0.60) {
       return 'fas fa-volume-down';
     }
-
     return 'fas fa-volume-up';
+  }
+
+  getcurrentPlaybackDuration() {
+    const player = this.props.mk.instance.player;
+    return player.getcurrentPlaybackDuration();
+  }
+
+  getcurrentPlaybackTime() {
+    const player = this.props.mk.instance.player;
+    return player.getcurrentPlaybackTime();
   }
 
   renderProgress() {
@@ -190,7 +197,6 @@ class Player extends React.Component {
     if (playbackTime) {
       return playbackTime.currentPlaybackTime * 1000
     }
-
     return 0;
   }
 
