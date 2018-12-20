@@ -80,7 +80,16 @@ class ArtistAlbums extends React.Component {
 
   async componentDidMount() {
     const music = MusicKit.getInstance();
-    const artist = await music.api.library.artist(this.props.id, {include: 'albums'});
+
+    const id = this.props.id;
+    const isCatalog = /^\d+$/.test(id);
+
+    let artist;
+    if (isCatalog) {
+      artist = await music.api.artist(this.props.id, {include: 'albums'});
+    } else {
+      artist = await music.api.library.artist(this.props.id, {include: 'albums'});
+    }
 
     console.log(artist);
 

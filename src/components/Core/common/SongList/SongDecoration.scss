@@ -1,0 +1,100 @@
+.playingAnimation {
+  border-radius: inherit;
+  background: rgba(250, 250, 250, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.animated {
+    > div {
+      span {
+        animation-play-state: running;
+      }
+    }
+  }
+
+  > div {
+    display: flex;
+    align-items: flex-end;
+    height: 10px;
+
+    span {
+      display: inline-block;
+      align-self: flex-end;
+      bottom: 0;
+      width: 3px;
+      height: 5px;
+      background: #fe2851;
+      animation: audio-wave 0.95s infinite ease-in-out;
+      animation-play-state: paused;
+      margin-left: 1px;
+
+      &:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      &:nth-child(3) {
+        animation-delay: 0.8s;
+      }
+
+      &:nth-child(4) {
+        animation-delay: 0.6s;
+      }
+
+      &:nth-child(5) {
+        animation-delay: 0.3s;
+      }
+    }
+  }
+
+  @keyframes audio-wave {
+    0% {
+      height: 5px;
+    }
+    25% {
+      height: 10px;
+    }
+    50% {
+      height: 8px;
+    }
+    50% {
+      height: 10px;
+    }
+    100% {
+      height: 5px;
+    }
+  }
+}
+
+.albumArtwork {
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-radius: 3px;
+
+  .playingAnimation {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  .artworkWrapper {
+    border-radius: 3px;
+    width: 40px;
+    height: 40px;
+    background: #fafafa;
+
+    img {
+      border-radius: inherit;
+      width: inherit;
+      height: inherit;
+    }
+  }
+}
+
+.songIndex {
+  color: #fe2851;
+  width: 24px;
+}

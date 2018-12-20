@@ -51,11 +51,10 @@ export default class AlbumsPanel extends React.Component {
           <span className={classes.title}>{album.attributes.name}</span>
           <span className={classes.subtitle}>{album.attributes.artistName}</span>
           {album.relationships ? (
-            <SongList scrollElement={this.ref} load={() => album.relationships.tracks.data} album={true}/>
+            <SongList scrollElement={this.ref} load={() => album.relationships.tracks.data} />
           ) : (
             <Loader/>
           )}
-
         </div>
       </div>
     );
