@@ -1,7 +1,8 @@
 @import '../../styles/settings/colors';
 
 .loginContainer {
-  background: $login_background_color linear-gradient(290deg, #CD3C5A, $login_background_color);
+  background: $login_background_color
+    linear-gradient(290deg, #cd3c5a, $login_background_color);
   background-size: 100% 100%;
 
   width: 100%;
@@ -10,7 +11,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
   .title {
     margin-bottom: 5px;
     color: white;
@@ -23,7 +23,7 @@
       font-size: 48pt;
       font-weight: 600;
     }
-    .betaLabel{
+    .betaLabel {
       margin-left: 10px;
       margin-top: 22px;
       span {
@@ -87,6 +87,7 @@
     * {
       box-sizing: content-box;
     }
+
     .disclaimerIcon {
       font-size: 12px;
       padding: 8px 8px;
@@ -94,7 +95,6 @@
       display: inline-block;
       height: 100%;
       > span {
-
         color: $main_background_color;
         background: $primary_color;
         border-radius: 50%;
@@ -106,6 +106,7 @@
         justify-content: center;
       }
     }
+
     .disclaimerText {
       margin-right: 10px;
       width: 320px;
@@ -115,10 +116,18 @@
 }
 
 @keyframes fadein {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 @keyframes growin {
-  from { width: 0; }
-  to   { width: 100px; }
+  from {
+    width: 0;
+  }
+  to {
+    width: 100px;
+  }
 }

@@ -24,7 +24,7 @@ export default class MusicKitAuthorizeProvider extends React.Component {
     }
 
     try {
-      await music.api.library.songs({ limit: 1 });
+      await music.api.library.songs({ limit: 0 });
       this.setState({
         ready: true,
         isLoggedIn: true,

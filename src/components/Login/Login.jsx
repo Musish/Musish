@@ -24,9 +24,9 @@ export default function Login(props) {
         </div>
       </div>
       <h5 className={classes.subheading}>
-        Just like
+        {'Just like '}
         <i className="fab fa-apple" />
-        Music... ish.
+        {' Music... ish.'}
       </h5>
       <hr />
       <p className={classes.accountCaption}>
