@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import classes from './Logout.scss';
-import withMK from '../../../../../hoc/withMK';
 import PropTypes from 'prop-types';
+import withMK from '../../../../../hoc/withMK';
 class Logout extends Component {
-
   logout() {
     this.props.mk.instance.unauthorize();
     window.location.reload();
