@@ -4,7 +4,6 @@ import classes from './Logout.scss';
 import withMK from '../../../../../hoc/withMK';
 
 class Logout extends Component {
-
   constructor(props) {
     super(props);
 
