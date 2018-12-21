@@ -24,7 +24,7 @@ class BrowsePage extends React.Component {
   async componentDidMount() {
     const music = MusicKit.getInstance();
     const charts = await music.api.charts(['songs', 'albums', 'playlists'], { limit: 40 });
-    const top100 = await music.api.playlists(top100Ids);
+    const top100 = await music.api.playlists(top100Ids.slice(0,25));
 
     this.setState({
       charts,
