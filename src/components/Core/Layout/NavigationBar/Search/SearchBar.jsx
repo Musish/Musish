@@ -8,6 +8,7 @@ import Loader from '../../../../common/Loader';
 import SongResultItem from './SongResultItem';
 import AlbumResultItem from './AlbumResultItem';
 import ArtistResultItem from './ArtistResultItem';
+import PlaylistResultItem from './PlaylistResultItem';
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -148,6 +149,9 @@ class SearchBar extends React.Component {
             ))}
             {this.renderResults('Artists', 'artists', artist => (
               <ArtistResultItem key={artist.id} artist={artist} />
+            ))}
+            {this.renderResults('Playlists', 'playlists', playlist => (
+              <PlaylistResultItem key={playlist.id} playlist={playlist} size={30} />
             ))}
           </div>
         </div>
