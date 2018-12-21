@@ -1,11 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import Loader from '../../common/Loader';
+import axios from 'axios';
 import PageContent from '../Layout/PageContent';
 import PageTitle from '../../common/PageTitle';
 import SongList from '../common/SongList/SongList';
-import { artworkForMediaItem, humanifyMillis } from '../common/Utils';
+import { API_URL, artworkForMediaItem, humanifyMillis } from '../common/Utils';
 import classes from './PlaylistPage.scss';
 
 class PlaylistPage extends React.Component {
@@ -14,48 +14,82 @@ class PlaylistPage extends React.Component {
 
     this.state = {
       playlistId: this.props.match.params.id || this.props.playlist,
+      runtime: '',
+      playlist: null,
+      songs: [],
+      end: false,
     };
-    console.log('constructorr');
+
+    this.scrollRef = React.createRef();
 
     this.load = this.load.bind(this);
-    this.scrollRef = React.createRef();
+    this.onSetItems = this.onSetItems.bind(this);
+  }
+
+  onSetItems({ items: songs, end }) {
+    this.setState({
+      songs,
+      end,
+    });
+
+    const albumLength = songs.reduce(
+      (totalDuration, song) => totalDuration + song.attributes.durationInMillis,
+      0
+    );
+
+    this.setState({
+      runtime: humanifyMillis(albumLength),
+    });
   }
 
   async load(params, { page }) {
     const { playlistId } = this.state;
     const music = MusicKit.getInstance();
 
-    const isLibrary = playlistId.startsWith('p.');
-    const playlist = isLibrary
-      ? await music.api.library.playlist(playlistId, { offset: page * 100 })
-      : await music.api.playlist(playlistId, { offset: page * 100 });
-
     if (page === 0) {
-      const albumLength = playlist.relationships.tracks.data.reduce(
-        (totalDuration, track) => totalDuration + track.attributes.durationInMillis,
-        0
-      );
+      const isLibrary = playlistId.startsWith('p.');
+      const playlist = isLibrary
+        ? await music.api.library.playlist(playlistId, { offset: params.offset })
+        : await music.api.playlist(playlistId, { offset: params.offset });
+
+      const { tracks } = playlist.relationships;
 
       this.setState({
         playlist,
-        runtime: humanifyMillis(albumLength),
-        isLibrary,
+        nextUrl: tracks.next,
       });
+
+      return tracks.data;
     }
 
-    return playlist.relationships.tracks.data;
+    if (!this.state.nextUrl) {
+      return [];
+    }
+
+    const { data } = await axios.get(`${API_URL}${this.state.nextUrl}`, {
+      headers: {
+        Authorization: `Bearer ${music.developerToken}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Music-User-Token': music.musicUserToken,
+      },
+    });
+
+    this.setState({
+      nextUrl: data.next,
+    });
+
+    return data.data;
   }
 
   renderHeader() {
-    const { playlist, runtime, isLibrary } = this.state;
+    const { playlist, runtime, songs, end } = this.state;
 
     if (!playlist) {
-      return;
+      return null;
     }
 
     const artworkURL = artworkForMediaItem(playlist, 80);
-    // const date = new Date(playlist.attributes.lastModifiedDate).toLocaleDateString('en-US'); // TODO: Where to put?
-    const trackCount = playlist.attributes.trackCount || playlist.relationships.tracks.data.length;
 
     return (
       <div className={classes.header}>
@@ -67,18 +101,13 @@ class PlaylistPage extends React.Component {
             <span className={classes.name}>{playlist.attributes.name}</span>
             <span className={classes.curator}>
               {playlist.attributes.curatorName ? (
-                <>
-                  Playlist by
-                  {playlist.attributes.curatorName}
-                </>
+                `Playlist by ${playlist.attributes.curatorName}`
               ) : (
                 <>In your personal library</>
               )}
             </span>
             <span className={classes.titleMeta}>
-              {trackCount}
-              songs,
-              {runtime}
+              {`${songs.length}${end ? '' : '+'} songs, ${runtime}`}
             </span>
           </div>
         </div>
@@ -92,18 +121,17 @@ class PlaylistPage extends React.Component {
   }
 
   render() {
-    const { playlist, runtime, isLibrary } = this.state;
-    console.log(this.state);
-
-    // const artworkURL = artworkForMediaItem(playlist, 80);
-    // const date = new Date(playlist.attributes.lastModifiedDate).toLocaleDateString('en-US'); // TODO: Where to put?
-    // /const trackCount = playlist.attributes.trackCount || playlist.relationships.tracks.data.length;
-
     return (
       <PageContent innerRef={this.scrollRef}>
         <PageTitle context={'My Library'} />
         {this.renderHeader()}
-        <SongList load={this.load} scrollElement={this.scrollRef} showAlbum showArtist />
+        <SongList
+          load={this.load}
+          scrollElement={this.scrollRef}
+          showAlbum
+          showArtist
+          onSetItems={this.onSetItems}
+        />
       </PageContent>
     );
   }
