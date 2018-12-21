@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import classes from './PlaylistItem.scss';
 import Modal from '../../common/Modal/Modal';
 import PlaylistPanel from './PlaylistPanel';
+import { artworkForMediaItem } from '../common/Utils';
 
 export default class PlaylistItem extends Component {
   constructor(props) {
@@ -44,7 +45,7 @@ export default class PlaylistItem extends Component {
 
   render() {
     const { playlist, size } = this.props;
-    const artwork = MusicKit.formatArtworkURL(playlist.attributes.artwork, size, size);
+    const artwork = artworkForMediaItem(playlist, size);
     return (
       <>
         {this.renderModal()}
