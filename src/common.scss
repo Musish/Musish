@@ -33,12 +33,12 @@ button {
   font-size: 11px;
 }
 
-:global {
-  * {
-    outline: none !important;
-    box-sizing: border-box;
-  }
+* {
+  outline: none !important;
+  box-sizing: border-box;
+}
 
+:global {
   #app-root {
     height: 100vh;
     display: flex;

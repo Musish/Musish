@@ -77,10 +77,12 @@ export default class SongList extends React.Component {
     this.onSetItems = this.onSetItems.bind(this);
   }
 
-  onSetItems({ items: songs }) {
+  onSetItems(state) {
     this.setState({
-      songs,
+      songs: state.items,
     });
+
+    this.props.onSetItems(state);
   }
 
   rowRenderer({ item: song, index, isScrolling, isVisible, key, style }) {
@@ -123,10 +125,12 @@ SongList.propTypes = {
   showAlbum: PropTypes.bool,
   scrollElement: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   load: PropTypes.func.isRequired,
+  onSetItems: PropTypes.func,
 };
 
 SongList.defaultProps = {
   showArtist: false,
   showAlbum: false,
   scrollElement: null,
+  onSetItems: () => null,
 };

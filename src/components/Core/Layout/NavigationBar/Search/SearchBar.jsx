@@ -1,12 +1,14 @@
 import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
+import debounce from 'lodash/debounce';
 import classes from './SearchBar.scss';
 import withMK from '../../../../../hoc/withMK';
 import Loader from '../../../../common/Loader';
 import SongResultItem from './SongResultItem';
 import AlbumResultItem from './AlbumResultItem';
 import ArtistResultItem from './ArtistResultItem';
+import PlaylistResultItem from './PlaylistResultItem';
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -22,6 +24,7 @@ class SearchBar extends React.Component {
     this.handleShowResults = this.handleShowResults.bind(this);
     this.handleHideResults = this.handleHideResults.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.search = debounce(this.search, 400, { maxWait: 1000 }).bind(this);
   }
 
   handleShowResults() {
@@ -67,10 +70,6 @@ class SearchBar extends React.Component {
   }
 
   async searchCatalog(query) {
-    this.setState({
-      catalogData: null,
-    });
-
     const catalogData = await this.props.mk.instance.api.search(query, {
       types: ['albums', 'songs', 'playlists', 'artists'],
       limit: 3,
@@ -82,10 +81,6 @@ class SearchBar extends React.Component {
   }
 
   async searchLibrary(query) {
-    this.setState({
-      libraryData: null,
-    });
-
     const libraryData = await this.props.mk.instance.api.library.search(query, {
       types: ['library-albums', 'library-songs', 'library-playlists', 'library-artists'],
       limit: 3,
@@ -154,6 +149,9 @@ class SearchBar extends React.Component {
             ))}
             {this.renderResults('Artists', 'artists', artist => (
               <ArtistResultItem key={artist.id} artist={artist} />
+            ))}
+            {this.renderResults('Playlists', 'playlists', playlist => (
+              <PlaylistResultItem key={playlist.id} playlist={playlist} size={30} />
             ))}
           </div>
         </div>

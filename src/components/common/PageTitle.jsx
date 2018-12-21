@@ -6,16 +6,17 @@ export default function PageTitle(props) {
   return (
     <div className={styles.pageTitle}>
       {props.context && <span className={styles.contextHeading}>{props.context}</span>}
-      <h1>{props.title}</h1>
+      {props.title && <h1>{props.title}</h1>}
     </div>
   );
 }
 
 PageTitle.propTypes = {
   context: PropTypes.any,
-  title: PropTypes.any.isRequired,
+  title: PropTypes.any,
 };
 
 PageTitle.defaultProps = {
   context: null,
+  title: null,
 };

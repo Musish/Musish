@@ -266,3 +266,5 @@ export const RepeatModeAll = 2;
 
 export const ShuffleModeOff = 0;
 export const ShuffleModeSongs = 1;
+
+export const API_URL = 'https://api.music.apple.com';
