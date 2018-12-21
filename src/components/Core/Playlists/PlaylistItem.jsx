@@ -55,6 +55,7 @@ export default class PlaylistItem extends Component {
               className={classes.image}
               style={{ width: size, height: size }}
               alt={playlist.attributes.name}
+              title={playlist.attributes.name}
             />
           </div>
 
