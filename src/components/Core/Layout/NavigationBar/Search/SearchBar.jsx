@@ -1,13 +1,13 @@
 import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
+import debounce from 'lodash/debounce';
 import classes from './SearchBar.scss';
 import withMK from '../../../../../hoc/withMK';
 import Loader from '../../../../common/Loader';
 import SongResultItem from './SongResultItem';
 import AlbumResultItem from './AlbumResultItem';
 import ArtistResultItem from './ArtistResultItem';
-import debounce from 'lodash/debounce';
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class SearchBar extends React.Component {
     this.handleShowResults = this.handleShowResults.bind(this);
     this.handleHideResults = this.handleHideResults.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
-    this.search = debounce(this.search, 400, {maxWait: 1000});
+    this.search = debounce(this.search, 400, { maxWait: 1000 }).bind(this);
   }
 
   handleShowResults() {
@@ -49,7 +49,6 @@ class SearchBar extends React.Component {
   }
 
   async search(query) {
-    console.log(query);
     if (query.length === 0) {
       this.setState({
         catalogData: null,
