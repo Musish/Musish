@@ -1,12 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import classes from './Logout.scss';
 import withMK from '../../../../../hoc/withMK';
-
+import PropTypes from 'prop-types';
 class Logout extends Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   logout() {
     this.props.mk.instance.unauthorize();
@@ -14,12 +10,16 @@ class Logout extends Component {
   }
 
   render() {
-    return(
+    return (
       <div className={classes.logoutWrapper}>
-          <span onClick={() => this.logout()}>Logout</span>
+        <span onClick={() => this.logout()}>Logout</span>
       </div>
     );
   }
 }
+
+Logout.propTypes = {
+  mk: PropTypes.any.isRequired,
+};
 
 export default withMK(Logout);
