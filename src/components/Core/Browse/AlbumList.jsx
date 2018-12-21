@@ -4,28 +4,31 @@ import cx from 'classnames';
 import classes from './BrowsePage.scss';
 import AlbumItem from '../Albums/AlbumItem';
 import Loader from '../../common/Loader';
+import PropTypes from 'prop-types';
 
 class AlbumList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      list: null
+      list: null,
     };
+
+    this.getAlbums = this.getAlbums.bind(this);
+  }
+
+  async getAlbums(ids) {
+    const music = MusicKit.getInstance();
+    const list = await music.api.albums(ids);
+
+    this.setState({
+      list: list,
+    });
   }
 
   async componentDidMount() {
     if ((this.props.list == undefined || this.props.list == null) && (this.props.listIds !== null && this.props.listIds !== undefined)) {
-      const music = MusicKit.getInstance();
-      const list = await music.api.albums(this.props.listIds);
-
-      this.setState({
-        list: list
-      });
-    } else {
-      this.setState({
-        list: this.props.list
-      })
+      this.getAlbums(this.props.listIds);
     }
   }
 

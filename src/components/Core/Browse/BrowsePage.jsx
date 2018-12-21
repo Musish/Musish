@@ -4,8 +4,6 @@ import cx from 'classnames';
 import PageContent from '../Layout/PageContent';
 import PageTitle from '../../common/PageTitle';
 import classes from './BrowsePage.scss';
-import AlbumItem from '../Albums/AlbumItem';
-import PlaylistItem from '../Playlists/PlaylistItem';
 import SongList from '../common/SongList/SongList';
 import {top100Ids, aListPlaylistsIds} from '../common/Utils';
 import Loader from '../../common/Loader';
@@ -21,15 +19,20 @@ class BrowsePage extends React.Component {
     };
 
     this.ref = React.createRef();
+    this.getCharts = this.getCharts.bind(this);
   }
 
-  async componentDidMount() {
+  async getCharts() {
     const music = MusicKit.getInstance();
     const charts = await music.api.charts(['songs', 'albums', 'playlists'], { limit: 40 });
 
     this.setState({
       charts,
     });
+  }
+
+  async componentDidMount() {
+    this.getCharts();
   }
 
   render() {

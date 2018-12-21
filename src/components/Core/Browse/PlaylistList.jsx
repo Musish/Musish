@@ -4,6 +4,7 @@ import cx from 'classnames';
 import classes from './BrowsePage.scss';
 import PlaylistItem from '../Playlists/PlaylistItem';
 import Loader from '../../common/Loader';
+import PropTypes from 'prop-types';
 
 class PlaylistList extends React.Component {
   constructor(props) {
@@ -12,20 +13,22 @@ class PlaylistList extends React.Component {
     this.state = {
       list: null
     };
+
+    this.getPlaylists = this.getPlaylists.bind(this);
+  }
+
+  async getPlaylists(ids) {
+    const music = MusicKit.getInstance();
+    const list = await music.api.playlists(ids);
+
+    this.setState({
+      list: list,
+    });
   }
 
   async componentDidMount() {
     if ((this.props.list == undefined || this.props.list == null) && (this.props.listIds !== null && this.props.listIds !== undefined)) {
-      const music = MusicKit.getInstance();
-      const list = await music.api.playlists(this.props.listIds);
-
-      this.state = {
-        list: list
-      }
-    } else {
-      this.state = {
-        list: this.props.list
-      }
+      this.getPlaylists(this.props.listIds);
     }
   }
 
