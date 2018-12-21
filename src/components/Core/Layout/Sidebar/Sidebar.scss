@@ -21,7 +21,10 @@
       background: $main_background_color;
       padding: 10px 15px;
       border-radius: 5px;
-      margin-top: 15px;
+
+      &:not(:first-child) {
+        margin-top: 15px;
+      }
 
       h3 {
         color: $primary_color;
