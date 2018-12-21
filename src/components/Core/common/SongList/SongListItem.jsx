@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ContextMenuTrigger } from 'react-contextmenu';
+import ContentLoader from 'react-content-loader';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { createMediaItem, isPlaying, getTime } from '../Utils';
@@ -68,38 +69,21 @@ class SongListItem extends React.Component {
     return isPlaying(song);
   }
 
-  renderIcon() {
-    const { showAlbum, song } = this.props;
-
-    return <SongDecoration song={song} showAlbum={showAlbum} />;
-  }
-
-  render() {
+  renderContents() {
     const { showArtist, showAlbum, song } = this.props;
     const { attributes } = song;
-    const duration = getTime(attributes.durationInMillis);
 
-    const explicit = attributes.contentRating === 'explicit' && (
-      <div className={classes.explicit}>
-        <span>E</span>
-      </div>
-    );
+    if (attributes) {
+      const duration = getTime(attributes.durationInMillis);
 
-    return (
-      <div
-        className={cx(
-          { [classes.indexedSong]: !showAlbum, [classes.playing]: this.isPlaying() },
-          classes.song
-        )}
-        onClick={this.handleClick}
-        style={this.props.style}
-      >
-        <ContextMenuTrigger
-          id={MENU_TYPE}
-          attributes={{ className: [classes.songWrapper] }}
-          collect={props => collect(props, this)}
-        >
-          <div className={classes.songBacker} />
+      const explicit = attributes.contentRating === 'explicit' && (
+        <div className={classes.explicit}>
+          <span>E</span>
+        </div>
+      );
+
+      return (
+        <>
           {this.renderIcon()}
           <div className={classes.songInfo}>
             <span className={classes.songTitle}>
@@ -117,6 +101,44 @@ class SongListItem extends React.Component {
           <span className={classes.songDuration}>
             <span>{duration}</span>
           </span>
+        </>
+      );
+    }
+    return (
+      <ContentLoader height={25} speed={2} primaryColor={'#f3f3f3'} secondaryColor={'#ecebeb'} className={cx(classes.songInfo, classes.buffering)}>
+        {/* Pure SVG */}
+        <rect x="0" y="1" rx="2" ry="2" width="23.5" height="23.5" />
+        <rect x="29" y="7" rx="2" ry="2" width="90" height="4" />
+        <rect x="29" y="15" rx="2" ry="2" width="60" height="4" />
+      </ContentLoader>
+    );
+  }
+
+  renderIcon() {
+    const { showAlbum, song } = this.props;
+
+    return <SongDecoration song={song} showAlbum={showAlbum} />;
+  }
+
+  render() {
+    const { showAlbum } = this.props;
+
+    return (
+      <div
+        className={cx(
+          { [classes.indexedSong]: !showAlbum, [classes.playing]: this.isPlaying() },
+          classes.song
+        )}
+        onClick={this.handleClick}
+        style={this.props.style}
+      >
+        <ContextMenuTrigger
+          id={MENU_TYPE}
+          attributes={{ className: [classes.songWrapper] }}
+          collect={props => collect(props, this)}
+        >
+          <div className={classes.songBacker} />
+          {this.renderContents()}
         </ContextMenuTrigger>
       </div>
     );

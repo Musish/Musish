@@ -6172,6 +6172,10 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-content-loader@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/react-content-loader/-/react-content-loader-3.4.1.tgz#8eb273c630ffb36cb92f4383be811828eb8e1e66"
+
 react-contextmenu@^2.10.0:
   version "2.10.0"
   resolved "https://registry.yarnpkg.com/react-contextmenu/-/react-contextmenu-2.10.0.tgz#3a5338a552964db85c300072f719bc1f6b969838"
