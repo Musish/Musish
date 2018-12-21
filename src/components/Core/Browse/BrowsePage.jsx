@@ -7,7 +7,7 @@ import classes from './BrowsePage.scss';
 import AlbumItem from '../Albums/AlbumItem';
 import PlaylistItem from '../Playlists/PlaylistItem';
 import SongList from '../common/SongList/SongList';
-import {top100Ids} from '../common/Utils';
+import {top100Ids, aListPlaylistsIds} from '../common/Utils';
 
 class BrowsePage extends React.Component {
   constructor(props) {
@@ -15,7 +15,8 @@ class BrowsePage extends React.Component {
 
     this.state = {
       charts: null,
-      top100: null
+      top100: null,
+      aLists: null
     };
 
     this.ref = React.createRef();
@@ -25,29 +26,22 @@ class BrowsePage extends React.Component {
     const music = MusicKit.getInstance();
     const charts = await music.api.charts(['songs', 'albums', 'playlists'], { limit: 40 });
     const top100 = await music.api.playlists(top100Ids.slice(0,25));
+    const aLists = await music.api.playlists(aListPlaylistsIds);
 
     this.setState({
       charts,
-      top100
+      top100,
+      aLists
     });
   }
 
   render() {
-    const { charts, top100 } = this.state;
+    const { charts, top100, aLists } = this.state;
 
     return (
       <PageContent innerRef={this.ref}>
         <PageTitle title={'Browse'} context={'Apple Music'} />
 
-        <h3>Hot playlists</h3>
-        <div className={classes.scrollWrapper}>
-          <div className={cx(classes.scrollGrid, classes.doubleRow)}>
-            {charts &&
-              charts.playlists[0].data.map(playlist => (
-                <PlaylistItem key={playlist.id} playlist={playlist} size={100} />
-              ))}
-          </div>
-        </div>
         <h3>Daily Top 100</h3>
         <div className={classes.scrollWrapper}>
           <div className={cx(classes.scrollGrid, classes.doubleRow)}>
@@ -57,7 +51,25 @@ class BrowsePage extends React.Component {
               ))}
           </div>
         </div>
-        <h3>Popular albums</h3>
+        <h3>The A-Lists</h3>
+        <div className={classes.scrollWrapper}>
+          <div className={cx(classes.scrollGrid, classes.doubleRow)}>
+            {aLists &&
+              aLists.map(playlist => (
+                <PlaylistItem key={playlist.id} playlist={playlist} size={100} />
+              ))}
+          </div>
+        </div>
+        <h3>Top Playlists</h3>
+        <div className={classes.scrollWrapper}>
+          <div className={cx(classes.scrollGrid, classes.doubleRow)}>
+            {charts &&
+              charts.playlists[0].data.map(playlist => (
+                <PlaylistItem key={playlist.id} playlist={playlist} size={100} />
+              ))}
+          </div>
+        </div>
+        <h3>Top Albums</h3>
         <div className={classes.scrollWrapper}>
           <div className={cx(classes.scrollGrid, classes.doubleRow)}>
             {charts &&
@@ -66,7 +78,7 @@ class BrowsePage extends React.Component {
               ))}
           </div>
         </div>
-        <h3>Top songs</h3>
+        <h3>Top Songs</h3>
         <div className={classes.chartingSongs}>
           {charts && (
             <SongList
