@@ -48,53 +48,6 @@ export function isPlaying(song) {
   return isCurrentItem(song) && MusicKit.getInstance().player.isPlaying;
 }
 
-export const appleCuratorsIds = [
-  '976439528', /* blues */
-  '988581516', /* rock */
-  '988556214', /* alternative */
-  '988588080', /* pop */
-  '989061185', /* hip-hop */
-  '976439542', /* jazz */
-  '988583890', /* r&b/soul */
-  '989074778', /* dance */
-  '988658201', /* metal */
-  '989076708', /* electronic */
-  '989071074', /* classical */
-  '976439534', /* country */
-  '982347996', /* new-artists */
-  '988658197', /* k-pop */
-  '976439552', /* reggae */
-  '988578699', /* singer/songwriter */
-  '988656348', /* african */
-  '976439529', /* inspirational */
-  '976439587', /* world */
-  '988578275', /* stage & screen */
-  '1053601584', /* christmas */
-  '989066661', /* childrens-music */
-];
-
-export const featuredPlaylistsIds = [
-  'pl.f4d106fed2bd41149aaacabb233eb5eb', /* todays-hits */
-  'pl.567c541f63414e798be5cf214e155557', /* today-at-apple */
-  'pl.4589a0c55c9e462e9d3cb17964f5bda6', /* mellow-days */
-  'pl.725376c1e6b14915b7e27a919db39c52', /* easy-hits */
-  'pl.03cac344bd5641cfb59d39626f62d098', /* headliners */
-  'pl.299001f6c528460797ea61bac6522a81', /* guitar-throwback */
-  'pl.f19f6b5be8474fe789e36a6242f6113e', /* new-fire */
-  'pl.0d4aee5424c74d29ad15252eeb43d3b1', /* feeling-happy */
-  'pl.91bb14d8ee10414e8fda8fb71f56db03', /* friday-feeling */
-  'pl.5cc71a7325f8405c8c420ea382d66040', /* relax */
-  'pl.a0214a4b459d4f79a991d1151e6f211f', /* future-hits */
-  'pl.cc0486f6236d482da2362e5dcd6d9b3e', /* pure-throwback */
-  'pl.acb576c15091494a9ed6dfc5c3f33957', /* all-the-way-up */
-  'pl.b5e8dbe8a706496496e1292466839207', /* acoustic-chill */
-  'pl.2d4d74790f074233b82d07bfae5c219c', /* its-lit */
-  'pl.c21556629e97453f9672feb9d8f228a3', /* pop-throwback */
-  'pl.2b0e6e332fdf4b7a91164da3162127b5', /* best-of-the-week */
-  'pl.c6b0ecb695eb4fcea3476050fdb4e1bb', /* unwind */
-  'pl.dbd712beded846dca273d5d3259d28aa', /* pure-focus */
-];
-
 export const top100Ids = [
   'pl.d25f5d1181894928af76c85c967f8f31', /* top-100-global */
   'pl.c2273b7e89b44121b3093f67228918e7', /* top-100-uk */
@@ -233,31 +186,6 @@ export const aListPlaylistsIds = [
   'pl.19886d42a5cf41fcbcd277b519dd9e6a', /* a-list-uk */
   'pl.d60caf02fcce4d7e9788fe01243b7c2c', /* a-list-bollywood */
   'pl.fecfa8a26ea44ad581d4fe501892c8ff', /* a-list-christian */
-];
-
-export const curatorsIds = [
-  '1231985718', /* ministry-of-sound */
-  '1114653141', /* bbc-music */
-  '999976862', /* shazam */
-  '1176303175', /* capital */
-  '1110093882', /* beats-by-dr-dre */
-  '1151621339', /* nike */
-  '1019272989', /* this-is */
-  '1022031818', /* topsify */
-  '1114613681', /* steinway-sons */
-  '1271525907', /* peaceful-music */
-  '1033686287', /* future-classic */
-  '1163862189', /* ea-music */
-  '1203471375', /* victorias-secret */
-  '1081083320', /* sonos */
-  '1055418988', /* gq */
-  '1089330276', /* blue-note-records */
-  '1102503115', /* real-world-records */
-  '999976483', /* nme */
-  '999963781', /* vice */
-  '1072959111', /* bbc-music-magazine */
-  '1173615171', /* abbey-road-studios */
-  '976439460', /* rolling-stone */
 ];
 
 export const RepeatModeNone = 0;
