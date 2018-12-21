@@ -39,11 +39,14 @@
       right: 0;
       background: white;
       width: 250px;
+      overflow: auto;
+      max-height: 30vh;
       box-shadow: 0 8px 36px -10px rgba(150, 150, 150, 0.75);
       border-radius: 6px 0 6px 6px;
       margin-right: 1px;
       text-align: left;
       flex-direction: column;
+      z-index: 300;
 
       .section {
         .title {
@@ -65,7 +68,7 @@
           color: $primary_color
         }
 
-        &.song, &.album {
+        &.song, &.album, &.playlist {
           display: flex;
           flex-direction: row;
 
