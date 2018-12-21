@@ -44,7 +44,7 @@ Modal.propTypes = {
 Modal.defaultProps = {
   open: false,
   style: {},
-  width: 900,
+  width: null,
 };
 
 export default Modal;

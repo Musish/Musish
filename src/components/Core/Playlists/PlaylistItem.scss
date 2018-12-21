@@ -14,6 +14,8 @@
   align-items: center;
   cursor: pointer;
   margin: 15px 10px;
+  transform: scale(1);
+  transition: transform 0.3s;
 
   .imageContainer {
     width: 100%;
@@ -34,6 +36,7 @@
   }
 
   &:hover {
+    transform: scale(1.05);
     .image {
       opacity: 0.8;
     }

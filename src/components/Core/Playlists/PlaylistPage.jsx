@@ -113,7 +113,7 @@ class PlaylistPage extends React.Component {
         </div>
         {playlist.attributes.description && (
           <div className={classes.description}>
-            <span>{playlist.attributes.description.standard}</span>
+            <span dangerouslySetInnerHTML={{ __html: playlist.attributes.description.standard }} />
           </div>
         )}
       </div>

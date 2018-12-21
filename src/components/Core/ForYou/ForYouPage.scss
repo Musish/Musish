@@ -1,4 +1,4 @@
-@import '../../../styles/settings/colors';
+  @import '../../../styles/settings/colors';
 
 .albumHeading {
   margin-top: 20px;
@@ -9,18 +9,23 @@
 }
 
 .recommendationGroup {
-  padding-top: 10px;
+  padding: 10px;
 
   .personalRecommendationsTitle {
     color: $text_color;
+    margin-left: 5px;
   }
 
   .personalRecommendationsGrid {
+    margin-top: 5px;
     display: grid;
     grid-auto-flow: column dense;
     grid-template-rows: auto auto;
     grid-gap: 0 10px;
     justify-content: left;
+    > * {
+      margin: 5px 5px
+    }
   }
 }
 
@@ -64,6 +69,7 @@
   grid-template-rows: auto;
   grid-gap: 0 10px;
   justify-content: left;
+  padding: 5px 0;
   width: 0; // WTF, this shouldn't work but it makes it work and nothing else does. One day it may break, but until that day lets just completely forget that this is a thing...
   &.doubleRow {
     grid-template-rows: auto auto;
