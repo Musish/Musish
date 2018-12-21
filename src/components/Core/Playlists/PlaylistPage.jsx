@@ -5,56 +5,120 @@ import Loader from '../../common/Loader';
 import PageContent from '../Layout/PageContent';
 import PageTitle from '../../common/PageTitle';
 import SongList from '../common/SongList/SongList';
+import { artworkForMediaItem, humanifyMillis } from '../common/Utils';
+import classes from './PlaylistPage.scss';
 
 class PlaylistPage extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      playlist: null,
+      playlistId: this.props.match.params.id || this.props.playlist,
     };
+    console.log('constructorr');
 
-    this.ref = React.createRef();
+    this.load = this.load.bind(this);
+    this.scrollRef = React.createRef();
   }
 
-  async componentDidMount() {
+  async load(params, { page }) {
+    const { playlistId } = this.state;
     const music = MusicKit.getInstance();
-    const playlist = await music.api.library.playlist(this.props.match.params.id);
 
-    this.setState({
-      playlist,
-    });
-  }
+    const isLibrary = playlistId.startsWith('p.');
+    const playlist = isLibrary
+      ? await music.api.library.playlist(playlistId, { offset: page * 100 })
+      : await music.api.playlist(playlistId, { offset: page * 100 });
 
-  renderContent() {
-    if (!this.state.playlist) {
-      return <Loader />;
+    if (page === 0) {
+      const albumLength = playlist.relationships.tracks.data.reduce(
+        (totalDuration, track) => totalDuration + track.attributes.durationInMillis,
+        0
+      );
+
+      this.setState({
+        playlist,
+        runtime: humanifyMillis(albumLength),
+        isLibrary,
+      });
     }
 
+    return playlist.relationships.tracks.data;
+  }
+
+  renderHeader() {
+    const { playlist, runtime, isLibrary } = this.state;
+
+    if (!playlist) {
+      return;
+    }
+
+    const artworkURL = artworkForMediaItem(playlist, 80);
+    // const date = new Date(playlist.attributes.lastModifiedDate).toLocaleDateString('en-US'); // TODO: Where to put?
+    const trackCount = playlist.attributes.trackCount || playlist.relationships.tracks.data.length;
+
     return (
-      <>
-        <PageTitle title={this.state.playlist.attributes.name} context={'My Library'} />
-        <p>
-          {this.state.playlist.attributes.description &&
-            this.state.playlist.attributes.description.standard}
-        </p>
-        <SongList
-          scrollElement={this.ref}
-          load={() => this.state.playlist.relationships.tracks.data}
-          showArtist
-          showAlbum
-        />
-      </>
+      <div className={classes.header}>
+        <div className={classes.headerMain}>
+          <div className={classes.artworkWrapper}>
+            <img src={artworkURL} alt={playlist.attributes.name} />
+          </div>
+          <div className={classes.titleWrapper}>
+            <span className={classes.name}>{playlist.attributes.name}</span>
+            <span className={classes.curator}>
+              {playlist.attributes.curatorName ? (
+                <>
+                  Playlist by
+                  {playlist.attributes.curatorName}
+                </>
+              ) : (
+                <>In your personal library</>
+              )}
+            </span>
+            <span className={classes.titleMeta}>
+              {trackCount}
+              songs,
+              {runtime}
+            </span>
+          </div>
+        </div>
+        {playlist.attributes.description && (
+          <div className={classes.description}>
+            <span>{playlist.attributes.description.standard}</span>
+          </div>
+        )}
+      </div>
     );
   }
 
   render() {
-    return <PageContent innerRef={this.ref}>{this.renderContent()}</PageContent>;
+    const { playlist, runtime, isLibrary } = this.state;
+    console.log(this.state);
+
+    // const artworkURL = artworkForMediaItem(playlist, 80);
+    // const date = new Date(playlist.attributes.lastModifiedDate).toLocaleDateString('en-US'); // TODO: Where to put?
+    // /const trackCount = playlist.attributes.trackCount || playlist.relationships.tracks.data.length;
+
+    return (
+      <PageContent innerRef={this.scrollRef}>
+        <PageTitle context={'My Library'} />
+        {this.renderHeader()}
+        <SongList load={this.load} scrollElement={this.scrollRef} showAlbum showArtist />
+      </PageContent>
+    );
   }
 }
 
 PlaylistPage.propTypes = {
-  match: PropTypes.any.isRequired,
+  playlist: PropTypes.any,
+  id: PropTypes.any,
+  match: PropTypes.object,
+};
+
+PlaylistPage.defaultProps = {
+  playlist: null,
+  id: null,
+  match: null,
 };
 
 export default withRouter(PlaylistPage);

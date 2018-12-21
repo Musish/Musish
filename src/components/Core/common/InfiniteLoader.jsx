@@ -58,12 +58,15 @@ export default class InfiniteLoader extends React.Component {
     });
 
     try {
-      const limit = 50;
+      const limit = 100;
 
-      const newItems = await this.props.load({
-        limit,
-        offset: page * limit,
-      });
+      const newItems = await this.props.load(
+        {
+          limit,
+          offset: page * limit,
+        },
+        { page }
+      );
 
       this.setItems({
         page: page + 1,
