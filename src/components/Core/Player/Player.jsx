@@ -300,8 +300,11 @@ class Player extends React.Component {
           </span>
 
           <QueueContext.Consumer>
-            {({ doShow }) => (
-              <span className={cx(styles.controls, styles.queueWrapper)} onClick={doShow}>
+            {({ show, doShow, doHide }) => (
+              <span
+                className={cx(styles.controls, styles.queueWrapper, { [styles.enabled]: show })}
+                onClick={show ? doHide : doShow}
+              >
                 <i className={'fas fa-list-ol'} />
               </span>
             )}
