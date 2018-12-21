@@ -105,11 +105,17 @@ class SongListItem extends React.Component {
       );
     }
     return (
-      <ContentLoader height={25} speed={2} primaryColor={'#f3f3f3'} secondaryColor={'#ecebeb'} className={cx(classes.songInfo, classes.buffering)}>
+      <ContentLoader
+        height={40}
+        speed={2}
+        primaryColor={'#f3f3f3'}
+        secondaryColor={'#ecebeb'}
+        className={cx(classes.songInfo, classes.buffering)}
+      >
         {/* Pure SVG */}
-        <rect x="0" y="1" rx="2" ry="2" width="23.5" height="23.5" />
-        <rect x="29" y="7" rx="2" ry="2" width="90" height="4" />
-        <rect x="29" y="15" rx="2" ry="2" width="60" height="4" />
+        <rect x="0" y="2" rx="2" ry="2" width="34.5" height="34.5" />
+        <rect x="43" y="10" rx="2" ry="2" width="90" height="7" />
+        <rect x="43" y="20" rx="2" ry="2" width="60" height="7" />
       </ContentLoader>
     );
   }

@@ -5,9 +5,9 @@ import PageContent from '../Layout/PageContent';
 import PageTitle from '../../common/PageTitle';
 import classes from './BrowsePage.scss';
 import SongList from '../common/SongList/SongList';
-import { top100Ids, aListPlaylistsIds } from '../common/Utils';
+import { top100Ids, aListPlaylistsIds } from './browse';
 import Loader from '../../common/Loader';
-import ItemList from '../Browse/ItemList';
+import ItemList from './ItemList';
 
 class BrowsePage extends React.Component {
   constructor(props) {
@@ -30,7 +30,7 @@ class BrowsePage extends React.Component {
     });
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.getCharts();
   }
 
