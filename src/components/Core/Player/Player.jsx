@@ -223,7 +223,7 @@ class Player extends React.Component {
 
     const artworkURL = artworkForMediaItem(nowPlayingItem, 60);
 
-    const { repeatMode, shuffleMode } = mk.instance.player.repeatMode;
+    const { repeatMode, shuffleMode } = mk.instance.player;
 
     const isRepeating = repeatMode === RepeatModeOne || repeatMode === RepeatModeAll;
     const isShuffling = shuffleMode === ShuffleModeSongs;
