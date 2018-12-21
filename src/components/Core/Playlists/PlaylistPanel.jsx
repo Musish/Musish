@@ -69,12 +69,10 @@ export default class PlaylistPanel extends React.Component {
               </span>
             </div>
           </div>
-          {isLibrary && (
-            <>
-              <div className={classes.description}>
-                <span>{playlist.attributes.description.standard}</span>
-              </div>
-            </>
+          {playlist.attributes.description.standard && (
+            <div className={classes.description}>
+              <span>{playlist.attributes.description.standard}</span>
+            </div>
           )}
         </div>
         <div className={classes.main} ref={this.ref}>
