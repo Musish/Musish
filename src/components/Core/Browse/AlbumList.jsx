@@ -38,17 +38,29 @@ class AlbumList extends React.Component {
         <div className={classes.scrollWrapper}>
           <div className={cx(classes.scrollGrid)}>
             {list ? (
-              list.map(album => (
+              list.map(album =>
                 <AlbumItem key={album.id} album={album} size={170} />
-              ))
+              )
             ) : (
-              <Loader />
-            )}
+                <Loader />
+              )}
           </div>
         </div>
       </>
     );
   }
 }
+
+AlbumList.propTypes = {
+  title: PropTypes.any,
+  list: PropTypes.any,
+  listIds: PropTypes.any,
+};
+
+AlbumList.defaultProps = {
+  title: '',
+  list: null,
+  listIds: null,
+};
 
 export default withRouter(AlbumList);

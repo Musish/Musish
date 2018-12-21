@@ -19,13 +19,13 @@ class PlaylistList extends React.Component {
       const music = MusicKit.getInstance();
       const list = await music.api.playlists(this.props.listIds);
 
-      this.setState({
+      this.state = {
         list: list
-      });
+      }
     } else {
-      this.setState({
+      this.state = {
         list: this.props.list
-      })
+      }
     }
   }
 
@@ -50,5 +50,17 @@ class PlaylistList extends React.Component {
     );
   }
 }
+
+PlaylistList.propTypes = {
+  title: PropTypes.any,
+  list: PropTypes.any,
+  listIds: PropTypes.any,
+};
+
+PlaylistList.defaultProps = {
+  title: '',
+  list: null,
+  listIds: null,
+};
 
 export default withRouter(PlaylistList);
