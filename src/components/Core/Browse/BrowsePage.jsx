@@ -10,6 +10,7 @@ import SongList from '../common/SongList/SongList';
 import {top100Ids, aListPlaylistsIds} from '../common/Utils';
 import Loader from '../../common/Loader';
 import PlaylistList from '../Browse/PlaylistList';
+import AlbumList from '../Browse/AlbumList';
 
 class BrowsePage extends React.Component {
   constructor(props) {
@@ -44,18 +45,8 @@ class BrowsePage extends React.Component {
 
         <PlaylistList title={'Top Playlists'} list={charts ? charts.playlists[0].data : null}/>
 
-        <h3>Top Albums</h3>
-        <div className={classes.scrollWrapper}>
-          <div className={cx(classes.scrollGrid, classes.doubleRow)}>
-            {charts ? (
-              charts.albums[0].data.map(album => (
-                <AlbumItem key={album.id} album={album} size={100} />
-              ))
-            ) : (
-              <Loader />
-            )}
-          </div>
-        </div>
+        <AlbumList title={'Top Albums'} list={charts ? charts.albums[0].data : null}/>
+
         <h3>Top Songs</h3>
         <div className={classes.chartingSongs}>
           {charts ? (
