@@ -5,7 +5,7 @@
   "license": "MIT",
   "husky": {
     "hooks": {
-      "pre-commit": "eslint -c ./.eslintrc ./src"
+      "pre-commit": "eslint \"src/**/*.{js,jsx}\" -c .eslintrc"
     }
   },
   "dependencies": {
