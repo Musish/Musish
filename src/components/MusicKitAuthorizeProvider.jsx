@@ -2,21 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Login from './Login/Login';
 import TokenLoader from './LoginLoader/LoginLoader';
+import withMK from '../hoc/withMK';
 
-export default class MusicKitAuthorizeProvider extends React.Component {
+class MusicKitAuthorizeProvider extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       ready: false,
-      isLoggedIn: false,
+      ...MusicKitAuthorizeProvider.getDerivedStateFromProps(this.props, {}),
+    };
+  }
+
+  static getDerivedStateFromProps(props) {
+    return {
+      isAuthorized: props.mk.instance.isAuthorized,
     };
   }
 
   async handleTokenCheck() {
-    const music = MusicKit.getInstance();
+    const music = this.props.mk.instance;
 
-    if (!music.isAuthorized) {
+    if (!this.state.isAuthorized) {
       this.setState({
         ready: true,
       });
@@ -25,40 +32,29 @@ export default class MusicKitAuthorizeProvider extends React.Component {
 
     try {
       await music.api.library.songs({ limit: 0 });
-      this.setState({
-        ready: true,
-        isLoggedIn: true,
-      });
+      await music.authorize();
     } catch (e) {
-      this.setState({
-        ready: true,
-        isLoggedIn: false,
-      });
+      await music.unauthorize();
     }
+
+    this.setState({
+      ready: true,
+    });
   }
 
   componentDidMount() {
     this.handleTokenCheck();
   }
 
-  async authorize() {
-    const music = MusicKit.getInstance();
-    await music.authorize();
-
-    this.setState({
-      isLoggedIn: true,
-    });
-  }
-
   render() {
-    const { ready, isLoggedIn } = this.state;
+    const { ready, isAuthorized } = this.state;
 
     if (!ready) {
-      return <TokenLoader />;
+      return <TokenLoader/>;
     }
 
-    if (!isLoggedIn) {
-      return <Login onClick={() => this.authorize()} />;
+    if (!isAuthorized) {
+      return <Login onClick={() => this.props.mk.instance.authorize()}/>;
     }
 
     return this.props.children;
@@ -68,3 +64,9 @@ export default class MusicKitAuthorizeProvider extends React.Component {
 MusicKitAuthorizeProvider.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
 };
+
+const bindings = {
+  [MusicKit.Events.authorizationStatusDidChange]: 'authorizationStatus',
+};
+
+export default withMK(MusicKitAuthorizeProvider, bindings);
