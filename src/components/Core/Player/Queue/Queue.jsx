@@ -55,11 +55,9 @@ class Queue extends Component {
             <div className={classes.modal} onClick={e => e.stopPropagation()}>
               <div className={cx(classes.header, 'handle')}>
                 <div className={classes.title}>
-                  <span>Next up</span>
-                </div>
-                <div className={classes.icons}>
                   <span>
-                    <i className="fas fa-grip-horizontal" />
+                    <i className="fas fa-grip-vertical" />
+                    {' Next up'}
                   </span>
                 </div>
                 <div className={classes.icons} onClick={doHide}>
