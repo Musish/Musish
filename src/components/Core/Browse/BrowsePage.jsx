@@ -7,8 +7,7 @@ import classes from './BrowsePage.scss';
 import SongList from '../common/SongList/SongList';
 import {top100Ids, aListPlaylistsIds} from '../common/Utils';
 import Loader from '../../common/Loader';
-import PlaylistList from '../Browse/PlaylistList';
-import AlbumList from '../Browse/AlbumList';
+import ItemList from '../Browse/ItemList';
 
 class BrowsePage extends React.Component {
   constructor(props) {
@@ -42,13 +41,13 @@ class BrowsePage extends React.Component {
       <PageContent innerRef={this.ref}>
         <PageTitle title={'Browse'} context={'Apple Music'} />
 
-        <PlaylistList title={'Daily Top 100'} listIds={top100Ids.slice(0,25)} />
+        <ItemList title={'Daily Top 100'} listIds={top100Ids.slice(0,25)} type={'playlist'} />
 
-        <PlaylistList title={'The A-Lists'} listIds={aListPlaylistsIds} />
+        <ItemList title={'The A-Lists'} listIds={aListPlaylistsIds} type={'playlist'} />
 
-        <PlaylistList title={'Top Playlists'} list={charts ? charts.playlists[0].data : null} />
+        <ItemList title={'Top Playlists'} list={charts ? charts.playlists[0].data : null} type={'playlist'} />
 
-        <AlbumList title={'Top Albums'} list={charts ? charts.albums[0].data : null} />
+        <ItemList title={'Top Albums'} list={charts ? charts.albums[0].data : null} type={'album'} />
 
         <h3>Top Songs</h3>
         <div className={classes.chartingSongs}>
