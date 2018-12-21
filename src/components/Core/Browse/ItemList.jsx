@@ -20,8 +20,7 @@ class ItemList extends React.Component {
 
   async getItems(ids) {
     const music = MusicKit.getInstance();
-    const list =
-      this.props.type === 'playlist' ?
+    const list = this.props.type === 'playlist' ?
       await music.api.playlists(ids) : await music.api.albums(ids);
 
     this.setState({
