@@ -30,7 +30,7 @@ class BrowsePage extends React.Component {
     });
   }
 
-  async componentDidMount() {
+  componentDidMount() {
     this.getCharts();
   }
 
