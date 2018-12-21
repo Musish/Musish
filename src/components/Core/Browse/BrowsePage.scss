@@ -6,7 +6,7 @@
   display: grid;
   grid-auto-flow: column dense;
   grid-template-rows: auto;
-  grid-gap: 0 10px;
+  grid-gap: 0 20px;
   justify-content: left;
   width: 0; // WTF, this shouldn't work but it makes it work and nothing else does. One day it may break, but until that day lets just completely forget that this is a thing...
   &.doubleRow {
