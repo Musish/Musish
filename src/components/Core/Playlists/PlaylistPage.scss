@@ -1,0 +1,50 @@
+@import '../../../styles/settings/colors';
+
+.header {
+
+  .headerMain {
+    display: flex;
+    flex-direction: row;
+    margin: 15px 0;
+    align-items: center;
+
+    .artworkWrapper {
+      border-radius: 8px;
+      width: 80px;
+      height: 80px;
+      background: $container_background;
+
+      img {
+        border-radius: inherit;
+        width: inherit;
+        height: inherit;
+      }
+    }
+
+    .titleWrapper {
+      margin-left: 15px;
+
+      .name {
+        display: block;
+        font-weight: bold;
+        font-size: 2em;
+      }
+
+      .curator {
+        display: block;
+        color: $tertiary_color;
+      }
+
+      .titleMeta {
+        display: block;
+        margin-top: 4px;
+        color: $tertiary_color;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .description {
+    margin: 20px 0px;
+  }
+}
