@@ -1,31 +1,44 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Login from './Login/Login';
+import TokenLoader from './LoginLoader/LoginLoader';
 
 export default class MusicKitAuthorizeProvider extends React.Component {
   constructor(props) {
     super(props);
-    const music = MusicKit.getInstance();
 
     this.state = {
-      ready: music.isAuthorized,
+      ready: false,
+      isLoggedIn: false,
     };
   }
 
-  componentDidMount() {
+  async handleTokenCheck() {
     const music = MusicKit.getInstance();
+
+    if (!music.isAuthorized) {
+      this.setState({
+        ready: true,
+      });
+      return;
+    }
+
     try {
-      const song = music.api.songs();
-      if (song) {
-        this.setState({
-          ready: true,
-        });
-      }
+      await music.api.library.songs({ limit: 1 });
+      this.setState({
+        ready: true,
+        isLoggedIn: true,
+      });
     } catch (e) {
       this.setState({
-        ready: false,
+        ready: true,
+        isLoggedIn: false,
       });
     }
+  }
+
+  componentDidMount() {
+    this.handleTokenCheck();
   }
 
   async authorize() {
@@ -33,12 +46,18 @@ export default class MusicKitAuthorizeProvider extends React.Component {
     await music.authorize();
 
     this.setState({
-      ready: true,
+      isLoggedIn: true,
     });
   }
 
   render() {
-    if (!this.state.ready) {
+    const { ready, isLoggedIn } = this.state;
+
+    if (!ready) {
+      return <TokenLoader />;
+    }
+
+    if (!isLoggedIn) {
       return <Login onClick={() => this.authorize()} />;
     }
 
