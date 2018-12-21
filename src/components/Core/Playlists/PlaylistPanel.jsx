@@ -70,7 +70,7 @@ export default class PlaylistPanel extends React.Component {
           {playlist.attributes.description && (
             <div className={classes.description}>
               <span
-                dangerouslySetInnerHTML={{ __html: playlist.attributes.description.standard }}
+                dangerouslySetInnerHTML={{ __html: playlist.attributes.description.standard }} // eslint-disable-line react/no-danger
               />
             </div>
           )}

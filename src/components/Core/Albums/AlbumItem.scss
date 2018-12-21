@@ -35,10 +35,14 @@
   }
 
   &:hover {
-    transform: scale(1.05);
+    transform: scale(1.025);
     .image {
       opacity: 0.8;
     }
+  }
+
+  &:active {
+    transform: scale(0.975);
   }
 
   .descriptionContainer {

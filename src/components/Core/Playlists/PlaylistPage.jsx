@@ -113,7 +113,9 @@ class PlaylistPage extends React.Component {
         </div>
         {playlist.attributes.description && (
           <div className={classes.description}>
-            <span dangerouslySetInnerHTML={{ __html: playlist.attributes.description.standard }} />
+            <span
+              dangerouslySetInnerHTML={{ __html: playlist.attributes.description.standard }} // eslint-disable-line react/no-danger
+            />
           </div>
         )}
       </div>
