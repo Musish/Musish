@@ -1,5 +1,30 @@
 .scrollWrapper {
   overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    border-radius: 1px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #ffffff;
+    border-radius: 1px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: lighten(#fe2851, 40%);
+    border-radius: 1px;
+    cursor: pointer;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #ffffff;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background: lighten(#fe2851, 25%);
+  }
 }
 
 .scrollGrid {
