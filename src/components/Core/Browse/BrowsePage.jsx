@@ -41,28 +41,24 @@ class BrowsePage extends React.Component {
       <PageContent innerRef={this.ref}>
         <PageTitle title={'Browse'} context={'Apple Music'} />
 
-        <ItemList 
-          title={'Daily Top 100'} 
-          listIds={top100Ids.slice(0, 25)} 
-          type={'playlist'} 
+        <ItemList
+          title={'Daily Top 100'}
+          listIds={top100Ids.slice(0, 25)}
+          type={'playlist'}
         />
 
-        <ItemList 
-          title={'The A-Lists'} 
-          listIds={aListPlaylistsIds} 
-          type={'playlist'} 
+        <ItemList title={'The A-Lists'} listIds={aListPlaylistsIds} type={'playlist'} />
+
+        <ItemList
+          title={'Top Playlists'}
+          list={charts ? charts.playlists[0].data : null}
+          type={'playlist'}
         />
 
-        <ItemList 
-          title={'Top Playlists'} 
-          list={charts ? charts.playlists[0].data : null} 
-          type={'playlist'} 
-        />
-
-        <ItemList 
-          title={'Top Albums'} 
-          list={charts ? charts.albums[0].data : null} 
-          type={'album'} 
+        <ItemList
+          title={'Top Albums'}
+          list={charts ? charts.albums[0].data : null}
+          type={'album'}
         />
 
         <h3>Top Songs</h3>

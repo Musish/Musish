@@ -29,7 +29,7 @@ class ItemList extends React.Component {
 
   async componentDidMount() {
     if (
-      (this.props.list === undefined || this.props.list === null) && 
+      (this.props.list === undefined || this.props.list === null) &&
       (this.props.listIds !== null && this.props.listIds !== undefined)
     ) {
       this.getItems(this.props.listIds);
@@ -51,6 +51,7 @@ class ItemList extends React.Component {
                 } else if (this.props.type === 'album') {
                   return <AlbumItem key={item.id} album={item} size={170} />;
                 }
+                return '';
               })
             ) : (
               <Loader />
