@@ -12,6 +12,22 @@ export default class MusicKitAuthorizeProvider extends React.Component {
     };
   }
 
+  componentDidMount() {
+    const music = MusicKit.getInstance();
+    try {
+      const song = music.api.songs();
+      if (song) {
+        this.setState({
+          ready: true,
+        });
+      }
+    } catch (e) {
+      this.setState({
+        ready: false,
+      });
+    }
+  }
+
   async authorize() {
     const music = MusicKit.getInstance();
     await music.authorize();
