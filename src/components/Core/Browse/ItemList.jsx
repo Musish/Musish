@@ -23,12 +23,15 @@ class ItemList extends React.Component {
     const list = this.props.type === 'playlist' ? await music.api.playlists(ids) : await music.api.albums(ids);
 
     this.setState({
-      list: list,
+      list,
     });
   }
 
   async componentDidMount() {
-    if ((this.props.list == undefined || this.props.list == null) && (this.props.listIds !== null && this.props.listIds !== undefined)) {
+    if (
+      (this.props.list === undefined || this.props.list === null) && 
+      (this.props.listIds !== null && this.props.listIds !== undefined)
+    ) {
       this.getItems(this.props.listIds);
     }
   }
@@ -47,13 +50,11 @@ class ItemList extends React.Component {
                   return <PlaylistItem key={item.id} playlist={item} size={170} />;
                 } else if (this.props.type === 'album') {
                   return <AlbumItem key={item.id} album={item} size={170} />;
-                } else {
-                  return '';
                 }
               })
             ) : (
-                <Loader />
-              )}
+              <Loader />
+            )}
           </div>
         </div>
       </>
