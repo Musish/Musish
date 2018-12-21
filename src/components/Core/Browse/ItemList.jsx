@@ -30,10 +30,8 @@ class ItemList extends React.Component {
   }
 
   async componentDidMount() {
-    if (
-      (this.props.list === undefined || this.props.list === null) &&
-      (this.props.listIds !== null && this.props.listIds !== undefined)
-    ) {
+    const { list, listIds } = this.props;
+    if (!list && listIds) {
       this.getItems(this.props.listIds);
     }
   }
