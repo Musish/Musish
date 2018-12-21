@@ -18,7 +18,8 @@ export default class PlaylistPanel extends React.Component {
   }
 
   async componentDidMount() {
-    const playlistId = this.props.id || this.props.playlist;
+    const playlistId = this.props.id || this.props.playlist.id;
+
     if (playlistId) {
       const isLibrary = playlistId.startsWith('p.');
       const music = MusicKit.getInstance();
@@ -47,8 +48,9 @@ export default class PlaylistPanel extends React.Component {
     }
 
     const artworkURL = artworkForMediaItem(playlist, 80);
-    // const date = new Date(playlist.attributes.lastModifiedDate).toLocaleDateString('en-US'); // TODO: Where to put?
-    const trackCount = playlist.attributes.trackCount || playlist.relationships.tracks.data.length;
+    const trackCount =
+      playlist.attributes.trackCount ||
+      (playlist.relationships && playlist.relationships.tracks.data.length);
 
     return (
       <div className={classes.panel}>
@@ -60,13 +62,10 @@ export default class PlaylistPanel extends React.Component {
             <div className={classes.titleWrapper}>
               <span className={classes.name}>{playlist.attributes.name}</span>
               <span className={classes.curator}>
-                Playlist by
-                {playlist.attributes.curatorName}
+                {`Playlist by ${playlist.attributes.curatorName}`}
               </span>
               <span className={classes.titleMeta}>
-                {trackCount}
-                songs,
-                {runtime}
+                {`${trackCount} songs, ${runtime}`}
               </span>
             </div>
           </div>
