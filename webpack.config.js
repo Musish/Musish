@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 Encore.setOutputPath('build/')
   .setPublicPath('/')
-  .addEntry('app', './src/index.jsx')
+  .addEntry('app', './src/app/index.jsx')
   .enableSingleRuntimeChunk()
   .cleanupOutputBeforeBuild()
   .enableSourceMaps(!Encore.isProduction())
@@ -28,7 +28,7 @@ const config = Encore.getWebpackConfig();
 config.plugins.push(
   new HtmlWebpackPlugin({
     // Also generate a test.html
-    template: 'src/app.html',
+    template: 'src/app/app.html',
     title: 'Musi.sh',
     meta: {
       viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
