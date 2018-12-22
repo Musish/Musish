@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import MusicKitProvider from './MusicKitProvider';
 import MusicKitAuthorizeProvider from './MusicKitAuthorizeProvider';
 import AlbumsPage from './Core/Albums/AlbumsPage';
@@ -15,7 +17,7 @@ import QueueContext from './Core/Player/Queue/QueueContext';
 import ModalContext from './common/Modal/ModalContext';
 import Modal from './common/Modal/Modal';
 
-export default class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
 
@@ -90,3 +92,5 @@ export default class App extends React.Component {
     );
   }
 }
+
+export default DragDropContext(HTML5Backend)(App);
