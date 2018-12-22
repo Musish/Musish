@@ -36,13 +36,12 @@ export default class PlaylistPanel extends React.Component {
       this.setState({
         playlist,
         runtime: humanifyMillis(albumLength),
-        isLibrary,
       });
     }
   }
 
   render() {
-    const { playlist, runtime, isLibrary } = this.state;
+    const { playlist, runtime } = this.state;
 
     if (!playlist) {
       return <Loader />;
