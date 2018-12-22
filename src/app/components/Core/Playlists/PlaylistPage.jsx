@@ -1,12 +1,12 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import PageContent from '../Layout/PageContent';
 import PageTitle from '../../common/PageTitle';
 import SongList from '../Songs/SongList/SongList';
-import { API_URL, artworkForMediaItem, humanifyMillis } from '../../../utils/Utils';
+import { artworkForMediaItem, humanifyMillis } from '../../../utils/Utils';
 import classes from './PlaylistPage.scss';
+import MusicApi from '../../../services/MusicApi';
 
 class PlaylistPage extends React.Component {
   constructor(props) {
@@ -66,14 +66,7 @@ class PlaylistPage extends React.Component {
       return [];
     }
 
-    const { data } = await axios.get(`${API_URL}${this.state.nextUrl}`, {
-      headers: {
-        Authorization: `Bearer ${music.developerToken}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Music-User-Token': music.musicUserToken,
-      },
-    });
+    const { data } = await MusicApi.getNextSongs(this.state.nextUrl);
 
     this.setState({
       nextUrl: data.next,

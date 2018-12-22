@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import { DragSource } from 'react-dnd';
+import cx from 'classnames';
 import classes from './AlbumItem.scss';
 import AlbumPanel from './AlbumPanel';
 import ModalContext from '../../common/Modal/ModalContext';
+import DragDropType from '../../../utils/Constants/DragDropType';
 
 class AlbumItem extends Component {
   constructor(props) {
@@ -24,18 +27,17 @@ class AlbumItem extends Component {
   }
 
   render() {
-    const { album, size } = this.props;
+    const { album, size, connectDragSource, isOver } = this.props;
     const artwork = MusicKit.formatArtworkURL(album.attributes.artwork, size, size);
 
-    return (
-      <ModalContext.Consumer>
-        {({ push }) => (
-          <>
-            <div
-              className={classes.container}
-              onClick={() => this.handleOpen(push)}
-              style={{ width: size }}
-            >
+    return connectDragSource(
+      <div
+        className={cx(classes.container, { [classes.droppable]: isOver })}
+        style={{ width: size }}
+      >
+        <ModalContext.Consumer>
+          {({ push }) => (
+            <div onClick={() => this.handleOpen(push)}>
               <div className={classes.imageContainer} style={{ width: size, height: size }}>
                 <img
                   src={artwork}
@@ -54,25 +56,43 @@ class AlbumItem extends Component {
                 </span>
               </div>
             </div>
-          </>
-        )}
-      </ModalContext.Consumer>
+          )}
+        </ModalContext.Consumer>
+      </div>
     );
   }
 }
 
 AlbumItem.propTypes = {
   navigate: PropTypes.bool,
+  history: PropTypes.any.isRequired,
   album: PropTypes.any,
   id: PropTypes.any,
-  history: PropTypes.any.isRequired,
   size: PropTypes.number.isRequired,
+  connectDragSource: PropTypes.func.isRequired,
+  isOver: PropTypes.bool,
 };
 
 AlbumItem.defaultProps = {
   navigate: false,
   album: null,
   id: null,
+  isOver: false,
 };
 
-export default withRouter(AlbumItem);
+const dndSpec = {
+  beginDrag(props) {
+    return {
+      album: props.id || props.album.id,
+    };
+  },
+};
+
+function dndCollect(connect, monitor) {
+  return {
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging(),
+  };
+}
+
+export default DragSource(DragDropType.ALBUM, dndSpec, dndCollect)(withRouter(AlbumItem));

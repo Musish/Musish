@@ -42,23 +42,31 @@
         li {
           color: #333333;
           font-weight: 500;
-          margin: 10px 0;
+          margin: 2px 0px;
 
           a {
-            margin: -10px 0;
-            padding: 5px 12px;
+            margin: 0;
+            padding: 2px 12px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
             width: 210px;
             display: block;
-          }
-
-          &.active a {
             border-radius: 4px;
-            background: $primary_color;
-            color: $main_background_color;
-            font-weight: 500;
+            border: solid 1px transparent;
+            &.dndSeeking {
+              border: dashed 1px lighten($primary_color, 20%);
+            }
+            &.dndHovered {
+              background: lighten($primary_color, 20%);
+              color: #ffffff;
+            }
+            &.active {
+              background: $primary_color;
+              border: solid 1px $primary_color;
+              color: $main_background_color;
+              font-weight: 500;
+            }
           }
         }
       }

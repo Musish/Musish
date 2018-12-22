@@ -3,11 +3,13 @@ import React from 'react';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { DragSource } from 'react-dnd';
 import { createMediaItem, isPlaying, getTime } from '../../../../utils/Utils';
 import classes from './SongList.scss';
 import { MENU_TYPE } from './SongList';
 import withMK from '../../../../hoc/withMK';
 import SongDecoration from './SongDecoration';
+import DragDropType from '../../../../utils/Constants/DragDropType';
 
 function collect(props, { props: song, playSong, queueNext, queueLater, state: { artworkURL } }) {
   return {
@@ -75,7 +77,7 @@ class SongListItem extends React.Component {
   }
 
   render() {
-    const { showArtist, showAlbum, song } = this.props;
+    const { showArtist, showAlbum, song, connectDragSource, isOver } = this.props;
     const { attributes } = song;
     const duration = getTime(attributes.durationInMillis);
 
@@ -85,10 +87,14 @@ class SongListItem extends React.Component {
       </div>
     );
 
-    return (
+    return connectDragSource(
       <div
         className={cx(
-          { [classes.indexedSong]: !showAlbum, [classes.playing]: this.isPlaying() },
+          {
+            [classes.indexedSong]: !showAlbum,
+            [classes.playing]: this.isPlaying(),
+            [classes.droppable]: isOver,
+          },
           classes.song
         )}
         onClick={this.handleClick}
@@ -131,10 +137,13 @@ SongListItem.propTypes = {
   showArtist: PropTypes.bool.isRequired,
   showAlbum: PropTypes.bool.isRequired,
   mk: PropTypes.any.isRequired,
+  connectDragSource: PropTypes.func.isRequired,
+  isOver: PropTypes.bool,
 };
 
 SongListItem.defaultProps = {
   style: {},
+  isOver: false,
 };
 
 const bindings = {
@@ -142,4 +151,19 @@ const bindings = {
   [MusicKit.Events.playbackStateDidChange]: 'playbackState',
 };
 
-export default withMK(SongListItem, bindings);
+const dndSpec = {
+  beginDrag(props) {
+    return {
+      song: props.song,
+    };
+  },
+};
+
+function dndCollect(connect, monitor) {
+  return {
+    connectDragSource: connect.dragSource(),
+    isDragging: monitor.isDragging(),
+  };
+}
+
+export default DragSource(DragDropType.SONG, dndSpec, dndCollect)(withMK(SongListItem, bindings));

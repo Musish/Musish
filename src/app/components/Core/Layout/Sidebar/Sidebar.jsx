@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import Player from '../../Player/Player';
 import classes from './Sidebar.scss';
+import MenuItem from './MenuItem';
+import PlaylistMenuItem from './PlaylistMenuItem';
 
 export default class Sidebar extends React.Component {
   constructor(props) {
@@ -26,7 +26,8 @@ export default class Sidebar extends React.Component {
     const playlists =
       this.state.playlists &&
       this.state.playlists.map(playlist => (
-        <MenuItem
+        <PlaylistMenuItem
+          playlist={playlist}
           to={`/playlists/${playlist.id}`}
           label={playlist.attributes.name}
           key={playlist.id}
@@ -64,27 +65,3 @@ export default class Sidebar extends React.Component {
     );
   }
 }
-
-function MenuItem(props) {
-  const { to, label, exact } = props;
-
-  return (
-    <Route path={to} exact={exact}>
-      {({ match }) => (
-        <li className={match ? classes.active : ''}>
-          <Link to={to}>{label}</Link>
-        </li>
-      )}
-    </Route>
-  );
-}
-
-MenuItem.propTypes = {
-  to: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  exact: PropTypes.bool,
-};
-
-MenuItem.defaultProps = {
-  exact: true,
-};

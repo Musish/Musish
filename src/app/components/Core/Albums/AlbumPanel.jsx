@@ -19,9 +19,8 @@ export default class AlbumsPanel extends React.Component {
 
   async componentDidMount() {
     const albumId = this.props.id || this.props.album.id;
-    const isLibrary = isNaN(albumId);
     const music = MusicKit.getInstance();
-    const album = isLibrary
+    const album = isNaN(albumId)
       ? await music.api.library.album(albumId)
       : await music.api.album(albumId);
 
