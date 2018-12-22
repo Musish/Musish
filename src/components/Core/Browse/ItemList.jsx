@@ -20,8 +20,8 @@ class ItemList extends React.Component {
 
   async getItems(ids) {
     const music = MusicKit.getInstance();
-    const list = this.props.type === 'playlist' ?
-      await music.api.playlists(ids) : await music.api.albums(ids);
+    const list =
+      this.props.type === 'playlist' ? await music.api.playlists(ids) : await music.api.albums(ids);
 
     this.setState({
       list,
@@ -47,7 +47,8 @@ class ItemList extends React.Component {
               list.map(item => {
                 if (this.props.type === 'playlist') {
                   return <PlaylistItem key={item.id} playlist={item} size={170} />;
-                } else if (this.props.type === 'album') {
+                }
+                if (this.props.type === 'album') {
                   return <AlbumItem key={item.id} album={item} size={170} />;
                 }
                 return '';
