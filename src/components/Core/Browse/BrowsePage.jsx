@@ -1,6 +1,5 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import cx from 'classnames';
 import PageContent from '../Layout/PageContent';
 import PageTitle from '../../common/PageTitle';
 import classes from './BrowsePage.scss';
@@ -23,7 +22,7 @@ class BrowsePage extends React.Component {
 
   async getCharts() {
     const music = MusicKit.getInstance();
-    const charts = await music.api.charts(['songs', 'albums', 'playlists'], { limit: 40 });
+    const charts = await music.api.charts(['songs', 'albums', 'playlists'], { limit: 36 });
 
     this.setState({
       charts,
@@ -40,7 +39,13 @@ class BrowsePage extends React.Component {
     return (
       <PageContent innerRef={this.ref}>
         <PageTitle title={'Browse'} context={'Apple Music'} />
-        <ItemList title={'Daily Top 100'} listIds={top100Ids.slice(0, 25)} type={'playlist'} />
+        <ItemList
+          title={'Daily Top 100'}
+          listIds={top100Ids.slice(0, 24)}
+          type={'playlist'}
+          size={120}
+          rows={2}
+        />
         <ItemList title={'The A-Lists'} listIds={aListPlaylistsIds} type={'playlist'} />
         <ItemList
           title={'Top Playlists'}
@@ -51,6 +56,8 @@ class BrowsePage extends React.Component {
           title={'Top Albums'}
           list={charts ? charts.albums[0].data : null}
           type={'album'}
+          size={120}
+          rows={3}
         />
         <h3>Top Songs</h3>
         <div className={classes.chartingSongs}>

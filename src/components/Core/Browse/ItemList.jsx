@@ -37,21 +37,27 @@ class ItemList extends React.Component {
 
   render() {
     const list = this.props.list ? this.props.list : this.state.list;
+    const { type, rows, size } = this.props;
+
+    const styles = {
+      gridTemplateRows: 'auto '.repeat(rows),
+    };
 
     return (
       <>
         <h3>{this.props.title}</h3>
         <div className={classes.scrollWrapper}>
-          <div className={cx(classes.scrollGrid)}>
+          <div className={cx(classes.scrollGrid)} style={styles}>
             {list ? (
               list.map(item => {
-                if (this.props.type === 'playlist') {
-                  return <PlaylistItem key={item.id} playlist={item} size={170} />;
+                switch (type) {
+                  case 'playlist':
+                    return <PlaylistItem key={item.id} playlist={item} size={size} />;
+                  case 'album':
+                    return <AlbumItem key={item.id} album={item} size={size} />;
+                  default:
+                    return null;
                 }
-                if (this.props.type === 'album') {
-                  return <AlbumItem key={item.id} album={item} size={170} />;
-                }
-                return '';
               })
             ) : (
               <Loader />
@@ -64,17 +70,19 @@ class ItemList extends React.Component {
 }
 
 ItemList.propTypes = {
-  title: PropTypes.any,
-  type: PropTypes.any,
+  title: PropTypes.any.isRequired,
+  type: PropTypes.any.isRequired,
   list: PropTypes.any,
   listIds: PropTypes.any,
+  rows: PropTypes.number,
+  size: PropTypes.number,
 };
 
 ItemList.defaultProps = {
-  title: '',
-  type: 'playlist',
   list: null,
   listIds: null,
+  rows: 1,
+  size: 170,
 };
 
 export default withRouter(ItemList);
