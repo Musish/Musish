@@ -35,13 +35,12 @@ export default class PlaylistPanel extends React.Component {
       this.setState({
         playlist,
         runtime: humanifyMillis(albumLength),
-        isLibrary,
       });
     }
   }
 
   render() {
-    const { playlist, runtime, isLibrary } = this.state;
+    const { playlist, runtime } = this.state;
 
     if (!playlist) {
       return <Loader />;
@@ -64,14 +63,14 @@ export default class PlaylistPanel extends React.Component {
               <span className={classes.curator}>
                 {`Playlist by ${playlist.attributes.curatorName}`}
               </span>
-              <span className={classes.titleMeta}>
-                {`${trackCount} songs, ${runtime}`}
-              </span>
+              <span className={classes.titleMeta}>{`${trackCount} songs, ${runtime}`}</span>
             </div>
           </div>
-          {playlist.attributes.description.standard && (
+          {playlist.attributes.description && (
             <div className={classes.description}>
-              <span>{playlist.attributes.description.standard}</span>
+              <span
+                dangerouslySetInnerHTML={{ __html: playlist.attributes.description.standard }} // eslint-disable-line react/no-danger
+              />
             </div>
           )}
         </div>
