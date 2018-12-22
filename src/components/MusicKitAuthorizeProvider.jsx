@@ -40,7 +40,7 @@ class MusicKitAuthorizeProvider extends React.Component {
       this.setState({
         ready: true,
       });
-    }, 50);
+    }, 200);
   }
 
   componentDidMount() {
@@ -64,6 +64,7 @@ class MusicKitAuthorizeProvider extends React.Component {
 
 MusicKitAuthorizeProvider.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
+  mk: PropTypes.any.isRequired,
 };
 
 const bindings = {
