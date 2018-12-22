@@ -10,10 +10,23 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Roboto', sans-serif;
 }
 
+* {
+  outline: none !important;
+  box-sizing: border-box;
+}
+
+div, span {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+}
+
 a {
   color: rgb(105, 105, 105);
   text-decoration: none;
   transition: color 0.1s;
+  cursor: pointer;
 }
 
 a:hover {
@@ -31,11 +44,12 @@ button {
   padding: 10px 15px;
   color: #fe2851;
   font-size: 11px;
+  cursor: pointer;
 }
 
-* {
-  outline: none !important;
-  box-sizing: border-box;
+img {
+  user-drag: none;
+  -webkit-user-drag: none;
 }
 
 :global {
