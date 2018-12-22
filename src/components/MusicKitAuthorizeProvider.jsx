@@ -22,35 +22,25 @@ class MusicKitAuthorizeProvider extends React.Component {
 
   async handleTokenCheck() {
     const music = this.props.mk.instance;
-
-    console.log("1: " + this.state.isAuthorized);
-
     if (!this.state.isAuthorized) {
-      console.log("1.1: I am not authorized: " + this.state.isAuthorized);
-
       this.setState({
         ready: true,
       });
       return;
     }
 
-    console.log("2: " + this.state.isAuthorized);
-
-
     try {
       await music.api.library.songs({ limit: 0 });
       await music.authorize();
-      console.log("3: " + this.state.isAuthorized);
-
     } catch (e) {
       await music.unauthorize();
-      console.log("4: " + this.state.isAuthorized);
-
     }
 
-    this.setState({
-      ready: true,
-    });
+    setTimeout(() => {
+      this.setState({
+        ready: true,
+      });
+    }, 50);
   }
 
   componentDidMount() {
@@ -65,7 +55,7 @@ class MusicKitAuthorizeProvider extends React.Component {
     }
 
     if (!isAuthorized) {
-      return <Login onClick={() => this.props.mk.instance.authorize()}/>;
+      return <Login onClick={() => this.props.mk.instance.authorize()} />;
     }
 
     return this.props.children;
