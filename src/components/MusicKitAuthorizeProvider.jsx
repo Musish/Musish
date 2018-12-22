@@ -36,11 +36,11 @@ class MusicKitAuthorizeProvider extends React.Component {
       await music.unauthorize();
     }
 
-    setTimeout(() => {
+    setImmediate(() => {
       this.setState({
         ready: true,
       });
-    }, 200);
+    });
   }
 
   componentDidMount() {
