@@ -6,7 +6,7 @@ import PageTitle from '../../common/PageTitle';
 import classes from './BrowsePage.scss';
 import AlbumItem from '../Albums/AlbumItem';
 import PlaylistItem from '../Playlists/PlaylistItem';
-import SongList from '../common/SongList/SongList';
+import SongList from '../Songs/SongList/SongList';
 
 class BrowsePage extends React.Component {
   constructor(props) {

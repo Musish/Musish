@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import classes from './SearchBar.scss';
-import { artworkForMediaItem } from '../../../common/Utils';
+import { artworkForMediaItem } from '../../../../../utils/Utils';
 import ModalContext from '../../../../common/Modal/ModalContext';
 import PlaylistPanel from '../../../Playlists/PlaylistPanel';
 

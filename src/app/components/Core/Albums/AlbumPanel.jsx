@@ -2,8 +2,8 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import classes from './AlbumPanel.scss';
-import { artworkForMediaItem, humanifyMillis } from '../common/Utils';
-import SongList from '../common/SongList/SongList';
+import { artworkForMediaItem, humanifyMillis } from '../../../utils/Utils';
+import SongList from '../Songs/SongList/SongList';
 import Loader from '../../common/Loader';
 
 export default class AlbumsPanel extends React.Component {

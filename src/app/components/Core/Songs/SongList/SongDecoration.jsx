@@ -2,7 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import withMK from '../../../../hoc/withMK';
 import classes from './SongDecoration.scss';
-import { artworkForMediaItem, isCurrentItem, isPlaying } from '../Utils';
+import { artworkForMediaItem, isCurrentItem, isPlaying } from '../../../../utils/Utils';
 
 function SongDecoration({ song, showAlbum, size = 40 }) {
   const currentItem = isCurrentItem(song);

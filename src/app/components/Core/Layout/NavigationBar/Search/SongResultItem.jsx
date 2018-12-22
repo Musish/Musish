@@ -3,8 +3,8 @@ import cx from 'classnames';
 import * as PropTypes from 'prop-types';
 import classes from './SearchBar.scss';
 import withMK from '../../../../../hoc/withMK';
-import { createMediaItem } from '../../../common/Utils';
-import SongDecoration from '../../../common/SongList/SongDecoration';
+import { createMediaItem } from '../../../../../utils/Utils';
+import SongDecoration from '../../../Songs/SongList/SongDecoration';
 
 function SongResultItem({ song, mk }) {
   const play = async () => {

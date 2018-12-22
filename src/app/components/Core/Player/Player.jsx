@@ -10,7 +10,7 @@ import {
   ShuffleModeOff,
   ShuffleModeSongs,
   getTime,
-} from '../common/Utils';
+} from '../../../utils/Utils';
 import withMK from '../../../hoc/withMK';
 import QueueContext from './Queue/QueueContext';
 

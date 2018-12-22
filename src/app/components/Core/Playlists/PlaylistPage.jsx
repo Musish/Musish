@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import PageContent from '../Layout/PageContent';
 import PageTitle from '../../common/PageTitle';
-import SongList from '../common/SongList/SongList';
-import { API_URL, artworkForMediaItem, humanifyMillis } from '../common/Utils';
+import SongList from '../Songs/SongList/SongList';
+import { API_URL, artworkForMediaItem, humanifyMillis } from '../../../utils/Utils';
 import classes from './PlaylistPage.scss';
 
 class PlaylistPage extends React.Component {

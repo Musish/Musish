@@ -3,7 +3,7 @@ import React from 'react';
 import { ContextMenuTrigger } from 'react-contextmenu';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { createMediaItem, isPlaying, getTime } from '../Utils';
+import { createMediaItem, isPlaying, getTime } from '../../../../utils/Utils';
 import classes from './SongList.scss';
 import { MENU_TYPE } from './SongList';
 import withMK from '../../../../hoc/withMK';

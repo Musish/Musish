@@ -3,7 +3,7 @@ import React from 'react';
 import { connectMenu, ContextMenu, MenuItem } from 'react-contextmenu';
 import PropTypes from 'prop-types';
 import classes from './SongList.scss';
-import InfiniteScroll from '../InfiniteScroll';
+import InfiniteScroll from '../../common/InfiniteScroll';
 import SongListItem from './SongListItem';
 
 export const MENU_TYPE = 'DYNAMIC';

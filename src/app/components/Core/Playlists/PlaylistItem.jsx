@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import classes from './PlaylistItem.scss';
 import Modal from '../../common/Modal/Modal';
 import PlaylistPanel from './PlaylistPanel';
-import { artworkForMediaItem } from '../common/Utils';
+import { artworkForMediaItem } from '../../../utils/Utils';
 
 export default class PlaylistItem extends Component {
   constructor(props) {
