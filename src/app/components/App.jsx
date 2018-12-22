@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContext } from 'react-dnd';
 import MusicKitProvider from './MusicKitProvider';
 import MusicKitAuthorizeProvider from './MusicKitAuthorizeProvider';
 import AlbumsPage from './Core/Albums/AlbumsPage';
