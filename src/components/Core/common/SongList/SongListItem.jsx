@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { ContextMenuTrigger } from 'react-contextmenu';
-import ContentLoader from 'react-content-loader';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { createMediaItem, isPlaying, getTime } from '../Utils';
@@ -105,18 +104,12 @@ class SongListItem extends React.Component {
       );
     }
     return (
-      <ContentLoader
-        height={40}
-        speed={2}
-        primaryColor={'#f3f3f3'}
-        secondaryColor={'#ecebeb'}
-        className={cx(classes.songInfo, classes.buffering)}
-      >
-        {/* Pure SVG */}
-        <rect x="0" y="2" rx="2" ry="2" width="34.5" height="34.5" />
-        <rect x="43" y="10" rx="2" ry="2" width="90" height="7" />
-        <rect x="43" y="20" rx="2" ry="2" width="60" height="7" />
-      </ContentLoader>
+      <>
+        {this.renderIcon()}
+        <div className={classes.songInfo}>
+          <span className={classes.songTitle}>{'Song not available'}</span>
+        </div>
+      </>
     );
   }
 
@@ -127,25 +120,36 @@ class SongListItem extends React.Component {
   }
 
   render() {
-    const { showAlbum } = this.props;
+    const { showAlbum, song } = this.props;
+    const { attributes } = song;
 
-    return (
-      <div
-        className={cx(
-          { [classes.indexedSong]: !showAlbum, [classes.playing]: this.isPlaying() },
-          classes.song
-        )}
-        onClick={this.handleClick}
-        style={this.props.style}
-      >
-        <ContextMenuTrigger
-          id={MENU_TYPE}
-          attributes={{ className: [classes.songWrapper] }}
-          collect={props => collect(props, this)}
+    if (attributes) {
+      return (
+        <div
+          className={cx(
+            { [classes.indexedSong]: !showAlbum, [classes.playing]: this.isPlaying() },
+            classes.song
+          )}
+          onClick={this.handleClick}
+          style={this.props.style}
         >
+          <ContextMenuTrigger
+            id={MENU_TYPE}
+            attributes={{ className: [classes.songWrapper] }}
+            collect={props => collect(props, this)}
+          >
+            <div className={classes.songBacker} />
+            {this.renderContents()}
+          </ContextMenuTrigger>
+        </div>
+      );
+    }
+    return (
+      <div className={cx(classes.song)} style={this.props.style}>
+        <div className={[classes.songWrapper]}>
           <div className={classes.songBacker} />
           {this.renderContents()}
-        </ContextMenuTrigger>
+        </div>
       </div>
     );
   }
