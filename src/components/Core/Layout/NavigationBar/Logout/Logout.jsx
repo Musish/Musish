@@ -10,9 +10,8 @@ class Logout extends Component {
     this.logout = this.logout.bind(this);
   }
 
-  logout() {
-    this.props.mk.instance.unauthorize();
-    window.location.reload();
+  async logout() {
+    await this.props.mk.instance.unauthorize();
   }
 
   render() {
