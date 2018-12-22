@@ -4,7 +4,7 @@ import PageContent from '../Layout/PageContent';
 import PageTitle from '../../common/PageTitle';
 import classes from './BrowsePage.scss';
 import SongList from '../common/SongList/SongList';
-import { top100Ids, aListPlaylistsIds } from './browse';
+import browseData from './browse';
 import Loader from '../../common/Loader';
 import ItemList from './ItemList';
 
@@ -41,12 +41,16 @@ class BrowsePage extends React.Component {
         <PageTitle title={'Browse'} context={'Apple Music'} />
         <ItemList
           title={'Daily Top 100'}
-          listIds={top100Ids.slice(0, 24)}
+          listIds={Object.values(browseData.top100).slice(0, 24)}
           type={'playlist'}
           size={120}
           rows={2}
         />
-        <ItemList title={'The A-Lists'} listIds={aListPlaylistsIds} type={'playlist'} />
+        <ItemList
+          title={'The A-Lists'}
+          listIds={Object.values(browseData.aLists).slice(0, 24)}
+          type={'playlist'}
+        />
         <ItemList
           title={'Top Playlists'}
           list={charts ? charts.playlists[0].data : null}
