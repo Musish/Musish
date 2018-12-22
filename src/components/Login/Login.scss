@@ -2,7 +2,7 @@
 
 .loginContainer {
   background: $login_background_color
-    linear-gradient(290deg, #cd3c5a, $login_background_color);
+    linear-gradient(315deg, #cd3c5a, $login_background_color);
   background-size: 100% 100%;
 
   width: 100%;
@@ -11,6 +11,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   .title {
     margin-bottom: 5px;
     color: white;
@@ -84,10 +85,6 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    * {
-      box-sizing: content-box;
-    }
-
     .disclaimerIcon {
       font-size: 12px;
       padding: 8px 8px;
@@ -106,7 +103,6 @@
         justify-content: center;
       }
     }
-
     .disclaimerText {
       margin-right: 10px;
       width: 320px;

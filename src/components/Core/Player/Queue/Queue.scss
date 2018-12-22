@@ -18,7 +18,8 @@
   height: 45px;
   display: flex;
   flex-direction: row;
-  background: #f5f5f5;
+  background: #fe2851;
+  color: #ffffff;;
   border-bottom: solid 1px #eeeeee;
   cursor: pointer;
   padding: 0 15px;
@@ -35,14 +36,13 @@
 
     &.title {
       flex: 1;
-      color: #fe2851;
       font-weight: 600;
       font-size: 16px;
     }
 
     &.icons {
       font-size: 16px;
-      color: #666666;
+      color: #ffffff;
       cursor: pointer;
       margin-left: 20px;
     }
