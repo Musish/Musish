@@ -1,11 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import cx from 'classnames';
 import PageContent from '../Layout/PageContent';
 import PageTitle from '../../common/PageTitle';
 import classes from './BrowsePage.scss';
-import AlbumItem from '../Albums/AlbumItem';
-import PlaylistItem from '../Playlists/PlaylistItem';
+import browseData from './browse';
+import Loader from '../../common/Loader';
+import ItemList from './ItemList';
 import SongList from '../Songs/SongList/SongList';
 
 class BrowsePage extends React.Component {
@@ -17,15 +17,20 @@ class BrowsePage extends React.Component {
     };
 
     this.ref = React.createRef();
+    this.getCharts = this.getCharts.bind(this);
   }
 
-  async componentDidMount() {
+  async getCharts() {
     const music = MusicKit.getInstance();
-    const charts = await music.api.charts(['songs', 'albums', 'playlists'], { limit: 40 });
+    const charts = await music.api.charts(['songs', 'albums', 'playlists'], { limit: 36 });
 
     this.setState({
       charts,
     });
+  }
+
+  componentDidMount() {
+    this.getCharts();
   }
 
   render() {
@@ -34,34 +39,41 @@ class BrowsePage extends React.Component {
     return (
       <PageContent innerRef={this.ref}>
         <PageTitle title={'Browse'} context={'Apple Music'} />
-
-        <h3>Hot playlists</h3>
-        <div className={classes.scrollWrapper}>
-          <div className={cx(classes.scrollGrid, classes.doubleRow)}>
-            {charts &&
-              charts.playlists[0].data.map(playlist => (
-                <PlaylistItem key={playlist.id} playlist={playlist} size={100} />
-              ))}
-          </div>
-        </div>
-        <h3>Popular albums</h3>
-        <div className={classes.scrollWrapper}>
-          <div className={cx(classes.scrollGrid, classes.doubleRow)}>
-            {charts &&
-              charts.albums[0].data.map(album => (
-                <AlbumItem key={album.id} album={album} size={100} />
-              ))}
-          </div>
-        </div>
-        <h3>Top songs</h3>
+        <ItemList
+          title={'Daily Top 100'}
+          listIds={Object.values(browseData.top100).slice(0, 24)}
+          type={'playlist'}
+          size={120}
+          rows={2}
+        />
+        <ItemList
+          title={'The A-Lists'}
+          listIds={Object.values(browseData.aLists).slice(0, 24)}
+          type={'playlist'}
+        />
+        <ItemList
+          title={'Top Playlists'}
+          list={charts ? charts.playlists[0].data : null}
+          type={'playlist'}
+        />
+        <ItemList
+          title={'Top Albums'}
+          list={charts ? charts.albums[0].data : null}
+          type={'album'}
+          size={120}
+          rows={3}
+        />
+        <h3>Top Songs</h3>
         <div className={classes.chartingSongs}>
-          {charts && (
+          {charts ? (
             <SongList
               scrollElement={this.ref}
               load={() => charts.songs[0].data.slice(0, 10)}
               showArtist
               showAlbum
             />
+          ) : (
+            <Loader />
           )}
         </div>
       </PageContent>

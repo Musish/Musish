@@ -28,7 +28,8 @@ export default class PlaylistPanel extends React.Component {
         : await music.api.playlist(playlistId);
 
       const albumLength = playlist.relationships.tracks.data.reduce(
-        (totalDuration, track) => totalDuration + track.attributes.durationInMillis,
+        (totalDuration, track) =>
+          totalDuration + track.attributes ? track.attributes.durationInMillis : 0,
         0
       );
 

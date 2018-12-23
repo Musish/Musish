@@ -70,7 +70,7 @@ class SongListItem extends React.Component {
     return isPlaying(song);
   }
 
-  renderIcon() {
+  renderDecoration() {
     const { showAlbum, song } = this.props;
 
     return <SongDecoration song={song} showAlbum={showAlbum} />;
@@ -79,13 +79,28 @@ class SongListItem extends React.Component {
   render() {
     const { showArtist, showAlbum, song, connectDragSource, isOver } = this.props;
     const { attributes } = song;
-    const duration = getTime(attributes.durationInMillis);
+
+    if (!attributes) {
+      return (
+        <div className={cx(classes.song)} style={this.props.style}>
+          <div className={[classes.songWrapper]}>
+            <div className={classes.songBacker} />
+            {this.renderDecoration()}
+            <div className={classes.songInfo}>
+              <span className={classes.songTitle}>{'Song not available'}</span>
+            </div>
+          </div>
+        </div>
+      );
+    }
 
     const explicit = attributes.contentRating === 'explicit' && (
       <div className={classes.explicit}>
         <span>E</span>
       </div>
     );
+
+    const duration = getTime(attributes.durationInMillis);
 
     return connectDragSource(
       <div
@@ -106,7 +121,7 @@ class SongListItem extends React.Component {
           collect={props => collect(props, this)}
         >
           <div className={classes.songBacker} />
-          {this.renderIcon()}
+          {this.renderDecoration()}
           <div className={classes.songInfo}>
             <span className={classes.songTitle}>
               {attributes.name}

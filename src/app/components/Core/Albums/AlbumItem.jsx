@@ -44,6 +44,7 @@ class AlbumItem extends Component {
                   className={classes.image}
                   style={{ width: size, height: size }}
                   alt={album.attributes.name}
+                  title={album.attributes.name}
                 />
               </div>
 

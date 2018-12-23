@@ -35,6 +35,7 @@
     "prettier": "^1.15.3",
     "prop-types": "^15.6.2",
     "react": "^16.6.3",
+    "react-content-loader": "^3.4.1",
     "react-contextmenu": "^2.10.0",
     "react-dnd": "^7.0.2",
     "react-dnd-html5-backend": "^7.0.2",
