@@ -3,13 +3,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { DragSource } from 'react-dnd';
-import { createMediaItem, isPlaying, getTime } from '../../../../utils/Utils';
+import { createMediaItem, getTime } from '../../../../utils/Utils';
 import classes from './SongList.scss';
 import withMK from '../../../../hoc/withMK';
 import SongDecoration from './SongDecoration';
 import DragDropType from '../../../../utils/Constants/DragDropType';
 import ContextMenuTrigger from '../../../common/ContextMenu/ContextMenuTrigger';
 import SongContextMenu from './SongContextMenu';
+import { isSongPlaying } from '../../../../services/MusicPlayerApi';
 
 class SongListItem extends React.Component {
   constructor(props) {
@@ -27,22 +28,16 @@ class SongListItem extends React.Component {
     await music.player.play();
   }
 
-  async pauseSong() {
-    await this.props.mk.instance.player.pause();
-  }
-
   async handleClick() {
-    if (this.isPlaying()) {
-      this.pauseSong();
-    } else {
-      this.playSong();
-    }
+    const { song, songs, index } = this.props;
+
+    this.props.playSong({ song, songs, index });
   }
 
   isPlaying() {
     const { song } = this.props;
 
-    return isPlaying(song);
+    return isSongPlaying(song);
   }
 
   renderDecoration() {
@@ -129,6 +124,7 @@ SongListItem.propTypes = {
   mk: PropTypes.any.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   isOver: PropTypes.bool,
+  playSong: PropTypes.func.isRequired,
 };
 
 SongListItem.defaultProps = {

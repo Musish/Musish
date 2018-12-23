@@ -27,7 +27,7 @@ export default class SongList extends React.Component {
 
   rowRenderer({ item: song, index, isScrolling, isVisible, key, style }) {
     const { songs } = this.state;
-    const { showArtist, showAlbum } = this.props;
+    const { showArtist, showAlbum, playSong } = this.props;
 
     return (
       <SongListItem
@@ -38,6 +38,7 @@ export default class SongList extends React.Component {
         showArtist={showArtist}
         showAlbum={showAlbum}
         style={style}
+        playSong={playSong}
       />
     );
   }
@@ -65,6 +66,7 @@ SongList.propTypes = {
   scrollElement: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   load: PropTypes.func.isRequired,
   onSetItems: PropTypes.func,
+  playSong: PropTypes.func.isRequired,
 };
 
 SongList.defaultProps = {

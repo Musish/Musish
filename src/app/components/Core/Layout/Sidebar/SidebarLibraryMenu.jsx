@@ -4,7 +4,7 @@ import { DropTarget } from 'react-dnd';
 import cx from 'classnames';
 import MenuItem from './MenuItem';
 import DragDropType from '../../../../utils/Constants/DragDropType';
-import MusicApi from '../../../../services/MusicApi';
+import { addToLibrary } from '../../../../services/MusicApi';
 import classes from './Sidebar.scss';
 
 function SidebarLibraryMenu(props) {
@@ -50,13 +50,13 @@ const dndSpec = {
 
     switch (monitor.getItemType()) {
       case DragDropType.SONG:
-        MusicApi.addToLibrary('songs', [item.song.id]);
+        addToLibrary('songs', [item.song.id]);
         break;
       case DragDropType.ALBUM:
-        MusicApi.addToLibrary('albums', [item.album]);
+        addToLibrary('albums', [item.album]);
         break;
       case DragDropType.PLAYLIST:
-        MusicApi.addToLibrary('playlists', [item.playlist]);
+        addToLibrary('playlists', [item.playlist]);
         break;
       default:
         break;
