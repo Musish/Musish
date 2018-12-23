@@ -20,7 +20,7 @@ function SidebarMenu(props) {
 
 SidebarMenu.propTypes = {
   title: PropTypes.string.isRequired,
-  items: PropTypes.any.isRequired,
+  items: PropTypes.array.isRequired,
 };
 
 export default SidebarMenu;

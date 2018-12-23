@@ -57,11 +57,7 @@ class ArtistPage extends React.Component {
 }
 
 ArtistPage.propTypes = {
-  match: PropTypes.any,
-};
-
-ArtistPage.defaultProps = {
-  match: null,
+  match: PropTypes.any.isRequired,
 };
 
 export default withRouter(ArtistPage);

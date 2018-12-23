@@ -26,6 +26,7 @@
       &.dndSeeking {
         border: dashed 1px lighten($primary_color, 20%);
       }
+
       &.dndHovered {
         background: lighten($primary_color, 20%);
         color: #ffffff;
@@ -63,13 +64,16 @@
             display: block;
             border-radius: 4px;
             border: solid 1px transparent;
+
             &.dndSeeking {
               border: dashed 1px lighten($primary_color, 20%);
             }
+
             &.dndHovered {
               background: lighten($primary_color, 20%);
               color: #ffffff;
             }
+
             &.active {
               background: $primary_color;
               border: solid 1px $primary_color;

@@ -30,7 +30,7 @@ function SidebarLibraryMenu(props) {
 
 SidebarLibraryMenu.propTypes = {
   title: PropTypes.string.isRequired,
-  items: PropTypes.any.isRequired,
+  items: PropTypes.array.isRequired,
 };
 
 function collect(connect, monitor) {
