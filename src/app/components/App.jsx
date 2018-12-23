@@ -87,7 +87,7 @@ class App extends React.Component {
                     />
                   )}
                 </Layout>
-                <Alert />
+                <Alert stack offset={60} />
               </ModalContext.Provider>
             </QueueContext.Provider>
           </Router>

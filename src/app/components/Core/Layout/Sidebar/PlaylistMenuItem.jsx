@@ -53,7 +53,7 @@ const dndSpec = {
 
     switch (monitor.getItemType()) {
       case DragDropType.SONG:
-        MusicApi.addSongsToPlaylist(playlist.id, [item.id]);
+        MusicApi.addSongsToPlaylist(playlist.id, [item.song.id]);
         break;
       case DragDropType.ALBUM:
         MusicApi.addAlbumToPlaylist(playlist.id, item.album);

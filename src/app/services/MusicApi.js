@@ -1,4 +1,5 @@
 import axios from 'axios';
+import Alert from 'react-s-alert';
 import { API_URL } from '../utils/Utils';
 
 export default class MusicApi {
@@ -10,7 +11,7 @@ export default class MusicApi {
     });
   }
 
-  static addSongsToPlaylist(playlistId, songs) {
+  static async addSongsToPlaylist(playlistId, songs) {
     const payload = {
       data: songs.map(song => ({
         id: song,
@@ -18,12 +19,17 @@ export default class MusicApi {
       })),
     };
 
-    return axios({
-      method: 'post',
-      url: `${API_URL}/v1/me/library/playlists/${playlistId}/tracks`,
-      data: payload,
-      headers: this.getHeaders(),
-    });
+    try {
+      await axios({
+        method: 'post',
+        url: `${API_URL}/v1/me/library/playlists/${playlistId}/tracks`,
+        data: payload,
+        headers: this.getHeaders(),
+      });
+      Alert.success("Added to your playlist, it'll show up in a few minutes. Hold tight!");
+    } catch (error) {
+      Alert.error("You're unable to add songs to this playlist.");
+    }
   }
 
   static async addAlbumToPlaylist(playlistId, albumId) {
@@ -38,16 +44,7 @@ export default class MusicApi {
       type: 'song',
     }));
 
-    const payload = {
-      data: tracks,
-    };
-
-    return axios({
-      method: 'post',
-      url: `${API_URL}/v1/me/library/playlists/${playlistId}/tracks`,
-      data: payload,
-      headers: this.getHeaders(),
-    });
+    this.addSongsToPlaylist(playlistId, tracks);
   }
 
   static async addPlaylistToPlaylist(playlistId, sourcePlaylistId) {
@@ -62,16 +59,7 @@ export default class MusicApi {
       type: 'song',
     }));
 
-    const payload = {
-      data: tracks,
-    };
-
-    return axios({
-      method: 'post',
-      url: `${API_URL}/v1/me/library/playlists/${playlistId}/tracks`,
-      data: payload,
-      headers: this.getHeaders(),
-    });
+    this.addSongsToPlaylist(playlistId, tracks);
   }
 
   static getHeaders() {
