@@ -170,21 +170,28 @@ class Player extends React.Component {
     const bufferPercent = playbackTime ? this.getCurrentBufferedProgress() : 0;
 
     return (
-      <div className={styles.progressContainer}>
-        <div className={styles.bufferProgress} style={{ width: `${bufferPercent}%` }} />
-        <input
-          className={styles['progress-bar']}
-          style={{ backgroundSize: `${percent}% 100%` }}
-          type={'range'}
-          value={this.getScrubberValue()}
-          onChange={this.onScrub}
-          onMouseDown={this.onStartScrubbing}
-          onMouseUp={this.onEndScrubbing}
-          min={0}
-          max={nowPlayingItem.playbackDuration}
-          step={0.01}
-        />
-      </div>
+      <input
+        className={styles['progress-bar']}
+        style={{
+          background: `linear-gradient(
+            to right,
+            #fe2851 0%,
+            #fe2851 ${percent}%,
+            #cccccc ${percent}%,
+            #cccccc ${bufferPercent}%,
+            #ffffff ${bufferPercent}%,
+            #ffffff 100%
+          ) no-repeat`,
+        }}
+        type={'range'}
+        value={this.getScrubberValue()}
+        onChange={this.onScrub}
+        onMouseDown={this.onStartScrubbing}
+        onMouseUp={this.onEndScrubbing}
+        min={0}
+        max={nowPlayingItem.playbackDuration}
+        step={0.01}
+      />
     );
   }
 
