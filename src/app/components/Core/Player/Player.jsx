@@ -275,7 +275,15 @@ class Player extends React.Component {
               <div className={styles.volumeBarWrapper}>
                 <input
                   className={cx(styles['progress-bar'], styles.volumeBar)}
-                  style={{ backgroundSize: `${mk.instance.player.volume * 100}% 100%` }}
+                  style={{
+                    background: `linear-gradient(
+                      to right,
+                      #fe2851 0%,
+                      #fe2851 ${mk.instance.player.volume * 100}%,
+                      #cccccc ${mk.instance.player.volume * 100}%,
+                      #cccccc 100%
+                    ) no-repeat`,
+                  }}
                   type={'range'}
                   value={mk.instance.player.volume}
                   onChange={this.handleVolumeChange}
