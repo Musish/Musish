@@ -17,6 +17,7 @@ import QueueContext from './Core/Player/Queue/QueueContext';
 import ModalContext from './common/Modal/ModalContext';
 import Modal from './common/Modal/Modal';
 import ConnectedMenu from './common/ContextMenu/ContextMenu';
+import SearchPage from './Core/Search/SearchPage';
 
 class App extends React.Component {
   constructor(props) {
@@ -75,6 +76,7 @@ class App extends React.Component {
                     <Route path="/songs" exact component={SongsPage} />
                     <Route path="/browse" exact component={BrowsePage} />
                     <Route path="/radio" exact component={RadioPage} />
+                    <Route path="/search" exact component={SearchPage} />
                     <Redirect to="/" />
                   </Switch>
                   {this.state.modalsContents.length > 0 && (
