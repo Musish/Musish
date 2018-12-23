@@ -38,19 +38,19 @@ export default class Sidebar extends React.Component {
       <aside className={classes.sidebar}>
         <div className={classes.menus}>
           <div className={classes.menu}>
-            <h3>My Library</h3>
+            <h3>Apple Music</h3>
             <ul>
               <MenuItem to={'/'} label={'For You'} />
-              <MenuItem to={'/artists'} exact={false} label={'Artists'} />
-              <MenuItem to={'/albums'} exact={false} label={'Albums'} />
-              <MenuItem to={'/songs'} label={'Songs'} />
+              <MenuItem to={'/browse'} label={'Browse'} />
+              <MenuItem to={'/radio'} label={'Radio'} />
             </ul>
           </div>
           <div className={classes.menu}>
-            <h3>Apple Music</h3>
+            <h3>My Library</h3>
             <ul>
-              <MenuItem to={'/browse'} label={'Browse'} />
-              <MenuItem to={'/radio'} label={'Radio'} />
+              <MenuItem to={'/artists'} exact={false} label={'Artists'} />
+              <MenuItem to={'/albums'} exact={false} label={'Albums'} />
+              <MenuItem to={'/songs'} label={'Songs'} />
             </ul>
           </div>
           {playlists && (
