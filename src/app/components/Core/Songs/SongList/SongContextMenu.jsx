@@ -1,27 +1,9 @@
 import React from 'react';
 import { MenuItem } from 'react-contextmenu';
 import PropTypes from 'prop-types';
-import { artworkForMediaItem, createMediaItem } from '../../../../utils/Utils';
+import { artworkForMediaItem } from '../../../../utils/Utils';
 import classes from './SongContextMenu.scss';
-
-async function playSong(songs, index) {
-  const music = MusicKit.getInstance();
-  await music.setQueue({
-    startPosition: index,
-    items: songs.map(song => createMediaItem(song)),
-  });
-  await music.player.play();
-}
-
-async function queueNext(song) {
-  await MusicKit.getInstance().player.queue.prepend({
-    items: [createMediaItem(song)],
-  });
-}
-
-async function queueLater(song) {
-  await MusicKit.getInstance().player.queue.append({ items: [createMediaItem(song)] });
-}
+import { playLater, playNext, playSong } from '../../../../services/MusicPlayerApi';
 
 export default function SongContextMenu({ song, songs, index }) {
   const { attributes } = song;
@@ -46,8 +28,8 @@ export default function SongContextMenu({ song, songs, index }) {
       <MenuItem divider />
 
       <MenuItem onClick={() => playSong(songs, index)}>Play</MenuItem>
-      <MenuItem onClick={() => queueNext(song)}>Play next</MenuItem>
-      <MenuItem onClick={() => queueLater(song)}>Play later</MenuItem>
+      <MenuItem onClick={() => playNext(song)}>Play next</MenuItem>
+      <MenuItem onClick={() => playLater(song)}>Play later</MenuItem>
 
       <MenuItem divider />
 

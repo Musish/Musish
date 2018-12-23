@@ -5,6 +5,7 @@ import classes from './PlaylistPanel.scss';
 import { artworkForMediaItem, humanifyMillis } from '../../../utils/Utils';
 import SongList from '../Songs/SongList/SongList';
 import Loader from '../../common/Loader';
+import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
 
 export default class PlaylistPanel extends React.Component {
   constructor(props) {
@@ -15,6 +16,8 @@ export default class PlaylistPanel extends React.Component {
     };
 
     this.ref = React.createRef();
+
+    this.playSong = this.playSong.bind(this);
   }
 
   async componentDidMount() {
@@ -38,6 +41,10 @@ export default class PlaylistPanel extends React.Component {
         runtime: humanifyMillis(albumLength),
       });
     }
+  }
+
+  playSong({ index }) {
+    MusicPlayerApi.playPlaylist(this.state.playlist, index);
   }
 
   render() {
@@ -83,6 +90,7 @@ export default class PlaylistPanel extends React.Component {
               album={false}
               showArtist
               showAlbum
+              playSong={this.playSong}
             />
           ) : (
             <Loader />

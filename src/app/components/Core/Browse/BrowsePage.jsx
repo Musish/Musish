@@ -7,6 +7,7 @@ import browseData from './browse';
 import Loader from '../../common/Loader';
 import ItemList from './ItemList';
 import SongList from '../Songs/SongList/SongList';
+import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
 
 class BrowsePage extends React.Component {
   constructor(props) {
@@ -31,6 +32,10 @@ class BrowsePage extends React.Component {
 
   componentDidMount() {
     this.getCharts();
+  }
+
+  static playSong({ songs, index }) {
+    MusicPlayerApi.playSong(songs, index);
   }
 
   render() {
@@ -71,6 +76,7 @@ class BrowsePage extends React.Component {
               load={() => charts.songs[0].data.slice(0, 10)}
               showArtist
               showAlbum
+              playSong={BrowsePage.playSong}
             />
           ) : (
             <Loader />
