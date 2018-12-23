@@ -2,6 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
+import { Link } from 'react-router-dom';
 import classes from './SearchBar.scss';
 import withMK from '../../../../../hoc/withMK';
 import Loader from '../../../../common/Loader';
@@ -142,16 +143,24 @@ class SearchBar extends React.Component {
 
           <div className={classes.results}>
             {this.renderResults('Songs', 'songs', song => (
-              <SongResultItem key={song.id} song={song} />
+              <Link to={`/search/${query}`} key={song.id}>
+                <SongResultItem song={song} />
+              </Link>
             ))}
             {this.renderResults('Albums', 'albums', album => (
-              <AlbumResultItem key={album.id} album={album} size={30} />
+              <Link to={`/search/${query}`} key={album.id}>
+                <AlbumResultItem album={album} size={30} />
+              </Link>
             ))}
             {this.renderResults('Artists', 'artists', artist => (
-              <ArtistResultItem key={artist.id} artist={artist} />
+              <Link to={`/search/${query}`} key={artist.id}>
+                <ArtistResultItem artist={artist} />
+              </Link>
             ))}
             {this.renderResults('Playlists', 'playlists', playlist => (
-              <PlaylistResultItem key={playlist.id} playlist={playlist} size={30} />
+              <Link to={`/search/${query}`} key={playlist.id}>
+                <PlaylistResultItem playlist={playlist} size={30} />
+              </Link>
             ))}
           </div>
         </div>
