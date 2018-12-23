@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
+import Alert from 'react-s-alert';
 import MusicKitProvider from './MusicKitProvider';
 import MusicKitAuthorizeProvider from './MusicKitAuthorizeProvider';
 import AlbumsPage from './Core/Albums/AlbumsPage';
@@ -86,6 +87,7 @@ class App extends React.Component {
                     />
                   )}
                 </Layout>
+                <Alert />
               </ModalContext.Provider>
             </QueueContext.Provider>
           </Router>
