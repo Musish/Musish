@@ -15,7 +15,7 @@ class ArtistPage extends React.Component {
     };
   }
 
-  async componentDidMount() {
+  async fetchArtist() {
     const music = MusicKit.getInstance();
 
     const { id } = this.props.match.params;
@@ -31,6 +31,10 @@ class ArtistPage extends React.Component {
     this.setState({
       artist,
     });
+  }
+
+  componentDidMount() {
+    this.fetchArtist();
   }
 
   render() {
