@@ -6,7 +6,7 @@ export function getNextSongs(path) {
   return axios({
     method: 'get',
     url: `${API_URL}${path}`,
-    headers: this.getHeaders(),
+    headers: getHeaders(),
   });
 }
 
@@ -23,7 +23,7 @@ export async function addSongsToPlaylist(playlistId, songs) {
       method: 'post',
       url: `${API_URL}/v1/me/library/playlists/${playlistId}/tracks`,
       data: payload,
-      headers: this.getHeaders(),
+      headers: getHeaders(),
     });
     Alert.success("Added to your playlist, it'll show up in a few seconds. Hold tight!");
   } catch (error) {
@@ -43,7 +43,7 @@ export async function addAlbumToPlaylist(playlistId, albumId) {
     type: 'song',
   }));
 
-  await this.addSongsToPlaylist(playlistId, tracks);
+  await addSongsToPlaylist(playlistId, tracks);
 }
 
 export async function addPlaylistToPlaylist(playlistId, sourcePlaylistId) {
@@ -58,7 +58,7 @@ export async function addPlaylistToPlaylist(playlistId, sourcePlaylistId) {
     type: 'song',
   }));
 
-  await this.addSongsToPlaylist(playlistId, tracks);
+  await addSongsToPlaylist(playlistId, tracks);
 }
 
 export async function addToLibrary(mediaType, songs) {
@@ -66,10 +66,11 @@ export async function addToLibrary(mediaType, songs) {
     await axios({
       method: 'post',
       url: `${API_URL}/v1/me/library?ids[${mediaType}]=${songs.map(s => s).join(',')}`,
-      headers: this.getHeaders(),
+      headers: getHeaders(),
     });
     Alert.success("Added to your library, it'll show up in a few seconds. Hold tight!");
   } catch (error) {
+    console.error(error);
     Alert.error("We're unable to add these songs to your library.");
   }
 }
