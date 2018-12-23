@@ -5,25 +5,27 @@ import PropTypes from 'prop-types';
 import classes from './SongList.scss';
 import InfiniteScroll from '../../common/InfiniteScroll';
 import SongListItem from './SongListItem';
+import { artworkForMediaItem } from '../../../../utils/Utils';
 
 export const MENU_TYPE = 'DYNAMIC';
 
-function DynamicMenu({ id, trigger }) {
+function DynamicMenuContent(trigger) {
   if (!trigger) {
     return null;
   }
 
-  const {
-    song: { attributes },
-  } = trigger.song;
+  const { song } = trigger;
+  const { attributes } = song;
   const inLibrary = attributes.playParams.isLibrary;
 
+  const artworkURL = artworkForMediaItem(song, 60);
+
   return (
-    <ContextMenu id={id}>
+    <>
       <div className={'item-info'}>
         <div className={'artwork'}>
           <div className={'artwork-wrapper'}>
-            <img src={trigger.artworkURL} alt={attributes.name} />
+            <img src={artworkURL} alt={attributes.name} />
           </div>
         </div>
         <div className={'description'}>
@@ -41,17 +43,21 @@ function DynamicMenu({ id, trigger }) {
 
       <MenuItem divider />
 
-      <MenuItem onClick={trigger.queueLater}>Show Artist</MenuItem>
-      <MenuItem onClick={trigger.queueLater}>Show Album</MenuItem>
+      <MenuItem onClick={() => null}>Show Artist</MenuItem>
+      <MenuItem onClick={() => null}>Show Album</MenuItem>
       {!inLibrary && (
         <>
           <MenuItem divider />
 
-          <MenuItem onClick={trigger.queueLater}>Add to library</MenuItem>
+          <MenuItem onClick={() => null}>Add to library</MenuItem>
         </>
       )}
-    </ContextMenu>
+    </>
   );
+}
+
+function DynamicMenu({ id, trigger }) {
+  return <ContextMenu id={id}>{DynamicMenuContent(trigger)}</ContextMenu>;
 }
 
 DynamicMenu.propTypes = {

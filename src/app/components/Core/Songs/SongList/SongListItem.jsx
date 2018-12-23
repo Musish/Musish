@@ -11,14 +11,13 @@ import withMK from '../../../../hoc/withMK';
 import SongDecoration from './SongDecoration';
 import DragDropType from '../../../../utils/Constants/DragDropType';
 
-function collect(props, { props: song, playSong, queueNext, queueLater, state: { artworkURL } }) {
+function collect(props, { props: { song, playSong, queueNext, queueLater } }) {
   return {
     ...props,
     song,
     playSong,
     queueNext,
     queueLater,
-    artworkURL,
   };
 }
 
