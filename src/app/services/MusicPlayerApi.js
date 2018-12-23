@@ -62,24 +62,32 @@ export async function shuffle() {
   }
 
   const newQueue = _shuffle(currentQueue);
-  const newPosition = getPosition(newQueue, getPlayingItem());
-  await setQueueItems(newQueue, newPosition);
+  newQueue[MusicKit.getInstance().player.queue.position] = getPlayingItem();
+
+  await setQueueItems(newQueue);
+
+  const wasPlaying = isPlaying();
+  setImmediate(() => {
+    if (wasPlaying) {
+      play(); // TODO: Work out a better way to keep the song playing...
+    }
+  });
 }
 
 export async function unShuffle() {
   if (isShuffled()) {
-    let originalIndex = 0;
-
-    const playingItem = getPlayingItem();
-
     const newQueue = originalQueue;
-    if (playingItem) {
-      originalIndex = getPosition(newQueue, playingItem);
-    }
 
     originalQueue = null;
-    await setQueueItems(newQueue, originalIndex);
+    await setQueueItems(newQueue);
   }
+
+  const wasPlaying = isPlaying();
+  setImmediate(() => {
+    if (wasPlaying) {
+      play(); // TODO: Work out a better way to keep the song playing...
+    }
+  });
 }
 
 export function isShuffled() {
@@ -91,10 +99,18 @@ export function getQueueItems() {
 }
 
 export async function setQueueItems(items, index) {
-  await MusicKit.getInstance().setQueue({
-    startPosition: index,
+  const s = {
     items: items.map(createMediaItem),
-  });
+    startPosition: index,
+  };
+
+  s.startPosition = index;
+
+  if (isNaN(index)) {
+    s.startPosition = MusicKit.getInstance().player.queue.position;
+  }
+
+  await MusicKit.getInstance().setQueue(s);
 }
 
 function isSame(a, b) {
@@ -115,6 +131,10 @@ export function isCurrentSong(song) {
   }
 
   return isSame(song, playing);
+}
+
+export function isPlaying() {
+  return MusicKit.getInstance().player.isPlaying;
 }
 
 export function isSongPlaying(song) {
