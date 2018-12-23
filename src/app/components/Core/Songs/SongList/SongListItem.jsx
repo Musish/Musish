@@ -1,74 +1,20 @@
 import React from 'react';
 
-import { ContextMenuTrigger, MenuItem } from 'react-contextmenu';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { DragSource } from 'react-dnd';
-import { createMediaItem, isPlaying, getTime, artworkForMediaItem } from '../../../../utils/Utils';
+import { createMediaItem, isPlaying, getTime } from '../../../../utils/Utils';
 import classes from './SongList.scss';
-import { MENU_TYPE } from './SongList';
 import withMK from '../../../../hoc/withMK';
 import SongDecoration from './SongDecoration';
 import DragDropType from '../../../../utils/Constants/DragDropType';
-
-function collect(collectProps, el) {
-  const { props, playSong, queueNext, queueLater } = el;
-  const { song } = props;
-  const { attributes } = song;
-
-  const inLibrary = attributes.playParams.isLibrary;
-
-  const artworkURL = artworkForMediaItem(song, 60);
-
-  const render = (
-    <>
-      <div className={'item-info'}>
-        <div className={'artwork'}>
-          <div className={'artwork-wrapper'}>
-            <img src={artworkURL} alt={attributes.name} />
-          </div>
-        </div>
-        <div className={'description'}>
-          <h1>{attributes.name}</h1>
-          <h2>{attributes.artistName}</h2>
-          <h3>{attributes.albumName}</h3>
-        </div>
-      </div>
-
-      <MenuItem divider />
-
-      <MenuItem onClick={playSong}>Play</MenuItem>
-      <MenuItem onClick={queueNext}>Play next</MenuItem>
-      <MenuItem onClick={queueLater}>Play later</MenuItem>
-
-      <MenuItem divider />
-
-      <MenuItem onClick={() => null}>Show Artist</MenuItem>
-      <MenuItem onClick={() => null}>Show Album</MenuItem>
-      {!inLibrary && (
-        <>
-          <MenuItem divider />
-
-          <MenuItem onClick={() => null}>Add to library</MenuItem>
-        </>
-      )}
-    </>
-  );
-
-  return {
-    ...collectProps,
-    render,
-  };
-}
+import ContextMenuTrigger from '../../../common/ContextMenu/ContextMenuTrigger';
+import SongContextMenu from './SongContextMenu';
 
 class SongListItem extends React.Component {
   constructor(props) {
     super(props);
 
-    this.playSong = this.playSong.bind(this);
-    this.pauseSong = this.pauseSong.bind(this);
-    this.queueNext = this.queueNext.bind(this);
-    this.queueLater = this.queueLater.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -83,16 +29,6 @@ class SongListItem extends React.Component {
 
   async pauseSong() {
     await this.props.mk.instance.player.pause();
-  }
-
-  async queueNext() {
-    await this.props.mk.instance.player.queue.prepend({
-      items: [createMediaItem(this.props.song)],
-    });
-  }
-
-  async queueLater() {
-    await this.props.mk.instance.player.queue.append({ items: [createMediaItem(this.props.song)] });
   }
 
   async handleClick() {
@@ -116,7 +52,7 @@ class SongListItem extends React.Component {
   }
 
   render() {
-    const { showArtist, showAlbum, song, connectDragSource, isOver } = this.props;
+    const { showArtist, showAlbum, song, connectDragSource, isOver, songs, index } = this.props;
     const { attributes } = song;
     const duration = getTime(attributes.durationInMillis);
 
@@ -140,9 +76,8 @@ class SongListItem extends React.Component {
         style={this.props.style}
       >
         <ContextMenuTrigger
-          id={MENU_TYPE}
           attributes={{ className: [classes.songWrapper] }}
-          collect={props => collect(props, this)}
+          render={() => <SongContextMenu song={song} songs={songs} index={index} />}
         >
           <div className={classes.songBacker} />
           {this.renderIcon()}

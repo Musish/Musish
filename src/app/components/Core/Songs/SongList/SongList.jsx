@@ -1,26 +1,9 @@
 import React from 'react';
 
-import { connectMenu, ContextMenu, MenuItem } from 'react-contextmenu';
 import PropTypes from 'prop-types';
 import classes from './SongList.scss';
 import InfiniteScroll from '../../common/InfiniteScroll';
 import SongListItem from './SongListItem';
-
-export const MENU_TYPE = 'DYNAMIC';
-
-function DynamicMenu({ trigger }) {
-  return <ContextMenu id={MENU_TYPE}>{trigger && trigger.render}</ContextMenu>;
-}
-
-DynamicMenu.propTypes = {
-  trigger: PropTypes.any,
-};
-
-DynamicMenu.defaultProps = {
-  trigger: null,
-};
-
-const ConnectedMenu = connectMenu(MENU_TYPE)(DynamicMenu);
 
 export default class SongList extends React.Component {
   constructor(props) {
@@ -71,7 +54,6 @@ export default class SongList extends React.Component {
           rowHeight={showAlbum || showArtist ? 50 : 37}
           rowRenderer={this.rowRenderer}
         />
-        <ConnectedMenu />
       </div>
     );
   }
