@@ -6,7 +6,7 @@ import PageTitle from '../../common/PageTitle';
 import SongList from '../Songs/SongList/SongList';
 import { artworkForMediaItem, humanifyMillis } from '../../../utils/Utils';
 import classes from './PlaylistPage.scss';
-import MusicApi from '../../../services/MusicApi';
+import * as MusicApi from '../../../services/MusicApi';
 
 class PlaylistPage extends React.Component {
   constructor(props) {

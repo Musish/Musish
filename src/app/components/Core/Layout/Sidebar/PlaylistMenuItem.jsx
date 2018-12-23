@@ -5,7 +5,7 @@ import { DropTarget } from 'react-dnd';
 import cx from 'classnames';
 import DragDropType from '../../../../utils/Constants/DragDropType';
 import classes from './Sidebar.scss';
-import MusicApi from '../../../../services/MusicApi';
+import * as MusicApi from '../../../../services/MusicApi';
 
 function PlaylistMenuItem(props) {
   const { playlist, connectDropTarget, isDndOver, activeDndItem } = props;
