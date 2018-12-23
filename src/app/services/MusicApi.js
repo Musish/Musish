@@ -70,7 +70,6 @@ export async function addToLibrary(mediaType, songs) {
     });
     Alert.success("Added to your library, it'll show up in a few seconds. Hold tight!");
   } catch (error) {
-    console.error(error);
     Alert.error("We're unable to add these songs to your library.");
   }
 }
