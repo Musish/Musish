@@ -1,8 +1,9 @@
 import React from 'react';
 import Player from '../../Player/Player';
 import classes from './Sidebar.scss';
-import MenuItem from './MenuItem';
 import PlaylistMenuItem from './PlaylistMenuItem';
+import SidebarMenu from './SidebarMenu';
+import SidebarLibraryMenu from './SidebarLibraryMenu';
 
 export default class Sidebar extends React.Component {
   constructor(props) {
@@ -37,22 +38,22 @@ export default class Sidebar extends React.Component {
     return (
       <aside className={classes.sidebar}>
         <div className={classes.menus}>
-          <div className={classes.menu}>
-            <h3>Apple Music</h3>
-            <ul>
-              <MenuItem to={'/'} label={'For You'} />
-              <MenuItem to={'/browse'} label={'Browse'} />
-              <MenuItem to={'/radio'} label={'Radio'} />
-            </ul>
-          </div>
-          <div className={classes.menu}>
-            <h3>My Library</h3>
-            <ul>
-              <MenuItem to={'/artists'} exact={false} label={'Artists'} />
-              <MenuItem to={'/albums'} exact={false} label={'Albums'} />
-              <MenuItem to={'/songs'} label={'Songs'} />
-            </ul>
-          </div>
+          <SidebarMenu
+            title={'Apple music'}
+            items={[
+              { to: '/', label: 'For You' },
+              { to: '/browse', label: 'Browse' },
+              { to: '/radio', label: 'Radio' },
+            ]}
+          />
+          <SidebarLibraryMenu
+            title={'My Library'}
+            items={[
+              { to: '/artists', label: 'Artists' },
+              { to: '/albums', label: 'Albums' },
+              { to: '/songs', label: 'Songs' },
+            ]}
+          />
           {playlists && (
             <div className={classes.menu}>
               <h3>Playlists</h3>

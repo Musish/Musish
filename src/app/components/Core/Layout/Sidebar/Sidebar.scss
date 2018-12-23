@@ -21,6 +21,15 @@
       background: $main_background_color;
       padding: 10px 15px;
       border-radius: 5px;
+      border: solid 1px transparent;
+
+      &.dndSeeking {
+        border: dashed 1px lighten($primary_color, 20%);
+      }
+      &.dndHovered {
+        background: lighten($primary_color, 20%);
+        color: #ffffff;
+      }
 
       &:not(:first-child) {
         margin-top: 15px;

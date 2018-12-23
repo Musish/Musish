@@ -26,7 +26,7 @@ export default class MusicApi {
         data: payload,
         headers: this.getHeaders(),
       });
-      Alert.success("Added to your playlist, it'll show up in a few minutes. Hold tight!");
+      Alert.success("Added to your playlist, it'll show up in a few seconds. Hold tight!");
     } catch (error) {
       Alert.error("You're unable to add songs to this playlist.");
     }
@@ -60,6 +60,19 @@ export default class MusicApi {
     }));
 
     this.addSongsToPlaylist(playlistId, tracks);
+  }
+
+  static async addToLibrary(mediaType, songs) {
+    try {
+      await axios({
+        method: 'post',
+        url: `${API_URL}/v1/me/library?ids[${mediaType}]=${songs.map(s => s).join(',')}`,
+        headers: this.getHeaders(),
+      });
+      Alert.success("Added to your library, it'll show up in a few seconds. Hold tight!");
+    } catch (error) {
+      Alert.error("We're unable to add these songs to your library.");
+    }
   }
 
   static getHeaders() {
