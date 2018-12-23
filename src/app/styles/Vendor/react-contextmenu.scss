@@ -12,11 +12,13 @@
   pointer-events: none;
   text-align: left;
   transition: opacity 250ms ease !important;
+
   &.react-contextmenu--visible {
     opacity: 1;
     pointer-events: auto;
     z-index: 9999;
   }
+
   .react-contextmenu-item {
     background: 0 0;
     border: 0;
@@ -27,16 +29,19 @@
     padding: 3px 20px;
     text-align: inherit;
     white-space: nowrap;
+
     &.react-contextmenu-item--active, &.react-contextmenu-item--selected {
       color: #fff;
       background-color: #fe2851;
       border-color: #fe2851;
       text-decoration: none;
     }
+
     &.react-contextmenu-item--disabled {
       background-color: transparent;
       border-color: rgba(0, 0, 0, 0.15);
       color: #878a8c;
+
       &:hover {
         background-color: transparent;
         border-color: rgba(0, 0, 0, 0.15);
@@ -44,18 +49,22 @@
       }
     }
   }
+
   .react-contextmenu-item--divider {
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
     cursor: inherit;
     margin-bottom: 3px;
     padding: 2px 0;
+
     &:hover {
       background-color: transparent;
       border-color: rgba(0, 0, 0, 0.15);
     }
   }
+
   .react-contextmenu-item.react-contextmenu-submenu {
     padding: 0;
+
     > .react-contextmenu-item:after {
       content: "▶";
       display: inline-block;
@@ -63,50 +72,5 @@
       right: 7px;
     }
   }
-  /* Musishit begins */
-  .item-info {
-    width: 220px;
-    display: flex;
-    flex-direction: row;
-    .artwork {
-      width: 70px;
-      padding: 0 5px;
-      .artwork-wrapper {
-        width: 60px;
-        height: 60px;
-        background: #aaaaaa;
-        border-radius: 3px;
-        > img {
-          width: inherit;
-          height: inherit;
-          border-radius: inherit;
-        }
-      }
-    }
-    .description {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      h1, h2, h3 {
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        width: 145px;
-        display: block;
-      }
-      h1 {
-        font-size: 15px;
-        margin-bottom: 5px;
-      }
-      h2, h3 {
-        font-size: 12px;
-        color: #555;
-      }
-      h3 {
-        margin-top: 3px;
-        font-weight: 300;
-      }
-    }
-  }
-  /* Musishit ends */
 }
+
