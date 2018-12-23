@@ -6,7 +6,8 @@ import PageTitle from '../../common/PageTitle';
 import SongList from '../Songs/SongList/SongList';
 import { artworkForMediaItem, humanifyMillis } from '../../../utils/Utils';
 import classes from './PlaylistPage.scss';
-import MusicApi from '../../../services/MusicApi';
+import * as MusicApi from '../../../services/MusicApi';
+import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
 
 class PlaylistPage extends React.Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class PlaylistPage extends React.Component {
 
     this.load = this.load.bind(this);
     this.onSetItems = this.onSetItems.bind(this);
+    this.playSong = this.playSong.bind(this);
   }
 
   onSetItems({ items: songs, end }) {
@@ -40,6 +42,10 @@ class PlaylistPage extends React.Component {
     this.setState({
       runtime: humanifyMillis(albumLength),
     });
+  }
+
+  playSong({ index }) {
+    MusicPlayerApi.playPlaylist(this.state.playlist, index);
   }
 
   async load(params, { page }) {
@@ -126,6 +132,7 @@ class PlaylistPage extends React.Component {
           showAlbum
           showArtist
           onSetItems={this.onSetItems}
+          playSong={this.playSong}
         />
       </PageContent>
     );

@@ -2,13 +2,14 @@ import React from 'react';
 import cx from 'classnames';
 import withMK from '../../../../hoc/withMK';
 import classes from './SongDecoration.scss';
-import { artworkForMediaItem, isCurrentItem, isPlaying } from '../../../../utils/Utils';
+import { artworkForMediaItem } from '../../../../utils/Utils';
+import { isCurrentSong, isSongPlaying } from '../../../../services/MusicPlayerApi';
 
 function SongDecoration({ song, showAlbum, size = 40 }) {
-  const currentItem = isCurrentItem(song);
+  const currentItem = isCurrentSong(song);
 
   const playingAnimation = (
-    <div className={cx(classes.playingAnimation, { [classes.animated]: isPlaying(song) })}>
+    <div className={cx(classes.playingAnimation, { [classes.animated]: isSongPlaying(song) })}>
       <div>
         <span />
         <span />
