@@ -41,6 +41,7 @@ class Player extends React.Component {
 
     this.getCurrentPlaybackDuration = this.getCurrentPlaybackDuration.bind(this);
     this.getCurrentPlaybackTime = this.getCurrentPlaybackTime.bind(this);
+    this.getCurrentBufferedProgress = this.getCurrentBufferedProgress.bind(this);
   }
 
   static timeToPercent(time, duration) {
@@ -144,12 +145,17 @@ class Player extends React.Component {
 
   getCurrentPlaybackDuration() {
     const { player } = this.props.mk.instance;
-    return getTime(player.currentPlaybackDuration * 1000);
+    return getTime(player.currentPlaybackTimeRemaining * 1000);
   }
 
   getCurrentPlaybackTime() {
     const { player } = this.props.mk.instance;
     return getTime(player.currentPlaybackTime * 1000);
+  }
+
+  getCurrentBufferedProgress() {
+    const { player } = this.props.mk.instance;
+    return player.currentBufferedProgress;
   }
 
   renderProgress() {
@@ -161,11 +167,22 @@ class Player extends React.Component {
     const percent = playbackTime
       ? Player.timeToPercent(playbackTime.currentPlaybackTime, duration)
       : 0;
+    const bufferPercent = playbackTime ? this.getCurrentBufferedProgress() : 0;
 
     return (
       <input
         className={styles['progress-bar']}
-        style={{ backgroundSize: `${percent}% 100%` }}
+        style={{
+          background: `linear-gradient(
+            to right,
+            #fe2851 0%,
+            #fe2851 ${percent}%,
+            #cccccc ${percent}%,
+            #cccccc ${bufferPercent}%,
+            #ffffff ${bufferPercent}%,
+            #ffffff 100%
+          ) no-repeat`,
+        }}
         type={'range'}
         value={this.getScrubberValue()}
         onChange={this.onScrub}

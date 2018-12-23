@@ -18,6 +18,7 @@ import RadioPage from './Core/Radio/RadioPage';
 import QueueContext from './Core/Player/Queue/QueueContext';
 import ModalContext from './common/Modal/ModalContext';
 import Modal from './common/Modal/Modal';
+import ConnectedMenu from './common/ContextMenu/ContextMenu';
 
 class App extends React.Component {
   constructor(props) {
@@ -88,6 +89,7 @@ class App extends React.Component {
                   )}
                 </Layout>
                 <Alert stack offset={60} />
+                <ConnectedMenu />
               </ModalContext.Provider>
             </QueueContext.Provider>
           </Router>

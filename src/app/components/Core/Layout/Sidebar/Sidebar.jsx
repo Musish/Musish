@@ -52,6 +52,7 @@ export default class Sidebar extends React.Component {
               { to: '/artists', label: 'Artists' },
               { to: '/albums', label: 'Albums' },
               { to: '/songs', label: 'Songs' },
+              { to: '/playlists', label: 'Playlists' },
             ]}
           />
           {playlists && (
