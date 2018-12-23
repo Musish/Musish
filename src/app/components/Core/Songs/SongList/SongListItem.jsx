@@ -70,56 +70,10 @@ class SongListItem extends React.Component {
     return isPlaying(song);
   }
 
-  renderIcon() {
+  renderDecoration() {
     const { showAlbum, song } = this.props;
 
     return <SongDecoration song={song} showAlbum={showAlbum} />;
-  }
-
-  renderContents() {
-    const { showArtist, showAlbum, song } = this.props;
-    const { attributes } = song;
-
-    if (!attributes) {
-      return (
-        <>
-          {this.renderIcon()}
-          <div className={classes.songInfo}>
-            <span className={classes.songTitle}>{'Song not available'}</span>
-          </div>
-        </>
-      );
-    }
-
-    const duration = getTime(attributes.durationInMillis);
-
-    const explicit = attributes.contentRating === 'explicit' && (
-      <div className={classes.explicit}>
-        <span>E</span>
-      </div>
-    );
-
-    return (
-      <>
-        {this.renderIcon()}
-        <div className={classes.songInfo}>
-          <span className={classes.songTitle}>
-            {attributes.name}
-            {explicit}
-          </span>
-          {(showArtist || showAlbum) && (
-            <span>
-              {showArtist && attributes.artistName}
-              {showArtist && showAlbum && ' - '}
-              {showAlbum && attributes.albumName}
-            </span>
-          )}
-        </div>
-        <span className={classes.songDuration}>
-          <span>{duration}</span>
-        </span>
-      </>
-    );
   }
 
   render() {
@@ -131,11 +85,20 @@ class SongListItem extends React.Component {
         <div className={cx(classes.song)} style={this.props.style}>
           <div className={[classes.songWrapper]}>
             <div className={classes.songBacker} />
-            {this.renderContents()}
+            {this.renderDecoration()}
+            <div className={classes.songInfo}>
+              <span className={classes.songTitle}>{'Song not available'}</span>
+            </div>
           </div>
         </div>
       );
     }
+
+    const explicit = attributes.contentRating === 'explicit' && (
+      <div className={classes.explicit}>
+        <span>E</span>
+      </div>
+    );
 
     const duration = getTime(attributes.durationInMillis);
 
@@ -158,7 +121,23 @@ class SongListItem extends React.Component {
           collect={props => collect(props, this)}
         >
           <div className={classes.songBacker} />
-          {this.renderContents()}
+          {this.renderDecoration()}
+          <div className={classes.songInfo}>
+            <span className={classes.songTitle}>
+              {attributes.name}
+              {explicit}
+            </span>
+            {(showArtist || showAlbum) && (
+              <span>
+                {showArtist && attributes.artistName}
+                {showArtist && showAlbum && ' - '}
+                {showAlbum && attributes.albumName}
+              </span>
+            )}
+          </div>
+          <span className={classes.songDuration}>
+            <span>{duration}</span>
+          </span>
         </ContextMenuTrigger>
       </div>
     );
