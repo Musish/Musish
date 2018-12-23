@@ -5,63 +5,14 @@ import PropTypes from 'prop-types';
 import classes from './SongList.scss';
 import InfiniteScroll from '../../common/InfiniteScroll';
 import SongListItem from './SongListItem';
-import { artworkForMediaItem } from '../../../../utils/Utils';
 
 export const MENU_TYPE = 'DYNAMIC';
 
-function DynamicMenuContent(trigger) {
-  if (!trigger) {
-    return null;
-  }
-
-  const { song } = trigger;
-  const { attributes } = song;
-  const inLibrary = attributes.playParams.isLibrary;
-
-  const artworkURL = artworkForMediaItem(song, 60);
-
-  return (
-    <>
-      <div className={'item-info'}>
-        <div className={'artwork'}>
-          <div className={'artwork-wrapper'}>
-            <img src={artworkURL} alt={attributes.name} />
-          </div>
-        </div>
-        <div className={'description'}>
-          <h1>{attributes.name}</h1>
-          <h2>{attributes.artistName}</h2>
-          <h3>{attributes.albumName}</h3>
-        </div>
-      </div>
-
-      <MenuItem divider />
-
-      <MenuItem onClick={trigger.playSong}>Play</MenuItem>
-      <MenuItem onClick={trigger.queueNext}>Play next</MenuItem>
-      <MenuItem onClick={trigger.queueLater}>Play later</MenuItem>
-
-      <MenuItem divider />
-
-      <MenuItem onClick={() => null}>Show Artist</MenuItem>
-      <MenuItem onClick={() => null}>Show Album</MenuItem>
-      {!inLibrary && (
-        <>
-          <MenuItem divider />
-
-          <MenuItem onClick={() => null}>Add to library</MenuItem>
-        </>
-      )}
-    </>
-  );
-}
-
-function DynamicMenu({ id, trigger }) {
-  return <ContextMenu id={id}>{DynamicMenuContent(trigger)}</ContextMenu>;
+function DynamicMenu({ trigger }) {
+  return <ContextMenu id={MENU_TYPE}>{trigger && trigger.render}</ContextMenu>;
 }
 
 DynamicMenu.propTypes = {
-  id: PropTypes.string.isRequired,
   trigger: PropTypes.any,
 };
 

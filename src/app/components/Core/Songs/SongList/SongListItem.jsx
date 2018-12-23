@@ -1,23 +1,63 @@
 import React from 'react';
 
-import { ContextMenuTrigger } from 'react-contextmenu';
+import { ContextMenuTrigger, MenuItem } from 'react-contextmenu';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { DragSource } from 'react-dnd';
-import { createMediaItem, isPlaying, getTime } from '../../../../utils/Utils';
+import { createMediaItem, isPlaying, getTime, artworkForMediaItem } from '../../../../utils/Utils';
 import classes from './SongList.scss';
 import { MENU_TYPE } from './SongList';
 import withMK from '../../../../hoc/withMK';
 import SongDecoration from './SongDecoration';
 import DragDropType from '../../../../utils/Constants/DragDropType';
 
-function collect(props, { props: { song, playSong, queueNext, queueLater } }) {
+function collect(collectProps, el) {
+  const { props, playSong, queueNext, queueLater } = el;
+  const { song } = props;
+  const { attributes } = song;
+
+  const inLibrary = attributes.playParams.isLibrary;
+
+  const artworkURL = artworkForMediaItem(song, 60);
+
+  const render = (
+    <>
+      <div className={'item-info'}>
+        <div className={'artwork'}>
+          <div className={'artwork-wrapper'}>
+            <img src={artworkURL} alt={attributes.name} />
+          </div>
+        </div>
+        <div className={'description'}>
+          <h1>{attributes.name}</h1>
+          <h2>{attributes.artistName}</h2>
+          <h3>{attributes.albumName}</h3>
+        </div>
+      </div>
+
+      <MenuItem divider />
+
+      <MenuItem onClick={playSong}>Play</MenuItem>
+      <MenuItem onClick={queueNext}>Play next</MenuItem>
+      <MenuItem onClick={queueLater}>Play later</MenuItem>
+
+      <MenuItem divider />
+
+      <MenuItem onClick={() => null}>Show Artist</MenuItem>
+      <MenuItem onClick={() => null}>Show Album</MenuItem>
+      {!inLibrary && (
+        <>
+          <MenuItem divider />
+
+          <MenuItem onClick={() => null}>Add to library</MenuItem>
+        </>
+      )}
+    </>
+  );
+
   return {
-    ...props,
-    song,
-    playSong,
-    queueNext,
-    queueLater,
+    ...collectProps,
+    render,
   };
 }
 
