@@ -52,7 +52,7 @@ export default class AlbumsPanel extends React.Component {
           </div>
           <span className={classes.albumRuntimeDescription}>
             {album.attributes.trackCount}
-            songs,
+            {' songs: '}
             {runtime}
           </span>
         </div>
