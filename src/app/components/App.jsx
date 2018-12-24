@@ -76,7 +76,15 @@ class App extends React.Component {
                     <Route path="/songs" exact component={SongsPage} />
                     <Route path="/browse" exact component={BrowsePage} />
                     <Route path="/radio" exact component={RadioPage} />
-                    <Route path="/search/:query" exact component={SearchPage} />
+                    <Route
+                      path="/search/:query"
+                      exact
+                      component={({
+                        match: {
+                          params: { query },
+                        },
+                      }) => <SearchPage key={query} />}
+                    />
                     <Redirect to="/" />
                   </Switch>
                   {this.state.modalsContents.length > 0 && (
