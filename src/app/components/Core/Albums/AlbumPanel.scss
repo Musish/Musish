@@ -39,6 +39,17 @@
       display: block;
       color: $tertiary_color;
       margin-bottom: 10px;
+      > a:hover {
+        color: #fe2851;
+      }
+      .musicLink {
+        margin-left: 15px;
+        font-size: 0.9em;
+        color: #999;
+        &:hover {
+          color: $tertiary_color;
+        }
+      }
     }
   }
 }
