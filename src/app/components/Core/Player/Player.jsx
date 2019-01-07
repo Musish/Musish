@@ -313,13 +313,13 @@ class Player extends React.Component {
             <i className={'fas fa-random'} />
           </span>
 
-          {/*<LyricsModalContext.Consumer>*/}
-            {/*{({ open }) => (*/}
-              {/*<span className={cx(styles.controls)} onClick={() => open(nowPlayingItem)}>*/}
-                {/*<i className={'fas fa-align-left'} />*/}
-              {/*</span>*/}
-            {/*)}*/}
-          {/*</LyricsModalContext.Consumer>*/}
+          <LyricsModalContext.Consumer>
+            {({ open }) => (
+              <span className={cx(styles.controls)} onClick={() => open(nowPlayingItem)}>
+                <i className={'fas fa-align-left'} />
+              </span>
+            )}
+          </LyricsModalContext.Consumer>
 
           <QueueContext.Consumer>
             {({ show, doShow, doHide }) => (
