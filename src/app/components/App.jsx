@@ -2,10 +2,12 @@ import React from 'react';
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
+import Alert from 'react-s-alert';
 import MusicKitProvider from './MusicKitProvider';
 import MusicKitAuthorizeProvider from './MusicKitAuthorizeProvider';
 import AlbumsPage from './Core/Albums/AlbumsPage';
 import Layout from './Core/Layout/Layout';
+import ArtistPage from './Core/Artists/ArtistPage';
 import ArtistsPage from './Core/Artists/ArtistsPage';
 import Playlist from './Core/Playlists/PlaylistPage';
 import SongsPage from './Core/Songs/SongsPage';
@@ -72,6 +74,7 @@ class App extends React.Component {
                     />
                     <Route path="/artists" exact component={ArtistsPage} />
                     <Route path="/artists/:id" exact component={ArtistsPage} />
+                    <Route path="/artist/:id" exact component={ArtistPage} />
                     <Route path="/songs" exact component={SongsPage} />
                     <Route path="/browse" exact component={BrowsePage} />
                     <Route path="/radio" exact component={RadioPage} />
@@ -85,6 +88,7 @@ class App extends React.Component {
                     />
                   )}
                 </Layout>
+                <Alert stack offset={60} />
                 <ConnectedMenu />
               </ModalContext.Provider>
             </QueueContext.Provider>
