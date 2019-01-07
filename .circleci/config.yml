@@ -19,6 +19,9 @@ jobs:
           name: Install dependencies
           command: yarn
       - run:
+          name: Install dependencies
+          command: cd src/backend && yarn
+      - run:
           name: Install Serverless CLI
           command: sudo npm i -g serverless
       - save_cache:

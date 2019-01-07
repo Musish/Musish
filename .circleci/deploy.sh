@@ -14,7 +14,9 @@ git rm -rf .
 cp /tmp/CNAME ./CNAME || echo "No CNAME file"
 cd ..
 
-echo "JWT_TOKEN=$JWT_TOKEN" > .env
+touch .env
+echo "JWT_TOKEN=$JWT_TOKEN" >> .env
+echo "GENIUS_SONG_API_URL=$GENIUS_SONG_API_URL" >> .env
 
 yarn build
 
@@ -38,8 +40,6 @@ cat >./secrets.json <<EOF
   "GENIUS_API_KEY": "$GENIUS_API_KEY"
 }
 EOF
-
-yarn
 
 serverless deploy
 cd ../..
