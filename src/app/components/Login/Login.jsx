@@ -36,6 +36,9 @@ export default function Login(props) {
       <button type={'button'} onClick={props.onClick} className={classes.button}>
         Connect to Apple Music
       </button>
+      <button type={'button'} onClick={props.onBrowse} className={classes.button}>
+        Continue to browse
+      </button>
       <div className={classes.disclaimer}>
         <div className={classes.disclaimerIcon}>
           <span>
@@ -53,4 +56,5 @@ export default function Login(props) {
 
 Login.propTypes = {
   onClick: PropTypes.func.isRequired,
+  onBrowse: PropTypes.func.isRequired,
 };
