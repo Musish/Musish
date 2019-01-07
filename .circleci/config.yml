@@ -1,9 +1,10 @@
 version: 2
 jobs:
   build:
-#    branches:
-#      only:
-#        - master
+    branches:
+      only:
+        - master
+        - feature/lyrics
     docker:
       - image: circleci/node:8
     environment:
@@ -23,6 +24,7 @@ jobs:
       - save_cache:
           paths:
             - node_modules
+            - src/backend/node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}-{{ checksum "src/backend/yarn.lock" }}
 #      - run:
 #          name: Run tests
