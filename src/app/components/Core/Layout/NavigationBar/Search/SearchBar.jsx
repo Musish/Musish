@@ -81,14 +81,20 @@ class SearchBar extends React.Component {
   }
 
   async searchLibrary(query) {
-    const libraryData = await this.props.mk.instance.api.library.search(query, {
-      types: ['library-albums', 'library-songs', 'library-playlists', 'library-artists'],
-      limit: 3,
-    });
+    if (this.props.mk.instance.isAuthorized) {
+      const libraryData = await this.props.mk.instance.api.library.search(query, {
+        types: ['library-albums', 'library-songs', 'library-playlists', 'library-artists'],
+        limit: 3,
+      });
 
-    this.setState({
-      libraryData,
-    });
+      this.setState({
+        libraryData,
+      });
+    } else {
+      this.setState({
+        libraryData: null,
+      });
+    }
   }
 
   getItems(type) {
