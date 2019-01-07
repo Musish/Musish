@@ -52,6 +52,13 @@
     width: 50%;
     animation: fadein 0.8s;
   }
+  .secureConnection {
+    margin-top: 10px;
+    color: $main_background_color;
+    animation: fadein 0.8s;
+    font-style: italic;
+    font-size: 8pt;
+  }
   hr {
     width: 100px;
     border: none;
@@ -84,13 +91,16 @@
     border-radius: 4px;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    * {
+      box-sizing: content-box;
+    }
     .disclaimerIcon {
       font-size: 12px;
       padding: 8px 8px;
       background: $main_background_color;
-      display: inline-block;
-      height: 100%;
+      display: flex;
+      flex: 1;
+      align-items: center;
       > span {
         color: $main_background_color;
         background: $primary_color;

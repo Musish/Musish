@@ -32,22 +32,6 @@ export function humanifyMillis(duration) {
   return humanReadable;
 }
 
-export function isCurrentItem(song) {
-  const music = MusicKit.getInstance();
-
-  const mediaItem = music.player && music.player.nowPlayingItem;
-
-  if (!mediaItem) {
-    return false;
-  }
-
-  return song.id === mediaItem.container.id;
-}
-
-export function isPlaying(song) {
-  return isCurrentItem(song) && MusicKit.getInstance().player.isPlaying;
-}
-
 export const RepeatModeNone = 0;
 export const RepeatModeOne = 1;
 export const RepeatModeAll = 2;

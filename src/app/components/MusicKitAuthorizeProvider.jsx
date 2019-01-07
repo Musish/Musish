@@ -10,6 +10,7 @@ class MusicKitAuthorizeProvider extends React.Component {
 
     this.state = {
       ready: false,
+      browsing: false,
       ...MusicKitAuthorizeProvider.getDerivedStateFromProps(this.props, {}),
     };
   }
@@ -54,8 +55,13 @@ class MusicKitAuthorizeProvider extends React.Component {
       return <TokenLoader />;
     }
 
-    if (!isAuthorized) {
-      return <Login onClick={() => this.props.mk.instance.authorize()} />;
+    if (!isAuthorized && !this.state.browsing) {
+      return (
+        <Login
+          onClick={() => this.props.mk.instance.authorize()}
+          onBrowse={() => this.setState({ browsing: true })}
+        />
+      );
     }
 
     return this.props.children;

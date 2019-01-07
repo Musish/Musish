@@ -39,6 +39,10 @@ export default function Login(props) {
       <button type={'button'} onClick={props.onBrowse} className={classes.button}>
         Continue to browse
       </button>
+      <span className={classes.secureConnection}>
+        <i className={'fas fa-lock'} />
+        {' Secure authentication via Apple.com.'}
+      </span>
       <div className={classes.disclaimer}>
         <div className={classes.disclaimerIcon}>
           <span>
@@ -46,8 +50,9 @@ export default function Login(props) {
           </span>
         </div>
         <div className={classes.disclaimerText}>
-          Musi.sh is not affiliated or endorsed by Apple Inc. We do not intentionally collect or
-          store any personal information.
+          {
+            "Musi.sh is not affiliated with Apple, Inc. Our service does not access, collect, or store any personal or account information. 'Apple', 'Apple Music' and the Apple logo are trademarks of Apple, Inc."
+          }
         </div>
       </div>
     </div>

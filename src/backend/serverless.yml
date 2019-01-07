@@ -1,0 +1,19 @@
+service: musish
+
+custom:
+  secrets: ${file(secrets.json)}
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${self:custom.secrets.NODE_ENV}
+  region: us-east-1
+
+functions:
+  send:
+    handler: genius.song
+    events:
+      - http:
+          path: genius/song
+          method: get
+          cors: true

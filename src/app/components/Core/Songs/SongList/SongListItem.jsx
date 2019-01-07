@@ -1,35 +1,21 @@
 import React from 'react';
 
-import { ContextMenuTrigger } from 'react-contextmenu';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { DragSource } from 'react-dnd';
-import { createMediaItem, isPlaying, getTime } from '../../../../utils/Utils';
+import { createMediaItem, getTime } from '../../../../utils/Utils';
 import classes from './SongList.scss';
-import { MENU_TYPE } from './SongList';
 import withMK from '../../../../hoc/withMK';
 import SongDecoration from './SongDecoration';
 import DragDropType from '../../../../utils/Constants/DragDropType';
-
-function collect(props, { props: song, playSong, queueNext, queueLater, state: { artworkURL } }) {
-  return {
-    ...props,
-    song,
-    playSong,
-    queueNext,
-    queueLater,
-    artworkURL,
-  };
-}
+import ContextMenuTrigger from '../../../common/ContextMenu/ContextMenuTrigger';
+import SongContextMenu from './SongContextMenu';
+import { isSongPlaying } from '../../../../services/MusicPlayerApi';
 
 class SongListItem extends React.Component {
   constructor(props) {
     super(props);
 
-    this.playSong = this.playSong.bind(this);
-    this.pauseSong = this.pauseSong.bind(this);
-    this.queueNext = this.queueNext.bind(this);
-    this.queueLater = this.queueLater.bind(this);
     this.handleClick = this.handleClick.bind(this);
   }
 
@@ -42,32 +28,16 @@ class SongListItem extends React.Component {
     await music.player.play();
   }
 
-  async pauseSong() {
-    await this.props.mk.instance.player.pause();
-  }
-
-  async queueNext() {
-    await this.props.mk.instance.player.queue.prepend({
-      items: [createMediaItem(this.props.song)],
-    });
-  }
-
-  async queueLater() {
-    await this.props.mk.instance.player.queue.append({ items: [createMediaItem(this.props.song)] });
-  }
-
   async handleClick() {
-    if (this.isPlaying()) {
-      this.pauseSong();
-    } else {
-      this.playSong();
-    }
+    const { song, songs, index } = this.props;
+
+    this.props.playSong({ song, songs, index });
   }
 
   isPlaying() {
     const { song } = this.props;
 
-    return isPlaying(song);
+    return isSongPlaying(song);
   }
 
   renderDecoration() {
@@ -77,7 +47,7 @@ class SongListItem extends React.Component {
   }
 
   render() {
-    const { showArtist, showAlbum, song, connectDragSource, isOver } = this.props;
+    const { showArtist, showAlbum, song, connectDragSource, isOver, songs, index } = this.props;
     const { attributes } = song;
 
     if (!attributes) {
@@ -116,9 +86,9 @@ class SongListItem extends React.Component {
         style={this.props.style}
       >
         <ContextMenuTrigger
-          id={MENU_TYPE}
           attributes={{ className: [classes.songWrapper] }}
-          collect={props => collect(props, this)}
+          holdToDisplay={-1}
+          render={() => <SongContextMenu song={song} songs={songs} index={index} />}
         >
           <div className={classes.songBacker} />
           {this.renderDecoration()}
@@ -154,6 +124,7 @@ SongListItem.propTypes = {
   mk: PropTypes.any.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   isOver: PropTypes.bool,
+  playSong: PropTypes.func.isRequired,
 };
 
 SongListItem.defaultProps = {

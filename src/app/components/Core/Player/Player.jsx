@@ -7,12 +7,19 @@ import {
   RepeatModeAll,
   RepeatModeNone,
   RepeatModeOne,
-  ShuffleModeOff,
-  ShuffleModeSongs,
   getTime,
 } from '../../../utils/Utils';
 import withMK from '../../../hoc/withMK';
 import QueueContext from './Queue/QueueContext';
+import LyricsModalContext from './Lyrics/LyricsModalContext';
+import {
+  isShuffled,
+  pause,
+  play,
+  seekToTime,
+  shuffle,
+  unShuffle,
+} from '../../../services/MusicPlayerApi';
 
 class Player extends React.Component {
   constructor(props) {
@@ -25,12 +32,9 @@ class Player extends React.Component {
 
     this.handlePrevious = this.handlePrevious.bind(this);
     this.handleNext = this.handleNext.bind(this);
-    this.scrubToTime = this.scrubToTime.bind(this);
     this.onStartScrubbing = this.onStartScrubbing.bind(this);
     this.onEndScrubbing = this.onEndScrubbing.bind(this);
     this.onScrub = this.onScrub.bind(this);
-    this.handlePlay = this.handlePlay.bind(this);
-    this.handlePause = this.handlePause.bind(this);
 
     this.handleAddToLibrary = this.handleAddToLibrary.bind(this);
     this.handleRepeat = this.handleRepeat.bind(this);
@@ -50,18 +54,6 @@ class Player extends React.Component {
     }
 
     return Math.floor((time * 100) / duration);
-  }
-
-  async scrubToTime(time) {
-    await this.props.mk.instance.player.seekToTime(time);
-  }
-
-  handlePlay() {
-    this.props.mk.instance.player.play();
-  }
-
-  handlePause() {
-    this.props.mk.instance.player.pause();
   }
 
   handlePrevious() {
@@ -104,13 +96,11 @@ class Player extends React.Component {
     this.forceUpdate();
   }
 
-  handleShuffle() {
-    const { player } = this.props.mk.instance;
-
-    if (player.shuffleMode === ShuffleModeOff) {
-      player.shuffleMode = ShuffleModeSongs;
+  async handleShuffle() {
+    if (isShuffled()) {
+      await unShuffle();
     } else {
-      player.shuffleMode = ShuffleModeOff;
+      await shuffle();
     }
 
     this.forceUpdate();
@@ -181,8 +171,8 @@ class Player extends React.Component {
             #fe2851 ${percent}%,
             #cccccc ${percent}%,
             #cccccc ${bufferPercent}%,
-            #ffffff ${bufferPercent}%,
-            #ffffff 100%
+            #eeeeee ${bufferPercent}%,
+            #eeeeee 100%
           ) no-repeat`,
         }}
         type={'range'}
@@ -211,7 +201,7 @@ class Player extends React.Component {
   }
 
   async onEndScrubbing(e) {
-    await this.scrubToTime(e.target.value / 1000);
+    await seekToTime(e.target.value / 1000);
 
     this.setState({
       isScrubbing: false,
@@ -242,10 +232,9 @@ class Player extends React.Component {
 
     const artworkURL = artworkForMediaItem(nowPlayingItem, 60);
 
-    const { repeatMode, shuffleMode } = mk.instance.player;
+    const { repeatMode } = mk.instance.player;
 
     const isRepeating = repeatMode === RepeatModeOne || repeatMode === RepeatModeAll;
-    const isShuffling = shuffleMode === ShuffleModeSongs;
 
     return (
       <div className={styles.player}>
@@ -269,11 +258,11 @@ class Player extends React.Component {
             <i className={'fas fa-backward'} />
           </span>
           {mk.instance.player.isPlaying ? (
-            <span className={styles.main} onClick={this.handlePause}>
+            <span className={styles.main} onClick={pause}>
               <i className={'fas fa-pause'} />
             </span>
           ) : (
-            <span className={styles.main} onClick={this.handlePlay}>
+            <span className={styles.main} onClick={play}>
               <i className={'fas fa-play'} />
             </span>
           )}
@@ -289,7 +278,15 @@ class Player extends React.Component {
               <div className={styles.volumeBarWrapper}>
                 <input
                   className={cx(styles['progress-bar'], styles.volumeBar)}
-                  style={{ backgroundSize: `${mk.instance.player.volume * 100}% 100%` }}
+                  style={{
+                    background: `linear-gradient(
+                      to right,
+                      #fe2851 0%,
+                      #fe2851 ${mk.instance.player.volume * 100}%,
+                      #cccccc ${mk.instance.player.volume * 100}%,
+                      #cccccc 100%
+                    ) no-repeat`,
+                  }}
                   type={'range'}
                   value={mk.instance.player.volume}
                   onChange={this.handleVolumeChange}
@@ -312,16 +309,24 @@ class Player extends React.Component {
           </span>
 
           <span
-            className={cx(styles.controls, { [styles.enabled]: isShuffling })}
+            className={cx(styles.controls, { [styles.enabled]: isShuffled() })}
             onClick={this.handleShuffle}
           >
             <i className={'fas fa-random'} />
           </span>
 
+          <LyricsModalContext.Consumer>
+            {({ open }) => (
+              <span className={cx(styles.controls)} onClick={() => open(nowPlayingItem)}>
+                <i className={'fas fa-align-left'} />
+              </span>
+            )}
+          </LyricsModalContext.Consumer>
+
           <QueueContext.Consumer>
             {({ show, doShow, doHide }) => (
               <span
-                className={cx(styles.controls, styles.queueWrapper, { [styles.enabled]: show })}
+                className={cx(styles.controls, { [styles.enabled]: show })}
                 onClick={show ? doHide : doShow}
               >
                 <i className={'fas fa-list-ol'} />

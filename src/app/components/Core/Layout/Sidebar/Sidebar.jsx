@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Player from '../../Player/Player';
 import classes from './Sidebar.scss';
-import MenuItem from './MenuItem';
 import PlaylistMenuItem from './PlaylistMenuItem';
 import withMK from '../../../../hoc/withMK';
+import SidebarMenu from './SidebarMenu';
+import SidebarLibraryMenu from './SidebarLibraryMenu';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -37,15 +38,15 @@ class Sidebar extends React.Component {
         />
       ));
     const library = this.props.mk.instance.isAuthorized ? (
-      <div className={classes.menu}>
-        <h3>My Library</h3>
-        <ul>
-          <MenuItem to={'/'} label={'For You'} />
-          <MenuItem to={'/artists'} exact={false} label={'Artists'} />
-          <MenuItem to={'/albums'} exact={false} label={'Albums'} />
-          <MenuItem to={'/songs'} label={'Songs'} />
-        </ul>
-      </div>
+      <SidebarLibraryMenu
+        title={'My Library'}
+        items={[
+          { to: '/artists', label: 'Artists' },
+          { to: '/albums', label: 'Albums' },
+          { to: '/songs', label: 'Songs' },
+          { to: '/playlists', label: 'Playlists' },
+        ]}
+      />
     ) : (
       <></>
     );
@@ -53,14 +54,15 @@ class Sidebar extends React.Component {
     return (
       <aside className={classes.sidebar}>
         <div className={classes.menus}>
+          <SidebarMenu
+            title={'Apple music'}
+            items={[
+              { to: '/', label: 'For You' },
+              { to: '/browse', label: 'Browse' },
+              { to: '/radio', label: 'Radio' },
+            ]}
+          />
           {library}
-          <div className={classes.menu}>
-            <h3>Apple Music</h3>
-            <ul>
-              <MenuItem to={'/browse'} label={'Browse'} />
-              <MenuItem to={'/radio'} label={'Radio'} />
-            </ul>
-          </div>
           {playlists && (
             <div className={classes.menu}>
               <h3>Playlists</h3>

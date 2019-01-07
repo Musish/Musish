@@ -14,7 +14,9 @@ git rm -rf .
 cp /tmp/CNAME ./CNAME || echo "No CNAME file"
 cd ..
 
-echo "JWT_TOKEN=$JWT_TOKEN" > .env
+touch .env
+echo "JWT_TOKEN=$JWT_TOKEN" >> .env
+echo "GENIUS_SONG_API_URL=$GENIUS_SONG_API_URL" >> .env
 
 yarn build
 
@@ -30,3 +32,14 @@ git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-emp
 
 git push origin $TARGET_BRANCH
 cd ..
+
+cd src/backend
+cat >./secrets.json <<EOF
+{
+  "NODE_ENV": "prod",
+  "GENIUS_API_KEY": "$GENIUS_API_KEY"
+}
+EOF
+
+serverless deploy
+cd ../..

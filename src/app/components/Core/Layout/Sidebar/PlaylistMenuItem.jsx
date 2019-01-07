@@ -1,11 +1,11 @@
 import React from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Link, Route, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 import cx from 'classnames';
 import DragDropType from '../../../../utils/Constants/DragDropType';
 import classes from './Sidebar.scss';
-import MusicApi from '../../../../services/MusicApi';
+import * as MusicApi from '../../../../services/MusicApi';
 
 function PlaylistMenuItem(props) {
   const { playlist, connectDropTarget, isDndOver, activeDndItem } = props;
@@ -18,7 +18,7 @@ function PlaylistMenuItem(props) {
           <Link
             to={to}
             className={cx(
-              { [classes.active]: match },
+              { [classes.active]: !!match },
               { [classes.dndSeeking]: activeDndItem },
               { [classes.dndHovered]: isDndOver }
             )}
@@ -53,7 +53,7 @@ const dndSpec = {
 
     switch (monitor.getItemType()) {
       case DragDropType.SONG:
-        MusicApi.addSongsToPlaylist(playlist.id, [item.id]);
+        MusicApi.addSongsToPlaylist(playlist.id, [item.song.id]);
         break;
       case DragDropType.ALBUM:
         MusicApi.addAlbumToPlaylist(playlist.id, item.album);
@@ -71,4 +71,4 @@ export default DropTarget(
   [DragDropType.SONG, DragDropType.ALBUM, DragDropType.PLAYLIST],
   dndSpec,
   collect
-)(PlaylistMenuItem);
+)(withRouter(PlaylistMenuItem));

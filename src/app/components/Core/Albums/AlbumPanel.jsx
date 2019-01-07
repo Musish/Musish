@@ -5,8 +5,9 @@ import classes from './AlbumPanel.scss';
 import { artworkForMediaItem, humanifyMillis } from '../../../utils/Utils';
 import SongList from '../Songs/SongList/SongList';
 import Loader from '../../common/Loader';
+import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
 
-export default class AlbumsPanel extends React.Component {
+export default class AlbumPanel extends React.Component {
   constructor(props) {
     super(props);
 
@@ -15,6 +16,8 @@ export default class AlbumsPanel extends React.Component {
     };
 
     this.ref = React.createRef();
+
+    this.playSong = this.playSong.bind(this);
   }
 
   async componentDidMount() {
@@ -33,6 +36,10 @@ export default class AlbumsPanel extends React.Component {
       album,
       runtime: humanifyMillis(albumLength),
     });
+  }
+
+  playSong({ index }) {
+    MusicPlayerApi.playAlbum(this.state.album, index);
   }
 
   render() {
@@ -60,7 +67,11 @@ export default class AlbumsPanel extends React.Component {
           <span className={classes.title}>{album.attributes.name}</span>
           <span className={classes.subtitle}>{album.attributes.artistName}</span>
           {album.relationships ? (
-            <SongList scrollElement={this.ref} load={() => album.relationships.tracks.data} />
+            <SongList
+              scrollElement={this.ref}
+              load={() => album.relationships.tracks.data}
+              playSong={this.playSong}
+            />
           ) : (
             <Loader />
           )}
@@ -70,12 +81,12 @@ export default class AlbumsPanel extends React.Component {
   }
 }
 
-AlbumsPanel.propTypes = {
+AlbumPanel.propTypes = {
   id: PropTypes.any,
   album: PropTypes.any,
 };
 
-AlbumsPanel.defaultProps = {
+AlbumPanel.defaultProps = {
   id: null,
   album: null,
 };

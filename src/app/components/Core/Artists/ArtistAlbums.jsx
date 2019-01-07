@@ -21,9 +21,9 @@ export default class ArtistAlbums extends React.Component {
 
     let artist;
     if (isCatalog) {
-      artist = await music.api.artist(this.props.id, { include: 'albums' });
+      artist = await music.api.artist(id, { include: 'albums' });
     } else {
-      artist = await music.api.library.artist(this.props.id, { include: 'albums' });
+      artist = await music.api.library.artist(id, { include: 'albums' });
     }
 
     this.setState({
