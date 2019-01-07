@@ -45,16 +45,6 @@ export function getPlayingItem() {
   return MusicKit.getInstance().player.nowPlayingItem;
 }
 
-function getPosition(items, item) {
-  return items.reduce((index, currentItem, i) => {
-    if (isSame(currentItem, item)) {
-      return i;
-    }
-
-    return index;
-  }, 0);
-}
-
 export async function shuffle() {
   const currentQueue = getQueueItems();
   if (!isShuffled()) {
