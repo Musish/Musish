@@ -1,4 +1,4 @@
-service: raphaelvigee-com
+service: musish
 
 custom:
   secrets: ${file(secrets.json)}

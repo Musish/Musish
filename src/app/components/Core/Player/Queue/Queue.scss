@@ -12,6 +12,8 @@
   border-radius: 8px;
   box-shadow: 0 8px 36px -10px rgba(150, 150, 150, 0.75);
   animation: fadein 0.1s;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
@@ -23,6 +25,8 @@
   border-bottom: solid 1px #eeeeee;
   cursor: pointer;
   padding: 0 15px;
+  flex-shrink: 0;
+  flex-grow: 0;
 
   > div {
     height: 100%;
