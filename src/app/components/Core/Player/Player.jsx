@@ -163,7 +163,9 @@ class Player extends React.Component {
       mediaItem: { item: nowPlayingItem },
       playbackTime,
     } = this.props.mk;
-    const duration = nowPlayingItem.playbackDuration / 1000;
+    const duration = this.props.mk.instance.isAuthorized
+      ? nowPlayingItem.playbackDuration / 1000
+      : 30;
     const percent = playbackTime
       ? Player.timeToPercent(playbackTime.currentPlaybackTime, duration)
       : 0;
@@ -189,7 +191,7 @@ class Player extends React.Component {
         onMouseDown={this.onStartScrubbing}
         onMouseUp={this.onEndScrubbing}
         min={0}
-        max={nowPlayingItem.playbackDuration}
+        max={duration * 1000}
         step={0.01}
       />
     );
