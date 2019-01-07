@@ -11,6 +11,7 @@ import {
 } from '../../../utils/Utils';
 import withMK from '../../../hoc/withMK';
 import QueueContext from './Queue/QueueContext';
+import LyricsModalContext from './Lyrics/LyricsModalContext';
 import {
   isShuffled,
   pause,
@@ -312,10 +313,18 @@ class Player extends React.Component {
             <i className={'fas fa-random'} />
           </span>
 
+          <LyricsModalContext.Consumer>
+            {({ open }) => (
+              <span className={cx(styles.controls)} onClick={() => open(nowPlayingItem)}>
+                <i className={'fas fa-align-left'} />
+              </span>
+            )}
+          </LyricsModalContext.Consumer>
+
           <QueueContext.Consumer>
             {({ show, doShow, doHide }) => (
               <span
-                className={cx(styles.controls, styles.queueWrapper, { [styles.enabled]: show })}
+                className={cx(styles.controls, { [styles.enabled]: show })}
                 onClick={show ? doHide : doShow}
               >
                 <i className={'fas fa-list-ol'} />
