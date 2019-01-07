@@ -26,9 +26,6 @@ jobs:
             - node_modules
             - src/backend/node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}-{{ checksum "src/backend/yarn.lock" }}
-#      - run:
-#          name: Run tests
-#          command: npm test
       - deploy:
           name: Deploy
           command: ./.circleci/deploy.sh
