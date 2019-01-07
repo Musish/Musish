@@ -8,18 +8,25 @@ class Logout extends Component {
     super(props);
 
     this.logout = this.logout.bind(this);
+    this.login = this.login.bind(this);
   }
 
   async logout() {
     await this.props.mk.instance.unauthorize();
   }
 
+  async login() {
+    await this.props.mk.instance.authorize();
+  }
+
   render() {
-    return (
-      <div className={classes.logoutWrapper}>
-        <span onClick={this.logout}>Logout</span>
-      </div>
+    const button = this.props.mk.instance.isAuthorized ? (
+      <span onClick={this.logout}>Logout</span>
+    ) : (
+      <span onClick={this.login}>Login</span>
     );
+
+    return <div className={classes.logoutWrapper}>{button}</div>;
   }
 }
 
@@ -27,4 +34,8 @@ Logout.propTypes = {
   mk: PropTypes.any.isRequired,
 };
 
-export default withMK(Logout);
+const bindings = {
+  [MusicKit.Events.authorizationStatusDidChange]: 'authorization',
+};
+
+export default withMK(Logout, bindings);
