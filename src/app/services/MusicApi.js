@@ -1,15 +1,16 @@
 import axios from 'axios';
+import Alert from 'react-s-alert';
 import { API_URL } from '../utils/Utils';
 
 export function getNextSongs(path) {
   return axios({
     method: 'get',
     url: `${API_URL}${path}`,
-    headers: this.getHeaders(),
+    headers: getHeaders(),
   });
 }
 
-export function addSongsToPlaylist(playlistId, songs) {
+export async function addSongsToPlaylist(playlistId, songs) {
   const payload = {
     data: songs.map(song => ({
       id: song,
@@ -17,12 +18,17 @@ export function addSongsToPlaylist(playlistId, songs) {
     })),
   };
 
-  return axios({
-    method: 'post',
-    url: `${API_URL}/v1/me/library/playlists/${playlistId}/tracks`,
-    data: payload,
-    headers: this.getHeaders(),
-  });
+  try {
+    await axios({
+      method: 'post',
+      url: `${API_URL}/v1/me/library/playlists/${playlistId}/tracks`,
+      data: payload,
+      headers: getHeaders(),
+    });
+    Alert.success("Added to your playlist, it'll show up in a few seconds. Hold tight!");
+  } catch (error) {
+    Alert.error("You're unable to add songs to this playlist.");
+  }
 }
 
 export async function addAlbumToPlaylist(playlistId, albumId) {
@@ -37,16 +43,7 @@ export async function addAlbumToPlaylist(playlistId, albumId) {
     type: 'song',
   }));
 
-  const payload = {
-    data: tracks,
-  };
-
-  return axios({
-    method: 'post',
-    url: `${API_URL}/v1/me/library/playlists/${playlistId}/tracks`,
-    data: payload,
-    headers: this.getHeaders(),
-  });
+  await addSongsToPlaylist(playlistId, tracks);
 }
 
 export async function addPlaylistToPlaylist(playlistId, sourcePlaylistId) {
@@ -61,16 +58,20 @@ export async function addPlaylistToPlaylist(playlistId, sourcePlaylistId) {
     type: 'song',
   }));
 
-  const payload = {
-    data: tracks,
-  };
+  await addSongsToPlaylist(playlistId, tracks);
+}
 
-  return axios({
-    method: 'post',
-    url: `${API_URL}/v1/me/library/playlists/${playlistId}/tracks`,
-    data: payload,
-    headers: this.getHeaders(),
-  });
+export async function addToLibrary(mediaType, songs) {
+  try {
+    await axios({
+      method: 'post',
+      url: `${API_URL}/v1/me/library?ids[${mediaType}]=${songs.map(s => s).join(',')}`,
+      headers: getHeaders(),
+    });
+    Alert.success("Added to your library, it'll show up in a few seconds. Hold tight!");
+  } catch (error) {
+    Alert.error("We're unable to add these songs to your library.");
+  }
 }
 
 export function getHeaders() {

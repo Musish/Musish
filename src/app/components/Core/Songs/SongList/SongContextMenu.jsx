@@ -1,11 +1,12 @@
 import React from 'react';
 import { MenuItem } from 'react-contextmenu';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { artworkForMediaItem } from '../../../../utils/Utils';
 import classes from './SongContextMenu.scss';
 import { playLater, playNext, playSong } from '../../../../services/MusicPlayerApi';
 
-export default function SongContextMenu({ song, songs, index }) {
+function SongContextMenu({ song, songs, index }) {
   const { attributes } = song;
   const artworkURL = artworkForMediaItem(song, 60);
   const inLibrary = attributes.playParams.isLibrary;
@@ -51,3 +52,5 @@ SongContextMenu.propTypes = {
   song: PropTypes.any.isRequired,
   songs: PropTypes.array.isRequired,
 };
+
+export default withRouter(SongContextMenu);

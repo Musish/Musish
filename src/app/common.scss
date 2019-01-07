@@ -79,4 +79,8 @@ img {
 
   @import 'styles/Vendor/react-contextmenu';
   @import 'styles/Vendor/github-fork-ribbon-css';
+  @import '~react-s-alert/dist/s-alert-default';
+  @import '~react-s-alert/dist/s-alert-css-effects/slide';
+  @import './assets/Styles/toaster';
+  @import './assets/Styles/contextMenu';
 }

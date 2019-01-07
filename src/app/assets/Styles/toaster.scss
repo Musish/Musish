@@ -1,0 +1,35 @@
+.s-alert-box,
+.s-alert-box * {
+  box-sizing: border-box;
+}
+
+.s-alert-box {
+  background: #ffffff;
+  box-shadow: 0 5px 20px -3px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+}
+
+.s-alert-close::before,
+.s-alert-close::after {
+  background: #666666;
+}
+
+.s-alert-info {
+  background: #fff;
+  color: #00A2D3;
+}
+
+.s-alert-success {
+  background: #fff;
+  color: #27AE60;
+}
+
+.s-alert-warning {
+  background: #fff;
+  color: #F1C40F;
+}
+
+.s-alert-error {
+  background: #fff;
+  color: #E74C3C;
+}

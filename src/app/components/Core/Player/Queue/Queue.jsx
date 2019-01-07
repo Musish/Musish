@@ -57,7 +57,7 @@ class Queue extends Component {
                 <div className={classes.title}>
                   <span>
                     <i className="fas fa-grip-vertical" />
-                    {' Next up'}
+                    {' Up next'}
                   </span>
                 </div>
                 <div className={classes.icons} onClick={doHide}>

@@ -87,6 +87,7 @@ class SongListItem extends React.Component {
       >
         <ContextMenuTrigger
           attributes={{ className: [classes.songWrapper] }}
+          holdToDisplay={-1}
           render={() => <SongContextMenu song={song} songs={songs} index={index} />}
         >
           <div className={classes.songBacker} />
