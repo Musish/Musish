@@ -4,6 +4,7 @@ jobs:
     branches:
       only:
         - master
+        - feature/lyrics
     docker:
       - image: circleci/node:8
     environment:
@@ -12,18 +13,19 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies-{{ checksum "yarn.lock" }}-{{ checksum "src/backend/yarn.lock" }}
             - v1-dependencies-
       - run:
           name: Install dependencies
           command: yarn
-#      - run:
-#          name: Install Serverless CLI and dependencies
-#          command: sudo npm i -g serverless
+      - run:
+          name: Install Serverless CLI
+          command: sudo npm i -g serverless
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+            - src/backend/node_modules
+          key: v1-dependencies-{{ checksum "yarn.lock" }}-{{ checksum "src/backend/yarn.lock" }}
 #      - run:
 #          name: Run tests
 #          command: npm test
