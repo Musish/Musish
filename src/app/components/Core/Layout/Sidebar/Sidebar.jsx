@@ -18,7 +18,9 @@ class Sidebar extends React.Component {
 
   async componentDidMount() {
     const music = MusicKit.getInstance();
-    const playlists = await music.api.library.playlists();
+    const playlists = this.props.mk.instance.isAuthorized
+      ? await music.api.library.playlists()
+      : null;
 
     this.setState({
       playlists,
@@ -26,8 +28,10 @@ class Sidebar extends React.Component {
   }
 
   render() {
+    const authorized = this.props.mk.instance.isAuthorized;
+
     const playlists =
-      this.props.mk.instance.isAuthorized &&
+      authorized &&
       this.state.playlists &&
       this.state.playlists.map(playlist => (
         <PlaylistMenuItem
@@ -37,7 +41,7 @@ class Sidebar extends React.Component {
           key={playlist.id}
         />
       ));
-    const library = this.props.mk.instance.isAuthorized ? (
+    const library = authorized ? (
       <SidebarLibraryMenu
         title={'My Library'}
         items={[
@@ -50,18 +54,26 @@ class Sidebar extends React.Component {
     ) : (
       <></>
     );
+    const appleMusic = authorized ? (
+      <SidebarMenu
+        title={'Apple music'}
+        items={[
+          { to: '/', label: 'For You' },
+          { to: '/browse', label: 'Browse' },
+          { to: '/radio', label: 'Radio' },
+        ]}
+      />
+    ) : (
+      <SidebarMenu
+        title={'Apple music'}
+        items={[{ to: '/browse', label: 'Browse' }, { to: '/radio', label: 'Radio' }]}
+      />
+    );
 
     return (
       <aside className={classes.sidebar}>
         <div className={classes.menus}>
-          <SidebarMenu
-            title={'Apple music'}
-            items={[
-              { to: '/', label: 'For You' },
-              { to: '/browse', label: 'Browse' },
-              { to: '/radio', label: 'Radio' },
-            ]}
-          />
+          {appleMusic}
           {library}
           {playlists && (
             <div className={classes.menu}>
