@@ -18,6 +18,8 @@ touch .env
 echo "JWT_TOKEN=$JWT_TOKEN" >> .env
 echo "GENIUS_SONG_API_URL=$GENIUS_SONG_API_URL" >> .env
 
+cat .env
+
 yarn build
 
 cp -a build/. out/.
