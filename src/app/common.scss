@@ -64,6 +64,7 @@ img {
     display: flex;
     flex: 1;
     width: 100%;
+    overflow: auto;
 
     > aside {
       overflow-y: auto;
