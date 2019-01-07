@@ -1,5 +1,5 @@
 import React from 'react';
 
-const LyricsModalContext = React.createContext({ song: null });
+const LyricsModalContext = React.createContext({ open: false });
 
 export default LyricsModalContext;

@@ -7,11 +7,15 @@ import classes from './LyricsModal.scss';
 import Lyrics from './Lyrics';
 import LyricsModalContext from './LyricsModalContext';
 import withContext from '../../../../hoc/withContext';
+import withMK from '../../../../hoc/withMK';
+import { getPlayingItem } from '../../../../services/MusicPlayerApi';
 
-function LyricsModal({ lyricsSong, close }) {
-  if (!lyricsSong) {
+function LyricsModal({ opened, close, mk }) {
+  if (!opened) {
     return null;
   }
+
+  const nowPlaying = getPlayingItem();
 
   return (
     <Draggable handle={'.handle'} defaultPosition={{ x: 0, y: 0 }} position={null}>
@@ -29,20 +33,25 @@ function LyricsModal({ lyricsSong, close }) {
             </span>
           </div>
         </div>
-        <Lyrics key={lyricsSong.id} song={lyricsSong} />
+        {nowPlaying ? <Lyrics key={nowPlaying.id} song={nowPlaying} /> : '...'}
       </div>
     </Draggable>
   );
 }
 
 LyricsModal.propTypes = {
-  lyricsSong: PropTypes.any,
+  opened: PropTypes.bool,
   close: PropTypes.func,
+  mk: PropTypes.any.isRequired,
 };
 
 LyricsModal.defaultProps = {
-  lyricsSong: null,
+  opened: null,
   close: null,
 };
 
-export default withContext(LyricsModal, LyricsModalContext);
+const bindings = {
+  [MusicKit.Events.mediaItemDidChange]: 'mediaItem',
+};
+
+export default withMK(withContext(LyricsModal, LyricsModalContext), bindings);

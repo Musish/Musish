@@ -32,7 +32,7 @@ class Lyrics extends React.Component {
     const qsName = encodeURIComponent(song.attributes.name);
     const qsArtist = encodeURIComponent(song.attributes.artistName);
 
-    const { data } = await backend.get(`?name=${qsName}&artist=${qsArtist}`);
+    const { data } = await backend.get(`/genius/song?name=${qsName}&artist=${qsArtist}`);
 
     this.setState({
       geniusSong: data,

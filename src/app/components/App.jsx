@@ -7,7 +7,6 @@ import MusicKitProvider from './MusicKitProvider';
 import MusicKitAuthorizeProvider from './MusicKitAuthorizeProvider';
 import AlbumsPage from './Core/Albums/AlbumsPage';
 import Layout from './Core/Layout/Layout';
-import ArtistPage from './Core/Artists/ArtistPage';
 import ArtistsPage from './Core/Artists/ArtistsPage';
 import Playlist from './Core/Playlists/PlaylistPage';
 import SongsPage from './Core/Songs/SongsPage';
@@ -29,7 +28,7 @@ class App extends React.Component {
     this.state = {
       showQueue: false,
       modalsContents: [],
-      lyricsSong: null,
+      lyricsModalOpen: false,
     };
   }
 
@@ -52,9 +51,9 @@ class App extends React.Component {
     };
 
     const lyricsModalState = {
-      lyricsSong: this.state.lyricsSong,
-      open: lyricsSong => this.setState({ lyricsSong }),
-      close: () => this.setState({ lyricsSong: null }),
+      opened: this.state.lyricsModalOpen,
+      open: () => this.setState({ lyricsModalOpen: true }),
+      close: () => this.setState({ lyricsModalOpen: false }),
     };
 
     return (
