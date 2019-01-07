@@ -30,3 +30,16 @@ git commit -m "Automated deployment to GitHub Pages: ${CIRCLE_SHA1}" --allow-emp
 
 git push origin $TARGET_BRANCH
 cd ..
+
+cd src/backend
+cat >./secrets.json <<EOF
+{
+  "NODE_ENV": "prod",
+  "GENIUS_API_KEY": "$GENIUS_API_KEY"
+}
+EOF
+
+yarn
+
+serverless deploy
+cd ../..
