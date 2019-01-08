@@ -10,10 +10,17 @@ provider:
   region: us-east-1
 
 functions:
-  send:
-    handler: genius.song
+  genius-song:
+    handler: genius/song.details
     events:
       - http:
           path: genius/song
+          method: get
+          cors: true
+  genius-artist:
+    handler: genius/artist.details
+    events:
+      - http:
+          path: genius/artist
           method: get
           cors: true

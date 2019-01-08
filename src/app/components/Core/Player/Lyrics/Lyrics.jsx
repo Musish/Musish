@@ -4,10 +4,12 @@ import backend from '../../../../services/Backend';
 import Loader from '../../../common/Loader';
 
 const iframeCss = `
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 <style>
   body, html {
       margin: 0;
       padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Roboto', sans-serif;
   }
   
   .rg_embed {
