@@ -1,6 +1,6 @@
 const querystring = require('querystring');
 const secrets = require('../secrets.json');
-const utils = require('../utils.json');
+const utils = require('../utils');
 
 const axios = require('axios').create({
   baseURL: 'https://api.genius.com',

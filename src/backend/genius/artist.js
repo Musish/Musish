@@ -1,13 +1,8 @@
-const querystring = require('querystring');
 const secrets = require('../secrets.json');
-const utils = require('../utils.js');
+const utils = require('../utils');
+const appleMusicApi = require('../appleMusicApi');
 
-const axios = require('axios').create({
-  baseURL: 'https://api.genius.com',
-  headers: {
-    Authorization: `Bearer ${secrets.GENIUS_API_KEY}`,
-  },
-});
+const axios = require('axios');
 
 async function findMatch(hits) {
   if(hits.length === 0) {
@@ -15,9 +10,7 @@ async function findMatch(hits) {
   }
 
   for (const hit of hits) {
-    console.log(hit);
     if (hit.type === "artist") {
-      console.log('hit artist');
       return hit.result;
     }
   }
@@ -26,15 +19,23 @@ async function findMatch(hits) {
 }
 
 async function fetchArtist(hit) {
-  const {data} = await axios.get(hit.api_path);
-  console.log('api_path', data);
+  const {data} = await axios.get(`https://api.genius.com${hit.api_path}`, {
+    headers: {
+      Authorization: `Bearer ${secrets.GENIUS_API_KEY}`,
+    }
+  });
 
-  return data.response.artist;
+  const artist = data.response.artist;
+  delete artist.current_user_metadata;
+
+  console.log(artist);
+
+  return artist;
 }
 
 async function fetchHits(artist) {
   try {
-    const { data } = await axios.get(`https://genius.com/api/search/multi?q=${artist}`, { 'headers': {} });
+    const { data } = await axios.get(`https://genius.com/api/search/multi?q=${artist}`);
 
     const { hits } = data.response.sections.find(s => s.type === 'artist');
 
@@ -46,8 +47,12 @@ async function fetchHits(artist) {
   return null;
 }
 
-async function handle({ artist }) {
-  const hits = await fetchHits(artist);
+async function handle({ artistId }) {
+  console.log('!!! artistId: ', artistId);
+  const appleArtistData = await appleMusicApi.fetchArtist(artistId);
+  const artistName = appleArtistData.attributes.name;
+
+  const hits = await fetchHits(artistName);
 
   if (!hits) {
     return null;
@@ -55,7 +60,7 @@ async function handle({ artist }) {
 
   const match = await findMatch(hits);
 
-  if(match) {
+  if (match) {
     return await fetchArtist(match);
   }
 
