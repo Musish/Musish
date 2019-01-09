@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classes from './Logout.scss';
+import classes from './Authorize.scss';
 import withMK from '../../../../../hoc/withMK';
 
-class Logout extends Component {
+class Authorize extends Component {
   constructor(props) {
     super(props);
 
@@ -26,11 +26,11 @@ class Logout extends Component {
       <span onClick={this.login}>Login</span>
     );
 
-    return <div className={classes.logoutWrapper}>{button}</div>;
+    return <div className={classes.authorizeWrapper}>{button}</div>;
   }
 }
 
-Logout.propTypes = {
+Authorize.propTypes = {
   mk: PropTypes.any.isRequired,
 };
 
@@ -38,4 +38,4 @@ const bindings = {
   [MusicKit.Events.authorizationStatusDidChange]: 'authorization',
 };
 
-export default withMK(Logout, bindings);
+export default withMK(Authorize, bindings);
