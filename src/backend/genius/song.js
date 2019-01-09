@@ -1,5 +1,6 @@
 const querystring = require('querystring');
-const secrets = require('./secrets.json');
+const secrets = require('../secrets.json');
+const utils = require('../utils');
 
 const axios = require('axios').create({
   baseURL: 'https://api.genius.com',
@@ -7,33 +8,6 @@ const axios = require('axios').create({
     Authorization: `Bearer ${secrets.GENIUS_API_KEY}`,
   },
 });
-
-const corsOrigin = '*';
-
-function generateResponse (code, payload) {
-  return {
-    statusCode: code,
-    headers: {
-      'Access-Control-Allow-Origin': corsOrigin,
-      'Access-Control-Allow-Headers': 'x-requested-with',
-      'Access-Control-Allow-Credentials': true
-    },
-    body: JSON.stringify(payload)
-  }
-}
-
-function generateError (code, err) {
-  console.log(err);
-  return {
-    statusCode: code,
-    headers: {
-      'Access-Control-Allow-Origin': corsOrigin,
-      'Access-Control-Allow-Headers': 'x-requested-with',
-      'Access-Control-Allow-Credentials': true
-    },
-    body: JSON.stringify(err)
-  }
-}
 
 async function findMatch(hits) {
   if(hits.length === 0) {
@@ -87,15 +61,15 @@ async function handle({ name, artist }) {
 }
 
 module.exports = {
-  song: async function(event) {
+  details: async function(event) {
     const params = event.queryStringParameters;
 
     try {
       const hit = await handle(params);
 
-      return generateResponse(200, hit);
+      return utils.generateResponse(200, hit);
     } catch (e) {
-      return generateError(500, e);
+      return utils.generateError(500, e);
     }
   }
 };

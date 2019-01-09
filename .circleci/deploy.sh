@@ -16,7 +16,7 @@ cd ..
 
 touch .env
 echo "JWT_TOKEN=$JWT_TOKEN" >> .env
-echo "GENIUS_SONG_API_URL=$GENIUS_SONG_API_URL" >> .env
+echo "GENIUS_API_URL=$GENIUS_API_URL" >> .env
 
 yarn build
 
