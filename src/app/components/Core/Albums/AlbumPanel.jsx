@@ -58,9 +58,7 @@ export default class AlbumPanel extends React.Component {
             <img src={artworkURL} alt={album.attributes.name} />
           </div>
           <span className={classes.albumRuntimeDescription}>
-            {album.attributes.trackCount}
-            songs,
-            {runtime}
+            {`${album.attributes.trackCount} songs, ${runtime}`}
           </span>
         </div>
         <div className={classes.main} ref={this.ref}>
