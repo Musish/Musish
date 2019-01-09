@@ -41,19 +41,6 @@ class Sidebar extends React.Component {
           key={playlist.id}
         />
       ));
-    const library = authorized ? (
-      <SidebarLibraryMenu
-        title={'My Library'}
-        items={[
-          { to: '/artists', label: 'Artists' },
-          { to: '/albums', label: 'Albums' },
-          { to: '/songs', label: 'Songs' },
-          { to: '/playlists', label: 'Playlists' },
-        ]}
-      />
-    ) : (
-      <></>
-    );
     const appleMusic = authorized ? (
       <SidebarMenu
         title={'Apple music'}
@@ -74,7 +61,17 @@ class Sidebar extends React.Component {
       <aside className={classes.sidebar}>
         <div className={classes.menus}>
           {appleMusic}
-          {library}
+          {authorized && (
+            <SidebarLibraryMenu
+              title={'My Library'}
+              items={[
+                { to: '/artists', label: 'Artists' },
+                { to: '/albums', label: 'Albums' },
+                { to: '/songs', label: 'Songs' },
+                { to: '/playlists', label: 'Playlists' },
+              ]}
+            />
+          )}
           {playlists && (
             <div className={classes.menu}>
               <h3>Playlists</h3>
