@@ -95,7 +95,7 @@ class ArtistPage extends React.Component {
           </div>
         )}
         <PageTitle title={artist ? artist.attributes.name : '...'} context={'Apple Music'} />
-        <p>{geniusData && geniusData.plainDescription}</p>
+        {geniusData && geniusData.plainDescription}
         <h3>Albums</h3>
 
         {artist && (

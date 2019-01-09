@@ -15,6 +15,7 @@ module.exports = {
       return data.data[0];
     } catch (error) {
       console.error(error);
+      return null;
     }
   },
 };
