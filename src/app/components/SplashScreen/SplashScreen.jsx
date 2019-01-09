@@ -2,11 +2,12 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import classes from './Login.scss';
+import classes from './SplashScreen.scss';
 
-class Login extends React.Component {
+class SplashScreen extends React.Component {
   constructor(props) {
     super(props);
+
     this.loginNavigate = this.loginNavigate.bind(this);
     this.browseNavigate = this.browseNavigate.bind(this);
   }
@@ -23,7 +24,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className={classes.loginContainer}>
+      <div className={classes.splashContainer}>
         <a
           className="github-fork-ribbon"
           href="https://github.com/Musish/Musish"
@@ -78,10 +79,10 @@ class Login extends React.Component {
   }
 }
 
-Login.propTypes = {
+SplashScreen.propTypes = {
   onClick: PropTypes.func.isRequired,
   onBrowse: PropTypes.func.isRequired,
   history: PropTypes.any.isRequired,
 };
 
-export default withRouter(Login);
+export default withRouter(SplashScreen);

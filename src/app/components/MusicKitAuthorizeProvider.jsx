@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Login from './Login/Login';
+import SplashScreen from './SplashScreen/SplashScreen';
 import TokenLoader from './LoginLoader/LoginLoader';
 import withMK from '../hoc/withMK';
 
@@ -57,7 +57,7 @@ class MusicKitAuthorizeProvider extends React.Component {
 
     if (!isAuthorized && !this.state.browsing) {
       return (
-        <Login
+        <SplashScreen
           onClick={() => this.props.mk.instance.authorize()}
           onBrowse={() => this.setState({ browsing: true })}
         />

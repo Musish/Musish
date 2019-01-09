@@ -181,8 +181,8 @@ class Player extends React.Component {
         onMouseDown={this.onStartScrubbing}
         onMouseUp={this.onEndScrubbing}
         min={0}
-        max={duration * 1000}
-        step={0.01}
+        max={duration}
+        step={1}
       />
     );
   }
@@ -201,7 +201,7 @@ class Player extends React.Component {
   }
 
   async onEndScrubbing(e) {
-    await seekToTime(e.target.value / 1000);
+    await seekToTime(e.target.value);
 
     this.setState({
       isScrubbing: false,
@@ -216,7 +216,7 @@ class Player extends React.Component {
 
     const { playbackTime } = this.props.mk;
     if (playbackTime) {
-      return playbackTime.currentPlaybackTime * 1000;
+      return playbackTime.currentPlaybackTime;
     }
 
     return 0;
