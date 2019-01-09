@@ -12,6 +12,13 @@ const iframeCss = `
       font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Roboto', sans-serif;
   }
   
+  .rg_embed_body * {
+    background: none !important;
+    color: #000 !important;
+    pointer-events: none !important;
+    cursor: default !important;
+  }
+  
   .rg_embed {
       margin: 0;
       width: 100%;

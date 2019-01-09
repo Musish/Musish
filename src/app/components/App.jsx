@@ -7,6 +7,7 @@ import MusicKitProvider from './MusicKitProvider';
 import MusicKitAuthorizeProvider from './MusicKitAuthorizeProvider';
 import AlbumsPage from './Core/Albums/AlbumsPage';
 import Layout from './Core/Layout/Layout';
+import ArtistPage from './Core/Artists/ArtistPage';
 import ArtistsPage from './Core/Artists/ArtistsPage';
 import Playlist from './Core/Playlists/PlaylistPage';
 import SongsPage from './Core/Songs/SongsPage';
@@ -75,6 +76,7 @@ class App extends React.Component {
                       />
                       <Route path="/artists" exact component={ArtistsPage} />
                       <Route path="/artists/:id" exact component={ArtistsPage} />
+                      <Route path="/artist/:id" exact component={ArtistPage} />
                       <Route path="/songs" exact component={SongsPage} />
                       <Route path="/browse" exact component={BrowsePage} />
                       <Route path="/radio" exact component={RadioPage} />

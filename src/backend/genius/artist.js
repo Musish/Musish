@@ -28,8 +28,6 @@ async function fetchArtist(hit) {
   const artist = data.response.artist;
   delete artist.current_user_metadata;
 
-  console.log(artist);
-
   return artist;
 }
 
@@ -48,7 +46,6 @@ async function fetchHits(artist) {
 }
 
 async function handle({ artistId }) {
-  console.log('!!! artistId: ', artistId);
   const appleArtistData = await appleMusicApi.fetchArtist(artistId);
   const artistName = appleArtistData.attributes.name;
 
