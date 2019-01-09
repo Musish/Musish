@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import SplashScreen from './SplashScreen/SplashScreen';
 import TokenLoader from './LoginLoader/LoginLoader';
 import withMK from '../hoc/withMK';
+import AuthorizeContext from './Core/Layout/NavigationBar/Authorize/AuthorizeContext';
 
 class MusicKitAuthorizeProvider extends React.Component {
   constructor(props) {
@@ -64,7 +65,11 @@ class MusicKitAuthorizeProvider extends React.Component {
       );
     }
 
-    return this.props.children;
+    return (
+      <AuthorizeContext.Provider value={isAuthorized}>
+        {this.props.children}
+      </AuthorizeContext.Provider>
+    );
   }
 }
 

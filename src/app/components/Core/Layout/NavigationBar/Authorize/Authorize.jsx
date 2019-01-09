@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classes from './Authorize.scss';
 import withMK from '../../../../../hoc/withMK';
+import AuthorizeContext from './AuthorizeContext';
 
 class Authorize extends Component {
   constructor(props) {
@@ -20,7 +21,7 @@ class Authorize extends Component {
   }
 
   render() {
-    const button = this.props.mk.instance.isAuthorized ? (
+    const button = this.context ? (
       <span onClick={this.logout}>Logout</span>
     ) : (
       <span onClick={this.login}>Login</span>
@@ -34,8 +35,6 @@ Authorize.propTypes = {
   mk: PropTypes.any.isRequired,
 };
 
-const bindings = {
-  [MusicKit.Events.authorizationStatusDidChange]: 'authorization',
-};
+Authorize.contextType = AuthorizeContext;
 
-export default withMK(Authorize, bindings);
+export default withMK(Authorize);

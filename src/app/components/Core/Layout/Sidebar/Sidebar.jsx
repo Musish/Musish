@@ -6,6 +6,7 @@ import PlaylistMenuItem from './PlaylistMenuItem';
 import withMK from '../../../../hoc/withMK';
 import SidebarMenu from './SidebarMenu';
 import SidebarLibraryMenu from './SidebarLibraryMenu';
+import AuthorizeContext from '../NavigationBar/Authorize/AuthorizeContext';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -17,10 +18,7 @@ class Sidebar extends React.Component {
   }
 
   async componentDidMount() {
-    const music = MusicKit.getInstance();
-    const playlists = this.props.mk.instance.isAuthorized
-      ? await music.api.library.playlists()
-      : null;
+    const playlists = this.context ? await this.props.mk.instance.api.library.playlists() : null;
 
     this.setState({
       playlists,
@@ -28,7 +26,7 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const authorized = this.props.mk.instance.isAuthorized;
+    const authorized = this.context;
 
     const playlists =
       authorized &&
@@ -89,8 +87,6 @@ Sidebar.propTypes = {
   mk: PropTypes.any.isRequired,
 };
 
-const bindings = {
-  [MusicKit.Events.authorizationStatusDidChange]: 'authorization',
-};
+Sidebar.contextType = AuthorizeContext;
 
-export default withMK(Sidebar, bindings);
+export default withMK(Sidebar);

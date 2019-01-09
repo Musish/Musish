@@ -9,6 +9,7 @@ import SongResultItem from './SongResultItem';
 import AlbumResultItem from './AlbumResultItem';
 import ArtistResultItem from './ArtistResultItem';
 import PlaylistResultItem from './PlaylistResultItem';
+import AuthorizeContext from '../Authorize/AuthorizeContext';
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -61,7 +62,7 @@ class SearchBar extends React.Component {
     this.setState({
       loading: true,
     });
-    if (this.props.mk.instance.isAuthorized) {
+    if (this.context) {
       await Promise.all([this.searchCatalog(query), this.searchLibrary(query)]);
     } else {
       await this.searchCatalog(query);
@@ -166,5 +167,7 @@ class SearchBar extends React.Component {
 SearchBar.propTypes = {
   mk: PropTypes.any.isRequired,
 };
+
+SearchBar.contextType = AuthorizeContext;
 
 export default withMK(SearchBar);
