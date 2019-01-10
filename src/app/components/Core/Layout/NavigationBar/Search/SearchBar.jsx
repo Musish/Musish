@@ -2,6 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
+import { withRouter } from 'react-router-dom';
 import classes from './SearchBar.scss';
 import withMK from '../../../../../hoc/withMK';
 import Loader from '../../../../common/Loader';
@@ -131,27 +132,35 @@ class SearchBar extends React.Component {
     return (
       <div className={cx(classes.navSearch, { [classes.active]: showResults })}>
         <div className={classes.navSearchWrapper}>
-          <input
-            type="text"
-            placeholder="Search music"
-            value={query}
-            onChange={this.handleSearch}
-            onFocus={this.handleShowResults}
-            onBlur={this.handleHideResults}
-          />
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+              this.props.history.push(`/search/${query}`);
+              return false;
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Search music"
+              value={query}
+              onChange={this.handleSearch}
+              onFocus={this.handleShowResults}
+              onBlur={this.handleHideResults}
+            />
+          </form>
 
           <div className={classes.results}>
             {this.renderResults('Songs', 'songs', song => (
-              <SongResultItem key={song.id} song={song} />
+              <SongResultItem song={song} key={song.id} />
             ))}
             {this.renderResults('Albums', 'albums', album => (
-              <AlbumResultItem key={album.id} album={album} size={30} />
+              <AlbumResultItem album={album} size={30} key={album.id} />
             ))}
             {this.renderResults('Artists', 'artists', artist => (
-              <ArtistResultItem key={artist.id} artist={artist} />
+              <ArtistResultItem artist={artist} key={artist.id} />
             ))}
             {this.renderResults('Playlists', 'playlists', playlist => (
-              <PlaylistResultItem key={playlist.id} playlist={playlist} size={30} />
+              <PlaylistResultItem playlist={playlist} size={30} key={playlist.id} />
             ))}
           </div>
         </div>
@@ -162,6 +171,7 @@ class SearchBar extends React.Component {
 
 SearchBar.propTypes = {
   mk: PropTypes.any.isRequired,
+  history: PropTypes.any.isRequired,
 };
 
-export default withMK(SearchBar);
+export default withRouter(withMK(SearchBar));
