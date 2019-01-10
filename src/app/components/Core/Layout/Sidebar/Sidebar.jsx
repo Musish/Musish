@@ -4,6 +4,7 @@ import Player from '../../Player/Player';
 import classes from './Sidebar.scss';
 import PlaylistMenuItem from './PlaylistMenuItem';
 import withMK from '../../../../hoc/withMK';
+import withContext from '../../../../hoc/withContext';
 import SidebarMenu from './SidebarMenu';
 import SidebarLibraryMenu from './SidebarLibraryMenu';
 import AuthorizeContext from '../NavigationBar/Authorize/AuthorizeContext';
@@ -26,7 +27,7 @@ class Sidebar extends React.Component {
   }
 
   render() {
-    const authorized = this.context;
+    const { authorized } = this.props;
 
     const playlists =
       authorized &&
@@ -85,8 +86,7 @@ class Sidebar extends React.Component {
 
 Sidebar.propTypes = {
   mk: PropTypes.any.isRequired,
+  authorized: PropTypes.bool.isRequired,
 };
 
-Sidebar.contextType = AuthorizeContext;
-
-export default withMK(Sidebar);
+export default withMK(withContext(Sidebar, AuthorizeContext));

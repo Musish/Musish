@@ -66,7 +66,7 @@ class MusicKitAuthorizeProvider extends React.Component {
     }
 
     return (
-      <AuthorizeContext.Provider value={isAuthorized}>
+      <AuthorizeContext.Provider value={{ authorized: isAuthorized }}>
         {this.props.children}
       </AuthorizeContext.Provider>
     );

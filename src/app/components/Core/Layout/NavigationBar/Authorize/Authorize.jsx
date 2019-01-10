@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import classes from './Authorize.scss';
 import withMK from '../../../../../hoc/withMK';
 import AuthorizeContext from './AuthorizeContext';
+import withContext from '../../../../../hoc/withContext';
 
 class Authorize extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class Authorize extends Component {
   }
 
   render() {
-    const button = this.context ? (
+    const button = this.props.authorized ? (
       <span onClick={this.logout}>Logout</span>
     ) : (
       <span onClick={this.login}>Login</span>
@@ -33,8 +34,7 @@ class Authorize extends Component {
 
 Authorize.propTypes = {
   mk: PropTypes.any.isRequired,
+  authorized: PropTypes.bool.isRequired,
 };
 
-Authorize.contextType = AuthorizeContext;
-
-export default withMK(Authorize);
+export default withMK(withContext(Authorize, AuthorizeContext));
