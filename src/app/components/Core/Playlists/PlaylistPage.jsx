@@ -26,6 +26,8 @@ class PlaylistPage extends React.Component {
     this.load = this.load.bind(this);
     this.onSetItems = this.onSetItems.bind(this);
     this.playSong = this.playSong.bind(this);
+    this.playPlaylist = this.playPlaylist.bind(this);
+    this.shufflePlaylist = this.shufflePlaylist.bind(this);
   }
 
   onSetItems({ items: songs, end }) {
@@ -34,18 +36,28 @@ class PlaylistPage extends React.Component {
       end,
     });
 
-    const albumLength = songs.reduce(
+    const playlistLength = songs.reduce(
       (totalDuration, song) => totalDuration + song.attributes.durationInMillis,
       0
     );
 
     this.setState({
-      runtime: humanifyMillis(albumLength),
+      runtime: humanifyMillis(playlistLength),
     });
   }
 
   playSong({ index }) {
     MusicPlayerApi.playPlaylist(this.state.playlist, index);
+  }
+
+  async playPlaylist(index = 0) {
+    MusicPlayerApi.playPlaylist(this.state.playlist, index);
+  }
+
+  async shufflePlaylist() {
+    const randy = Math.floor(Math.random() * this.state.playlist.relationships.tracks.data.length);
+    await this.playPlaylist(randy);
+    MusicPlayerApi.shuffle();
   }
 
   async load(params, { page }) {
@@ -88,7 +100,7 @@ class PlaylistPage extends React.Component {
       return null;
     }
 
-    const artworkURL = artworkForMediaItem(playlist, 80);
+    const artworkURL = artworkForMediaItem(playlist, 100);
 
     return (
       <div className={classes.header}>
@@ -108,6 +120,16 @@ class PlaylistPage extends React.Component {
             <span className={classes.titleMeta}>
               {`${songs.length}${end ? '' : '+'} songs, ${runtime}`}
             </span>
+            <div className={classes.playActions}>
+              <button type={'button'} onClick={this.playPlaylist} className={classes.button}>
+                <i className={`${classes.icon} fas fa-play`} />
+                Play
+              </button>
+              <button type={'button'} onClick={this.shufflePlaylist} className={classes.button}>
+                <i className={`${classes.icon} fas fa-random`} />
+                Shuffle
+              </button>
+            </div>
           </div>
         </div>
         {playlist.attributes.description && (

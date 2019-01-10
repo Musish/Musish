@@ -18,6 +18,8 @@ export default class AlbumPanel extends React.Component {
     this.ref = React.createRef();
 
     this.playSong = this.playSong.bind(this);
+    this.playAlbum = this.playAlbum.bind(this);
+    this.shuffleAlbum = this.shuffleAlbum.bind(this);
   }
 
   async componentDidMount() {
@@ -42,6 +44,16 @@ export default class AlbumPanel extends React.Component {
     MusicPlayerApi.playAlbum(this.state.album, index);
   }
 
+  async playAlbum(index = 0) {
+    MusicPlayerApi.playAlbum(this.state.album, index);
+  }
+
+  async shuffleAlbum() {
+    const randy = Math.floor(Math.random() * this.state.album.relationships.tracks.data.length);
+    await this.playAlbum(randy);
+    MusicPlayerApi.shuffle();
+  }
+
   render() {
     const { album, runtime } = this.state;
 
@@ -56,6 +68,16 @@ export default class AlbumPanel extends React.Component {
         <div className={classes.aside}>
           <div className={classes.artworkWrapper}>
             <img src={artworkURL} alt={album.attributes.name} />
+          </div>
+          <div className={classes.playActions}>
+            <button type={'button'} onClick={this.playAlbum} className={classes.button}>
+              <i className={`${classes.icon} fas fa-play`} />
+              Play
+            </button>
+            <button type={'button'} onClick={this.shuffleAlbum} className={classes.button}>
+              <i className={`${classes.icon} fas fa-random`} />
+              Shuffle
+            </button>
           </div>
           <span className={classes.albumRuntimeDescription}>
             {`${album.attributes.trackCount} songs, ${runtime}`}

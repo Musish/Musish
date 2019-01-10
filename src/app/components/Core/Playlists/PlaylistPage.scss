@@ -1,7 +1,6 @@
 @import '../../../styles/settings/colors';
 
 .header {
-
   .headerMain {
     display: flex;
     flex-direction: row;
@@ -10,8 +9,8 @@
 
     .artworkWrapper {
       border-radius: 8px;
-      width: 80px;
-      height: 80px;
+      width: 95px;
+      height: 95px;
       background: $container_background;
 
       img {
@@ -40,6 +39,39 @@
         margin-top: 4px;
         color: $tertiary_color;
         font-size: 12px;
+      }
+
+      .playActions {
+        align-content: right;
+        display: flex;
+        justify-content: space-between;
+        max-width: 280px;
+        min-width: 180px;
+
+        .button {
+          padding: 0;
+          width: 48%;
+          height: 25px;
+          animation: fadein 0.8s;
+          border-color: $sidebar_color;
+          background: $sidebar_color;
+          color: $tertiary_color;
+          border-radius: 8px;
+          align-content: center;
+          cursor: pointer;
+          line-height: 0px;
+          margin: 10px 0;
+
+          .icon{
+            font-size: 8px;
+            padding-right: 5px;
+          }
+        }
+
+        .button:hover {
+          color: $primary_color;
+          background: $indescreet_hover_color;
+        }
       }
     }
   }
