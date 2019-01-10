@@ -8,6 +8,34 @@
     margin-top: 30px;
   }
 
+  .playActions {
+    display: flex;
+    justify-content: space-between;
+
+    .button {
+      width: 48%;
+      height: 30px;
+      animation: fadein 0.8s;
+      border-color: $sidebar_color;
+      background: $sidebar_color;
+      color: $tertiary_color;
+      border-radius: 8px;
+      align-content: center;
+      cursor: pointer;
+      line-height: 0px;
+      margin: 10px 0;
+      .icon{
+        font-size: 9px;
+        padding-right: 5px;
+      }
+    }
+    .button:hover {
+      // border-color: $primary_color;
+      color: $primary_color;
+      background: $indescreet_hover_color;
+    }
+  }
+
   .aside {
     width: 220px;
   
@@ -26,7 +54,7 @@
     
     .albumRuntimeDescription {
       display: block;
-      text-align: right;
+      text-align: center;
       color: $tertiary_color;
       font-size: 12px;
       margin-top: 5px;
