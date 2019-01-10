@@ -16,7 +16,7 @@ cd ..
 
 touch .env
 echo "JWT_TOKEN=$JWT_TOKEN" >> .env
-echo "GENIUS_SONG_API_URL=$GENIUS_SONG_API_URL" >> .env
+echo "GENIUS_API_URL=$GENIUS_API_URL" >> .env
 
 yarn build
 
@@ -37,7 +37,8 @@ cd src/backend
 cat >./secrets.json <<EOF
 {
   "NODE_ENV": "prod",
-  "GENIUS_API_KEY": "$GENIUS_API_KEY"
+  "GENIUS_API_KEY": "$GENIUS_API_KEY",
+  "APPLE_DEVELOPER_TOKEN": "$JWT_TOKEN"
 }
 EOF
 
