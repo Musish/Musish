@@ -50,6 +50,7 @@
         min-width: 180px;
     
         .button {
+          padding: 0;
           width: 48%;
           height: 25px;
           animation: fadein 0.8s;
@@ -62,7 +63,6 @@
           line-height: 0px;
           margin: 10px 0;
           .icon{
-            margin: 0;
             font-size: 8px;
             padding-right: 5px;
           }
