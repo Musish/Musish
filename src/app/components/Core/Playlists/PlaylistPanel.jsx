@@ -18,6 +18,8 @@ export default class PlaylistPanel extends React.Component {
     this.ref = React.createRef();
 
     this.playSong = this.playSong.bind(this);
+    this.playPlaylist = this.playPlaylist.bind(this);
+    this.shufflePlaylist = this.shufflePlaylist.bind(this);
   }
 
   async componentDidMount() {
@@ -30,7 +32,7 @@ export default class PlaylistPanel extends React.Component {
         ? await music.api.library.playlist(playlistId)
         : await music.api.playlist(playlistId);
 
-      const albumLength = playlist.relationships.tracks.data.reduce(
+      const playlistLength = playlist.relationships.tracks.data.reduce(
         (totalDuration, track) =>
           totalDuration + track.attributes ? track.attributes.durationInMillis : 0,
         0
@@ -38,13 +40,23 @@ export default class PlaylistPanel extends React.Component {
 
       this.setState({
         playlist,
-        runtime: humanifyMillis(albumLength),
+        runtime: humanifyMillis(playlistLength),
       });
     }
   }
 
   playSong({ index }) {
     MusicPlayerApi.playPlaylist(this.state.playlist, index);
+  }
+
+  playPlaylist(index = 0) {
+    MusicPlayerApi.playPlaylist(this.state.playlist, index);
+  }
+
+  shufflePlaylist() {
+    const randy = Math.floor(Math.random() * this.state.playlist.relationships.tracks.data.length);
+    this.playPlaylist(randy);
+    MusicPlayerApi.shuffle();
   }
 
   render() {
@@ -54,7 +66,7 @@ export default class PlaylistPanel extends React.Component {
       return <Loader />;
     }
 
-    const artworkURL = artworkForMediaItem(playlist, 80);
+    const artworkURL = artworkForMediaItem(playlist, 100);
     const trackCount =
       playlist.attributes.trackCount ||
       (playlist.relationships && playlist.relationships.tracks.data.length);
@@ -72,6 +84,16 @@ export default class PlaylistPanel extends React.Component {
                 {`Playlist by ${playlist.attributes.curatorName}`}
               </span>
               <span className={classes.titleMeta}>{`${trackCount} songs, ${runtime}`}</span>
+              <div className={classes.playActions}>
+                <button type={'button'} onClick={this.playPlaylist} className={classes.button}>
+                  <i className={`${classes.icon} fas fa-play`} />
+                  Play
+                </button>
+                <button type={'button'} onClick={this.shufflePlaylist} className={classes.button}>
+                  <i className={`${classes.icon} fas fa-random`} />
+                  Shuffle
+                </button>
+              </div>
             </div>
           </div>
           {playlist.attributes.description && (
