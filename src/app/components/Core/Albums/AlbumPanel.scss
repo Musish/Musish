@@ -24,13 +24,14 @@
       cursor: pointer;
       line-height: 0px;
       margin: 10px 0;
+
       .icon{
         font-size: 9px;
         padding-right: 5px;
       }
     }
+
     .button:hover {
-      // border-color: $primary_color;
       color: $primary_color;
       background: $indescreet_hover_color;
     }
