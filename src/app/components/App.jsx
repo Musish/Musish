@@ -59,8 +59,8 @@ class App extends React.Component {
 
     return (
       <MusicKitProvider>
-        <MusicKitAuthorizeProvider>
-          <Router>
+        <Router>
+          <MusicKitAuthorizeProvider>
             <QueueContext.Provider value={queueState}>
               <ModalContext.Provider value={modalState}>
                 <LyricsModalContext.Provider value={lyricsModalState}>
@@ -96,8 +96,8 @@ class App extends React.Component {
                 </LyricsModalContext.Provider>
               </ModalContext.Provider>
             </QueueContext.Provider>
-          </Router>
-        </MusicKitAuthorizeProvider>
+          </MusicKitAuthorizeProvider>
+        </Router>
       </MusicKitProvider>
     );
   }

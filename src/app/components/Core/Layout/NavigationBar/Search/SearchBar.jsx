@@ -4,11 +4,13 @@ import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
 import classes from './SearchBar.scss';
 import withMK from '../../../../../hoc/withMK';
+import withContext from '../../../../../hoc/withContext';
 import Loader from '../../../../common/Loader';
 import SongResultItem from './SongResultItem';
 import AlbumResultItem from './AlbumResultItem';
 import ArtistResultItem from './ArtistResultItem';
 import PlaylistResultItem from './PlaylistResultItem';
+import AuthorizeContext from '../Authorize/AuthorizeContext';
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -61,8 +63,11 @@ class SearchBar extends React.Component {
     this.setState({
       loading: true,
     });
-
-    await Promise.all([this.searchCatalog(query), this.searchLibrary(query)]);
+    if (this.props.authorized) {
+      await Promise.all([this.searchCatalog(query), this.searchLibrary(query)]);
+    } else {
+      await this.searchCatalog(query);
+    }
 
     this.setState({
       loading: false,
@@ -162,6 +167,7 @@ class SearchBar extends React.Component {
 
 SearchBar.propTypes = {
   mk: PropTypes.any.isRequired,
+  authorized: PropTypes.bool.isRequired,
 };
 
-export default withMK(SearchBar);
+export default withMK(withContext(SearchBar, AuthorizeContext));
