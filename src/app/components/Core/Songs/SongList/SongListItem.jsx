@@ -79,6 +79,7 @@ class SongListItem extends React.Component {
             [classes.indexedSong]: !showAlbum,
             [classes.playing]: this.isPlaying(),
             [classes.droppable]: isOver,
+            [classes.disabledSong]: !song.attributes.playParams,
           },
           classes.song
         )}
