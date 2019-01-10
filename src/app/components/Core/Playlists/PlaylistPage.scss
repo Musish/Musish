@@ -1,7 +1,6 @@
 @import '../../../styles/settings/colors';
 
 .header {
-
   .headerMain {
     display: flex;
     flex-direction: row;
@@ -48,7 +47,7 @@
         justify-content: space-between;
         max-width: 280px;
         min-width: 180px;
-    
+
         .button {
           padding: 0;
           width: 48%;
@@ -62,13 +61,14 @@
           cursor: pointer;
           line-height: 0px;
           margin: 10px 0;
+
           .icon{
             font-size: 8px;
             padding-right: 5px;
           }
         }
+
         .button:hover {
-          // border-color: $primary_color;
           color: $primary_color;
           background: $indescreet_hover_color;
         }
