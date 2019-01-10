@@ -50,7 +50,7 @@
       }
     }
 
-    & .songBacker:after {
+    .songBacker:after {
       content: '';
       background: none;
       transition: background 0.15s;
@@ -112,6 +112,19 @@
       width: 60px;
       align-items: center;
       color: $tertiary_color;
+    }
+
+    &.disabledSong {
+      pointer-events: none !important;
+      cursor: not-allowed !important;
+
+      .songInfo {
+        opacity: 0.5;
+      }
+
+      &:hover .songBacker:after {
+        background: none;
+      }
     }
   }
 }
