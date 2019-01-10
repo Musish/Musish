@@ -4,6 +4,8 @@ import classes from './SearchPage.scss';
 import withMK from '../../../hoc/withMK';
 import PageTitle from '../../common/PageTitle';
 import PageContent from '../Layout/PageContent';
+import Loader from '../../common/Loader';
+import SongResultItem from '../Layout/NavigationBar/Search/SongResultItem';
 
 class SearchPage extends React.Component {
   constructor(props) {
@@ -22,7 +24,7 @@ class SearchPage extends React.Component {
 
   async search() {
     this.setState({
-      query: this.props.match.params.query,
+      query: this.props.query,
     });
 
     const query = this.state.query.replace(' ', '+');
@@ -35,7 +37,15 @@ class SearchPage extends React.Component {
       return;
     }
 
+    this.setState({
+      loading: true,
+    });
+
     await Promise.all([this.searchCatalog(query), this.searchLibrary(query)]);
+
+    this.setState({
+      loading: false,
+    });
   }
 
   async searchCatalog(query) {
@@ -60,8 +70,6 @@ class SearchPage extends React.Component {
     });
   }
 
-  componentDidMount() {}
-
   getItems(type) {
     let songs = [];
 
@@ -78,6 +86,22 @@ class SearchPage extends React.Component {
     return songs;
   }
 
+  renderResults(type, rowRenderer) {
+    const songs = this.getItems(type);
+
+    if (!songs || songs.length === 0) {
+      return null;
+    }
+
+    return (
+      <div className={classes.results}>
+        {songs.map(rowRenderer)}
+
+        {this.state.loading && <Loader />}
+      </div>
+    );
+  }
+
   render() {
     return (
       <PageContent innerRef={this.ref}>
@@ -86,6 +110,9 @@ class SearchPage extends React.Component {
         <div className={classes.container}>
           <h3>Top Results</h3>
           <h3>Songs</h3>
+          {this.renderResults('songs', song => (
+            <SongResultItem song={song} key={song.id} />
+          ))}
           <h3>Playlists</h3>
           <h3>Albums</h3>
           <h3>Artists</h3>
@@ -98,7 +125,7 @@ class SearchPage extends React.Component {
 
 SearchPage.propTypes = {
   mk: PropTypes.any.isRequired,
-  match: PropTypes.object.isRequired,
+  query: PropTypes.string.isRequired,
 };
 
 export default withMK(SearchPage);

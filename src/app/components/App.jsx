@@ -88,7 +88,7 @@ class App extends React.Component {
                           match: {
                             params: { query },
                           },
-                        }) => <SearchPage key={query} />}
+                        }) => <SearchPage key={query} query={query} />}
                       />
                       <Redirect to="/" />
                     </Switch>
