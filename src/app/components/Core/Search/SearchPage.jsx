@@ -6,28 +6,32 @@ import PageTitle from '../../common/PageTitle';
 import PageContent from '../Layout/PageContent';
 import Loader from '../../common/Loader';
 import SongResultItem from '../Layout/NavigationBar/Search/SongResultItem';
+import AlbumItem from '../Albums/AlbumItem';
+import PlaylistItem from '../Playlists/PlaylistItem';
+import SongList from '../Songs/SongList/SongList';
+import SongsPage from '../Songs/SongsPage';
+import ArtistResultItem from '../Layout/NavigationBar/Search/ArtistResultItem';
 
 class SearchPage extends React.Component {
   constructor(props) {
     super(props);
 
-    this.ref = React.createRef();
-
     this.state = {
-      query: '',
       catalogData: null,
       libraryData: null,
     };
 
+    this.ref = React.createRef();
+
     this.search = this.search.bind(this);
   }
 
-  async search() {
-    this.setState({
-      query: this.props.query,
-    });
+  componentDidMount() {
+    this.search();
+  }
 
-    const query = this.state.query.replace(' ', '+');
+  async search() {
+    const query = this.props.query.replace(' ', '+');
 
     if (query.length === 0) {
       this.setState({
@@ -51,7 +55,7 @@ class SearchPage extends React.Component {
   async searchCatalog(query) {
     const catalogData = await this.props.mk.instance.api.search(query, {
       types: ['albums', 'songs', 'playlists', 'artists'],
-      limit: 5,
+      limit: 10,
     });
 
     this.setState({
@@ -62,7 +66,7 @@ class SearchPage extends React.Component {
   async searchLibrary(query) {
     const libraryData = await this.props.mk.instance.api.library.search(query, {
       types: ['library-albums', 'library-songs', 'library-playlists', 'library-artists'],
-      limit: 5,
+      limit: 10,
     });
 
     this.setState({
@@ -92,32 +96,52 @@ class SearchPage extends React.Component {
     if (!songs || songs.length === 0) {
       return null;
     }
-
     return (
-      <div className={classes.results}>
+      <>
         {songs.map(rowRenderer)}
-
         {this.state.loading && <Loader />}
-      </div>
+      </>
     );
   }
 
   render() {
+    console.log(this.getItems('songs'));
     return (
       <PageContent innerRef={this.ref}>
         <PageTitle title={'Your Results'} context={'Search'} />
 
-        <div className={classes.container}>
-          <h3>Top Results</h3>
-          <h3>Songs</h3>
-          {this.renderResults('songs', song => (
-            <SongResultItem song={song} key={song.id} />
+        <h3>Top Results</h3>
+        <h3>Songs</h3>
+        <SongList
+          load={() => this.getItems('songs')}
+          scrollElement={this.ref}
+          showAlbum
+          showArtist
+          playSong={SongsPage.playSong}
+        />
+
+        <h3>Playlists</h3>
+        <div className={classes.searchGrid}>
+          {this.renderResults('playlists', playlist => (
+            <PlaylistItem key={playlist.id} playlist={playlist} size={170} navigate />
           ))}
-          <h3>Playlists</h3>
-          <h3>Albums</h3>
-          <h3>Artists</h3>
-          <h3>People</h3>
         </div>
+
+        <h3>Albums</h3>
+        <div className={classes.searchGrid}>
+          {this.renderResults('albums', album => (
+            <AlbumItem key={album.id} album={album} size={170} navigate />
+          ))}
+        </div>
+
+        <h3>Artists</h3>
+        <div className={classes.searchGrid}>
+          {/*{this.renderResults('artists', artist => (*/}
+            {/*<AlbumItem key={artist.id} playlist={artist} size={170} navigate />*/}
+          {/*))}*/}
+        </div>
+
+        <h3>People</h3>
       </PageContent>
     );
   }

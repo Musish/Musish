@@ -1,0 +1,8 @@
+.searchGrid {
+  display: flex;
+  flex-wrap: wrap;
+
+  > div {
+     margin: 15px 10px;
+  }
+}
