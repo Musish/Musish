@@ -84,3 +84,29 @@ export function getHeaders() {
     'Music-User-Token': music.musicUserToken,
   };
 }
+
+export function infiniteLoadRelationships(id, functionGenerator, key, store) {
+  return async ({ offset }, { page }) => {
+    if (page === 0) {
+      const playlist = await functionGenerator(id, { offset });
+
+      const data = playlist.relationships[key];
+
+      // eslint-disable-next-line no-param-reassign
+      store.nextUrl = data.next;
+
+      return data.data;
+    }
+
+    if (!store.nextUrl) {
+      return [];
+    }
+
+    const { data } = await getNextSongs(store.nextUrl);
+
+    // eslint-disable-next-line no-param-reassign
+    store.nextUrl = data.next;
+
+    return data.data;
+  };
+}

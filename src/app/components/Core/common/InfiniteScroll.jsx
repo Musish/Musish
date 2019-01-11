@@ -29,7 +29,9 @@ export default class InfiniteScroll extends React.Component {
   }
 
   getElement() {
-    return this.props.scrollElement.current;
+    const { scrollElement, scrollElementModifier } = this.props;
+
+    return scrollElementModifier(scrollElement.current);
   }
 
   render() {
@@ -79,9 +81,11 @@ InfiniteScroll.propTypes = {
   listClassName: PropTypes.string,
   rowHeight: PropTypes.number.isRequired,
   scrollElement: PropTypes.shape({ current: PropTypes.instanceOf(Element) }).isRequired,
+  scrollElementModifier: PropTypes.func,
 };
 
 InfiniteScroll.defaultProps = {
   listClassName: '',
   onSetItems: state => null,
+  scrollElementModifier: e => e,
 };

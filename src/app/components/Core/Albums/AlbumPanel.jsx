@@ -6,6 +6,7 @@ import { artworkForMediaItem, humanifyMillis } from '../../../utils/Utils';
 import SongList from '../Songs/SongList/SongList';
 import Loader from '../../common/Loader';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
+import * as MusicApi from '../../../services/MusicApi';
 
 export default class AlbumPanel extends React.Component {
   constructor(props) {
@@ -16,27 +17,27 @@ export default class AlbumPanel extends React.Component {
     };
 
     this.ref = React.createRef();
+    this.store = {};
 
     this.playSong = this.playSong.bind(this);
     this.playAlbum = this.playAlbum.bind(this);
     this.shuffleAlbum = this.shuffleAlbum.bind(this);
+    this.onSetItems = this.onSetItems.bind(this);
   }
 
-  async componentDidMount() {
-    const albumId = this.props.id || this.props.album.id;
-    const music = MusicKit.getInstance();
-    const album = isNaN(albumId)
-      ? await music.api.library.album(albumId)
-      : await music.api.album(albumId);
+  getAlbumId() {
+    return this.props.id || this.props.album.id;
+  }
 
-    const albumLength = album.relationships.tracks.data.reduce(
-      (totalDuration, track) => totalDuration + track.attributes.durationInMillis,
+  onSetItems({ items }) {
+    const playlistLength = items.reduce(
+      (totalDuration, track) =>
+        totalDuration + track.attributes ? track.attributes.durationInMillis : 0,
       0
     );
 
     this.setState({
-      album,
-      runtime: humanifyMillis(albumLength),
+      runtime: humanifyMillis(playlistLength),
     });
   }
 
@@ -61,6 +62,10 @@ export default class AlbumPanel extends React.Component {
       return <Loader />;
     }
 
+    const music = MusicKit.getInstance();
+    const functionGenerator = (...args) =>
+      isNaN(this.getAlbumId()) ? music.api.library.album(...args) : music.api.album(...args);
+
     const artworkURL = artworkForMediaItem(album, 220);
 
     const explicit = album.attributes.contentRating === 'explicit' && (
@@ -72,7 +77,7 @@ export default class AlbumPanel extends React.Component {
     );
 
     return (
-      <div className={classes.panel}>
+      <div className={classes.panel} ref={this.ref}>
         <div className={classes.aside}>
           <div className={classes.artworkWrapper}>
             <img src={artworkURL} alt={album.attributes.name} />
@@ -91,21 +96,26 @@ export default class AlbumPanel extends React.Component {
             {`${album.attributes.trackCount} songs, ${runtime}`}
           </span>
         </div>
-        <div className={classes.main} ref={this.ref}>
+
+        <div className={classes.main}>
           <span className={classes.title}>
             <span className={classes.name}>{album.attributes.name}</span>
             {explicit}
           </span>
+
           <span className={classes.subtitle}>{album.attributes.artistName}</span>
-          {album.relationships ? (
-            <SongList
-              scrollElement={this.ref}
-              load={() => album.relationships.tracks.data}
-              playSong={this.playSong}
-            />
-          ) : (
-            <Loader />
-          )}
+          <SongList
+            scrollElement={this.ref}
+            scrollElementModifier={e => e && e.parentElement}
+            load={MusicApi.infiniteLoadRelationships(
+              this.getAlbumId(),
+              functionGenerator,
+              'tracks',
+              this.store
+            )}
+            onSetItems={this.onSetItems}
+            playSong={this.playSong}
+          />
         </div>
       </div>
     );
