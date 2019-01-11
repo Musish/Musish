@@ -59,9 +59,34 @@
       display:block;
       @include wrapTo(100%);
 
-      &.albumName {
-        font-weight: 400;
+      &.albumTitle {
         margin: 10px 0 5px 0;
+        display: flex;
+        width: 100%;
+
+        .albumName {
+          flex: 1;
+          font-weight: 400;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        .explicit {
+          background: $secondary_color;
+          color: $main_background_color;
+          display: flex;
+          flex-shrink: 0;
+          width: 12px;
+          height: 12px;
+          align-items: center;
+          justify-content: center;
+          font-weight: 300;
+          border-radius: 3px;
+          font-size: 9px;
+          margin-left: 5px;
+          margin-top: 2px;
+        }
       }
 
       &.artistName {

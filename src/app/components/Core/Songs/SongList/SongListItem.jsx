@@ -73,7 +73,7 @@ class SongListItem extends React.Component {
           <SongDecoration song={song} showAlbum={showAlbum} />
           <div className={classes.songInfo}>
             <span className={classes.songTitle}>
-              {attributes.name}
+              <span className={classes.songName}>{attributes.name}</span>
               {explicit}
             </span>
             {(showArtist || showAlbum) && (
