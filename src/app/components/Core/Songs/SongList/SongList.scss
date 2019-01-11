@@ -74,6 +74,9 @@
       flex-direction: column;
       margin: 0 10px;
       justify-content: center;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
 
       &.buffering {
         margin: 0;
@@ -92,6 +95,10 @@
         color: #333333;
         display: flex;
 
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+
         .explicit {
           background: $secondary_color;
           color: $main_background_color;
@@ -108,10 +115,30 @@
       }
     }
 
-    .songDuration {
+    .songRightSide {
       width: 60px;
       align-items: center;
       color: $tertiary_color;
+      .songActions {
+        display: none;
+        color: #fe2851;
+        z-index: 100;
+        padding: 6px 8px;
+        &:hover {
+          opacity: 0.5;
+        }
+      }
+    }
+
+    &:hover {
+      .songRightSide {
+        .songDuration {
+          display: none;
+        }
+        .songActions {
+          display: inline;
+        }
+      }
     }
 
     &.disabledSong {
