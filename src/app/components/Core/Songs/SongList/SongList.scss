@@ -124,7 +124,10 @@
         display: none;
         color: #fe2851;
         z-index: 100;
-        padding: 6px 8px;
+
+        > * {
+          padding: 6px 8px;
+        }
 
         &:hover {
           opacity: 0.5;
