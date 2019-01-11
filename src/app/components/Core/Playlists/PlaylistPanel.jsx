@@ -25,6 +25,30 @@ export default class PlaylistPanel extends React.Component {
     this.playPlaylist = this.playPlaylist.bind(this);
     this.shufflePlaylist = this.shufflePlaylist.bind(this);
     this.onSetItems = this.onSetItems.bind(this);
+    this.playlistLoader = this.playlistLoader.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.props.id) {
+      this.fetchPlaylist();
+    }
+  }
+
+  async fetchPlaylist() {
+    const playlist = await this.playlistLoader(this.getPlaylistId());
+
+    this.setState({
+      playlist,
+    });
+  }
+
+  playlistLoader(...args) {
+    const music = MusicKit.getInstance();
+    if (this.getPlaylistId().startsWith('p.')) {
+      return music.api.library.playlist(...args);
+    }
+
+    return music.api.playlist(...args);
   }
 
   getPlaylistId() {
@@ -68,12 +92,6 @@ export default class PlaylistPanel extends React.Component {
     const artworkURL = artworkForMediaItem(playlist, 100);
     const trackCount = playlist.attributes.trackCount || items.length;
 
-    const music = MusicKit.getInstance();
-
-    const isLibrary = this.getPlaylistId().startsWith('p.');
-    const functionGenerator = (...args) =>
-      isLibrary ? music.api.library.playlist(...args) : music.api.playlist(...args);
-
     return (
       <div className={classes.panel} ref={this.ref}>
         <div className={classes.header}>
@@ -113,7 +131,7 @@ export default class PlaylistPanel extends React.Component {
             scrollElementModifier={e => e && e.parentElement}
             load={MusicApi.infiniteLoadRelationships(
               this.getPlaylistId(),
-              functionGenerator,
+              this.playlistLoader,
               'tracks',
               this.store
             )}

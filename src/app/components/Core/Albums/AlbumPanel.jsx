@@ -23,6 +23,30 @@ export default class AlbumPanel extends React.Component {
     this.playAlbum = this.playAlbum.bind(this);
     this.shuffleAlbum = this.shuffleAlbum.bind(this);
     this.onSetItems = this.onSetItems.bind(this);
+    this.albumLoader = this.albumLoader.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.props.id) {
+      this.fetchAlbum();
+    }
+  }
+
+  async fetchAlbum() {
+    const album = await this.albumLoader(this.getAlbumId());
+
+    this.setState({
+      album,
+    });
+  }
+
+  albumLoader(...args) {
+    const music = MusicKit.getInstance();
+    if (isNaN(this.getAlbumId())) {
+      return music.api.library.album(...args);
+    }
+
+    return music.api.album(...args);
   }
 
   getAlbumId() {
@@ -61,10 +85,6 @@ export default class AlbumPanel extends React.Component {
     if (!album) {
       return <Loader />;
     }
-
-    const music = MusicKit.getInstance();
-    const functionGenerator = (...args) =>
-      isNaN(this.getAlbumId()) ? music.api.library.album(...args) : music.api.album(...args);
 
     const artworkURL = artworkForMediaItem(album, 220);
 
@@ -109,7 +129,7 @@ export default class AlbumPanel extends React.Component {
             scrollElementModifier={e => e && e.parentElement}
             load={MusicApi.infiniteLoadRelationships(
               this.getAlbumId(),
-              functionGenerator,
+              this.albumLoader,
               'tracks',
               this.store
             )}
