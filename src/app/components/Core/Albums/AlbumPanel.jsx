@@ -68,6 +68,14 @@ export default class AlbumPanel extends React.Component {
 
     const artworkURL = artworkForMediaItem(album, 220);
 
+    const explicit = album.attributes.contentRating === 'explicit' && (
+      <div className={classes.explicit}>
+        <span>
+          <span>E</span>
+        </span>
+      </div>
+    );
+
     return (
       <div className={classes.panel} ref={this.ref}>
         <div className={classes.aside}>
@@ -88,8 +96,13 @@ export default class AlbumPanel extends React.Component {
             {`${album.attributes.trackCount} songs, ${runtime}`}
           </span>
         </div>
+
         <div className={classes.main}>
-          <span className={classes.title}>{album.attributes.name}</span>
+          <span className={classes.title}>
+            <span className={classes.name}>{album.attributes.name}</span>
+            {explicit}
+          </span>
+
           <span className={classes.subtitle}>{album.attributes.artistName}</span>
           <SongList
             scrollElement={this.ref}
