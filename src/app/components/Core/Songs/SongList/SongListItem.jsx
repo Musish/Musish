@@ -30,7 +30,7 @@ class SongListItem extends React.Component {
 
     if (!attributes) {
       return (
-        <div className={cx(classes.song)} style={this.props.style}>
+        <div className={cx(classes.song, classes.disabledSong)} style={this.props.style}>
           <div className={[classes.songWrapper]}>
             <div className={classes.songBacker} />
             <SongDecoration song={song} showAlbum={showAlbum} />
@@ -77,15 +77,29 @@ class SongListItem extends React.Component {
               {explicit}
             </span>
             {(showArtist || showAlbum) && (
-              <span>
+              <span className={classes.songMetaInfo}>
                 {showArtist && attributes.artistName}
                 {showArtist && showAlbum && ' - '}
                 {showAlbum && attributes.albumName}
               </span>
             )}
           </div>
-          <span className={classes.songDuration}>
-            <span>{duration}</span>
+          <span className={classes.songRightSide}>
+            <span className={classes.songDuration}>{duration}</span>
+            <span
+              className={classes.songActions}
+              onClick={e => {
+                e.stopPropagation();
+                return false;
+              }}
+            >
+              <ContextMenuTrigger
+                holdToDisplay={1}
+                render={() => <SongContextMenu song={song} songs={songs} index={index} />}
+              >
+                <i className="fas fa-ellipsis-h" />
+              </ContextMenuTrigger>
+            </span>
           </span>
         </ContextMenuTrigger>
       </div>

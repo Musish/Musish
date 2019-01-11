@@ -29,6 +29,7 @@
       transform: translateZ(0);
       animation-play-state: paused;
       margin-left: 1px;
+      border-radius: 2px;
 
       &:nth-child(2) {
         animation-delay: 0.2s;
@@ -40,10 +41,6 @@
 
       &:nth-child(4) {
         animation-delay: 0.6s;
-      }
-
-      &:nth-child(5) {
-        animation-delay: 0.3s;
       }
     }
   }

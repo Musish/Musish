@@ -41,6 +41,7 @@
 
   &:hover {
     transform: scale(1.025);
+
     .image {
       opacity: 0.8;
     }
@@ -62,6 +63,7 @@
         font-weight: 400;
         margin: 10px 0 5px 0;
       }
+
       &.artistName {
         font-weight: 300;
         color: $secondary_color;

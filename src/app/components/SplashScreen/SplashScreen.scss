@@ -29,7 +29,7 @@
       margin-top: 22px;
       span {
         font-weight: 400;
-        color: $primary_color;
+        color: $accent_color;
         background: $main_background_color;
         border-radius: 3px;
         padding: 4px 10px;
@@ -79,7 +79,7 @@
   }
   .button:hover {
     background: $main_background_color;
-    color: $primary_color;
+    color: $accent_color;
   }
   .disclaimer {
     position: fixed;
@@ -103,7 +103,7 @@
       align-items: center;
       > span {
         color: $main_background_color;
-        background: $primary_color;
+        background: $accent_color;
         border-radius: 50%;
         width: 26px;
         height: 26px;
