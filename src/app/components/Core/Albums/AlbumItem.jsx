@@ -32,6 +32,12 @@ class AlbumItem extends Component {
     const { album, size, connectDragSource, isOver } = this.props;
     const artwork = MusicKit.formatArtworkURL(album.attributes.artwork, size, size);
 
+    const explicit = album.attributes.contentRating === 'explicit' && (
+      <div className={classes.explicit}>
+        <span>E</span>
+      </div>
+    );
+
     return connectDragSource(
       <div
         className={cx(classes.container, { [classes.droppable]: isOver })}
@@ -55,8 +61,9 @@ class AlbumItem extends Component {
                 </div>
 
                 <div className={classes.descriptionContainer}>
-                  <span className={classes.albumName} style={{ width: size }}>
-                    {album.attributes.name}
+                  <span className={classes.albumTitle} style={{ width: size }}>
+                    <div className={classes.albumName}>{album.attributes.name}</div>
+                    {explicit}
                   </span>
                   <span className={classes.artistName} style={{ width: size }}>
                     {album.attributes.artistName}

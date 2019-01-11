@@ -95,14 +95,17 @@
         color: #333333;
         display: flex;
 
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
+        .songName {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
 
         .explicit {
           background: $secondary_color;
           color: $main_background_color;
           display: flex;
+          flex-shrink: 0;
           width: 12px;
           height: 12px;
           align-items: center;
