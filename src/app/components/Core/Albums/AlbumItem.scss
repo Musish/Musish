@@ -18,7 +18,7 @@
   transition: transform 0.3s;
 
   &.droppable {
-    color: #fe2851;
+    color: $accent_color;
   }
 
   .imageContainer {
