@@ -21,7 +21,7 @@ function SidebarLibraryMenu(props) {
       <h3>{title}</h3>
       <ul>
         {items.map(item => (
-          <MenuItem to={item.to} label={item.label} />
+          <MenuItem {...item} />
         ))}
       </ul>
     </div>
