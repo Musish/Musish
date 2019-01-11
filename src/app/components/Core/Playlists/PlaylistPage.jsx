@@ -14,7 +14,7 @@ class PlaylistPage extends React.Component {
     super(props);
 
     this.state = {
-      playlistId: this.props.match.params.id || this.props.playlist,
+      playlistId: this.props.match.params.id,
       runtime: '',
       playlist: null,
       songs: [],
@@ -28,6 +28,32 @@ class PlaylistPage extends React.Component {
     this.playSong = this.playSong.bind(this);
     this.playPlaylist = this.playPlaylist.bind(this);
     this.shufflePlaylist = this.shufflePlaylist.bind(this);
+    this.playlistLoader = this.playlistLoader.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchPlaylist();
+  }
+
+  async fetchPlaylist() {
+    const playlist = await this.playlistLoader(this.getPlaylistId());
+
+    this.setState({
+      playlist,
+    });
+  }
+
+  playlistLoader(...args) {
+    const music = MusicKit.getInstance();
+    if (this.getPlaylistId().startsWith('p.')) {
+      return music.api.library.playlist(...args);
+    }
+
+    return music.api.playlist(...args);
+  }
+
+  getPlaylistId() {
+    return this.state.playlistId;
   }
 
   onSetItems({ items: songs, end }) {
@@ -111,21 +137,14 @@ class PlaylistPage extends React.Component {
   }
 
   render() {
-    const { playlistId } = this.state;
-    const music = MusicKit.getInstance();
-
-    const isLibrary = playlistId.startsWith('p.');
-    const functionGenerator = (...args) =>
-      isLibrary ? music.api.library.playlist(...args) : music.api.playlist(...args);
-
     return (
       <PageContent innerRef={this.scrollRef}>
         <PageTitle context={'My Library'} />
         {this.renderHeader()}
         <SongList
           load={MusicApi.infiniteLoadRelationships(
-            playlistId,
-            functionGenerator,
+            this.getPlaylistId(),
+            this.playlistLoader,
             'tracks',
             this.store
           )}
@@ -141,13 +160,11 @@ class PlaylistPage extends React.Component {
 }
 
 PlaylistPage.propTypes = {
-  playlist: PropTypes.any,
   id: PropTypes.any,
   match: PropTypes.object,
 };
 
 PlaylistPage.defaultProps = {
-  playlist: null,
   id: null,
   match: null,
 };
