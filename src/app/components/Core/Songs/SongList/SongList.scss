@@ -119,11 +119,13 @@
       width: 60px;
       align-items: center;
       color: $tertiary_color;
+
       .songActions {
         display: none;
         color: #fe2851;
         z-index: 100;
         padding: 6px 8px;
+
         &:hover {
           opacity: 0.5;
         }
@@ -135,6 +137,7 @@
         .songDuration {
           display: none;
         }
+
         .songActions {
           display: inline;
         }

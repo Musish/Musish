@@ -316,8 +316,11 @@ class Player extends React.Component {
           </span>
 
           <LyricsModalContext.Consumer>
-            {({ open }) => (
-              <span className={cx(styles.controls)} onClick={() => open(nowPlayingItem)}>
+            {({ opened, open, close }) => (
+              <span
+                className={cx(styles.controls, { [styles.enabled]: opened })}
+                onClick={() => (opened ? close() : open(nowPlayingItem))}
+              >
                 <i className={'fas fa-align-left'} />
               </span>
             )}

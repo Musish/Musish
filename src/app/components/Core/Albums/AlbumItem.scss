@@ -28,6 +28,7 @@
     height: 0;
     padding-top: 100%;
     position: relative;
+
     .image {
       position: absolute;
       top: 0;
@@ -40,6 +41,7 @@
 
   &:hover {
     transform: scale(1.025);
+
     .image {
       opacity: 0.8;
     }
@@ -52,13 +54,16 @@
   .descriptionContainer {
     text-align: left;
     width: 100%;
+
     > span {
       display:block;
       @include wrapTo(100%);
+
       &.albumName {
         font-weight: 400;
         margin: 10px 0 5px 0;
       }
+
       &.artistName {
         font-weight: 300;
         color: $secondary_color;
