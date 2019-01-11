@@ -49,6 +49,10 @@ class App extends React.Component {
         this.setState(state => ({
           modalsContents: [...state.modalsContents.slice(0, -1)],
         })),
+      flush: () =>
+        this.setState({
+          modalsContents: [],
+        }),
     };
 
     const lyricsModalState = {
