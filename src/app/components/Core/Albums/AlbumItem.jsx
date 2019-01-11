@@ -9,7 +9,6 @@ import AlbumPanel from './AlbumPanel';
 import ModalContext from '../../common/Modal/ModalContext';
 import DragDropType from '../../../utils/Constants/DragDropType';
 import ContextMenuTrigger from '../../common/ContextMenu/ContextMenuTrigger';
-import SongContextMenu from '../Songs/SongList/SongContextMenu';
 import AlbumContextMenu from './AlbumContextMenu';
 
 class AlbumItem extends Component {

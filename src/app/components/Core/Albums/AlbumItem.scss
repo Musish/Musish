@@ -28,6 +28,7 @@
     height: 0;
     padding-top: 100%;
     position: relative;
+
     .image {
       position: absolute;
       top: 0;
@@ -52,9 +53,11 @@
   .descriptionContainer {
     text-align: left;
     width: 100%;
+
     > span {
       display:block;
       @include wrapTo(100%);
+
       &.albumName {
         font-weight: 400;
         margin: 10px 0 5px 0;
