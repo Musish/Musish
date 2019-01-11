@@ -80,8 +80,8 @@
     border-radius: 2px;
     background: linear-gradient(
         to right,
-        $primary_color 0%,
-        $primary_color 50%,
+        $accent_color 0%,
+        $accent_color 50%,
         white 50%,
         white 100%
       )
@@ -140,9 +140,9 @@
       }
 
       &.enabled {
-        color: $primary_color;
+        color: $accent_color;
         &:hover {
-          color: darken($primary_color, 10%);
+          color: darken($accent_color, 10%);
         }
       }
 
