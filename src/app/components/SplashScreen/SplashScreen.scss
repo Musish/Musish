@@ -76,6 +76,10 @@
     cursor: pointer;
     margin-top: 10px;
     padding: 10px 20px;
+
+    &.browseButton {
+      margin-top: 30px;
+    }
   }
   .button:hover {
     background: $main_background_color;

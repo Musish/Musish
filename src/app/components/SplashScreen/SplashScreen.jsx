@@ -2,6 +2,8 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import cx from 'classnames';
+
 import classes from './SplashScreen.scss';
 
 class SplashScreen extends React.Component {
@@ -59,8 +61,12 @@ class SplashScreen extends React.Component {
           <i className={'fas fa-lock'} />
           {' Secure authentication via Apple.com.'}
         </span>
-        <button type={'button'} onClick={this.browseNavigate} className={classes.button}>
-          Continue to browse
+        <button
+          type={'button'}
+          onClick={this.browseNavigate}
+          className={cx(classes.button, classes.browseButton)}
+        >
+          Or just browse
         </button>
         <div className={classes.disclaimer}>
           <div className={classes.disclaimerIcon}>

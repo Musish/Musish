@@ -63,6 +63,14 @@ export default class AlbumPanel extends React.Component {
 
     const artworkURL = artworkForMediaItem(album, 220);
 
+    const explicit = album.attributes.contentRating === 'explicit' && (
+      <div className={classes.explicit}>
+        <span>
+          <span>E</span>
+        </span>
+      </div>
+    );
+
     return (
       <div className={classes.panel}>
         <div className={classes.aside}>
@@ -84,7 +92,10 @@ export default class AlbumPanel extends React.Component {
           </span>
         </div>
         <div className={classes.main} ref={this.ref}>
-          <span className={classes.title}>{album.attributes.name}</span>
+          <span className={classes.title}>
+            <span className={classes.name}>{album.attributes.name}</span>
+            {explicit}
+          </span>
           <span className={classes.subtitle}>{album.attributes.artistName}</span>
           {album.relationships ? (
             <SongList
