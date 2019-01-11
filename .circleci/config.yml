@@ -23,7 +23,7 @@ jobs:
           command: cd src/backend && yarn
       - run:
           name: Install Serverless CLI
-          command: sudo npm i -g serverless
+          command: sudo npm i -g serverless@1.35.1
       - save_cache:
           paths:
             - node_modules
