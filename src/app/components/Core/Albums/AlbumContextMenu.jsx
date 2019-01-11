@@ -4,11 +4,14 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { artworkForMediaItem } from '../../../utils/Utils';
 import classes from './AlbumContextMenu.scss';
-import { playLater, playNext, playSong } from '../../../services/MusicPlayerApi';
+import { playAlbum } from '../../../services/MusicPlayerApi';
+import ModalContext from '../../common/Modal/ModalContext';
+import AlbumPanel from './AlbumPanel';
+import { addToLibrary } from '../../../services/MusicApi';
 
-function ArtistContextMenu({ song, songs, index }) {
-  const { attributes } = song;
-  const artworkURL = artworkForMediaItem(song, 60);
+function AlbumContextMenu({ album }) {
+  const { attributes } = album;
+  const artworkURL = artworkForMediaItem(album, 60);
   const inLibrary = attributes.playParams.isLibrary;
 
   return (
@@ -20,36 +23,35 @@ function ArtistContextMenu({ song, songs, index }) {
           </div>
         </div>
         <div className={classes.description}>
-          <h2>{attributes.artistName}</h2>
-          <h3>{attributes.albumName}</h3>
+          <h2>{attributes.name}</h2>
+          <h3>{attributes.artistName}</h3>
         </div>
       </div>
 
       <MenuItem divider />
 
-      <MenuItem onClick={() => playSong(songs, index)}>Play</MenuItem>
-      <MenuItem onClick={() => playNext(song)}>Play next</MenuItem>
-      <MenuItem onClick={() => playLater(song)}>Play later</MenuItem>
+      <MenuItem onClick={() => playAlbum(album, 0)}>Play</MenuItem>
 
       <MenuItem divider />
 
-      <MenuItem onClick={() => null}>Show Artist</MenuItem>
-      <MenuItem onClick={() => null}>Show Album</MenuItem>
+      <ModalContext.Consumer>
+        {({ push }) => (
+          <MenuItem onClick={() => push(<AlbumPanel album={album} />)}>Open Album</MenuItem>
+        )}
+      </ModalContext.Consumer>
       {!inLibrary && (
         <>
           <MenuItem divider />
 
-          <MenuItem onClick={() => null}>Add to library</MenuItem>
+          <MenuItem onClick={() => addToLibrary('albums', [album.id])}>Add to library</MenuItem>
         </>
       )}
     </>
   );
 }
 
-ArtistContextMenu.propTypes = {
-  index: PropTypes.number.isRequired,
-  song: PropTypes.any.isRequired,
-  songs: PropTypes.array.isRequired,
+AlbumContextMenu.propTypes = {
+  album: PropTypes.array.isRequired,
 };
 
-export default withRouter(ArtistContextMenu);
+export default withRouter(AlbumContextMenu);

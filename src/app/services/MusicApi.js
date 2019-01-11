@@ -61,16 +61,16 @@ export async function addPlaylistToPlaylist(playlistId, sourcePlaylistId) {
   await addSongsToPlaylist(playlistId, tracks);
 }
 
-export async function addToLibrary(mediaType, songs) {
+export async function addToLibrary(mediaType, media) {
   try {
     await axios({
       method: 'post',
-      url: `${API_URL}/v1/me/library?ids[${mediaType}]=${songs.map(s => s).join(',')}`,
+      url: `${API_URL}/v1/me/library?ids[${mediaType}]=${media.map(m => m).join(',')}`,
       headers: getHeaders(),
     });
-    Alert.success("Added to your library, it'll show up in a few seconds. Hold tight!");
+    Alert.success("Added tracks to your library, they'll show up in a few seconds. Hold tight!");
   } catch (error) {
-    Alert.error("We're unable to add these songs to your library.");
+    Alert.error("We're unable to add these tracks to your library.");
   }
 }
 
