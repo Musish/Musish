@@ -64,8 +64,8 @@ class Sidebar extends React.Component {
             <SidebarLibraryMenu
               title={'My Library'}
               items={[
-                { to: '/artists', label: 'Artists' },
-                { to: '/albums', label: 'Albums' },
+                { to: '/artists', label: 'Artists', exact: false },
+                { to: '/albums', label: 'Albums', exact: false },
                 { to: '/songs', label: 'Songs' },
                 { to: '/playlists', label: 'Playlists' },
               ]}
