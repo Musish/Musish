@@ -15,7 +15,6 @@ function SongDecoration({ song, showAlbum, size = 40 }) {
         <span />
         <span />
         <span />
-        <span />
       </div>
     </div>
   );
