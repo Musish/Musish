@@ -33,7 +33,7 @@
 
     .button:hover {
       color: $accent_color;
-      background: $indescreet_hover_color;
+      background: $indiscreet_hover_color;
     }
   }
 
@@ -78,7 +78,7 @@
       margin-bottom: 10px;
       
       > a:hover {
-        color: #fe2851;
+        color: $accent_color;
       }
     
       .musicLink {

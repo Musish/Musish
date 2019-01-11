@@ -45,17 +45,17 @@
   }
 
   &::-webkit-scrollbar-thumb {
-    background: lighten(#fe2851, 40%);
+    background: lighten($accent_color, 40%);
     border-radius: 1px;
     cursor: pointer;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: #ffffff;
+    background: $accent_color;
   }
 
   &:hover::-webkit-scrollbar-thumb {
-    background: lighten(#fe2851, 25%);
+    background: lighten($accent_color, 25%);
   }
 
   &::-webkit-scrollbar-corner {
