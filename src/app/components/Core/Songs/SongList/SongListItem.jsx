@@ -3,9 +3,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { DragSource } from 'react-dnd';
-import { createMediaItem, getTime } from '../../../../utils/Utils';
+import { getTime } from '../../../../utils/Utils';
 import classes from './SongList.scss';
-import withMK from '../../../../hoc/withMK';
 import SongDecoration from './SongDecoration';
 import DragDropType from '../../../../utils/Constants/DragDropType';
 import ContextMenuTrigger from '../../../common/ContextMenu/ContextMenuTrigger';
@@ -19,31 +18,10 @@ class SongListItem extends React.Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  async playSong() {
-    const music = this.props.mk.instance;
-    await music.setQueue({
-      startPosition: this.props.index,
-      items: this.props.songs.map(song => createMediaItem(song)),
-    });
-    await music.player.play();
-  }
-
   async handleClick() {
     const { song, songs, index } = this.props;
 
     this.props.playSong({ song, songs, index });
-  }
-
-  isPlaying() {
-    const { song } = this.props;
-
-    return isSongPlaying(song);
-  }
-
-  renderDecoration() {
-    const { showAlbum, song } = this.props;
-
-    return <SongDecoration song={song} showAlbum={showAlbum} />;
   }
 
   render() {
@@ -55,7 +33,7 @@ class SongListItem extends React.Component {
         <div className={cx(classes.song, classes.disabledSong)} style={this.props.style}>
           <div className={[classes.songWrapper]}>
             <div className={classes.songBacker} />
-            {this.renderDecoration()}
+            <SongDecoration song={song} showAlbum={showAlbum} />
             <div className={classes.songInfo}>
               <span className={classes.songTitle}>{'Song not available'}</span>
             </div>
@@ -77,7 +55,7 @@ class SongListItem extends React.Component {
         className={cx(
           {
             [classes.indexedSong]: !showAlbum,
-            [classes.playing]: this.isPlaying(),
+            [classes.playing]: isSongPlaying(song),
             [classes.droppable]: isOver,
             [classes.disabledSong]: !song.attributes.playParams,
           },
@@ -92,7 +70,7 @@ class SongListItem extends React.Component {
           render={() => <SongContextMenu song={song} songs={songs} index={index} />}
         >
           <div className={classes.songBacker} />
-          {this.renderDecoration()}
+          <SongDecoration song={song} showAlbum={showAlbum} />
           <div className={classes.songInfo}>
             <span className={classes.songTitle}>
               {attributes.name}
@@ -136,7 +114,6 @@ SongListItem.propTypes = {
   style: PropTypes.object,
   showArtist: PropTypes.bool.isRequired,
   showAlbum: PropTypes.bool.isRequired,
-  mk: PropTypes.any.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   isOver: PropTypes.bool,
   playSong: PropTypes.func.isRequired,
@@ -145,11 +122,6 @@ SongListItem.propTypes = {
 SongListItem.defaultProps = {
   style: {},
   isOver: false,
-};
-
-const bindings = {
-  [MusicKit.Events.mediaItemDidChange]: 'mediaItem',
-  [MusicKit.Events.playbackStateDidChange]: 'playbackState',
 };
 
 const dndSpec = {
@@ -167,4 +139,4 @@ function dndCollect(connect, monitor) {
   };
 }
 
-export default DragSource(DragDropType.SONG, dndSpec, dndCollect)(withMK(SongListItem, bindings));
+export default DragSource(DragDropType.SONG, dndSpec, dndCollect)(SongListItem);

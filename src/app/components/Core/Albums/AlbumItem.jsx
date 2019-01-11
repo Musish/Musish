@@ -8,6 +8,8 @@ import classes from './AlbumItem.scss';
 import AlbumPanel from './AlbumPanel';
 import ModalContext from '../../common/Modal/ModalContext';
 import DragDropType from '../../../utils/Constants/DragDropType';
+import ContextMenuTrigger from '../../common/ContextMenu/ContextMenuTrigger';
+import AlbumContextMenu from './AlbumContextMenu';
 
 class AlbumItem extends Component {
   constructor(props) {
@@ -38,24 +40,29 @@ class AlbumItem extends Component {
         <ModalContext.Consumer>
           {({ push }) => (
             <div onClick={() => this.handleOpen(push)}>
-              <div className={classes.imageContainer} style={{ width: size, height: size }}>
-                <img
-                  src={artwork}
-                  className={classes.image}
-                  style={{ width: size, height: size }}
-                  alt={album.attributes.name}
-                  title={album.attributes.name}
-                />
-              </div>
+              <ContextMenuTrigger
+                holdToDisplay={-1}
+                render={() => <AlbumContextMenu album={album} />}
+              >
+                <div className={classes.imageContainer} style={{ width: size, height: size }}>
+                  <img
+                    src={artwork}
+                    className={classes.image}
+                    style={{ width: size, height: size }}
+                    alt={album.attributes.name}
+                    title={album.attributes.name}
+                  />
+                </div>
 
-              <div className={classes.descriptionContainer}>
-                <span className={classes.albumName} style={{ width: size }}>
-                  {album.attributes.name}
-                </span>
-                <span className={classes.artistName} style={{ width: size }}>
-                  {album.attributes.artistName}
-                </span>
-              </div>
+                <div className={classes.descriptionContainer}>
+                  <span className={classes.albumName} style={{ width: size }}>
+                    {album.attributes.name}
+                  </span>
+                  <span className={classes.artistName} style={{ width: size }}>
+                    {album.attributes.artistName}
+                  </span>
+                </div>
+              </ContextMenuTrigger>
             </div>
           )}
         </ModalContext.Consumer>

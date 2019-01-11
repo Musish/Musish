@@ -9,6 +9,8 @@ import PlaylistPanel from './PlaylistPanel';
 import { artworkForMediaItem } from '../../../utils/Utils';
 import DragDropType from '../../../utils/Constants/DragDropType';
 import ModalContext from '../../common/Modal/ModalContext';
+import ContextMenuTrigger from '../../common/ContextMenu/ContextMenuTrigger';
+import PlaylistContextMenu from './PlaylistContextMenu';
 
 class PlaylistItem extends Component {
   constructor(props) {
@@ -38,21 +40,26 @@ class PlaylistItem extends Component {
         <ModalContext.Consumer>
           {({ push }) => (
             <div onClick={() => this.handleOpen(push)}>
-              <div className={classes.imageContainer} style={{ width: size, height: size }}>
-                <img
-                  src={artwork}
-                  className={classes.image}
-                  style={{ width: size, height: size }}
-                  alt={playlist.attributes.name}
-                  title={playlist.attributes.name}
-                />
-              </div>
+              <ContextMenuTrigger
+                holdToDisplay={-1}
+                render={() => <PlaylistContextMenu playlist={playlist} />}
+              >
+                <div className={classes.imageContainer} style={{ width: size, height: size }}>
+                  <img
+                    src={artwork}
+                    className={classes.image}
+                    style={{ width: size, height: size }}
+                    alt={playlist.attributes.name}
+                    title={playlist.attributes.name}
+                  />
+                </div>
 
-              <div className={classes.descriptionContainer}>
-                <span className={classes.playlistName} style={{ width: size }}>
-                  {playlist.attributes.name}
-                </span>
-              </div>
+                <div className={classes.descriptionContainer}>
+                  <span className={classes.playlistName} style={{ width: size }}>
+                    {playlist.attributes.name}
+                  </span>
+                </div>
+              </ContextMenuTrigger>
             </div>
           )}
         </ModalContext.Consumer>
