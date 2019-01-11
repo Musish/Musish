@@ -22,8 +22,8 @@ class PlaylistPage extends React.Component {
     };
 
     this.scrollRef = React.createRef();
+    this.store = {};
 
-    this.load = this.load.bind(this);
     this.onSetItems = this.onSetItems.bind(this);
     this.playSong = this.playSong.bind(this);
     this.playPlaylist = this.playPlaylist.bind(this);
@@ -58,39 +58,6 @@ class PlaylistPage extends React.Component {
     const randy = Math.floor(Math.random() * this.state.playlist.relationships.tracks.data.length);
     await this.playPlaylist(randy);
     MusicPlayerApi.shuffle();
-  }
-
-  async load(params, { page }) {
-    const { playlistId } = this.state;
-    const music = MusicKit.getInstance();
-
-    if (page === 0) {
-      const isLibrary = playlistId.startsWith('p.');
-      const playlist = isLibrary
-        ? await music.api.library.playlist(playlistId, { offset: params.offset })
-        : await music.api.playlist(playlistId, { offset: params.offset });
-
-      const { tracks } = playlist.relationships;
-
-      this.setState({
-        playlist,
-        nextUrl: tracks.next,
-      });
-
-      return tracks.data;
-    }
-
-    if (!this.state.nextUrl) {
-      return [];
-    }
-
-    const { data } = await MusicApi.getNextSongs(this.state.nextUrl);
-
-    this.setState({
-      nextUrl: data.next,
-    });
-
-    return data.data;
   }
 
   renderHeader() {
@@ -144,12 +111,24 @@ class PlaylistPage extends React.Component {
   }
 
   render() {
+    const { playlistId } = this.state;
+    const music = MusicKit.getInstance();
+
+    const isLibrary = playlistId.startsWith('p.');
+    const functionGenerator = (...args) =>
+      isLibrary ? music.api.library.playlist(...args) : music.api.playlist(...args);
+
     return (
       <PageContent innerRef={this.scrollRef}>
         <PageTitle context={'My Library'} />
         {this.renderHeader()}
         <SongList
-          load={this.load}
+          load={MusicApi.infiniteLoadRelationships(
+            playlistId,
+            functionGenerator,
+            'tracks',
+            this.store
+          )}
           scrollElement={this.scrollRef}
           showAlbum
           showArtist
