@@ -35,7 +35,7 @@ class Sidebar extends React.Component {
       this.state.playlists.map(playlist => (
         <PlaylistMenuItem
           playlist={playlist}
-          to={`/playlists/${playlist.id}`}
+          to={`/library/playlists/${playlist.id}`}
           label={playlist.attributes.name}
           key={playlist.id}
         />
@@ -64,10 +64,10 @@ class Sidebar extends React.Component {
             <SidebarLibraryMenu
               title={'My Library'}
               items={[
-                { to: '/artists', label: 'Artists', exact: false },
-                { to: '/albums', label: 'Albums', exact: false },
-                { to: '/songs', label: 'Songs' },
-                { to: '/playlists', label: 'Playlists' },
+                { to: '/library/artists', label: 'Artists', exact: false },
+                { to: '/library/albums', label: 'Albums', exact: false },
+                { to: '/library/songs', label: 'Songs' },
+                { to: '/library/playlists', label: 'Playlists' },
               ]}
             />
           )}

@@ -5,8 +5,10 @@ import * as PropTypes from 'prop-types';
 import classes from './SearchBar.scss';
 
 function ArtistResultItem({ artist }) {
+  const link = isNaN(artist.id) ? `/library/artists/${artist.id}` : `/artist/${artist.id}`;
+
   return (
-    <Link to={`/artists/${artist.id}`}>
+    <Link to={link}>
       <div className={cx(classes.result, classes.artist)}>
         <span className={classes.name}>{artist.attributes.name}</span>
       </div>

@@ -44,7 +44,7 @@ export default class AlbumsPage extends React.Component {
     return (
       <>
         <Route
-          path={'/albums/:id'}
+          path={'/library/albums/:id'}
           exact
           render={({
             match: {

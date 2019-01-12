@@ -71,17 +71,17 @@ class App extends React.Component {
                   <Layout>
                     <Switch>
                       <Route path="/" exact component={ForYouPage} />
-                      <Route path="/albums" component={AlbumsPage} />
-                      <Route path="/playlists" exact component={PlaylistsPage} />
+                      <Route path="/library/albums" component={AlbumsPage} />
+                      <Route path="/library/playlists" exact component={PlaylistsPage} />
                       <Route
-                        path="/playlists/:id"
+                        path="/library/playlists/:id"
                         exact
                         component={props => <Playlist key={props.location.pathname} {...props} />}
                       />
-                      <Route path="/artists" exact component={ArtistsPage} />
-                      <Route path="/artists/:id" exact component={ArtistsPage} />
+                      <Route path="/library/artists" exact component={ArtistsPage} />
+                      <Route path="/library/artists/:id" component={ArtistsPage} />
+                      <Route path="/library/songs" exact component={SongsPage} />
                       <Route path="/artist/:id" exact component={ArtistPage} />
-                      <Route path="/songs" exact component={SongsPage} />
                       <Route path="/browse" exact component={BrowsePage} />
                       <Route path="/radio" exact component={RadioPage} />
                       <Redirect to="/" />

@@ -9,7 +9,7 @@ import * as MusicApi from '../../../../services/MusicApi';
 
 function PlaylistMenuItem(props) {
   const { playlist, connectDropTarget, isDndOver, activeDndItem } = props;
-  const to = `/playlists/${playlist.id}`;
+  const to = `/library/playlists/${playlist.id}`;
 
   return connectDropTarget(
     <li>

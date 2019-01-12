@@ -19,7 +19,7 @@ class ArtistsList extends React.Component {
   }
 
   static rowRenderer({ item: artist, index, isScrolling, isVisible, key, style }) {
-    const path = `/artists/${artist.id}`;
+    const path = `/library/artists/${artist.id}`;
     return (
       <li key={key} style={style}>
         <Route path={path} exact>
@@ -51,8 +51,8 @@ class ArtistsList extends React.Component {
             onSetItems={({ items }) => {
               const { pathname } = this.props.location;
 
-              if (pathname === `/artists` && items.length > 0) {
-                this.props.history.push(`/artists/${items[0].id}`);
+              if (pathname === `/library/artists` && items.length > 0) {
+                this.props.history.push(`/library/artists/${items[0].id}`);
               }
             }}
           />
