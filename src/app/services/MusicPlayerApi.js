@@ -14,9 +14,24 @@ export async function playAlbum(album, index) {
   await setQueueItems(album.relationships.tracks.data, index);
   await music.player.play();
 }
+
+export async function shufflePlayAlbum(album) {
+  const music = MusicKit.getInstance();
+  const queue = _shuffle(album.relationships.tracks.data);
+  await setQueueItems(queue, 0);
+  await music.player.play();
+}
+
 export async function playPlaylist(playlist, index) {
   const music = MusicKit.getInstance();
   await setQueueItems(playlist.relationships.tracks.data, index);
+  await music.player.play();
+}
+
+export async function shufflePlayPlaylist(playlist) {
+  const music = MusicKit.getInstance();
+  const queue = _shuffle(playlist.relationships.tracks.data);
+  await setQueueItems(queue, 0);
   await music.player.play();
 }
 
