@@ -1,6 +1,7 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import classes from './AlbumPanel.scss';
 import { artworkForMediaItem, humanifyMillis } from '../../../utils/Utils';
 import SongList from '../Songs/SongList/SongList';
@@ -81,6 +82,7 @@ export default class AlbumPanel extends React.Component {
 
   render() {
     const { album, runtime } = this.state;
+    console.log(album);
 
     if (!album) {
       return <Loader />;
@@ -94,6 +96,14 @@ export default class AlbumPanel extends React.Component {
           <span>E</span>
         </span>
       </div>
+    );
+
+    const artistList = 'artists' in album.relationships ? album.relationships.artists.data : null;
+    const artistId = artistList.length > 0 ? artistList[0].id : null;
+    const artistName = artistId ? (
+      <Link to={`/artist/${artistId}`}>{album.attributes.artistName}</Link>
+    ) : (
+      <span className={classes.subtitle}>{album.attributes.artistName}</span>
     );
 
     return (
@@ -123,7 +133,7 @@ export default class AlbumPanel extends React.Component {
             {explicit}
           </span>
 
-          <span className={classes.subtitle}>{album.attributes.artistName}</span>
+          {artistName}
           <SongList
             scrollElement={this.ref}
             scrollElementModifier={e => e && e.parentElement}
