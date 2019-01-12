@@ -87,6 +87,11 @@ class Sidebar extends React.Component {
                 Github
               </a>
             </span>
+            <span className={classes.footnote}>
+              {'Designed with '}
+              <i className={'fa fa-heart'} />
+              {' by the Musi.sh team.'}
+            </span>
           </div>
         </div>
         <Player />

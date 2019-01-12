@@ -21,8 +21,7 @@
   display: flex;
   flex-direction: row;
   background: #fe2851;
-  color: #ffffff;;
-  border-bottom: solid 1px #eeeeee;
+  color: #ffffff;
   cursor: pointer;
   padding: 0 15px;
   flex-shrink: 0;
@@ -49,6 +48,10 @@
       color: #ffffff;
       cursor: pointer;
       margin-left: 20px;
+
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 }
