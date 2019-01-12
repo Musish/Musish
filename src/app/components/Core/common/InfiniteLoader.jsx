@@ -58,7 +58,7 @@ export default class InfiniteLoader extends React.Component {
     });
 
     try {
-      const limit = 100;
+      const { limit } = this.props;
 
       const newItems = await this.props.load(
         {
@@ -107,9 +107,11 @@ InfiniteLoader.propTypes = {
   render: PropTypes.func.isRequired,
   onSetItems: PropTypes.func,
   scrollElement: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  limit: PropTypes.number,
 };
 
 InfiniteLoader.defaultProps = {
   onSetItems: state => null,
   scrollElement: null,
+  limit: 100,
 };

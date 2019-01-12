@@ -12,6 +12,7 @@ import ArtistsPage from './Core/Artists/ArtistsPage';
 import Playlist from './Core/Playlists/PlaylistPage';
 import SongsPage from './Core/Songs/SongsPage';
 import PlaylistsPage from './Core/Playlists/PlaylistsPage';
+import RecentlyAddedPage from './Core/RecentlyAdded/RecentlyAddedPage';
 import ForYouPage from './Core/ForYou/ForYouPage';
 import BrowsePage from './Core/Browse/BrowsePage';
 import RadioPage from './Core/Radio/RadioPage';
@@ -70,21 +71,22 @@ class App extends React.Component {
                 <LyricsModalContext.Provider value={lyricsModalState}>
                   <Layout>
                     <Switch>
-                      <Route path="/" exact component={ForYouPage} />
-                      <Route path="/me/albums" component={AlbumsPage} />
-                      <Route path="/me/playlists" exact component={PlaylistsPage} />
+                      <Route path={'/'} exact component={ForYouPage} />
+                      <Route path={'/me/added'} component={RecentlyAddedPage} />
+                      <Route path={'/me/albums'} component={AlbumsPage} />
+                      <Route path={'/me/playlists'} exact component={PlaylistsPage} />
                       <Route
-                        path="/me/playlists/:id"
+                        path={'/me/playlists/:id'}
                         exact
                         component={props => <Playlist key={props.location.pathname} {...props} />}
                       />
-                      <Route path="/me/artists" exact component={ArtistsPage} />
-                      <Route path="/me/artists/:id" component={ArtistsPage} />
-                      <Route path="/me/songs" exact component={SongsPage} />
-                      <Route path="/artist/:id" exact component={ArtistPage} />
-                      <Route path="/browse" exact component={BrowsePage} />
-                      <Route path="/radio" exact component={RadioPage} />
-                      <Redirect to="/" />
+                      <Route path={'/me/artists'} exact component={ArtistsPage} />
+                      <Route path={'/me/artists/:id'} component={ArtistsPage} />
+                      <Route path={'/me/songs'} exact component={SongsPage} />
+                      <Route path={'/artist/:id'} exact component={ArtistPage} />
+                      <Route path={'/browse'} exact component={BrowsePage} />
+                      <Route path={'/radio'} exact component={RadioPage} />
+                      <Redirect to={'/'} />
                     </Switch>
                     {this.state.modalsContents.length > 0 && (
                       <Modal

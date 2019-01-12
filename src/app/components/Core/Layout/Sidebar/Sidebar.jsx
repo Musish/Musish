@@ -64,6 +64,7 @@ class Sidebar extends React.Component {
             <SidebarLibraryMenu
               title={'My Library'}
               items={[
+                { to: '/me/added', label: 'Recently Added', exact: false },
                 { to: '/me/artists', label: 'Artists', exact: false },
                 { to: '/me/albums', label: 'Albums', exact: false },
                 { to: '/me/songs', label: 'Songs' },
@@ -86,6 +87,11 @@ class Sidebar extends React.Component {
               <a href={'https://github.com/Musish/Musish'} target={'_blank'}>
                 Github
               </a>
+            </span>
+            <span className={classes.footnote}>
+              {'Designed with '}
+              <i className={'fa fa-heart'} />
+              {' by the Musi.sh team.'}
             </span>
           </div>
         </div>
