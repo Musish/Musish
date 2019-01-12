@@ -1,3 +1,27 @@
+.choices {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+
+  .selectionItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .selectionItem:hover {
+    cursor: pointer;
+    background-color: #fe2851;
+    color: white;
+  }
+}
+
 .searchGrid {
   display: flex;
   flex-wrap: wrap;

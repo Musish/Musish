@@ -10,6 +10,7 @@ import AlbumItem from '../Albums/AlbumItem';
 import PlaylistItem from '../Playlists/PlaylistItem';
 import SongList from '../Songs/SongList/SongList';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
+import ArtistResultItem from '../Layout/NavigationBar/Search/ArtistResultItem';
 
 class SearchPage extends React.Component {
   constructor(props) {
@@ -61,7 +62,7 @@ class SearchPage extends React.Component {
   async searchCatalog(query) {
     const catalogData = await this.props.mk.instance.api.search(query, {
       types: ['albums', 'songs', 'playlists', 'artists'],
-      limit: 10,
+      limit: 24,
     });
     this.setState({
       catalogData,
@@ -71,7 +72,7 @@ class SearchPage extends React.Component {
   async searchLibrary(query) {
     const libraryData = await this.props.mk.instance.api.library.search(query, {
       types: ['library-albums', 'library-songs', 'library-playlists', 'library-artists'],
-      limit: 10,
+      limit: 24,
     });
     this.setState({
       libraryData,
@@ -113,15 +114,21 @@ class SearchPage extends React.Component {
   }
 
   render() {
+    console.log(this.state.catalogData);
+    console.log(this.state.libraryData);
     return (
       <PageContent innerRef={this.ref}>
+        <div className={classes.choices}>
+          <div className={classes.selectionItem}>Catalog</div>
+          <div className={classes.selectionItem}>Library</div>
+        </div>
         <PageTitle title={'Your Results'} context={'Search'} />
 
         <h3>Songs</h3>
         {!this.state.loading && (
           <SongList
             scrollElement={this.ref}
-            load={() => this.state.songs}
+            load={() => this.state.songs.slice(0, 10)}
             showArtist
             showAlbum
             playSong={SearchPage.playSong}
@@ -143,7 +150,10 @@ class SearchPage extends React.Component {
         </div>
 
         <h3>Artists</h3>
-        <div className={classes.searchGrid}>Test</div>
+        {this.renderResults('artists', artist => (
+          <ArtistResultItem artist={artist} key={artist.id} />
+        ))}
+
       </PageContent>
     );
   }
