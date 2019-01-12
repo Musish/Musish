@@ -14,6 +14,8 @@ import QueueContext from './Queue/QueueContext';
 import LyricsModalContext from './Lyrics/LyricsModalContext';
 import { isShuffled, pause, play, shuffle, unShuffle } from '../../../services/MusicPlayerApi';
 import PlayerTime from './PlayerTime';
+import AlbumPanel from '../Albums/AlbumPanel';
+import ModalContext from '../../common/Modal/ModalContext';
 
 class Player extends React.Component {
   constructor(props) {
@@ -28,6 +30,7 @@ class Player extends React.Component {
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
     this.toggleVolume = this.toggleVolume.bind(this);
     this.getVolumeIconClasses = this.getVolumeIconClasses.bind(this);
+    this.handleOpenAlbum = this.handleOpenAlbum.bind(this);
   }
 
   handlePrevious() {
@@ -106,6 +109,15 @@ class Player extends React.Component {
     return 'fas fa-volume-up';
   }
 
+  handleOpenAlbum(push) {
+    const nowPlayingItem = this.props.mk.mediaItem && this.props.mk.mediaItem.item;
+    const meta = nowPlayingItem.assets[0].metadata;
+
+    const id = meta.playlistId;
+
+    push(<AlbumPanel id={id} />);
+  }
+
   render() {
     const { mk } = this.props;
     const nowPlayingItem = mk.mediaItem && mk.mediaItem.item;
@@ -131,11 +143,15 @@ class Player extends React.Component {
           <div className={styles.track}>
             <h1>{nowPlayingItem.title}</h1>
             <Link to={`/artist/${meta.artistId}`}>
-              <h2 className={styles.link}>{nowPlayingItem.attributes.artistName}</h2>
+              <span className={cx(styles.artistName)}>{nowPlayingItem.attributes.artistName}</span>
             </Link>
-            <Link to={`/album/${meta.artistId}`}>
-              <h3 className={styles.link}>{nowPlayingItem.attributes.albumName}</h3>
-            </Link>
+            <ModalContext.Consumer>
+              {({ push }) => (
+                <span className={cx(styles.albumName)} onClick={() => this.handleOpenAlbum(push)}>
+                  {nowPlayingItem.attributes.albumName}
+                </span>
+              )}
+            </ModalContext.Consumer>
           </div>
         </div>
         <PlayerTime nowPlayingItem={nowPlayingItem} />

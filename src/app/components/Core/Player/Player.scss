@@ -25,35 +25,37 @@
       flex: 1;
       padding-left: 10px;
 
-      .link {
-        > :hover {
-          color: $accent_color;
-        }
-      }
-
-      h1,
-      h2,
-      h3 {
+      .artistName, .albumName {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         width: 160px;
         display: block;
+        font-size: 12px;
+
+        &:hover {
+          cursor: pointer;
+          color: $accent_color;
+        }
+      }
+
+      .artistName {
+        font-weight: bold;
+      }
+
+      .albumName {
+        margin-top: 3px;
+        font-weight: 300;
       }
 
       h1 {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 160px;
+        display: block;
         font-size: 18px;
         margin-bottom: 6px;
-      }
-
-      h2,
-      h3 {
-        font-size: 12px;
-      }
-
-      h3 {
-        margin-top: 3px;
-        font-weight: 300;
       }
     }
   }
