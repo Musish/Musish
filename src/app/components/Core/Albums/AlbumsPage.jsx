@@ -25,7 +25,7 @@ export default class AlbumsPage extends React.Component {
   }
 
   handleClose() {
-    this.props.history.push('/albums');
+    this.props.history.push('/library/albums');
   }
 
   static renderItems({ items }) {
