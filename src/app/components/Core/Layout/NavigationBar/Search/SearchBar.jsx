@@ -2,6 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
+import { withRouter } from 'react-router-dom';
 import classes from './SearchBar.scss';
 import withMK from '../../../../../hoc/withMK';
 import withContext from '../../../../../hoc/withContext';
@@ -179,4 +180,4 @@ SearchBar.propTypes = {
   history: PropTypes.object.isRequired,
 };
 
-export default withMK(withContext(SearchBar, AuthorizeContext));
+export default withRouter(withMK(withContext(SearchBar, AuthorizeContext)));

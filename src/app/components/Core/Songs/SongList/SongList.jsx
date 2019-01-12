@@ -21,7 +21,6 @@ export default class SongList extends React.Component {
     this.setState({
       songs: state.items,
     });
-
     this.props.onSetItems(state);
   }
 

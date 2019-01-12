@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import classes from './SearchPage.scss';
 import withMK from '../../../hoc/withMK';
 import PageTitle from '../../common/PageTitle';
 import PageContent from '../Layout/PageContent';
 import Loader from '../../common/Loader';
-import SongResultItem from '../Layout/NavigationBar/Search/SongResultItem';
 import AlbumItem from '../Albums/AlbumItem';
 import PlaylistItem from '../Playlists/PlaylistItem';
 import SongList from '../Songs/SongList/SongList';
-import SongsPage from '../Songs/SongsPage';
-import ArtistResultItem from '../Layout/NavigationBar/Search/ArtistResultItem';
+import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
 
 class SearchPage extends React.Component {
   constructor(props) {
@@ -19,10 +18,10 @@ class SearchPage extends React.Component {
     this.state = {
       catalogData: null,
       libraryData: null,
+      songs: [],
     };
 
     this.ref = React.createRef();
-
     this.search = this.search.bind(this);
   }
 
@@ -31,13 +30,13 @@ class SearchPage extends React.Component {
   }
 
   async search() {
-    const query = this.props.query.replace(' ', '+');
-
+    const query = this.props.match.params.query.replace(' ', '+');
     if (query.length === 0) {
       this.setState({
         catalogData: null,
         libraryData: null,
       });
+      this.updateSongs();
       return;
     }
 
@@ -46,9 +45,16 @@ class SearchPage extends React.Component {
     });
 
     await Promise.all([this.searchCatalog(query), this.searchLibrary(query)]);
+    this.updateSongs();
 
     this.setState({
       loading: false,
+    });
+  }
+
+  updateSongs() {
+    this.setState({
+      songs: this.getItems('songs'),
     });
   }
 
@@ -57,7 +63,6 @@ class SearchPage extends React.Component {
       types: ['albums', 'songs', 'playlists', 'artists'],
       limit: 10,
     });
-
     this.setState({
       catalogData,
     });
@@ -68,26 +73,25 @@ class SearchPage extends React.Component {
       types: ['library-albums', 'library-songs', 'library-playlists', 'library-artists'],
       limit: 10,
     });
-
     this.setState({
       libraryData,
     });
   }
 
   getItems(type) {
-    let songs = [];
+    let items = [];
 
     const { catalogData, libraryData } = this.state;
 
     if (libraryData && libraryData[`library-${type}`]) {
-      songs = [...songs, ...libraryData[`library-${type}`].data];
+      items = [...items, ...libraryData[`library-${type}`].data];
     }
 
     if (catalogData && catalogData[type]) {
-      songs = [...songs, ...catalogData[type].data];
+      items = [...items, ...catalogData[type].data];
     }
 
-    return songs;
+    return items;
   }
 
   renderResults(type, rowRenderer) {
@@ -104,28 +108,25 @@ class SearchPage extends React.Component {
     );
   }
 
+  static playSong({ songs, index }) {
+    MusicPlayerApi.playSong(songs, index);
+  }
+
   render() {
-    console.log(this.getItems('songs'));
     return (
       <PageContent innerRef={this.ref}>
         <PageTitle title={'Your Results'} context={'Search'} />
 
-        <h3>Top Results</h3>
         <h3>Songs</h3>
-        <SongList
-          load={() => this.getItems('songs')}
-          scrollElement={this.ref}
-          showAlbum
-          showArtist
-          playSong={SongsPage.playSong}
-        />
-
-        <h3>Playlists</h3>
-        <div className={classes.searchGrid}>
-          {this.renderResults('playlists', playlist => (
-            <PlaylistItem key={playlist.id} playlist={playlist} size={170} navigate />
-          ))}
-        </div>
+        {!this.state.loading && (
+          <SongList
+            scrollElement={this.ref}
+            load={() => this.state.songs}
+            showArtist
+            showAlbum
+            playSong={SearchPage.playSong}
+          />
+        )}
 
         <h3>Albums</h3>
         <div className={classes.searchGrid}>
@@ -134,10 +135,15 @@ class SearchPage extends React.Component {
           ))}
         </div>
 
+        <h3>Playlists</h3>
+        <div className={classes.searchGrid}>
+          {this.renderResults('playlists', playlist => (
+            <PlaylistItem key={playlist.id} playlist={playlist} size={170} navigate />
+          ))}
+        </div>
+
         <h3>Artists</h3>
         <div className={classes.searchGrid}>Test</div>
-
-        <h3>People</h3>
       </PageContent>
     );
   }
@@ -146,6 +152,7 @@ class SearchPage extends React.Component {
 SearchPage.propTypes = {
   mk: PropTypes.any.isRequired,
   query: PropTypes.string.isRequired,
+  match: PropTypes.any.isRequired,
 };
 
-export default withMK(SearchPage);
+export default withMK(withRouter(SearchPage));
