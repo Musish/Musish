@@ -60,7 +60,14 @@ class Lyrics extends React.Component {
     const { geniusSong } = this.state;
 
     if (geniusSong === false) {
-      return <div className={classes.noMatch}>No lyrics available :(</div>;
+      return (
+        <div className={classes.noMatch}>
+          {'No lyrics available '}
+          <span role={'img'} aria-label={'sad'}>
+            😢
+          </span>
+        </div>
+      );
     }
 
     if (!geniusSong) {
