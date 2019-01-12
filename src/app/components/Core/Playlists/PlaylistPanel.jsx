@@ -13,7 +13,7 @@ export default class PlaylistPanel extends React.Component {
     super(props);
 
     this.state = {
-      playlist: this.props.playlist,
+      playlist: null,
       runtime: 0,
       items: [],
     };
@@ -29,9 +29,7 @@ export default class PlaylistPanel extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.id) {
-      this.fetchPlaylist();
-    }
+    this.fetchPlaylist();
   }
 
   async fetchPlaylist() {
