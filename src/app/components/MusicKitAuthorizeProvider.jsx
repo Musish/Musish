@@ -10,43 +10,33 @@ class MusicKitAuthorizeProvider extends React.Component {
     super(props);
 
     this.state = {
-      ready: false,
+      ready: true,
       browsing: false,
-      ...MusicKitAuthorizeProvider.getDerivedStateFromProps(this.props, {}),
-    };
-  }
-
-  static getDerivedStateFromProps(props) {
-    return {
       isAuthorized: props.mk.instance.isAuthorized,
     };
+
+    this.check = this.check.bind(this);
   }
 
-  async handleTokenCheck() {
-    const music = this.props.mk.instance;
-    if (!this.state.isAuthorized) {
+  check({ authorizationStatus }) {
+    if (authorizationStatus === 0) {
       this.setState({
-        ready: true,
+        isAuthorized: false,
       });
-      return;
-    }
-
-    try {
-      await music.api.library.songs({ limit: 0 });
-      await music.authorize();
-    } catch (e) {
-      await music.unauthorize();
-    }
-
-    setImmediate(() => {
-      this.setState({
-        ready: true,
+    } else {
+      setImmediate(() => {
+        this.setState({
+          isAuthorized: true,
+        });
       });
-    });
+    }
   }
 
   componentDidMount() {
-    this.handleTokenCheck();
+    MusicKit.getInstance().addEventListener(
+      MusicKit.Events.authorizationStatusDidChange,
+      this.check
+    );
   }
 
   render() {
@@ -78,8 +68,4 @@ MusicKitAuthorizeProvider.propTypes = {
   mk: PropTypes.any.isRequired,
 };
 
-const bindings = {
-  [MusicKit.Events.authorizationStatusDidChange]: 'authorizationStatus',
-};
-
-export default withMK(MusicKitAuthorizeProvider, bindings);
+export default withMK(MusicKitAuthorizeProvider);
