@@ -88,15 +88,21 @@
       }
 
       .pictureWrapper {
-        display: inline-block;
+        display: flex;
         width: 41px;
         height: 41px;
         margin-left: 15px;
         background: #cccccc;
         border-radius: 50%;
+        align-items: center;
+        justify-content: center;
 
         > img {
           border-radius: inherit;
+        }
+
+        > span {
+          color: lighten($tertiary_color, 25%);
         }
       }
 
