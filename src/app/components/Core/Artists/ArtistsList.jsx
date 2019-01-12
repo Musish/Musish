@@ -19,7 +19,7 @@ class ArtistsList extends React.Component {
   }
 
   static rowRenderer({ item: artist, index, isScrolling, isVisible, key, style }) {
-    const path = `/artists/${artist.id}`;
+    const path = `/me/artists/${artist.id}`;
     const initials = artist.attributes.name
       .split(' ')
       .map(n => n.substring(0, 1))
@@ -58,8 +58,8 @@ class ArtistsList extends React.Component {
             onSetItems={({ items }) => {
               const { pathname } = this.props.location;
 
-              if (pathname === `/artists` && items.length > 0) {
-                this.props.history.push(`/artists/${items[0].id}`);
+              if (pathname === `/me/artists` && items.length > 0) {
+                this.props.history.push(`/me/artists/${items[0].id}`);
               }
             }}
           />
