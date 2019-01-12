@@ -1,3 +1,5 @@
+@import "../../../../styles/settings/colors";
+
 .modal {
   width: 400px;
   height: 500px;
@@ -6,4 +8,11 @@
 
 .lyricsSection {
   height: 455px;
+}
+
+.noMatch {
+  color: $accent_color;
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
 }
