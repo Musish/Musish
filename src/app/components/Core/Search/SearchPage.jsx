@@ -10,7 +10,7 @@ import AlbumItem from '../Albums/AlbumItem';
 import PlaylistItem from '../Playlists/PlaylistItem';
 import SongList from '../Songs/SongList/SongList';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
-import ArtistResultItem from '../Layout/NavigationBar/Search/ArtistResultItem';
+import ArtistItem from '../Artists/ArtistItem';
 
 class SearchPage extends React.Component {
   constructor(props) {
@@ -122,7 +122,7 @@ class SearchPage extends React.Component {
           <div className={classes.selectionItem}>Catalog</div>
           <div className={classes.selectionItem}>Library</div>
         </div>
-        <PageTitle title={'Your Results'} context={'Search'} />
+        <PageTitle title={`Search: '${this.props.match.params.query}'`} context={'Search'} />
 
         <h3>Songs</h3>
         {!this.state.loading && (
@@ -150,10 +150,11 @@ class SearchPage extends React.Component {
         </div>
 
         <h3>Artists</h3>
-        {this.renderResults('artists', artist => (
-          <ArtistResultItem artist={artist} key={artist.id} />
-        ))}
-
+        <div className={classes.searchArtistsGrid}>
+          {this.renderResults('artists', artist => (
+            <ArtistItem artist={artist} size={41} key={artist.id} />
+          ))}
+        </div>
       </PageContent>
     );
   }
