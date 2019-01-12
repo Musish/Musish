@@ -9,7 +9,7 @@ export default function ArtistsPage() {
     <>
       <ArtistsList />
       <Route
-        path={'/library/artists/:id'}
+        path={'/me/artists/:id'}
         exact
         render={({
           match: {

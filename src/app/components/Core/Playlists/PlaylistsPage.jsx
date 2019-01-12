@@ -24,7 +24,7 @@ export default class PlaylistsPage extends React.Component {
   }
 
   handleClose() {
-    this.props.history.push('/library/albums');
+    this.props.history.push('/me/albums');
   }
 
   static renderItems({ items }) {

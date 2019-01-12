@@ -21,7 +21,7 @@ export async function addSongsToPlaylist(playlistId, songs) {
   try {
     await axios({
       method: 'post',
-      url: `${API_URL}/v1/me/library/playlists/${playlistId}/tracks`,
+      url: `${API_URL}/v1/me/playlists/${playlistId}/tracks`,
       data: payload,
       headers: getHeaders(),
     });

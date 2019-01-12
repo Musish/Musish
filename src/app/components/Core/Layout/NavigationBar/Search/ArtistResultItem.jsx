@@ -5,7 +5,7 @@ import * as PropTypes from 'prop-types';
 import classes from './SearchBar.scss';
 
 function ArtistResultItem({ artist }) {
-  const link = isNaN(artist.id) ? `/library/artists/${artist.id}` : `/artist/${artist.id}`;
+  const link = isNaN(artist.id) ? `/me/artists/${artist.id}` : `/artist/${artist.id}`;
 
   return (
     <Link to={link}>

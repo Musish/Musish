@@ -22,7 +22,7 @@ class AlbumItem extends Component {
     const id = this.props.id || this.props.album.id;
 
     if (this.props.navigate) {
-      this.props.history.push(`/library/albums/${id}`);
+      this.props.history.push(`/me/albums/${id}`);
     } else {
       push(<AlbumPanel id={id} />);
     }

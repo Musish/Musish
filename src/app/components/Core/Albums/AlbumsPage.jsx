@@ -25,7 +25,7 @@ export default class AlbumsPage extends React.Component {
   }
 
   handleClose() {
-    this.props.history.push('/library/albums');
+    this.props.history.push('/me/albums');
   }
 
   static renderItems({ items }) {
@@ -44,7 +44,7 @@ export default class AlbumsPage extends React.Component {
     return (
       <>
         <Route
-          path={'/library/albums/:id'}
+          path={'/me/albums/:id'}
           exact
           render={({
             match: {
