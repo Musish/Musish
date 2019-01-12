@@ -22,7 +22,7 @@ export default class AlbumPanel extends React.Component {
 
     this.playSong = this.playSong.bind(this);
     this.playAlbum = this.playAlbum.bind(this);
-    this.shuffleAlbum = this.shuffleAlbum.bind(this);
+    this.shufflePlayAlbum = this.shufflePlayAlbum.bind(this);
     this.onSetItems = this.onSetItems.bind(this);
     this.albumLoader = this.albumLoader.bind(this);
   }
@@ -72,8 +72,8 @@ export default class AlbumPanel extends React.Component {
     MusicPlayerApi.playAlbum(this.state.album, index);
   }
 
-  async shuffleAlbum() {
-    MusicPlayerApi.shuffleAlbum(this.state.album);
+  async shufflePlayAlbum() {
+    MusicPlayerApi.shufflePlayAlbum(this.state.album);
   }
 
   render() {
@@ -112,7 +112,7 @@ export default class AlbumPanel extends React.Component {
               <i className={`${classes.icon} fas fa-play`} />
               Play
             </button>
-            <button type={'button'} onClick={this.shuffleAlbum} className={classes.button}>
+            <button type={'button'} onClick={this.shufflePlayAlbum} className={classes.button}>
               <i className={`${classes.icon} fas fa-random`} />
               Shuffle
             </button>
