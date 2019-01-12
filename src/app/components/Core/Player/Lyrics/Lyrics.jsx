@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classes from './LyricsModal.scss';
+
 import backend from '../../../../services/Backend';
 import Loader from '../../../common/Loader';
 
@@ -33,6 +35,8 @@ class Lyrics extends React.Component {
     this.state = {
       geniusSong: null,
     };
+
+    this.fetchGeniusSong = this.fetchGeniusSong.bind(this);
   }
 
   async fetchGeniusSong() {
@@ -44,7 +48,7 @@ class Lyrics extends React.Component {
     const { data } = await backend.get(`/genius/song?name=${qsName}&artist=${qsArtist}`);
 
     this.setState({
-      geniusSong: data,
+      geniusSong: data || false,
     });
   }
 
@@ -55,12 +59,23 @@ class Lyrics extends React.Component {
   render() {
     const { geniusSong } = this.state;
 
+    if (geniusSong === false) {
+      return (
+        <div className={classes.noMatch}>
+          {'No lyrics available '}
+          <span role={'img'} aria-label={'sad'}>
+            😢
+          </span>
+        </div>
+      );
+    }
+
     if (!geniusSong) {
       return <Loader />;
     }
 
     return (
-      <div style={{ flex: 1 }}>
+      <div className={classes.lyricsSection}>
         <iframe
           title={'Lyrics'}
           srcDoc={geniusSong.embed_content + iframeCss}

@@ -35,7 +35,7 @@ class Sidebar extends React.Component {
       this.state.playlists.map(playlist => (
         <PlaylistMenuItem
           playlist={playlist}
-          to={`/playlists/${playlist.id}`}
+          to={`/me/playlists/${playlist.id}`}
           label={playlist.attributes.name}
           key={playlist.id}
         />
@@ -64,10 +64,11 @@ class Sidebar extends React.Component {
             <SidebarLibraryMenu
               title={'My Library'}
               items={[
-                { to: '/artists', label: 'Artists', exact: false },
-                { to: '/albums', label: 'Albums', exact: false },
-                { to: '/songs', label: 'Songs' },
-                { to: '/playlists', label: 'Playlists' },
+                { to: '/me/added', label: 'Recently Added', exact: false },
+                { to: '/me/artists', label: 'Artists', exact: false },
+                { to: '/me/albums', label: 'Albums', exact: false },
+                { to: '/me/songs', label: 'Songs' },
+                { to: '/me/playlists', label: 'Playlists' },
               ]}
             />
           )}
@@ -77,6 +78,22 @@ class Sidebar extends React.Component {
               <ul>{playlists}</ul>
             </div>
           )}
+          <div className={classes.footer}>
+            <span>
+              <a href={'https://github.com/Musish/Musish/issues/new'} target={'_blank'}>
+                Feedback
+              </a>
+              {' & '}
+              <a href={'https://github.com/Musish/Musish'} target={'_blank'}>
+                Github
+              </a>
+            </span>
+            <span className={classes.footnote}>
+              {'Designed with '}
+              <i className={'fa fa-heart'} />
+              {' by the Musi.sh team.'}
+            </span>
+          </div>
         </div>
         <Player />
       </aside>

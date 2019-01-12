@@ -13,7 +13,7 @@ export default class PlaylistPanel extends React.Component {
     super(props);
 
     this.state = {
-      playlist: this.props.playlist,
+      playlist: null,
       runtime: 0,
       items: [],
     };
@@ -23,15 +23,13 @@ export default class PlaylistPanel extends React.Component {
 
     this.playSong = this.playSong.bind(this);
     this.playPlaylist = this.playPlaylist.bind(this);
-    this.shufflePlaylist = this.shufflePlaylist.bind(this);
+    this.shufflePlayPlaylist = this.shufflePlayPlaylist.bind(this);
     this.onSetItems = this.onSetItems.bind(this);
     this.playlistLoader = this.playlistLoader.bind(this);
   }
 
   componentDidMount() {
-    if (this.props.id) {
-      this.fetchPlaylist();
-    }
+    this.fetchPlaylist();
   }
 
   async fetchPlaylist() {
@@ -76,10 +74,8 @@ export default class PlaylistPanel extends React.Component {
     MusicPlayerApi.playPlaylist(this.state.playlist, index);
   }
 
-  async shufflePlaylist() {
-    const randy = Math.floor(Math.random() * this.state.playlist.relationships.tracks.data.length);
-    await this.playPlaylist(randy);
-    MusicPlayerApi.shuffle();
+  async shufflePlayPlaylist() {
+    MusicPlayerApi.shufflePlayPlaylist(this.state.playlist);
   }
 
   render() {
@@ -110,7 +106,11 @@ export default class PlaylistPanel extends React.Component {
                   <i className={`${classes.icon} fas fa-play`} />
                   Play
                 </button>
-                <button type={'button'} onClick={this.shufflePlaylist} className={classes.button}>
+                <button
+                  type={'button'}
+                  onClick={this.shufflePlayPlaylist}
+                  className={classes.button}
+                >
                   <i className={`${classes.icon} fas fa-random`} />
                   Shuffle
                 </button>

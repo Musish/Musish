@@ -1,6 +1,7 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import classes from './AlbumPanel.scss';
 import { artworkForMediaItem, humanifyMillis } from '../../../utils/Utils';
 import SongList from '../Songs/SongList/SongList';
@@ -13,7 +14,7 @@ export default class AlbumPanel extends React.Component {
     super(props);
 
     this.state = {
-      album: this.props.album,
+      album: null,
     };
 
     this.ref = React.createRef();
@@ -21,15 +22,13 @@ export default class AlbumPanel extends React.Component {
 
     this.playSong = this.playSong.bind(this);
     this.playAlbum = this.playAlbum.bind(this);
-    this.shuffleAlbum = this.shuffleAlbum.bind(this);
+    this.shufflePlayAlbum = this.shufflePlayAlbum.bind(this);
     this.onSetItems = this.onSetItems.bind(this);
     this.albumLoader = this.albumLoader.bind(this);
   }
 
   componentDidMount() {
-    if (this.props.id) {
-      this.fetchAlbum();
-    }
+    this.fetchAlbum();
   }
 
   async fetchAlbum() {
@@ -73,10 +72,8 @@ export default class AlbumPanel extends React.Component {
     MusicPlayerApi.playAlbum(this.state.album, index);
   }
 
-  async shuffleAlbum() {
-    const randy = Math.floor(Math.random() * this.state.album.relationships.tracks.data.length);
-    await this.playAlbum(randy);
-    MusicPlayerApi.shuffle();
+  async shufflePlayAlbum() {
+    MusicPlayerApi.shufflePlayAlbum(this.state.album);
   }
 
   render() {
@@ -96,6 +93,14 @@ export default class AlbumPanel extends React.Component {
       </div>
     );
 
+    const artistList = 'artists' in album.relationships ? album.relationships.artists.data : null;
+    const artistId = artistList && artistList.length > 0 ? artistList[0].id : null;
+    const artistName = artistId ? (
+      <Link to={`/artist/${artistId}`}>{album.attributes.artistName}</Link>
+    ) : (
+      <span className={classes.subtitle}>{album.attributes.artistName}</span>
+    );
+
     return (
       <div className={classes.panel} ref={this.ref}>
         <div className={classes.aside}>
@@ -107,7 +112,7 @@ export default class AlbumPanel extends React.Component {
               <i className={`${classes.icon} fas fa-play`} />
               Play
             </button>
-            <button type={'button'} onClick={this.shuffleAlbum} className={classes.button}>
+            <button type={'button'} onClick={this.shufflePlayAlbum} className={classes.button}>
               <i className={`${classes.icon} fas fa-random`} />
               Shuffle
             </button>
@@ -125,7 +130,7 @@ export default class AlbumPanel extends React.Component {
             {explicit}
           </span>
 
-          <span className={classes.subtitle}>{album.attributes.artistName}</span>
+          {artistName}
           <SongList
             scrollElement={this.ref}
             scrollElementModifier={e => e && e.parentElement}
