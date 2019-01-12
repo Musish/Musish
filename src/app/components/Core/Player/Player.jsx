@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import styles from './Player.scss';
 import {
   artworkForMediaItem,
@@ -119,6 +120,8 @@ class Player extends React.Component {
 
     const isRepeating = repeatMode === RepeatModeOne || repeatMode === RepeatModeAll;
 
+    const meta = nowPlayingItem.assets[0].metadata;
+
     return (
       <div className={styles.player}>
         <div className={styles['main-info']}>
@@ -127,8 +130,12 @@ class Player extends React.Component {
           </div>
           <div className={styles.track}>
             <h1>{nowPlayingItem.title}</h1>
-            <h2>{nowPlayingItem.attributes.artistName}</h2>
-            <h3>{nowPlayingItem.attributes.albumName}</h3>
+            <Link to={`/artist/${meta.artistId}`}>
+              <h2 className={styles.link}>{nowPlayingItem.attributes.artistName}</h2>
+            </Link>
+            <Link to={`/album/${meta.artistId}`}>
+              <h3 className={styles.link}>{nowPlayingItem.attributes.albumName}</h3>
+            </Link>
           </div>
         </div>
         <PlayerTime nowPlayingItem={nowPlayingItem} />
