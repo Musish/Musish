@@ -74,9 +74,7 @@ export default class AlbumPanel extends React.Component {
   }
 
   async shuffleAlbum() {
-    const randy = Math.floor(Math.random() * this.state.album.relationships.tracks.data.length);
-    await this.playAlbum(randy);
-    MusicPlayerApi.shuffle();
+    MusicPlayerApi.shuffleAlbum(this.state.album);
   }
 
   render() {

@@ -77,9 +77,7 @@ export default class PlaylistPanel extends React.Component {
   }
 
   async shufflePlaylist() {
-    const randy = Math.floor(Math.random() * this.state.playlist.relationships.tracks.data.length);
-    await this.playPlaylist(randy);
-    MusicPlayerApi.shuffle();
+    MusicPlayerApi.shufflePlaylist(this.state.playlist);
   }
 
   render() {
