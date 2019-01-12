@@ -140,7 +140,7 @@ class SearchBar extends React.Component {
           <form
             onSubmit={e => {
               e.preventDefault();
-              this.props.history.push(`/search/${query}`);
+              this.props.history.push(`/search/catalog/${query}`);
               return false;
             }}
           >

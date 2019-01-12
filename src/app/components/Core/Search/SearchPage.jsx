@@ -20,10 +20,13 @@ class SearchPage extends React.Component {
       catalogData: null,
       libraryData: null,
       songs: [],
+      isActive: '',
     };
 
     this.ref = React.createRef();
     this.search = this.search.bind(this);
+    this.handleCatalogChange = this.handleCatalogChange.bind(this);
+    this.handleLibraryChange = this.handleLibraryChange.bind(this);
   }
 
   componentDidMount() {
@@ -95,15 +98,15 @@ class SearchPage extends React.Component {
     return items;
   }
 
-  renderResults(type, rowRenderer) {
-    const songs = this.getItems(type);
+  renderResults(type, source, rowRenderer) {
+    const items = this.getItems(type).filter(item => item.type === source);
 
-    if (!songs || songs.length === 0) {
+    if (!items || items.length === 0) {
       return null;
     }
     return (
       <>
-        {songs.map(rowRenderer)}
+        {items.map(rowRenderer)}
         {this.state.loading && <Loader />}
       </>
     );
@@ -113,14 +116,24 @@ class SearchPage extends React.Component {
     MusicPlayerApi.playSong(songs, index);
   }
 
+  handleCatalogChange() {
+    this.props.history.push(`/search/catalog/${this.props.match.params.query}`);
+  }
+
+  handleLibraryChange() {
+    this.props.history.push(`/search/library/${this.props.match.params.query}`);
+  }
+
   render() {
-    console.log(this.state.catalogData);
-    console.log(this.state.libraryData);
     return (
       <PageContent innerRef={this.ref}>
         <div className={classes.choices}>
-          <div className={classes.selectionItem}>Catalog</div>
-          <div className={classes.selectionItem}>Library</div>
+          <div className={classes.selectionItem} onClick={this.handleCatalogChange}>
+            Catalog
+          </div>
+          <div className={classes.selectionItem} onClick={this.handleLibraryChange}>
+            Library
+          </div>
         </div>
         <PageTitle title={'Your Results'} context={'Search'} />
 
@@ -128,7 +141,7 @@ class SearchPage extends React.Component {
         {!this.state.loading && (
           <SongList
             scrollElement={this.ref}
-            load={() => this.state.songs.slice(0, 10)}
+            load={() => this.state.songs.filter(song => song.type === 'songs').slice(0, 10)}
             showArtist
             showAlbum
             playSong={SearchPage.playSong}
@@ -137,23 +150,22 @@ class SearchPage extends React.Component {
 
         <h3>Albums</h3>
         <div className={classes.searchGrid}>
-          {this.renderResults('albums', album => (
+          {this.renderResults('albums', 'albums', album => (
             <AlbumItem key={album.id} album={album} size={170} navigate />
           ))}
         </div>
 
         <h3>Playlists</h3>
         <div className={classes.searchGrid}>
-          {this.renderResults('playlists', playlist => (
+          {this.renderResults('playlists', 'library-playlists', playlist => (
             <PlaylistItem key={playlist.id} playlist={playlist} size={170} navigate />
           ))}
         </div>
 
         <h3>Artists</h3>
-        {this.renderResults('artists', artist => (
+        {this.renderResults('artists', 'artists', artist => (
           <ArtistResultItem artist={artist} key={artist.id} />
         ))}
-
       </PageContent>
     );
   }
@@ -161,6 +173,7 @@ class SearchPage extends React.Component {
 
 SearchPage.propTypes = {
   mk: PropTypes.any.isRequired,
+  history: PropTypes.object.isRequired,
   query: PropTypes.string.isRequired,
   match: PropTypes.any.isRequired,
 };
