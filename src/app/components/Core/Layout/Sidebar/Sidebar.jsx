@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Player from '../../Player/Player';
+import PlayerPortal from '../../Player/PlayerPortal';
 import classes from './Sidebar.scss';
 import PlaylistMenuItem from './PlaylistMenuItem';
 import withMK from '../../../../hoc/withMK';
@@ -58,6 +59,7 @@ class Sidebar extends React.Component {
 
     return (
       <aside className={classes.sidebar}>
+        <PlayerPortal />
         <div className={classes.menus}>
           {appleMusic}
           {authorized && (
