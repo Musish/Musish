@@ -20,6 +20,11 @@ class ArtistsList extends React.Component {
 
   static rowRenderer({ item: artist, index, isScrolling, isVisible, key, style }) {
     const path = `/me/artists/${artist.id}`;
+    const initials = artist.attributes.name
+      .split(' ')
+      .map(n => n.substring(0, 1))
+      .filter(c => !/[^a-zA-Z0-9]/.test(c))
+      .slice(0, 2);
     return (
       <li key={key} style={style}>
         <Route path={path} exact>
@@ -27,7 +32,9 @@ class ArtistsList extends React.Component {
             <Link to={path} className={cx(classes.artist, match ? classes.activeArtist : null)}>
               <div className={classes.artistBacker} />
               <div>
-                <span className={classes.pictureWrapper} />
+                <span className={classes.pictureWrapper}>
+                  <span>{initials}</span>
+                </span>
               </div>
               <div>
                 <span className={classes.artistName}>{artist.attributes.name}</span>

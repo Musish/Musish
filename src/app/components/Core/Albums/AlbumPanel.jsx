@@ -14,7 +14,7 @@ export default class AlbumPanel extends React.Component {
     super(props);
 
     this.state = {
-      album: this.props.album,
+      album: null,
     };
 
     this.ref = React.createRef();
@@ -28,9 +28,7 @@ export default class AlbumPanel extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.id) {
-      this.fetchAlbum();
-    }
+    this.fetchAlbum();
   }
 
   async fetchAlbum() {

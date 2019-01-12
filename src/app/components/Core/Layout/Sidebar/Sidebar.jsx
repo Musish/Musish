@@ -77,6 +77,17 @@ class Sidebar extends React.Component {
               <ul>{playlists}</ul>
             </div>
           )}
+          <div className={classes.footer}>
+            <span>
+              <a href={'https://github.com/Musish/Musish/issues/new'} target={'_blank'}>
+                Feedback
+              </a>
+              {' & '}
+              <a href={'https://github.com/Musish/Musish'} target={'_blank'}>
+                Github
+              </a>
+            </span>
+          </div>
         </div>
         <Player />
       </aside>
