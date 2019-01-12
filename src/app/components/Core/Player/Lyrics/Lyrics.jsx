@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classes from './LyricsModal.scss';
+
 import backend from '../../../../services/Backend';
 import Loader from '../../../common/Loader';
 
@@ -33,6 +35,8 @@ class Lyrics extends React.Component {
     this.state = {
       geniusSong: null,
     };
+
+    this.fetchGeniusSong = this.fetchGeniusSong.bind(this);
   }
 
   async fetchGeniusSong() {
@@ -60,7 +64,7 @@ class Lyrics extends React.Component {
     }
 
     return (
-      <div style={{ flex: 1 }}>
+      <div className={classes.lyricsSection}>
         <iframe
           title={'Lyrics'}
           srcDoc={geniusSong.embed_content + iframeCss}

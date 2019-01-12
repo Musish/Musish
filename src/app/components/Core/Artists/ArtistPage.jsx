@@ -75,6 +75,13 @@ class ArtistPage extends React.Component {
     this.fetchGeniusData();
   }
 
+  componentDidUpdate() {
+    if (this.state.artist.id !== this.props.match.params.id) {
+      this.fetchArtist();
+      this.fetchGeniusData();
+    }
+  }
+
   render() {
     const { artist, geniusData } = this.state;
 
