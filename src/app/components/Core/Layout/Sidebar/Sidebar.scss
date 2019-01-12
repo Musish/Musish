@@ -84,5 +84,20 @@
         }
       }
     }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      margin-bottom: 10px;
+      color: lighten($tertiary_color, 10%);
+
+      a {
+        color: lighten($tertiary_color, 20%);
+
+        &:hover {
+          color: $accent_color;
+        }
+      }
+    }
   }
 }
