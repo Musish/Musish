@@ -135,11 +135,7 @@ class SearchPage extends React.Component {
         </div>
 
         <h3>Artists</h3>
-        <div className={classes.searchGrid}>
-          {/*{this.renderResults('artists', artist => (*/}
-            {/*<AlbumItem key={artist.id} playlist={artist} size={170} navigate />*/}
-          {/*))}*/}
-        </div>
+        <div className={classes.searchGrid}>Test</div>
 
         <h3>People</h3>
       </PageContent>

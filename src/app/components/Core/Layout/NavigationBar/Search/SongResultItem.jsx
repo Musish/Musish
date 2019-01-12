@@ -15,13 +15,18 @@ function SongResultItem({ song, mk }) {
     await music.player.play();
   };
 
+  const { artistName, albumName } = song.attributes;
+
   return (
     <div className={cx(classes.result, classes.song)} key={song.id} onClick={play}>
       <div className={classes.artwork}>
         <SongDecoration song={song} showAlbum size={30} />
       </div>
 
-      <span className={classes.name}>{song.attributes.name}</span>
+      <div className={classes.detailsContainer}>
+        <span className={classes.name}>{song.attributes.name}</span>
+        <span className={classes.infos}>{`${artistName} - ${albumName}`}</span>
+      </div>
     </div>
   );
 }

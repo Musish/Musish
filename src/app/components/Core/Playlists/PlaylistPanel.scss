@@ -9,7 +9,6 @@
   }
 
   .header {
-
     .headerMain {
       display: flex;
       flex-direction: row;
@@ -18,8 +17,8 @@
 
       .artworkWrapper {
         border-radius: 8px;
-        width: 80px;
-        height: 80px;
+        width: 95px;
+        height: 95px;
         background: $container_background;
 
         img {
@@ -48,6 +47,31 @@
           margin-top: 4px;
           color: $tertiary_color;
           font-size: 12px;
+        }
+
+        .playActions {
+          .button {
+            padding: 0 25px;
+            height: 25px;
+            animation: fadein 0.8s;
+            border-color: $sidebar_color;
+            background: $sidebar_color;
+            color: $tertiary_color;
+            border-radius: 4px;
+            align-content: center;
+            cursor: pointer;
+            margin: 10px 10px 10px 0;
+
+            .icon{
+              font-size: 8px;
+              padding-right: 5px;
+            }
+          }
+
+          .button:hover {
+            color: $accent_color;
+            background: $indiscreet_hover_color;
+          }
         }
       }
     }

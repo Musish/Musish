@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Login from './Login/Login';
+import SplashScreen from './SplashScreen/SplashScreen';
 import TokenLoader from './LoginLoader/LoginLoader';
 import withMK from '../hoc/withMK';
+import AuthorizeContext from './Core/Layout/NavigationBar/Authorize/AuthorizeContext';
 
 class MusicKitAuthorizeProvider extends React.Component {
   constructor(props) {
@@ -10,6 +11,7 @@ class MusicKitAuthorizeProvider extends React.Component {
 
     this.state = {
       ready: false,
+      browsing: false,
       ...MusicKitAuthorizeProvider.getDerivedStateFromProps(this.props, {}),
     };
   }
@@ -54,11 +56,20 @@ class MusicKitAuthorizeProvider extends React.Component {
       return <TokenLoader />;
     }
 
-    if (!isAuthorized) {
-      return <Login onClick={() => this.props.mk.instance.authorize()} />;
+    if (!isAuthorized && !this.state.browsing) {
+      return (
+        <SplashScreen
+          onClick={() => this.props.mk.instance.authorize()}
+          onBrowse={() => this.setState({ browsing: true })}
+        />
+      );
     }
 
-    return this.props.children;
+    return (
+      <AuthorizeContext.Provider value={{ authorized: isAuthorized }}>
+        {this.props.children}
+      </AuthorizeContext.Provider>
+    );
   }
 }
 

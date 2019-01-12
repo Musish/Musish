@@ -61,16 +61,16 @@ export async function addPlaylistToPlaylist(playlistId, sourcePlaylistId) {
   await addSongsToPlaylist(playlistId, tracks);
 }
 
-export async function addToLibrary(mediaType, songs) {
+export async function addToLibrary(mediaType, media) {
   try {
     await axios({
       method: 'post',
-      url: `${API_URL}/v1/me/library?ids[${mediaType}]=${songs.map(s => s).join(',')}`,
+      url: `${API_URL}/v1/me/library?ids[${mediaType}]=${media.map(m => m).join(',')}`,
       headers: getHeaders(),
     });
-    Alert.success("Added to your library, it'll show up in a few seconds. Hold tight!");
+    Alert.success("Added tracks to your library, they'll show up in a few seconds. Hold tight!");
   } catch (error) {
-    Alert.error("We're unable to add these songs to your library.");
+    Alert.error("We're unable to add these tracks to your library.");
   }
 }
 
@@ -82,5 +82,31 @@ export function getHeaders() {
     Accept: 'application/json',
     'Content-Type': 'application/json',
     'Music-User-Token': music.musicUserToken,
+  };
+}
+
+export function infiniteLoadRelationships(id, functionGenerator, key, store) {
+  return async ({ offset }, { page }) => {
+    if (page === 0) {
+      const playlist = await functionGenerator(id, { offset });
+
+      const data = playlist.relationships[key];
+
+      // eslint-disable-next-line no-param-reassign
+      store.nextUrl = data.next;
+
+      return data.data;
+    }
+
+    if (!store.nextUrl) {
+      return [];
+    }
+
+    const { data } = await getNextSongs(store.nextUrl);
+
+    // eslint-disable-next-line no-param-reassign
+    store.nextUrl = data.next;
+
+    return data.data;
   };
 }

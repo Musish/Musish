@@ -65,19 +65,23 @@
 
         &:hover {
           background: #f7f7f7;
-          color: $primary_color
+          color: $accent_color
         }
 
         &.song, &.album, &.playlist {
           display: flex;
           flex-direction: row;
 
-          .name {
+          .detailsContainer {
             display: flex;
-            align-items: center;
-            text-overflow: ellipsis;
+            justify-content: center;
             white-space: nowrap;
             overflow: hidden;
+            flex-direction: column;
+
+            .infos {
+              font-size: 80%;
+            }
           }
 
           .artwork {
@@ -92,6 +96,12 @@
 
         &.artist {
           padding: 10px;
+        }
+
+        &.album, &.playlist {
+          span, .artwork {
+            align-self: center;
+          }
         }
       }
     }

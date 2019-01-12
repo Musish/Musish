@@ -14,7 +14,7 @@ class PlaylistPage extends React.Component {
     super(props);
 
     this.state = {
-      playlistId: this.props.match.params.id || this.props.playlist,
+      playlistId: this.props.match.params.id,
       runtime: '',
       playlist: null,
       songs: [],
@@ -22,10 +22,38 @@ class PlaylistPage extends React.Component {
     };
 
     this.scrollRef = React.createRef();
+    this.store = {};
 
-    this.load = this.load.bind(this);
     this.onSetItems = this.onSetItems.bind(this);
     this.playSong = this.playSong.bind(this);
+    this.playPlaylist = this.playPlaylist.bind(this);
+    this.shufflePlaylist = this.shufflePlaylist.bind(this);
+    this.playlistLoader = this.playlistLoader.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchPlaylist();
+  }
+
+  async fetchPlaylist() {
+    const playlist = await this.playlistLoader(this.getPlaylistId());
+
+    this.setState({
+      playlist,
+    });
+  }
+
+  playlistLoader(...args) {
+    const music = MusicKit.getInstance();
+    if (this.getPlaylistId().startsWith('p.')) {
+      return music.api.library.playlist(...args);
+    }
+
+    return music.api.playlist(...args);
+  }
+
+  getPlaylistId() {
+    return this.state.playlistId;
   }
 
   onSetItems({ items: songs, end }) {
@@ -34,13 +62,13 @@ class PlaylistPage extends React.Component {
       end,
     });
 
-    const albumLength = songs.reduce(
+    const playlistLength = songs.reduce(
       (totalDuration, song) => totalDuration + song.attributes.durationInMillis,
       0
     );
 
     this.setState({
-      runtime: humanifyMillis(albumLength),
+      runtime: humanifyMillis(playlistLength),
     });
   }
 
@@ -48,37 +76,14 @@ class PlaylistPage extends React.Component {
     MusicPlayerApi.playPlaylist(this.state.playlist, index);
   }
 
-  async load(params, { page }) {
-    const { playlistId } = this.state;
-    const music = MusicKit.getInstance();
+  async playPlaylist(index = 0) {
+    MusicPlayerApi.playPlaylist(this.state.playlist, index);
+  }
 
-    if (page === 0) {
-      const isLibrary = playlistId.startsWith('p.');
-      const playlist = isLibrary
-        ? await music.api.library.playlist(playlistId, { offset: params.offset })
-        : await music.api.playlist(playlistId, { offset: params.offset });
-
-      const { tracks } = playlist.relationships;
-
-      this.setState({
-        playlist,
-        nextUrl: tracks.next,
-      });
-
-      return tracks.data;
-    }
-
-    if (!this.state.nextUrl) {
-      return [];
-    }
-
-    const { data } = await MusicApi.getNextSongs(this.state.nextUrl);
-
-    this.setState({
-      nextUrl: data.next,
-    });
-
-    return data.data;
+  async shufflePlaylist() {
+    const randy = Math.floor(Math.random() * this.state.playlist.relationships.tracks.data.length);
+    await this.playPlaylist(randy);
+    MusicPlayerApi.shuffle();
   }
 
   renderHeader() {
@@ -88,7 +93,7 @@ class PlaylistPage extends React.Component {
       return null;
     }
 
-    const artworkURL = artworkForMediaItem(playlist, 80);
+    const artworkURL = artworkForMediaItem(playlist, 100);
 
     return (
       <div className={classes.header}>
@@ -108,6 +113,16 @@ class PlaylistPage extends React.Component {
             <span className={classes.titleMeta}>
               {`${songs.length}${end ? '' : '+'} songs, ${runtime}`}
             </span>
+            <div className={classes.playActions}>
+              <button type={'button'} onClick={this.playPlaylist} className={classes.button}>
+                <i className={`${classes.icon} fas fa-play`} />
+                Play
+              </button>
+              <button type={'button'} onClick={this.shufflePlaylist} className={classes.button}>
+                <i className={`${classes.icon} fas fa-random`} />
+                Shuffle
+              </button>
+            </div>
           </div>
         </div>
         {playlist.attributes.description && (
@@ -127,7 +142,12 @@ class PlaylistPage extends React.Component {
         <PageTitle context={'My Library'} />
         {this.renderHeader()}
         <SongList
-          load={this.load}
+          load={MusicApi.infiniteLoadRelationships(
+            this.getPlaylistId(),
+            this.playlistLoader,
+            'tracks',
+            this.store
+          )}
           scrollElement={this.scrollRef}
           showAlbum
           showArtist
@@ -140,13 +160,11 @@ class PlaylistPage extends React.Component {
 }
 
 PlaylistPage.propTypes = {
-  playlist: PropTypes.any,
   id: PropTypes.any,
   match: PropTypes.object,
 };
 
 PlaylistPage.defaultProps = {
-  playlist: null,
   id: null,
   match: null,
 };

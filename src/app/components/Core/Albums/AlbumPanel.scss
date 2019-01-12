@@ -8,6 +8,35 @@
     margin-top: 30px;
   }
 
+  .playActions {
+    display: flex;
+    justify-content: space-between;
+
+    .button {
+      width: 48%;
+      height: 30px;
+      animation: fadein 0.8s;
+      border-color: $sidebar_color;
+      background: $sidebar_color;
+      color: $tertiary_color;
+      border-radius: 4px;
+      align-content: center;
+      cursor: pointer;
+      line-height: 0px;
+      margin: 10px 0;
+
+      .icon{
+        font-size: 9px;
+        padding-right: 5px;
+      }
+    }
+
+    .button:hover {
+      color: $accent_color;
+      background: $indiscreet_hover_color;
+    }
+  }
+
   .aside {
     width: 220px;
   
@@ -26,7 +55,7 @@
     
     .albumRuntimeDescription {
       display: block;
-      text-align: right;
+      text-align: center;
       color: $tertiary_color;
       font-size: 12px;
       margin-top: 5px;
@@ -41,6 +70,28 @@
       display: block;
       font-weight: bold;
       font-size: 2em;
+      clear: both;
+      overflow: auto;
+
+      > * {
+        float: left;
+      }
+
+      .explicit > span {
+          background: $secondary_color;
+          color: $main_background_color;
+          display: flex;
+          flex-shrink: 0;
+          width: 12px;
+          height: 12px;
+          align-items: center;
+          justify-content: center;
+          font-weight: 300;
+          border-radius: 3px;
+          font-size: 9px;
+          margin-left: 5px;
+          margin-top: 12px;
+      }
     }
     
     .subtitle {
@@ -49,7 +100,7 @@
       margin-bottom: 10px;
       
       > a:hover {
-        color: #fe2851;
+        color: $accent_color;
       }
     
       .musicLink {

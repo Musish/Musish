@@ -7,34 +7,19 @@ import {
   RepeatModeAll,
   RepeatModeNone,
   RepeatModeOne,
-  getTime,
 } from '../../../utils/Utils';
 import withMK from '../../../hoc/withMK';
 import QueueContext from './Queue/QueueContext';
 import LyricsModalContext from './Lyrics/LyricsModalContext';
-import {
-  isShuffled,
-  pause,
-  play,
-  seekToTime,
-  shuffle,
-  unShuffle,
-} from '../../../services/MusicPlayerApi';
+import { isShuffled, pause, play, shuffle, unShuffle } from '../../../services/MusicPlayerApi';
+import PlayerTime from './PlayerTime';
 
 class Player extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      isScrubbing: false,
-      scrubbingPosition: 0,
-    };
-
     this.handlePrevious = this.handlePrevious.bind(this);
     this.handleNext = this.handleNext.bind(this);
-    this.onStartScrubbing = this.onStartScrubbing.bind(this);
-    this.onEndScrubbing = this.onEndScrubbing.bind(this);
-    this.onScrub = this.onScrub.bind(this);
 
     this.handleAddToLibrary = this.handleAddToLibrary.bind(this);
     this.handleRepeat = this.handleRepeat.bind(this);
@@ -42,25 +27,12 @@ class Player extends React.Component {
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
     this.toggleVolume = this.toggleVolume.bind(this);
     this.getVolumeIconClasses = this.getVolumeIconClasses.bind(this);
-
-    this.getCurrentPlaybackDuration = this.getCurrentPlaybackDuration.bind(this);
-    this.getCurrentPlaybackTime = this.getCurrentPlaybackTime.bind(this);
-    this.getCurrentBufferedProgress = this.getCurrentBufferedProgress.bind(this);
-  }
-
-  static timeToPercent(time, duration) {
-    if (duration === 0) {
-      return 0; // For some reason would call this
-    }
-
-    return Math.floor((time * 100) / duration);
   }
 
   handlePrevious() {
     const { player } = this.props.mk.instance;
-    const { playbackTime } = this.props.mk;
 
-    if (playbackTime.currentPlaybackTime < 2) {
+    if (player.currentPlaybackTime < 2) {
       player.skipToPreviousItem();
     } else {
       player.seekToTime(0);
@@ -133,93 +105,6 @@ class Player extends React.Component {
     return 'fas fa-volume-up';
   }
 
-  getCurrentPlaybackDuration() {
-    const { player } = this.props.mk.instance;
-    return getTime(player.currentPlaybackTimeRemaining * 1000);
-  }
-
-  getCurrentPlaybackTime() {
-    const { player } = this.props.mk.instance;
-    return getTime(player.currentPlaybackTime * 1000);
-  }
-
-  getCurrentBufferedProgress() {
-    const { player } = this.props.mk.instance;
-    return player.currentBufferedProgress;
-  }
-
-  renderProgress() {
-    const {
-      mediaItem: { item: nowPlayingItem },
-      playbackTime,
-    } = this.props.mk;
-    const duration = nowPlayingItem.playbackDuration / 1000;
-    const percent = playbackTime
-      ? Player.timeToPercent(playbackTime.currentPlaybackTime, duration)
-      : 0;
-    const bufferPercent = playbackTime ? this.getCurrentBufferedProgress() : 0;
-
-    return (
-      <input
-        className={styles['progress-bar']}
-        style={{
-          background: `linear-gradient(
-            to right,
-            #fe2851 0%,
-            #fe2851 ${percent}%,
-            #cccccc ${percent}%,
-            #cccccc ${bufferPercent}%,
-            #eeeeee ${bufferPercent}%,
-            #eeeeee 100%
-          ) no-repeat`,
-        }}
-        type={'range'}
-        value={this.getScrubberValue()}
-        onChange={this.onScrub}
-        onMouseDown={this.onStartScrubbing}
-        onMouseUp={this.onEndScrubbing}
-        min={0}
-        max={nowPlayingItem.playbackDuration}
-        step={0.01}
-      />
-    );
-  }
-
-  onScrub(e) {
-    this.setState({
-      scrubbingPosition: e.target.value,
-    });
-  }
-
-  onStartScrubbing(e) {
-    this.setState({
-      isScrubbing: true,
-      scrubbingPosition: e.target.value,
-    });
-  }
-
-  async onEndScrubbing(e) {
-    await seekToTime(e.target.value / 1000);
-
-    this.setState({
-      isScrubbing: false,
-      scrubbingPosition: null,
-    });
-  }
-
-  getScrubberValue() {
-    if (this.state.isScrubbing) {
-      return this.state.scrubbingPosition;
-    }
-
-    const { playbackTime } = this.props.mk;
-    if (playbackTime) {
-      return playbackTime.currentPlaybackTime * 1000;
-    }
-
-    return 0;
-  }
-
   render() {
     const { mk } = this.props;
     const nowPlayingItem = mk.mediaItem && mk.mediaItem.item;
@@ -246,11 +131,7 @@ class Player extends React.Component {
             <h3>{nowPlayingItem.attributes.albumName}</h3>
           </div>
         </div>
-        <div className={styles.progressBarWrapper}>
-          <span className={styles.playbackTime}>{this.getCurrentPlaybackTime()}</span>
-          {this.renderProgress()}
-          <span className={styles.playbackDuration}>{this.getCurrentPlaybackDuration()}</span>
-        </div>
+        <PlayerTime nowPlayingItem={nowPlayingItem} />
         <div className={styles.buttons}>
           <span onClick={this.handlePrevious}>
             <i className={'fas fa-backward'} />
@@ -314,8 +195,11 @@ class Player extends React.Component {
           </span>
 
           <LyricsModalContext.Consumer>
-            {({ open }) => (
-              <span className={cx(styles.controls)} onClick={() => open(nowPlayingItem)}>
+            {({ opened, open, close }) => (
+              <span
+                className={cx(styles.controls, { [styles.enabled]: opened })}
+                onClick={() => (opened ? close() : open(nowPlayingItem))}
+              >
                 <i className={'fas fa-align-left'} />
               </span>
             )}
@@ -341,7 +225,6 @@ const bindings = {
   [MusicKit.Events.mediaItemDidChange]: 'mediaItem',
   [MusicKit.Events.queueItemsDidChange]: 'queueItems',
   [MusicKit.Events.queuePositionDidChange]: 'queuePosition',
-  [MusicKit.Events.playbackTimeDidChange]: 'playbackTime',
   [MusicKit.Events.playbackStateDidChange]: 'playbackState',
   [MusicKit.Events.playbackVolumeDidChange]: 'playbackVolume',
 };
