@@ -133,6 +133,9 @@ class SearchBar extends React.Component {
 
   render() {
     const { query, showResults } = this.state;
+    const { location } = this.props;
+    const slugs = location.pathname.split('/');
+    const searchSource = slugs.length >= 2 && slugs[1] === 'search' ? slugs[2] : 'catalog';
 
     return (
       <div className={cx(classes.navSearch, { [classes.active]: showResults })}>
@@ -140,7 +143,7 @@ class SearchBar extends React.Component {
           <form
             onSubmit={e => {
               e.preventDefault();
-              this.props.history.push(`/search/catalog/${query}`);
+              this.props.history.push(`/search/${searchSource}/${query}`);
               return false;
             }}
           >
@@ -178,7 +181,7 @@ SearchBar.propTypes = {
   mk: PropTypes.any.isRequired,
   authorized: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 export default withRouter(withMK(withContext(SearchBar, AuthorizeContext)));

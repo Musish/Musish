@@ -57,9 +57,7 @@ class SearchPage extends React.Component {
         await this.searchLibrary(query);
         break;
       default:
-        console.error('Unknown source type');
         break;
-
     }
 
     this.setState({
@@ -223,7 +221,7 @@ class SearchPage extends React.Component {
         {loading && (<Loader />)}
         {isEmpty ? (
           <div className={classes.searchError}>
-            <span className={classes.searchErrorTitle}>😭</span>
+            <span className={classes.searchErrorTitle} role={'img'} aria-label={'loudly-crying'}>😭</span>
             <span className={classes.searchErrorDetails}>Oops, no results found.</span>
           </div>) : (
           <>

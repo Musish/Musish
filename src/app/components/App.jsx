@@ -88,7 +88,7 @@ class App extends React.Component {
                       <Route path={'/browse'} exact component={BrowsePage} />
                       <Route path={'/radio'} exact component={RadioPage} />
                       <Route
-                        path="/search/:source/:query"
+                        path={'/search/:source/:query'}
                         exact
                         component={({
                           match: {
