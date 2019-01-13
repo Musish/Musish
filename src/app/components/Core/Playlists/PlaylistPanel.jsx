@@ -56,7 +56,7 @@ export default class PlaylistPanel extends React.Component {
   onSetItems({ items }) {
     const playlistLength = items.reduce(
       (totalDuration, track) =>
-        totalDuration + track.attributes ? track.attributes.durationInMillis : 0,
+        totalDuration + (track.attributes ? track.attributes.durationInMillis : 0),
       0
     );
 
