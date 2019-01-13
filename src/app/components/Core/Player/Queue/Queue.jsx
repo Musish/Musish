@@ -5,13 +5,14 @@ import PropTypes from 'prop-types';
 import classes from './Queue.scss';
 import withMK from '../../../../hoc/withMK';
 import QueueContext from './QueueContext';
-import SortableList from './SortableList';
+import QueueList from './QueueList';
 
 class Queue extends Component {
   constructor(props) {
     super(props);
 
     this.onSortEnd = this.onSortEnd.bind(this);
+    this.removeItem = this.removeItem.bind(this);
   }
 
   onSortEnd({ oldIndex, newIndex }) {
@@ -35,6 +36,22 @@ class Queue extends Component {
 
       this.forceUpdate();
     }
+  }
+
+  static shouldCancelStart(e) {
+    return e.target.classList.contains(classes.notSortable);
+  }
+
+  removeItem(index) {
+    const { queue } = this.props.mk.instance.player;
+
+    // Update queue order
+    queue.items.splice(index, 1);
+
+    // eslint-disable-next-line no-underscore-dangle
+    queue._reindex();
+
+    this.forceUpdate();
   }
 
   render() {
@@ -66,7 +83,13 @@ class Queue extends Component {
                   </span>
                 </div>
               </div>
-              <SortableList items={items} onSortEnd={this.onSortEnd} helperClass="SortableHelper" />
+              <QueueList
+                items={items}
+                onSortEnd={this.onSortEnd}
+                shouldCancelStart={Queue.shouldCancelStart}
+                helperClass={classes.sortableHelper}
+                removeItemFunc={this.removeItem}
+              />
             </div>
           </Draggable>
         )}

@@ -62,9 +62,9 @@ class AlbumPanel extends React.Component {
   }
 
   onSetItems({ items }) {
-    const playlistLength = items.reduce(
+    const albumLength = items.reduce(
       (totalDuration, track) =>
-        totalDuration + track.attributes ? track.attributes.durationInMillis : 0,
+        totalDuration + (track.attributes ? track.attributes.durationInMillis : 0),
       0
     );
 
@@ -73,7 +73,7 @@ class AlbumPanel extends React.Component {
     }
 
     this.setState({
-      runtime: humanifyMillis(playlistLength),
+      runtime: humanifyMillis(albumLength),
     });
   }
 

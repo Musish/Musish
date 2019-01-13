@@ -1,14 +1,16 @@
+@import "../../../../styles/settings/colors";
+
 .modal {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 300px;
+  width: 320px;
   height: 400px;
   margin-top: -200px;
   margin-left: -137.5px;
   z-index: 2000;
   overflow: hidden;
-  background: #ffffff;
+  background: $main_background_color;
   border-radius: 8px;
   box-shadow: 0 8px 36px -10px rgba(150, 150, 150, 0.75);
   animation: fadein 0.1s;
@@ -20,8 +22,8 @@
   height: 45px;
   display: flex;
   flex-direction: row;
-  background: #fe2851;
-  color: #ffffff;
+  background: $accent_color;
+  color: $main_background_color;
   cursor: pointer;
   padding: 0 15px;
   flex-shrink: 0;
@@ -45,7 +47,7 @@
 
     &.icons {
       font-size: 16px;
-      color: #ffffff;
+      color: $main_background_color;
       cursor: pointer;
       margin-left: 20px;
 
@@ -65,19 +67,20 @@
   }
 }
 
-.SortableList {
+.QueueList {
   position: relative;
   width: 400px;
   padding: 0;
 }
 
-.SortableItem {
+.queueItem {
+  display: flex;
   width: 100%;
   height: 54px;
   margin-top: 1px;
   border-bottom: 1px solid #efefef;
-  background: #ffffff;
-  color: #333;
+  background: $main_background_color;
+  color: #333333;
   z-index: 10000;
 
   box-sizing: border-box;
@@ -93,39 +96,86 @@
   }
 
   &.playing {
-    color: #fe2851;
+    color: $accent_color;
     font-weight: 500;
   }
 
-  > span {
-    display: block;
-    width: 245px;
-    margin-left: 15px;
+  > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .notSortable {
+    cursor: default;
+  } // Reference class for non-sortable child elements
+
+  .albumArtwork {
+    display: flex;
+    align-items: center;
+    position: relative;
+    border-radius: 3px;
+    padding-left: 10px;
+
+    .artworkWrapper {
+      border-radius: 3px;
+      width: 40px;
+      height: 40px;
+      background: #fafafa;
+
+      img {
+        border-radius: inherit;
+        width: inherit;
+        height: inherit;
+      }
+    }
+  }
+
+  .queueItemInfo {
+    flex: 1;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
-    display: block;
-    user-select: none;
+
+    > span {
+      display: block;
+      width: 100%;
+      margin-left: 15px;
+
+      &.title {
+        margin-top: 5px;
+        font-size: 14px;
+        line-height: 14px;
+      }
+
+      &.description {
+        font-size: 12px;
+        line-height: 12px;
+        color: $secondary_color;
+      }
+    }
   }
 
-  .title {
-    margin-top: 5px;
-    font-size: 14px;
-    line-height: 14px;
+  .removeButton {
+    > i {
+      padding: 5px 5px;
+      margin-right: 15px;
+      margin-left:5px;
+      color: $main_background_color;
+      cursor: pointer;
+      transition: color 0.1s;
+    }
   }
 
-  .artistName {
-    font-size: 12px;
-    line-height: 12px;
-  }
-
-  .albumName {
-    font-size: 10px;
-    line-height: 10px;
+  &:hover {
+    .removeButton {
+      i {
+        color: $accent_color;
+      }
+    }
   }
 }
 
-.SortableHelper {
+.sortableHelper {
   cursor: row-resize;
-  z-index: 1752;
+  z-index: 10001;
 }

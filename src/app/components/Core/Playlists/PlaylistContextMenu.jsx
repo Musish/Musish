@@ -55,7 +55,7 @@ function PlaylistContextMenu({ playlist }) {
 }
 
 PlaylistContextMenu.propTypes = {
-  playlist: PropTypes.array.isRequired,
+  playlist: PropTypes.object.isRequired,
 };
 
 export default withRouter(PlaylistContextMenu);
