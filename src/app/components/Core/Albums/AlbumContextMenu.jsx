@@ -36,7 +36,9 @@ function AlbumContextMenu({ album }) {
 
       <ModalContext.Consumer>
         {({ push }) => (
-          <MenuItem onClick={() => push(<AlbumPanel album={album} />)}>Open Album</MenuItem>
+          <MenuItem onClick={() => push(<AlbumPanel key={album.id} album={album} />)}>
+            Open Album
+          </MenuItem>
         )}
       </ModalContext.Consumer>
       {!inLibrary && (
