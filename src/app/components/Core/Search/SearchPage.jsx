@@ -186,7 +186,7 @@ class SearchPage extends React.Component {
     return (
       <>
         <h3>Artists</h3>
-        <div className={classes.searchGrid}>
+        <div className={classes.searchArtistsGrid}>
           {artists.map(
             artist => (
               <ArtistItem artist={artist} size={41} key={artist.id} />
