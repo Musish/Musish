@@ -8,6 +8,7 @@ import ModalContext from '../../../../common/Modal/ModalContext';
 
 function AlbumResultItem(props) {
   const { album, size } = props;
+  const isCatalog = album.type === 'albums';
 
   return (
     <ModalContext.Consumer>
@@ -17,9 +18,11 @@ function AlbumResultItem(props) {
           onClick={() => push(<AlbumPanel album={album} />)}
         >
           <span className={classes.artwork}>
-            <div className={classes.catalogIndicator}>
-              <i className={'fab fa-apple'} />
-            </div>
+            {isCatalog && (
+              <div className={classes.catalogIndicator}>
+                <i className={'fab fa-apple'} />
+              </div>
+            )}
             <img
               src={artworkForMediaItem(album, size)}
               alt={album.attributes.name}

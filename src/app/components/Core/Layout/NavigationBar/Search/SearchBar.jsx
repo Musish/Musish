@@ -98,19 +98,14 @@ class SearchBar extends React.Component {
   }
 
   getItems(type) {
-    let songs = [];
-
     const { catalogData, libraryData } = this.state;
 
-    if (libraryData && libraryData[`library-${type}`]) {
-      songs = [...songs, ...libraryData[`library-${type}`].data];
-    }
+    const libraryItems =
+      libraryData && libraryData[`library-${type}`] ? libraryData[`library-${type}`].data : [];
 
-    if (catalogData && catalogData[type]) {
-      songs = [...songs, ...catalogData[type].data];
-    }
+    const catalogItems = catalogData && catalogData[type] ? catalogData[type].data : [];
 
-    return songs;
+    return [...libraryItems, ...catalogItems];
   }
 
   renderResults(label, type, rowRenderer) {

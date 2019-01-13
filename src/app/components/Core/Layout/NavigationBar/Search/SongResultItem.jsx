@@ -16,13 +16,16 @@ function SongResultItem({ song, mk }) {
   };
 
   const { artistName, albumName } = song.attributes;
+  const isCatalog = song.type === 'songs';
 
   return (
     <div className={cx(classes.result, classes.song)} key={song.id} onClick={play}>
       <div className={classes.artwork}>
-        <div className={classes.catalogIndicator}>
-          <i className={'fab fa-apple'} />
-        </div>
+        {isCatalog && (
+          <div className={classes.catalogIndicator}>
+            <i className={'fab fa-apple'} />
+          </div>
+        )}
         <SongDecoration song={song} showAlbum size={30} />
       </div>
 
