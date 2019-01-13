@@ -20,7 +20,7 @@ class SearchPage extends React.Component {
       catalogData: null,
       libraryData: null,
       loading: null,
-      songs: [],
+      songs: null,
     };
 
     this.ref = React.createRef();
@@ -150,15 +150,13 @@ class SearchPage extends React.Component {
         <PageTitle title={`Search: '${this.props.match.params.query}'`} context={'Search'} />
 
         <h3>Songs</h3>
-        {!this.state.loading && (
-          <SongList
-            scrollElement={this.ref}
-            load={() => this.state.songs}
-            showArtist
-            showAlbum
-            playSong={SearchPage.playSong}
-          />
-        )}
+        <SongList
+          scrollElement={this.ref}
+          tracks={this.state.songs}
+          showArtist
+          showAlbum
+          playSong={SearchPage.playSong}
+        />
 
         <h3>Albums</h3>
         <div className={classes.searchGrid}>
