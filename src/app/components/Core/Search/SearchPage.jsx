@@ -88,40 +88,43 @@ class SearchPage extends React.Component {
       limit: 24,
     });
     this.setState({
-      libraryData,
+      libraryData: {
+        'library-albums': { data: [] },
+        'library-songs': { data: [] },
+        'library-playlists': { data: [] },
+        'library-artists': { data: [] },
+        ...libraryData,
+      },
     });
   }
 
   getItems(type) {
-    let items = [];
+    let items = null;
 
     const { catalogData, libraryData } = this.state;
 
     if (libraryData && libraryData[`library-${type}`]) {
-      items = [...items, ...libraryData[`library-${type}`].data];
+      items = [...(items || []), ...libraryData[`library-${type}`].data];
     }
 
     if (catalogData && catalogData[type]) {
-      items = [...items, ...catalogData[type].data];
+      items = [...(items || []), ...catalogData[type].data];
     }
-
     return items;
   }
 
   renderResults(type, source, rowRenderer) {
-    const items = this.getItems(type).filter(item => item.type === source);
+    const items = this.getItems(type);
 
-    if (!items || items.length === 0) {
+    if (!items) {
+      return <Loader />;
+    }
+    if (items.length === 0) {
       return `No result for ${type} matching "${this.props.match.params.query}" in your ${
         this.props.match.params.source
       }.`;
     }
-    return (
-      <>
-        {items.map(rowRenderer)}
-        {this.state.loading && <Loader />}
-      </>
-    );
+    return items.filter(item => item.type === source).map(rowRenderer);
   }
 
   static playSong({ songs, index }) {
