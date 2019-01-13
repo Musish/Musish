@@ -174,7 +174,9 @@ class AlbumPanel extends React.Component {
                           if (match) {
                             this.props.history.push('/me/albums/');
                           }
-                          replace(<AlbumPanel album={matchedCatalogAlbum} />);
+                          replace(
+                            <AlbumPanel key={matchedCatalogAlbum.id} album={matchedCatalogAlbum} />
+                          );
                         }}
                       >
                         Show complete album

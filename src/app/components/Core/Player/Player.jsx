@@ -1,6 +1,7 @@
 import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import styles from './Player.scss';
 import {
   artworkForMediaItem,
@@ -13,6 +14,8 @@ import QueueContext from './Queue/QueueContext';
 import LyricsModalContext from './Lyrics/LyricsModalContext';
 import { isShuffled, pause, play, shuffle, unShuffle } from '../../../services/MusicPlayerApi';
 import PlayerTime from './PlayerTime';
+import AlbumPanel from '../Albums/AlbumPanel';
+import ModalContext from '../../common/Modal/ModalContext';
 
 class Player extends React.Component {
   constructor(props) {
@@ -27,6 +30,7 @@ class Player extends React.Component {
     this.handleVolumeChange = this.handleVolumeChange.bind(this);
     this.toggleVolume = this.toggleVolume.bind(this);
     this.getVolumeIconClasses = this.getVolumeIconClasses.bind(this);
+    this.handleOpenAlbum = this.handleOpenAlbum.bind(this);
   }
 
   handlePrevious() {
@@ -105,6 +109,15 @@ class Player extends React.Component {
     return 'fas fa-volume-up';
   }
 
+  handleOpenAlbum(replace) {
+    const nowPlayingItem = this.props.mk.mediaItem && this.props.mk.mediaItem.item;
+    const meta = nowPlayingItem.assets[0].metadata;
+
+    const id = meta.playlistId;
+
+    replace(<AlbumPanel key={id} id={id} />);
+  }
+
   render() {
     const { mk } = this.props;
     const nowPlayingItem = mk.mediaItem && mk.mediaItem.item;
@@ -119,6 +132,8 @@ class Player extends React.Component {
 
     const isRepeating = repeatMode === RepeatModeOne || repeatMode === RepeatModeAll;
 
+    const meta = nowPlayingItem.assets[0].metadata;
+
     return (
       <div className={styles.player}>
         <div className={styles['main-info']}>
@@ -127,8 +142,19 @@ class Player extends React.Component {
           </div>
           <div className={styles.track}>
             <h1>{nowPlayingItem.title}</h1>
-            <h2>{nowPlayingItem.attributes.artistName}</h2>
-            <h3>{nowPlayingItem.attributes.albumName}</h3>
+            <Link to={`/artist/${meta.artistId}`}>
+              <span className={cx(styles.artistName)}>{nowPlayingItem.attributes.artistName}</span>
+            </Link>
+            <ModalContext.Consumer>
+              {({ replace }) => (
+                <span
+                  className={cx(styles.albumName)}
+                  onClick={() => this.handleOpenAlbum(replace)}
+                >
+                  {nowPlayingItem.attributes.albumName}
+                </span>
+              )}
+            </ModalContext.Consumer>
           </div>
         </div>
         <PlayerTime nowPlayingItem={nowPlayingItem} />

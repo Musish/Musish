@@ -18,13 +18,13 @@ class AlbumItem extends Component {
     this.handleOpen = this.handleOpen.bind(this);
   }
 
-  handleOpen(push) {
+  handleOpen(replace) {
     const id = this.props.id || this.props.album.id;
 
     if (this.props.navigate) {
       this.props.history.push(`/me/albums/${id}`);
     } else {
-      push(<AlbumPanel id={id} />);
+      replace(<AlbumPanel key={id} id={id} />);
     }
   }
 
@@ -44,8 +44,8 @@ class AlbumItem extends Component {
         style={{ width: size }}
       >
         <ModalContext.Consumer>
-          {({ push }) => (
-            <div onClick={() => this.handleOpen(push)}>
+          {({ replace }) => (
+            <div onClick={() => this.handleOpen(replace)}>
               <ContextMenuTrigger
                 holdToDisplay={-1}
                 render={() => <AlbumContextMenu album={album} />}
