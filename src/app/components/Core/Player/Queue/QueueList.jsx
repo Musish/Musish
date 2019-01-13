@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import { SortableContainer } from 'react-sortable-hoc';
 import classes from './Queue.scss';
 import withMK from '../../../../hoc/withMK';
-import SortableItem, { QueueItemState } from './SortableItem';
+import QueueItem, { QueueItemState } from './QueueItem';
 
-class SortableList extends React.Component {
+class QueueList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = SortableList.getDerivedStateFromProps(this.props, {});
+    this.state = QueueList.getDerivedStateFromProps(this.props, {});
   }
 
   static queueState(index, position) {
@@ -30,7 +30,9 @@ class SortableList extends React.Component {
     const filteredItems = queue.items
       .map((item, index) => {
         // eslint-disable-next-line no-param-reassign
-        item.queueState = SortableList.queueState(index, queue.position);
+        item.queueState = QueueList.queueState(index, queue.position);
+        // eslint-disable-next-line no-param-reassign
+        item.queuePosition = index;
 
         return item;
       })
@@ -43,19 +45,28 @@ class SortableList extends React.Component {
 
   render() {
     const { filteredItems: items } = this.state;
+    const { removeItemFunc } = this.props;
 
     return (
       <List
-        rowHeight={55}
+        rowHeight={50}
         rowRenderer={args => {
-          const { index, key } = args;
+          const { index } = args;
           const item = items[index];
-          return <SortableItem key={key} item={item} {...args} disabled={index === 0} />;
+          return (
+            <QueueItem
+              {...args}
+              item={item}
+              queueIndex={index}
+              removeItemFunc={removeItemFunc}
+              disabled={index === 0}
+            />
+          );
         }}
         rowCount={items.length}
-        width={300}
+        width={320}
         height={355}
-        className={classes.SortableList}
+        className={classes.QueueList}
       />
     );
   }
@@ -67,8 +78,9 @@ const bindings = {
   [MusicKit.Events.queuePositionDidChange]: 'queuePosition',
 };
 
-SortableList.propTypes = {
+QueueList.propTypes = {
   mk: PropTypes.any.isRequired,
+  removeItemFunc: PropTypes.func.isRequired,
 };
 
-export default withMK(SortableContainer(SortableList, { withRef: true }), bindings);
+export default withMK(SortableContainer(QueueList, { withRef: true }), bindings);
