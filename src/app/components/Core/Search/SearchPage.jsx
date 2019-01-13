@@ -1,7 +1,8 @@
-/* eslint-disable prettier/prettier */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
+import cx from 'classnames';
+
 import classes from './SearchPage.scss';
 import withMK from '../../../hoc/withMK';
 import PageTitle from '../../common/PageTitle';
@@ -19,10 +20,10 @@ class SearchPage extends React.Component {
 
     this.state = {
       results: {
-        'albums': null,
-        'songs': null,
-        'playlists': null,
-        'artists': null,
+        albums: null,
+        songs: null,
+        playlists: null,
+        artists: null,
       },
       loading: null,
     };
@@ -49,6 +50,7 @@ class SearchPage extends React.Component {
     this.setState({
       loading: true,
     });
+
     switch (this.props.match.params.source) {
       case 'catalog':
         await this.searchCatalog(query);
@@ -59,7 +61,6 @@ class SearchPage extends React.Component {
       default:
         console.error('Unknown source type');
         break;
-
     }
 
     this.setState({
@@ -79,7 +80,7 @@ class SearchPage extends React.Component {
         albums: res.albums ? res.albums.data : [],
         songs: res.songs ? res.songs.data : [],
         playlists: res.playlists ? res.playlists.data : [],
-        artists: res.artists ? res.artists.data : []
+        artists: res.artists ? res.artists.data : [],
       },
     });
   }
@@ -96,8 +97,8 @@ class SearchPage extends React.Component {
         albums: res['library-albums'] ? res['library-albums'].data : [],
         songs: res['library-songs'] ? res['library-songs'].data : [],
         playlists: res['library-playlists'] ? res['library-playlists'].data : [],
-        artists: res['library-artists'] ? res['library-artists'].data : []
-      }
+        artists: res['library-artists'] ? res['library-artists'].data : [],
+      },
     });
   }
 
@@ -145,11 +146,9 @@ class SearchPage extends React.Component {
       <>
         <h3>Albums</h3>
         <div className={classes.searchGrid}>
-          {albums.map(
-            album => (
-              <AlbumItem key={album.id} album={album} size={170} navigate />
-            )
-          )}
+          {albums.map(album => (
+            <AlbumItem key={album.id} album={album} size={120} navigate />
+          ))}
         </div>
       </>
     );
@@ -166,11 +165,9 @@ class SearchPage extends React.Component {
       <>
         <h3>Playlists</h3>
         <div className={classes.searchGrid}>
-          {playlists.map(
-            playlist => (
-              <PlaylistItem key={playlist.id} playlist={playlist} size={170} navigate />
-            )
-          )}
+          {playlists.map(playlist => (
+            <PlaylistItem key={playlist.id} playlist={playlist} size={120} navigate />
+          ))}
         </div>
       </>
     );
@@ -187,18 +184,35 @@ class SearchPage extends React.Component {
       <>
         <h3>Artists</h3>
         <div className={classes.searchGrid}>
-          {artists.map(
-            artist => (
-              <ArtistItem artist={artist} size={41} key={artist.id} />
-            )
-          )}
+          {artists.map(artist => (
+            <ArtistItem artist={artist} size={41} key={artist.id} />
+          ))}
         </div>
       </>
     );
   }
 
-  render() {
+  renderTabs() {
+    const { source } = this.props.match.params;
+    return (
+      <div className={classes.choices}>
+        <div
+          className={cx(classes.selectionItem, { [classes.selected]: source === 'catalog' })}
+          onClick={this.handleCatalogChange}
+        >
+          Apple Music
+        </div>
+        <div
+          className={cx(classes.selectionItem, { [classes.selected]: source === 'library' })}
+          onClick={this.handleLibraryChange}
+        >
+          My Library
+        </div>
+      </div>
+    );
+  }
 
+  render() {
     const { loading } = this.state;
 
     const songs = this.renderSongs();
@@ -206,22 +220,18 @@ class SearchPage extends React.Component {
     const playlists = this.renderPlaylists();
     const artists = this.renderArtists();
 
-    const isEmpty = !loading && !(songs || albums || playlists || artists);
+    const isEmpty = !(loading || songs || albums || playlists || artists);
 
     return (
       <PageContent innerRef={this.ref}>
-        <div className={classes.choices}>
-          <div className={classes.selectionItem} onClick={this.handleCatalogChange}>
-            Catalog
-          </div>
-          <div className={classes.selectionItem} onClick={this.handleLibraryChange}>
-            Library
-          </div>
-        </div>
-        <PageTitle title={`Search: '${this.props.match.params.query}'`} context={'Search'} />
+        <PageTitle title={`Searching for ${this.props.match.params.query}`} context={'Search'} />
 
-        {loading && (<Loader />)}
-        {isEmpty ? (<h4>Could not load any of your library that match the search term.</h4>) : (
+        {this.renderTabs()}
+
+        {loading && <Loader />}
+        {isEmpty ? (
+          <h4>Could not load any of your library that match the search term.</h4>
+        ) : (
           <>
             {songs}
             {albums}
@@ -229,7 +239,6 @@ class SearchPage extends React.Component {
             {artists}
           </>
         )}
-
       </PageContent>
     );
   }
