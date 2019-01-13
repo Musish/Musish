@@ -178,6 +178,7 @@ SearchBar.propTypes = {
   mk: PropTypes.any.isRequired,
   authorized: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 export default withRouter(withMK(withContext(SearchBar, AuthorizeContext)));

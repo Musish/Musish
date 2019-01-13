@@ -220,7 +220,11 @@ class SearchPage extends React.Component {
         </div>
         <PageTitle title={`Search: '${this.props.match.params.query}'`} context={'Search'} />
         {loading && (<Loader />)}
-        {isEmpty ? (<h4>Could not load any of your library that match the search term.</h4>) : (
+        {isEmpty ? (
+          <div className={classes.searchError}>
+            <span className={classes.searchErrorTitle}>😭</span>
+            <span className={classes.searchErrorDetails}>Oops, no results found.</span>
+          </div>) : (
           <>
             {songs}
             {albums}
