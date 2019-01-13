@@ -19,6 +19,7 @@ class SearchPage extends React.Component {
     this.state = {
       catalogData: null,
       libraryData: null,
+      loading: null,
       songs: [],
     };
 
@@ -111,7 +112,9 @@ class SearchPage extends React.Component {
     const items = this.getItems(type).filter(item => item.type === source);
 
     if (!items || items.length === 0) {
-      return null;
+      return `No result for ${type} matching "${this.props.match.params.query}" in your ${
+        this.props.match.params.source
+      }.`;
     }
     return (
       <>
