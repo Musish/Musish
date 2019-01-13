@@ -118,9 +118,7 @@ export default class AlbumPanel extends React.Component {
             </button>
           </div>
           <span className={classes.albumRuntimeDescription}>
-            {album.attributes.trackCount}
-            {' songs: '}
-            {runtime}
+            {`${album.attributes.trackCount} songs, ${runtime}`}
           </span>
         </div>
 

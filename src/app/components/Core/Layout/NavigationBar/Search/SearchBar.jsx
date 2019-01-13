@@ -130,6 +130,8 @@ class SearchBar extends React.Component {
     const { query, showResults } = this.state;
     const { location } = this.props;
     const slugs = location.pathname.split('/');
+    // Providing you're on the search route, it fetches the second segment
+    // of the url which is either the 'catalog' or the 'library'
     const searchSource = slugs.length >= 2 && slugs[1] === 'search' ? slugs[2] : 'catalog';
 
     return (

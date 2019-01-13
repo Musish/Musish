@@ -39,7 +39,7 @@ export default class InfiniteScroll extends React.Component {
       return null;
     }
 
-    const c = (onScroll, state) => (
+    const wsRenderer = (onScroll, state) => (
       <WindowScroller
         scrollElement={this.getElement()}
         onScroll={args => this.onScroll(args, onScroll)}
@@ -67,14 +67,14 @@ export default class InfiniteScroll extends React.Component {
     );
 
     if (this.props.items) {
-      return c(() => null, { items: this.props.items, page: 0, end: true });
+      return wsRenderer(() => null, { items: this.props.items, page: 0, end: true });
     }
 
     return (
       <InfiniteLoader
         load={this.props.load}
         onSetItems={this.props.onSetItems}
-        render={({ onScroll }, state) => c(onScroll, state)}
+        render={({ onScroll }, state) => wsRenderer(onScroll, state)}
       />
     );
   }

@@ -51,6 +51,7 @@ class SongList extends React.Component {
       tracks,
       scrollElementModifier,
     } = this.props;
+
     return (
       <div className={classes.songList}>
         <InfiniteScroll
