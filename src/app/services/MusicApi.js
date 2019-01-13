@@ -89,7 +89,6 @@ export function infiniteLoadRelationships(id, functionGenerator, key, store) {
   return async ({ offset }, { page }) => {
     if (page === 0) {
       const playlist = await functionGenerator(id, { offset });
-
       const data = playlist.relationships[key];
 
       // eslint-disable-next-line no-param-reassign
@@ -109,4 +108,35 @@ export function infiniteLoadRelationships(id, functionGenerator, key, store) {
 
     return data.data;
   };
+}
+
+// Okay, okay. This is horrible, I know. Am I a bad person for writing this? Maybe, but is whoever
+// at Apple who designed the frameworks and APIs meaning we had to do this a bad person? Definitely.
+// https://www.google.com/#q=Nearby+shops+selling+eye+wash
+// https://www.google.com/images?q=cute+animals
+export async function fetchFullCatalogAlbumFromLibraryAlbum(album) {
+  const mk = MusicKit.getInstance();
+
+  const firstSong = album.relationships.tracks.data.find(
+    t => t.attributes && t.attributes.playParams && t.attributes.playParams.catalogId
+  );
+
+  if (!firstSong) {
+    return null;
+  }
+
+  const firstSongId = firstSong.attributes.playParams.catalogId;
+  const firstCatalogSong = await mk.api.song(firstSongId);
+
+  for (const a of firstCatalogSong.relationships.albums.data) {
+    // eslint-disable-next-line no-await-in-loop
+    const catalogAlbum = await mk.api.album(a.id);
+    if (
+      catalogAlbum.attributes.artistName === album.attributes.artistName &&
+      catalogAlbum.attributes.albumName === album.attributes.albumName
+    ) {
+      return catalogAlbum;
+    }
+  }
+  return null;
 }
