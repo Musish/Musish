@@ -132,7 +132,32 @@ class Player extends React.Component {
 
     const isRepeating = repeatMode === RepeatModeOne || repeatMode === RepeatModeAll;
 
-    const meta = nowPlayingItem.assets[0].metadata;
+    const hasMeta = nowPlayingItem.assets.length > 0;
+
+    const artistName = hasMeta ? (
+      <Link to={`/artist/${nowPlayingItem.assets[0].metadata.artistId}`}>
+        <span className={cx(styles.artistName, styles.link)}>
+          {nowPlayingItem.attributes.artistName}
+        </span>
+      </Link>
+    ) : (
+      <span className={cx(styles.artistName)}>{nowPlayingItem.attributes.artistName}</span>
+    );
+
+    const albumName = hasMeta ? (
+      <ModalContext.Consumer>
+        {({ replace }) => (
+          <span
+            className={cx(styles.albumName, styles.link)}
+            onClick={() => this.handleOpenAlbum(replace)}
+          >
+            {nowPlayingItem.attributes.albumName}
+          </span>
+        )}
+      </ModalContext.Consumer>
+    ) : (
+      <span className={cx(styles.albumName)}>{nowPlayingItem.attributes.albumName}</span>
+    );
 
     return (
       <div className={styles.player}>
@@ -142,19 +167,8 @@ class Player extends React.Component {
           </div>
           <div className={styles.track}>
             <h1>{nowPlayingItem.title}</h1>
-            <Link to={`/artist/${meta.artistId}`}>
-              <span className={cx(styles.artistName)}>{nowPlayingItem.attributes.artistName}</span>
-            </Link>
-            <ModalContext.Consumer>
-              {({ replace }) => (
-                <span
-                  className={cx(styles.albumName)}
-                  onClick={() => this.handleOpenAlbum(replace)}
-                >
-                  {nowPlayingItem.attributes.albumName}
-                </span>
-              )}
-            </ModalContext.Consumer>
+            {artistName}
+            {albumName}
           </div>
         </div>
         <PlayerTime nowPlayingItem={nowPlayingItem} />
