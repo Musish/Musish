@@ -1,20 +1,24 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, Route, withRouter } from 'react-router-dom';
 import classes from './AlbumPanel.scss';
 import { artworkForMediaItem, humanifyMillis } from '../../../utils/Utils';
 import SongList from '../Songs/SongList/SongList';
 import Loader from '../../common/Loader';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
 import * as MusicApi from '../../../services/MusicApi';
+import withMK from '../../../hoc/withMK';
+import ModalContext from '../../common/Modal/ModalContext';
 
-export default class AlbumPanel extends React.Component {
+class AlbumPanel extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       album: null,
+      shouldMatchCatalogAlbum: !this.isCatalog(),
+      matchedCatalogAlbum: null,
     };
 
     this.ref = React.createRef();
@@ -25,6 +29,7 @@ export default class AlbumPanel extends React.Component {
     this.shufflePlayAlbum = this.shufflePlayAlbum.bind(this);
     this.onSetItems = this.onSetItems.bind(this);
     this.albumLoader = this.albumLoader.bind(this);
+    this.fetchFullCatalogAlbum = this.fetchFullCatalogAlbum.bind(this);
   }
 
   componentDidMount() {
@@ -41,11 +46,15 @@ export default class AlbumPanel extends React.Component {
 
   albumLoader(...args) {
     const music = MusicKit.getInstance();
-    if (isNaN(this.getAlbumId())) {
+    if (!this.isCatalog()) {
       return music.api.library.album(...args);
     }
 
     return music.api.album(...args);
+  }
+
+  isCatalog() {
+    return !isNaN(this.getAlbumId());
   }
 
   getAlbumId() {
@@ -58,6 +67,10 @@ export default class AlbumPanel extends React.Component {
         totalDuration + track.attributes ? track.attributes.durationInMillis : 0,
       0
     );
+
+    if (this.state.shouldMatchCatalogAlbum) {
+      this.fetchFullCatalogAlbum();
+    }
 
     this.setState({
       runtime: humanifyMillis(playlistLength),
@@ -76,8 +89,16 @@ export default class AlbumPanel extends React.Component {
     MusicPlayerApi.shufflePlayAlbum(this.state.album);
   }
 
+  async fetchFullCatalogAlbum() {
+    const { album } = this.state;
+    const catalogAlbum = await MusicApi.fetchFullCatalogAlbumFromLibraryAlbum(album);
+    this.setState({
+      matchedCatalogAlbum: catalogAlbum,
+    });
+  }
+
   render() {
-    const { album, runtime } = this.state;
+    const { album, matchedCatalogAlbum, runtime } = this.state;
 
     if (!album) {
       return <Loader />;
@@ -141,6 +162,29 @@ export default class AlbumPanel extends React.Component {
             onSetItems={this.onSetItems}
             playSong={this.playSong}
           />
+
+          {matchedCatalogAlbum && (
+            <ModalContext.Consumer>
+              {({ replace }) => (
+                <div className={classes.showCompleteContainer}>
+                  <Route path={'/me/albums'}>
+                    {({ match }) => (
+                      <span
+                        onClick={() => {
+                          if (match) {
+                            this.props.history.push('/me/albums/');
+                          }
+                          replace(<AlbumPanel album={matchedCatalogAlbum} />);
+                        }}
+                      >
+                        Show complete album
+                      </span>
+                    )}
+                  </Route>
+                </div>
+              )}
+            </ModalContext.Consumer>
+          )}
         </div>
       </div>
     );
@@ -150,9 +194,13 @@ export default class AlbumPanel extends React.Component {
 AlbumPanel.propTypes = {
   id: PropTypes.any,
   album: PropTypes.any,
+  history: PropTypes.any,
 };
 
 AlbumPanel.defaultProps = {
   id: null,
   album: null,
+  history: null,
 };
+
+export default withRouter(withMK(AlbumPanel));

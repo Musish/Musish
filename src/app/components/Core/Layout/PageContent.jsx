@@ -1,5 +1,5 @@
 import React from 'react';
-import css from './PageContent.scss';
+import classes from './PageContent.scss';
 
 export default class PageContent extends React.Component {
   constructor(props) {
@@ -25,7 +25,7 @@ export default class PageContent extends React.Component {
     const { mounted } = this.state;
 
     return (
-      <div className={css.pageContent} ref={innerRef} {...rest}>
+      <div className={classes.pageContent} ref={innerRef} {...rest}>
         {mounted && this.props.children}
       </div>
     );
