@@ -106,15 +106,16 @@
   }
 
   .showCompleteContainer {
+    margin-top: 10px;
+
     > span {
-      color: #fe2851;
+      color: $accent_color;
       cursor: pointer;
-      font-size: 0.8em;
+      font-size: 0.9em;
       margin-left: 35px;
-      margin-top: 10px;
 
       &:hover {
-        color: darken(#fe2851, 20%);
+        color: darken($accent_color, 20%);
       }
     }
   }

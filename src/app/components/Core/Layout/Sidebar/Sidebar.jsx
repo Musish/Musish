@@ -40,6 +40,7 @@ class Sidebar extends React.Component {
           key={playlist.id}
         />
       ));
+
     const appleMusic = authorized ? (
       <SidebarMenu
         title={'Apple music'}

@@ -63,7 +63,8 @@ class PlaylistPage extends React.Component {
     });
 
     const playlistLength = songs.reduce(
-      (totalDuration, song) => totalDuration + song.attributes.durationInMillis,
+      (totalDuration, track) =>
+        totalDuration + (track.attributes ? track.attributes.durationInMillis : 0),
       0
     );
 
