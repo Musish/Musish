@@ -89,10 +89,10 @@ class SearchPage extends React.Component {
     });
     this.setState({
       libraryData: {
-        'library-albums': { data: [] },
-        'library-songs': { data: [] },
-        'library-playlists': { data: [] },
-        'library-artists': { data: [] },
+        'library-albums': { data: null },
+        'library-songs': { data: null },
+        'library-playlists': { data: null },
+        'library-artists': { data: null },
         ...libraryData,
       },
     });
@@ -104,11 +104,11 @@ class SearchPage extends React.Component {
     const { catalogData, libraryData } = this.state;
 
     if (libraryData && libraryData[`library-${type}`]) {
-      items = [...(items || []), ...libraryData[`library-${type}`].data];
+      items = [...(items || []), ...(libraryData[`library-${type}`].data || [])];
     }
 
     if (catalogData && catalogData[type]) {
-      items = [...(items || []), ...catalogData[type].data];
+      items = [...(items || []), ...(catalogData[type].data || [])];
     }
     return items;
   }
