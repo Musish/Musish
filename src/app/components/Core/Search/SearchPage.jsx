@@ -47,7 +47,6 @@ class SearchPage extends React.Component {
       this.setState({
         results: null,
       });
-      this.updateSongs();
       return;
     }
 
@@ -56,7 +55,6 @@ class SearchPage extends React.Component {
     });
 
     await Promise.all([this.searchCatalog(query), this.searchLibrary(query)]);
-    this.updateSongs();
 
     this.setState({
       loading: false,
