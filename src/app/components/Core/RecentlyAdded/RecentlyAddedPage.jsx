@@ -4,6 +4,7 @@ import classes from './RecentlyAddedPage.scss';
 import PageTitle from '../../common/PageTitle';
 import PageContent from '../Layout/PageContent';
 import InfiniteLoader from '../common/InfiniteLoader';
+import PlaylistItem from '../Playlists/PlaylistItem';
 
 export default class RecentlyAddedPage extends React.Component {
   constructor(props) {
@@ -19,9 +20,20 @@ export default class RecentlyAddedPage extends React.Component {
   }
 
   static renderItems({ items }) {
-    const albums = items.map(album => <AlbumItem key={album.id} album={album} size={170} />);
-
-    return <div className={classes.albumsGrid}>{albums}</div>;
+    return (
+      <div className={classes.artworkItemGrid}>
+        {items.map(item => {
+          switch (item.type) {
+            case 'library-playlists':
+              return <PlaylistItem key={item.id} playlist={item} size={170} />;
+            case 'library-albums':
+              return <AlbumItem key={item.id} album={item} size={170} />;
+            default:
+              return null;
+          }
+        })}
+      </div>
+    );
   }
 
   static renderContent({ onScroll }, state) {

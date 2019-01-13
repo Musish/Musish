@@ -93,10 +93,10 @@
       text-align: center;
       margin-top: 30px;
       margin-bottom: 10px;
-      color: lighten($tertiary_color, 10%);
+      color: lighten($tertiary_color, 20%);
 
       a {
-        color: lighten($tertiary_color, 20%);
+        color: lighten($tertiary_color, 10%);
 
         &:hover {
           color: $accent_color;
