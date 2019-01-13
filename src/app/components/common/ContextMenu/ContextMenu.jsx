@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 export const MENU_TYPE = 'DYNAMIC';
 
 function DynamicMenu({ trigger }) {
-  return <ContextMenu id={MENU_TYPE}>{trigger && trigger.render}</ContextMenu>;
+  const renderer = trigger ? trigger.render : <></>;
+
+  return <ContextMenu id={MENU_TYPE}>{renderer}</ContextMenu>;
 }
 
 DynamicMenu.propTypes = {

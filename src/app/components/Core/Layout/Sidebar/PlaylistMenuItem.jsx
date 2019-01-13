@@ -67,8 +67,8 @@ const dndSpec = {
   },
 };
 
-export default DropTarget(
-  [DragDropType.SONG, DragDropType.ALBUM, DragDropType.PLAYLIST],
-  dndSpec,
-  collect
-)(withRouter(PlaylistMenuItem));
+export default withRouter(
+  DropTarget([DragDropType.SONG, DragDropType.ALBUM, DragDropType.PLAYLIST], dndSpec, collect)(
+    PlaylistMenuItem
+  )
+);

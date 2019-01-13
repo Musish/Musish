@@ -51,7 +51,7 @@ function AlbumContextMenu({ album }) {
 }
 
 AlbumContextMenu.propTypes = {
-  album: PropTypes.array.isRequired,
+  album: PropTypes.object.isRequired,
 };
 
 export default withRouter(AlbumContextMenu);
