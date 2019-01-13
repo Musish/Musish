@@ -47,6 +47,10 @@ class App extends React.Component {
         this.setState(state => ({
           modalsContents: [...state.modalsContents, c],
         })),
+      replace: c =>
+        this.setState(state => ({
+          modalsContents: [...state.modalsContents.slice(0, -1), c],
+        })),
       pop: () =>
         this.setState(state => ({
           modalsContents: [...state.modalsContents.slice(0, -1)],
