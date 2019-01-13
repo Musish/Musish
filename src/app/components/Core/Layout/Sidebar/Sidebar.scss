@@ -17,6 +17,10 @@
     overflow: auto;
     padding-bottom: 15px;
 
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
     .menu {
       background: $main_background_color;
       padding: 10px 15px;
@@ -46,7 +50,7 @@
 
       ul {
         list-style-type: none;
-        margin: 15px 0 0;
+        margin: 5px 0 0;
         padding: 0;
 
         li {
@@ -89,13 +93,23 @@
       text-align: center;
       margin-top: 30px;
       margin-bottom: 10px;
-      color: lighten($tertiary_color, 10%);
+      color: lighten($tertiary_color, 20%);
 
       a {
-        color: lighten($tertiary_color, 20%);
+        color: lighten($tertiary_color, 10%);
 
         &:hover {
           color: $accent_color;
+        }
+      }
+
+      .footnote {
+        display: block;
+        margin-top: 10px;
+        font-size: 0.75em;
+
+        i {
+          font-size: 0.9em;
         }
       }
     }

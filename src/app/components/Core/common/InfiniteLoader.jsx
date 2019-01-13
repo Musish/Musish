@@ -58,7 +58,7 @@ export default class InfiniteLoader extends React.Component {
     });
 
     try {
-      const limit = 100;
+      const { limit } = this.props;
 
       const newItems = await this.props.load(
         {
@@ -86,6 +86,20 @@ export default class InfiniteLoader extends React.Component {
     this.setState(state);
   }
 
+  componentDidUpdate() {
+    const { loading, end } = this.state;
+    const { scrollElement, initialBuffer } = this.props;
+
+    if (
+      scrollElement &&
+      !loading &&
+      !end &&
+      scrollElement.current.scrollHeight - initialBuffer <= scrollElement.current.clientHeight
+    ) {
+      this.loadMore();
+    }
+  }
+
   render() {
     const { loading, items } = this.state;
 
@@ -107,9 +121,13 @@ InfiniteLoader.propTypes = {
   render: PropTypes.func.isRequired,
   onSetItems: PropTypes.func,
   scrollElement: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  limit: PropTypes.number,
+  initialBuffer: PropTypes.number,
 };
 
 InfiniteLoader.defaultProps = {
   onSetItems: state => null,
   scrollElement: null,
+  limit: 100,
+  initialBuffer: 300,
 };
