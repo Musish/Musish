@@ -1,0 +1,73 @@
+@import '../../../styles/settings/colors';
+
+@mixin wrapTo($width) {
+  display: block;
+  width: $width;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  transform: scale(1);
+  transition: transform 0.3s;
+  background: $container_background;
+  border-radius: 4px;
+  padding: 5px 10px;
+  height: 51px;
+
+  &.droppable {
+    color: $accent_color;
+  }
+
+  .pictureWrapper {
+    display: flex;
+    width: 41px;
+    height: 41px;
+    background: #cccccc;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+
+    > img {
+      border-radius: inherit;
+    }
+
+    > span {
+      color: lighten($tertiary_color, 25%);
+    }
+  }
+
+  .descriptionContainer {
+    text-align: left;
+    width: 100%;
+    margin-left: 10px;
+    padding-right: 15px;
+
+    > span {
+      display: block;
+      @include wrapTo(100%);
+      overflow: hidden;
+      word-wrap: break-word;
+
+      &.artistName {
+        font-weight: 300;
+        color: $secondary_color;
+        margin: 0;
+      }
+    }
+  }
+
+  &:hover {
+    transform: scale(1.025);
+
+    .image {
+      opacity: 0.8;
+    }
+  }
+
+  &:active {
+    transform: scale(0.975);
+  }
+}

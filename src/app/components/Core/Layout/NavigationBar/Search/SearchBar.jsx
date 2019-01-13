@@ -2,6 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
+import { withRouter } from 'react-router-dom';
 import classes from './SearchBar.scss';
 import withMK from '../../../../../hoc/withMK';
 import withContext from '../../../../../hoc/withContext';
@@ -97,19 +98,14 @@ class SearchBar extends React.Component {
   }
 
   getItems(type) {
-    let songs = [];
-
     const { catalogData, libraryData } = this.state;
 
-    if (libraryData && libraryData[`library-${type}`]) {
-      songs = [...songs, ...libraryData[`library-${type}`].data];
-    }
+    const libraryItems =
+      libraryData && libraryData[`library-${type}`] ? libraryData[`library-${type}`].data : [];
 
-    if (catalogData && catalogData[type]) {
-      songs = [...songs, ...catalogData[type].data];
-    }
+    const catalogItems = catalogData && catalogData[type] ? catalogData[type].data : [];
 
-    return songs;
+    return [...libraryItems, ...catalogItems];
   }
 
   renderResults(label, type, rowRenderer) {
@@ -132,32 +128,47 @@ class SearchBar extends React.Component {
 
   render() {
     const { query, showResults } = this.state;
+    const { location } = this.props;
+    const slugs = location.pathname.split('/');
+    // Providing you're on the search route, it fetches the second segment
+    // of the url which is either the 'catalog' or the 'library'
+    const searchSource = slugs.length >= 2 && slugs[1] === 'search' ? slugs[2] : 'catalog';
 
     return (
       <div className={cx(classes.navSearch, { [classes.active]: showResults })}>
         <div className={classes.navSearchWrapper}>
-          <input
-            type="text"
-            placeholder="Search music"
-            value={query}
-            onChange={this.handleSearch}
-            onFocus={this.handleShowResults}
-            onBlur={this.handleHideResults}
-          />
+          <form
+            onSubmit={e => {
+              e.preventDefault();
+              this.props.history.push(`/search/${searchSource}/${query}`);
+              return false;
+            }}
+          >
+            <input
+              type="text"
+              placeholder="Search music"
+              value={query}
+              onChange={this.handleSearch}
+              onFocus={this.handleShowResults}
+              onBlur={this.handleHideResults}
+            />
+          </form>
 
           <div className={classes.results}>
-            {this.renderResults('Songs', 'songs', song => (
-              <SongResultItem key={song.id} song={song} />
-            ))}
-            {this.renderResults('Albums', 'albums', album => (
-              <AlbumResultItem key={album.id} album={album} size={30} />
-            ))}
-            {this.renderResults('Artists', 'artists', artist => (
-              <ArtistResultItem key={artist.id} artist={artist} />
-            ))}
-            {this.renderResults('Playlists', 'playlists', playlist => (
-              <PlaylistResultItem key={playlist.id} playlist={playlist} size={30} />
-            ))}
+            <div className={classes.resultsContainer}>
+              {this.renderResults('Songs', 'songs', song => (
+                <SongResultItem song={song} key={song.id} />
+              ))}
+              {this.renderResults('Albums', 'albums', album => (
+                <AlbumResultItem album={album} size={30} key={album.id} />
+              ))}
+              {this.renderResults('Artists', 'artists', artist => (
+                <ArtistResultItem artist={artist} key={artist.id} />
+              ))}
+              {this.renderResults('Playlists', 'playlists', playlist => (
+                <PlaylistResultItem playlist={playlist} size={30} key={playlist.id} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -168,6 +179,8 @@ class SearchBar extends React.Component {
 SearchBar.propTypes = {
   mk: PropTypes.any.isRequired,
   authorized: PropTypes.bool.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
-export default withMK(withContext(SearchBar, AuthorizeContext));
+export default withRouter(withMK(withContext(SearchBar, AuthorizeContext)));

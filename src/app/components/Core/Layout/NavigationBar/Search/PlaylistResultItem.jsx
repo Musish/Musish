@@ -8,6 +8,7 @@ import PlaylistPanel from '../../../Playlists/PlaylistPanel';
 
 function PlaylistResultItem(props) {
   const { playlist, size } = props;
+  const isCatalog = playlist.type === 'playlists';
 
   return (
     <ModalContext.Consumer>
@@ -17,6 +18,11 @@ function PlaylistResultItem(props) {
           onClick={() => push(<PlaylistPanel playlist={playlist} />)}
         >
           <span className={classes.artwork}>
+            {isCatalog && (
+              <div className={classes.catalogIndicator}>
+                <i className={'fab fa-apple'} />
+              </div>
+            )}
             <img
               src={artworkForMediaItem(playlist, size)}
               alt={playlist.attributes.name}

@@ -63,7 +63,7 @@ class Lyrics extends React.Component {
       return (
         <div className={classes.noMatch}>
           {'No lyrics available '}
-          <span role={'img'} aria-label={'sad'}>
+          <span role={'img'} aria-label={'crying'}>
             😢
           </span>
         </div>

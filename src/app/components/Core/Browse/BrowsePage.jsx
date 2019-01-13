@@ -6,8 +6,8 @@ import classes from './BrowsePage.scss';
 import browseData from './browse';
 import Loader from '../../common/Loader';
 import ItemList from './ItemList';
-import SongList from '../Songs/SongList/SongList';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
+import SongGrid from '../Songs/SongGrid/SongGrid';
 
 class BrowsePage extends React.Component {
   constructor(props) {
@@ -44,6 +44,7 @@ class BrowsePage extends React.Component {
     return (
       <PageContent innerRef={this.ref}>
         <PageTitle title={'Browse'} context={'Apple Music'} />
+
         <ItemList
           title={'Daily Top 100'}
           listIds={Object.values(browseData.top100).slice(0, 24)}
@@ -51,29 +52,12 @@ class BrowsePage extends React.Component {
           size={120}
           rows={2}
         />
-        <ItemList
-          title={'The A-Lists'}
-          listIds={Object.values(browseData.aLists).slice(0, 24)}
-          type={'playlist'}
-        />
-        <ItemList
-          title={'Top Playlists'}
-          list={charts ? charts.playlists[0].data : null}
-          type={'playlist'}
-        />
-        <ItemList
-          title={'Top Albums'}
-          list={charts ? charts.albums[0].data : null}
-          type={'album'}
-          size={120}
-          rows={3}
-        />
+
         <h3>Top Songs</h3>
         <div className={classes.chartingSongs}>
           {charts ? (
-            <SongList
-              scrollElement={this.ref}
-              load={() => charts.songs[0].data.slice(0, 10)}
+            <SongGrid
+              tracks={charts.songs[0].data}
               showArtist
               showAlbum
               playSong={BrowsePage.playSong}
@@ -82,6 +66,26 @@ class BrowsePage extends React.Component {
             <Loader />
           )}
         </div>
+
+        <ItemList
+          title={'The A-Lists'}
+          listIds={Object.values(browseData.aLists).slice(0, 24)}
+          type={'playlist'}
+        />
+
+        <ItemList
+          title={'Top Playlists'}
+          list={charts ? charts.playlists[0].data : null}
+          type={'playlist'}
+        />
+
+        <ItemList
+          title={'Top Albums'}
+          list={charts ? charts.albums[0].data : null}
+          type={'album'}
+          size={120}
+          rows={3}
+        />
       </PageContent>
     );
   }
