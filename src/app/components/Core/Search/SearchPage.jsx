@@ -146,7 +146,7 @@ class SearchPage extends React.Component {
         <h3>Albums</h3>
         <div className={classes.searchGrid}>
           {albums.map(album => (
-            <AlbumItem key={album.id} album={album} size={120} navigate />
+            <AlbumItem key={album.id} album={album} size={120} />
           ))}
         </div>
       </>
@@ -165,7 +165,7 @@ class SearchPage extends React.Component {
         <h3>Playlists</h3>
         <div className={classes.searchGrid}>
           {playlists.map(playlist => (
-            <PlaylistItem key={playlist.id} playlist={playlist} size={120} navigate />
+            <PlaylistItem key={playlist.id} playlist={playlist} size={120} />
           ))}
         </div>
       </>
