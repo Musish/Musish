@@ -109,13 +109,13 @@ class Player extends React.Component {
     return 'fas fa-volume-up';
   }
 
-  handleOpenAlbum(push) {
+  handleOpenAlbum(replace) {
     const nowPlayingItem = this.props.mk.mediaItem && this.props.mk.mediaItem.item;
     const meta = nowPlayingItem.assets[0].metadata;
 
     const id = meta.playlistId;
 
-    push(<AlbumPanel id={id} />);
+    replace(<AlbumPanel key={id} id={id} />);
   }
 
   render() {
@@ -146,8 +146,11 @@ class Player extends React.Component {
               <span className={cx(styles.artistName)}>{nowPlayingItem.attributes.artistName}</span>
             </Link>
             <ModalContext.Consumer>
-              {({ push }) => (
-                <span className={cx(styles.albumName)} onClick={() => this.handleOpenAlbum(push)}>
+              {({ replace }) => (
+                <span
+                  className={cx(styles.albumName)}
+                  onClick={() => this.handleOpenAlbum(replace)}
+                >
                   {nowPlayingItem.attributes.albumName}
                 </span>
               )}
