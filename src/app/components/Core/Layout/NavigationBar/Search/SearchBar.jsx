@@ -158,18 +158,20 @@ class SearchBar extends React.Component {
           </form>
 
           <div className={classes.results}>
-            {this.renderResults('Songs', 'songs', song => (
-              <SongResultItem song={song} key={song.id} />
-            ))}
-            {this.renderResults('Albums', 'albums', album => (
-              <AlbumResultItem album={album} size={30} key={album.id} />
-            ))}
-            {this.renderResults('Artists', 'artists', artist => (
-              <ArtistResultItem artist={artist} key={artist.id} />
-            ))}
-            {this.renderResults('Playlists', 'playlists', playlist => (
-              <PlaylistResultItem playlist={playlist} size={30} key={playlist.id} />
-            ))}
+            <div className={classes.resultsContainer}>
+              {this.renderResults('Songs', 'songs', song => (
+                <SongResultItem song={song} key={song.id} />
+              ))}
+              {this.renderResults('Albums', 'albums', album => (
+                <AlbumResultItem album={album} size={30} key={album.id} />
+              ))}
+              {this.renderResults('Artists', 'artists', artist => (
+                <ArtistResultItem artist={artist} key={artist.id} />
+              ))}
+              {this.renderResults('Playlists', 'playlists', playlist => (
+                <PlaylistResultItem playlist={playlist} size={30} key={playlist.id} />
+              ))}
+            </div>
           </div>
         </div>
       </div>

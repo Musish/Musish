@@ -10,6 +10,7 @@ function ArtistResultItem({ artist }) {
   return (
     <Link to={link}>
       <div className={cx(classes.result, classes.artist)}>
+        <i className={'fab fa-apple'} />
         <span className={classes.name}>{artist.attributes.name}</span>
       </div>
     </Link>

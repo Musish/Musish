@@ -17,6 +17,9 @@ function AlbumResultItem(props) {
           onClick={() => push(<AlbumPanel album={album} />)}
         >
           <span className={classes.artwork}>
+            <div className={classes.catalogIndicator}>
+              <i className={'fab fa-apple'} />
+            </div>
             <img
               src={artworkForMediaItem(album, size)}
               alt={album.attributes.name}

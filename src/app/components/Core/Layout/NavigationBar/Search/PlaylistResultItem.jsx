@@ -17,6 +17,9 @@ function PlaylistResultItem(props) {
           onClick={() => push(<PlaylistPanel playlist={playlist} />)}
         >
           <span className={classes.artwork}>
+            <div className={classes.catalogIndicator}>
+              <i className={'fab fa-apple'} />
+            </div>
             <img
               src={artworkForMediaItem(playlist, size)}
               alt={playlist.attributes.name}
