@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { DragSource } from 'react-dnd';
 import { getTime } from '../../../../utils/Utils';
-import classes from './SongList.scss';
+import classes from './SongListItem.scss';
 import SongDecoration from './SongDecoration';
 import DragDropType from '../../../../utils/Constants/DragDropType';
 import ContextMenuTrigger from '../../../common/ContextMenu/ContextMenuTrigger';
@@ -25,12 +25,21 @@ class SongListItem extends React.Component {
   }
 
   render() {
-    const { showArtist, showAlbum, song, connectDragSource, isOver, songs, index } = this.props;
+    const {
+      showArtist,
+      showAlbum,
+      song,
+      connectDragSource,
+      isOver,
+      songs,
+      index,
+      className,
+    } = this.props;
     const { attributes } = song;
 
     if (!attributes) {
       return (
-        <div className={cx(classes.song, classes.disabledSong)} style={this.props.style}>
+        <div className={cx(classes.song, classes.disabledSong, className)} style={this.props.style}>
           <div className={[classes.songWrapper]}>
             <div className={classes.songBacker} />
             <SongDecoration song={song} showAlbum={showAlbum} />
@@ -59,7 +68,8 @@ class SongListItem extends React.Component {
             [classes.droppable]: isOver,
             [classes.disabledSong]: !song.attributes.playParams,
           },
-          classes.song
+          classes.song,
+          className
         )}
         onClick={this.handleClick}
         style={this.props.style}
@@ -117,11 +127,13 @@ SongListItem.propTypes = {
   connectDragSource: PropTypes.func.isRequired,
   isOver: PropTypes.bool,
   playSong: PropTypes.func.isRequired,
+  className: PropTypes.any,
 };
 
 SongListItem.defaultProps = {
   style: {},
   isOver: false,
+  className: null,
 };
 
 const dndSpec = {

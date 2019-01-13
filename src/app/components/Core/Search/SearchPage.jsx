@@ -9,7 +9,7 @@ import PageContent from '../Layout/PageContent';
 import Loader from '../../common/Loader';
 import AlbumItem from '../Albums/AlbumItem';
 import PlaylistItem from '../Playlists/PlaylistItem';
-import SongList from '../Songs/SongList/SongList';
+import SongGrid from '../Songs/SongGrid/SongGrid';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
 import ArtistItem from '../Artists/ArtistItem';
 
@@ -123,9 +123,9 @@ class SearchPage extends React.Component {
     return (
       <>
         <h3>Songs</h3>
-        <SongList
+        <SongGrid
           scrollElement={this.ref}
-          load={() => songs.slice(0, 10)}
+          tracks={songs}
           showArtist
           showAlbum
           playSong={SearchPage.playSong}
@@ -219,6 +219,7 @@ class SearchPage extends React.Component {
           </div>
         </div>
         <PageTitle title={`Search: '${this.props.match.params.query}'`} context={'Search'} />
+
         {loading && (<Loader />)}
         {isEmpty ? (
           <div className={classes.searchError}>

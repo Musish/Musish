@@ -5,7 +5,7 @@ import classes from './SongList.scss';
 import InfiniteScroll from '../../common/InfiniteScroll';
 import SongListItem from './SongListItem';
 
-export default class SongList extends React.Component {
+class SongList extends React.Component {
   constructor(props) {
     super(props);
 
@@ -43,8 +43,14 @@ export default class SongList extends React.Component {
   }
 
   render() {
-    const { showArtist, showAlbum, scrollElement, load, scrollElementModifier } = this.props;
-
+    const {
+      showArtist,
+      showAlbum,
+      scrollElement,
+      load,
+      tracks,
+      scrollElementModifier,
+    } = this.props;
     return (
       <div className={classes.songList}>
         <InfiniteScroll
@@ -52,6 +58,7 @@ export default class SongList extends React.Component {
           scrollElement={scrollElement}
           scrollElementModifier={scrollElementModifier}
           load={load}
+          items={tracks}
           rowHeight={showAlbum || showArtist ? 50 : 37}
           rowRenderer={this.rowRenderer}
         />
@@ -65,7 +72,8 @@ SongList.propTypes = {
   showAlbum: PropTypes.bool,
   scrollElement: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   scrollElementModifier: PropTypes.func,
-  load: PropTypes.func.isRequired,
+  load: PropTypes.func,
+  tracks: PropTypes.array,
   onSetItems: PropTypes.func,
   playSong: PropTypes.func.isRequired,
 };
@@ -76,4 +84,8 @@ SongList.defaultProps = {
   scrollElement: null,
   onSetItems: () => null,
   scrollElementModifier: e => e,
+  load: null,
+  tracks: null,
 };
+
+export default SongList;
