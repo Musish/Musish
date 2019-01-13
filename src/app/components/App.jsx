@@ -22,6 +22,7 @@ import Modal from './common/Modal/Modal';
 import ConnectedMenu from './common/ContextMenu/ContextMenu';
 import LyricsModalContext from './Core/Player/Lyrics/LyricsModalContext';
 import LyricsModal from './Core/Player/Lyrics/LyricsModal';
+import SearchPage from './Core/Search/SearchPage';
 
 class App extends React.Component {
   constructor(props) {
@@ -86,6 +87,15 @@ class App extends React.Component {
                       <Route path={'/artist/:id'} exact component={ArtistPage} />
                       <Route path={'/browse'} exact component={BrowsePage} />
                       <Route path={'/radio'} exact component={RadioPage} />
+                      <Route
+                        path={'/search/:source/:query'}
+                        exact
+                        component={({
+                          match: {
+                            params: { source, query },
+                          },
+                        }) => <SearchPage key={`${source}${query}`} />}
+                      />
                       <Redirect to={'/'} />
                     </Switch>
                     {this.state.modalsContents.length > 0 && (
