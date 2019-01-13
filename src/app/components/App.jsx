@@ -44,11 +44,11 @@ class App extends React.Component {
     const modalState = {
       push: c =>
         this.setState(state => ({
-          modalsContents: [...state.modalsContents, c],
+          modalsContents: [c, ...state.modalsContents],
         })),
       pop: () =>
         this.setState(state => ({
-          modalsContents: [...state.modalsContents.slice(0, -1)],
+          modalsContents: state.modalsContents.slice(1),
         })),
       flush: () =>
         this.setState({
@@ -90,9 +90,10 @@ class App extends React.Component {
                     </Switch>
                     {this.state.modalsContents.length > 0 && (
                       <Modal
+                        key={this.state.modalsContents.length}
                         open
                         handleClose={modalState.pop}
-                        render={() => this.state.modalsContents.slice(-1)[0]}
+                        render={() => this.state.modalsContents[0]}
                       />
                     )}
                   </Layout>
