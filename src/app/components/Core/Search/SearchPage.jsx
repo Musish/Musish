@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -17,10 +18,17 @@ class SearchPage extends React.Component {
     super(props);
 
     this.state = {
-      catalogData: null,
-      libraryData: null,
+      results: {
+        'albums': null,
+        'songs': null,
+        'playlists': null,
+        'artists': null,
+        'library-albums': null,
+        'library-songs': null,
+        'library-playlists': null,
+        'library-artists': null,
+      },
       loading: null,
-      songs: [],
     };
 
     this.ref = React.createRef();
@@ -37,8 +45,7 @@ class SearchPage extends React.Component {
     const query = this.props.match.params.query.replace(' ', '+');
     if (query.length === 0) {
       this.setState({
-        catalogData: null,
-        libraryData: null,
+        results: null,
       });
       this.updateSongs();
       return;
@@ -64,67 +71,58 @@ class SearchPage extends React.Component {
     return k;
   }
 
-  updateSongs() {
-    this.setState({
-      songs: this.getItems('songs')
-        .filter(song => song.type === this.getKey('songs'))
-        .slice(0, 10),
-    });
-  }
-
   async searchCatalog(query) {
-    const catalogData = await this.props.mk.instance.api.search(query, {
+    const res = await this.props.mk.instance.api.search(query, {
       types: ['albums', 'songs', 'playlists', 'artists'],
       limit: 24,
     });
+    const { results } = this.state;
     this.setState({
-      catalogData,
-    });
-  }
-
-  async searchLibrary(query) {
-    const libraryData = await this.props.mk.instance.api.library.search(query, {
-      types: ['library-albums', 'library-songs', 'library-playlists', 'library-artists'],
-      limit: 24,
-    });
-    this.setState({
-      libraryData: {
-        'library-albums': { data: null },
-        'library-songs': { data: null },
-        'library-playlists': { data: null },
-        'library-artists': { data: null },
-        ...libraryData,
+      results: {
+        ...results,
+        albums: res.albums ? res.albums.data : [],
+        songs: res.songs ? res.songs.data : [],
+        playlists: res.playlists ? res.playlists.data : [],
+        artists: res.artists ? res.artists.data : []
       },
     });
   }
 
-  getItems(type) {
-    let items = null;
-
-    const { catalogData, libraryData } = this.state;
-
-    if (libraryData && libraryData[`library-${type}`]) {
-      items = [...(items || []), ...(libraryData[`library-${type}`].data || [])];
-    }
-
-    if (catalogData && catalogData[type]) {
-      items = [...(items || []), ...(catalogData[type].data || [])];
-    }
-    return items;
+  async searchLibrary(query) {
+    const res = await this.props.mk.instance.api.library.search(query, {
+      types: ['library-albums', 'library-songs', 'library-playlists', 'library-artists'],
+      limit: 24,
+    });
+    const { results } = this.state;
+    this.setState({
+      results: {
+        ...results,
+        'library-albums': res['library-albums'] ? res['library-albums'].data : [],
+        'library-songs': res['library-songs'] ? res['library-songs'].data : [],
+        'library-playlists': res['library-playlists'] ? res['library-playlists'].data : [],
+        'library-artists': res['library-artists'] ? res['library-artists'].data : []
+      }
+    });
   }
 
-  renderResults(type, source, rowRenderer) {
-    const items = this.getItems(type);
+  getItems(type) {
+    return this.state.results[type];
+  }
+
+  renderResults(type, key, rowRenderer) {
+    const items = this.getItems(key);
 
     if (!items) {
       return <Loader />;
     }
+
     if (items.length === 0) {
-      return `No result for ${type} matching "${this.props.match.params.query}" in your ${
+      return `No result for ${type} matching '${this.props.match.params.query}' in your ${
         this.props.match.params.source
       }.`;
     }
-    return items.filter(item => item.type === source).map(rowRenderer);
+
+    return items.filter(item => item.type === key).map(rowRenderer);
   }
 
   static playSong({ songs, index }) {
@@ -156,7 +154,7 @@ class SearchPage extends React.Component {
         {!this.state.loading && (
           <SongList
             scrollElement={this.ref}
-            load={() => this.state.songs}
+            load={() => this.state.results[this.getKey('songs')].slice(0, 10)}
             showArtist
             showAlbum
             playSong={SearchPage.playSong}
