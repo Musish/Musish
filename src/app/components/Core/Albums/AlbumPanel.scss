@@ -104,4 +104,18 @@
       }
     }
   }
+
+  .showCompleteContainer {
+    > span {
+      color: #fe2851;
+      cursor: pointer;
+      font-size: 0.8em;
+      margin-left: 35px;
+      margin-top: 10px;
+
+      &:hover {
+        color: darken(#fe2851, 20%);
+      }
+    }
+  }
 }
