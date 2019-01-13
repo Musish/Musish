@@ -92,9 +92,9 @@ class App extends React.Component {
                         exact
                         component={({
                           match: {
-                            params: { query },
+                            params: { source, query },
                           },
-                        }) => <SearchPage key={query} />}
+                        }) => <SearchPage key={`${source}${query}`} />}
                       />
                       <Redirect to={'/'} />
                     </Switch>

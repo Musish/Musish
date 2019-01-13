@@ -55,9 +55,19 @@ class SearchPage extends React.Component {
     });
   }
 
+  getKey(k) {
+    if (this.props.match.params.source === 'library') {
+      return `library-${k}`;
+    }
+
+    return k;
+  }
+
   updateSongs() {
     this.setState({
-      songs: this.getItems('songs'),
+      songs: this.getItems('songs')
+        .filter(song => song.type === this.getKey('songs'))
+        .slice(0, 10),
     });
   }
 
@@ -140,7 +150,7 @@ class SearchPage extends React.Component {
         {!this.state.loading && (
           <SongList
             scrollElement={this.ref}
-            load={() => this.state.songs.filter(song => song.type === 'songs').slice(0, 10)}
+            load={() => this.state.songs}
             showArtist
             showAlbum
             playSong={SearchPage.playSong}
@@ -149,21 +159,21 @@ class SearchPage extends React.Component {
 
         <h3>Albums</h3>
         <div className={classes.searchGrid}>
-          {this.renderResults('albums', 'albums', album => (
+          {this.renderResults('albums', this.getKey('albums'), album => (
             <AlbumItem key={album.id} album={album} size={170} navigate />
           ))}
         </div>
 
         <h3>Playlists</h3>
         <div className={classes.searchGrid}>
-          {this.renderResults('playlists', 'library-playlists', playlist => (
+          {this.renderResults('playlists', this.getKey('playlists'), playlist => (
             <PlaylistItem key={playlist.id} playlist={playlist} size={170} navigate />
           ))}
         </div>
 
         <h3>Artists</h3>
         <div className={classes.searchArtistsGrid}>
-          {this.renderResults('artists', artist => (
+          {this.renderResults('artists', this.getKey('artists'), artist => (
             <ArtistItem artist={artist} size={41} key={artist.id} />
           ))}
         </div>
