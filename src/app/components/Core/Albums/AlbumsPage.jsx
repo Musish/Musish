@@ -50,7 +50,13 @@ export default class AlbumsPage extends React.Component {
             match: {
               params: { id },
             },
-          }) => <Modal open handleClose={this.handleClose} render={() => <AlbumPanel id={id} />} />}
+          }) => (
+            <Modal
+              open
+              handleClose={this.handleClose}
+              render={() => <AlbumPanel key={id} id={id} />}
+            />
+          )}
         />
         <PageContent innerRef={this.ref}>
           <PageTitle title={'Albums'} context={'My Library'} />

@@ -12,10 +12,10 @@ function AlbumResultItem(props) {
 
   return (
     <ModalContext.Consumer>
-      {({ push }) => (
+      {({ replace }) => (
         <div
           className={cx(classes.result, classes.album)}
-          onClick={() => push(<AlbumPanel album={album} />)}
+          onClick={() => replace(<AlbumPanel key={album.id} album={album} />)}
         >
           <span className={classes.artwork}>
             {isCatalog && (
