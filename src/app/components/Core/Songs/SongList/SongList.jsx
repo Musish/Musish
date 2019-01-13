@@ -5,7 +5,7 @@ import classes from './SongList.scss';
 import InfiniteScroll from '../../common/InfiniteScroll';
 import SongListItem from './SongListItem';
 
-export default class SongList extends React.Component {
+class SongList extends React.Component {
   constructor(props) {
     super(props);
 
@@ -87,3 +87,5 @@ SongList.defaultProps = {
   load: null,
   tracks: null,
 };
+
+export default SongList;
