@@ -13,9 +13,9 @@
   transform: scale(1);
   transition: transform 0.3s;
   background: $container_background;
-  border-radius: 4px;
+  border-radius: 8px;
   padding: 5px 10px;
-  height: 51px;
+  height: 61px;
 
   &.droppable {
     color: $accent_color;
