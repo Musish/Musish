@@ -1,0 +1,81 @@
+  @import '../../../../../styles/settings/colors';
+
+.albumHeading {
+  margin-top: 20px;
+}
+
+.playlistHeading {
+  margin-top: 10px;
+}
+
+.recommendationGroup {
+  padding: 10px;
+
+  .personalRecommendationsTitle {
+    color: $text_color;
+    margin-left: 5px;
+  }
+
+  .personalRecommendationsGrid {
+    margin-top: 5px;
+    display: grid;
+    grid-auto-flow: column dense;
+    grid-template-rows: auto auto;
+    grid-gap: 0 10px;
+    justify-content: left;
+    > * {
+      margin: 5px 5px
+    }
+  }
+}
+
+
+.scrollWrapper {
+  overflow: scroll;
+
+  &::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    border-radius: 1px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #ffffff;
+    border-radius: 1px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: lighten($accent_color, 40%);
+    border-radius: 1px;
+    cursor: pointer;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: $accent_color;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background: lighten($accent_color, 25%);
+  }
+
+  &::-webkit-scrollbar-corner {
+    display: none;
+  }
+}
+
+.scrollGrid {
+  display: grid;
+  grid-auto-flow: column dense;
+  grid-template-rows: auto;
+  grid-gap: 0 10px;
+  justify-content: left;
+  padding: 5px 0;
+  width: 0; // WTF, this shouldn't work but it makes it work and nothing else does. One day it may break, but until that day lets just completely forget that this is a thing...
+  &.doubleRow {
+    grid-template-rows: auto auto;
+  }
+}
+
+h4 {
+  font-weight: lighter;
+}

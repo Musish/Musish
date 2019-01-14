@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SplashScreen from './SplashScreen/SplashScreen';
-import TokenLoader from './LoginLoader/LoginLoader';
+import SplashScreen from './Outside/SplashScreen/SplashScreen';
+import TokenLoader from './Outside/LoginLoader/LoginLoader';
 import withMK from '../hoc/withMK';
-import AuthorizeContext from './Core/Layout/NavigationBar/Authorize/AuthorizeContext';
+import AuthorizeContext from './Inside/NavigationBar/Authorize/AuthorizeContext';
 
 class MusicKitAuthorizeProvider extends React.Component {
   constructor(props) {
