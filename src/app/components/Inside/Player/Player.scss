@@ -1,7 +1,7 @@
 @import '../../../styles/settings/colors';
 
 .player {
-  background: $main_background_color;
+  background: $background_color;
   padding: 20px 15px;
   border-radius: 5px;
   margin-top: 14px;
@@ -69,7 +69,7 @@
 
     span {
       font-size: 11px;
-      color: $player_icon_color;
+      color: $player_secondary_button_color;
     }
 
     .playbackTime {
@@ -124,7 +124,7 @@
       margin: 0 10px;
       font-size: 20px;
       line-height: 24px;
-      color: #111;
+      color: $player_button_color;
       cursor: pointer;
 
       &.main {
@@ -137,7 +137,7 @@
         display: flex;
         flex: 1;
         justify-content: center;
-        color: $player_icon_color;
+        color: $player_secondary_button_color;
       }
 
       &:hover {
@@ -168,7 +168,7 @@
           font-weight: 500;
           font-size: 12px;
           line-height: 12px;
-          background: $main_background_color;
+          background: $background_color;
           border-radius: 2px;
           text-align: center;
         }
@@ -193,7 +193,7 @@
     position: absolute;
     display: none;
     z-index: 5;
-    background: rgba(255, 255, 255, 0.8);
+    background: $player_volume_container_color;
     border-radius: 5px;
     width: 30px;
     height: 120px;

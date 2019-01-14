@@ -1,3 +1,5 @@
+@import '../../../styles/settings/colors';
+
 .container {
   position: absolute !important; // Forcefully define size
   width: 100% !important; // Forcefully define size
@@ -18,7 +20,7 @@
     max-height: 80%;
     padding: 15px 15px;
     overflow: auto;
-    background: #ffffff;
+    background: $background_color;
     border-radius: 8px;
     box-shadow: 0 8px 36px -10px rgba(150, 150, 150, 0.75);
     animation: fadein 0.1s;

@@ -1,3 +1,5 @@
+@import '../../../../../styles/settings/_colors.scss';
+
 .scrollWrapper {
   overflow: auto;
 
@@ -8,22 +10,22 @@
   }
 
   &::-webkit-scrollbar-track {
-    background: #ffffff;
+    background: $background_color;
     border-radius: 1px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: lighten(#fe2851, 40%);
+    background: lighten($accent_color, 40%);
     border-radius: 1px;
     cursor: pointer;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: #ffffff;
+    background: $background_color;
   }
 
   &:hover::-webkit-scrollbar-thumb {
-    background: lighten(#fe2851, 25%);
+    background: lighten($accent_color, 25%);
   }
 }
 
@@ -34,7 +36,8 @@
   grid-gap: 0 20px;
   justify-content: left;
   padding: 5px 0;
-  width: 0; // WTF, this shouldn't work but it makes it work and nothing else does. One day it may break, but until that day lets just completely forget that this is a thing...
+  width: 0; // WTF, this shouldn' t work but it makes it work and nothing else does. One day it may break, but until that day lets just completely forget that this is a thing...
+
   &.doubleRow {
     grid-template-rows: auto auto;
   }

@@ -1,13 +1,15 @@
+@import 'settings/_colors.scss';
+
 body {
   min-height: 100vh;
   margin: 0;
-  background: #ffffff;
-  color: #333333;
+  background: $background_color;
+  color: $text_color_strong;
   overflow: hidden;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Roboto', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, ' Helvetica Neue', 'Roboto', sans-serif;
 }
 
 * {
