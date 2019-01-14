@@ -33,9 +33,11 @@
         display: block;
         font-size: 12px;
 
-        &:hover {
-          cursor: pointer;
-          color: $accent_color;
+        &.link {
+          &:hover {
+            cursor: pointer;
+            color: $accent_color;
+          }
         }
       }
 
