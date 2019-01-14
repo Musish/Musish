@@ -213,16 +213,8 @@ class Player extends React.Component {
           </div>
           <div className={styles.track}>
             <h1>{nowPlayingItem.title}</h1>
-            <Link to={`/artist/${meta.artistId}`}>
-              <span className={cx(styles.artistName)}>{nowPlayingItem.attributes.artistName}</span>
-            </Link>
-            <ModalContext.Consumer>
-              {({ push }) => (
-                <span className={cx(styles.albumName)} onClick={() => this.handleOpenAlbum(push)}>
-                  {nowPlayingItem.attributes.albumName}
-                </span>
-              )}
-            </ModalContext.Consumer>
+            {artistName}
+            {albumName}
           </div>
         </div>
         <PlayerTime nowPlayingItem={nowPlayingItem} />
