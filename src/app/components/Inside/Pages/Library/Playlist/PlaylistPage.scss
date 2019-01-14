@@ -42,35 +42,27 @@
       }
 
       .playActions {
-        align-content: right;
-        display: flex;
-        justify-content: space-between;
-        max-width: 280px;
-        min-width: 180px;
-
         .button {
-          padding: 0;
-          width: 48%;
+          padding: 0 25px;
           height: 25px;
           animation: fadein 0.8s;
           border-color: $sidebar_color;
           background: $sidebar_color;
           color: $tertiary_color;
-          border-radius: 8px;
+          border-radius: 4px;
           align-content: center;
           cursor: pointer;
-          line-height: 0px;
-          margin: 10px 0;
+          margin: 10px 10px 10px 0;
+
+          &:hover {
+            color: $accent_color;
+            background: $indiscreet_hover_color;
+          }
 
           .icon{
             font-size: 8px;
             padding-right: 5px;
           }
-        }
-
-        .button:hover {
-          color: $accent_color;
-          background: $indiscreet_hover_color;
         }
       }
     }

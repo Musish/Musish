@@ -30,7 +30,7 @@
       span {
         font-weight: 400;
         color: $accent_color;
-        background: $main_background_color;
+        background: $background_color;
         border-radius: 3px;
         padding: 4px 10px;
       }
@@ -46,7 +46,7 @@
     text-align: center;
   }
   .accountCaption {
-    color: $main_background_color;
+    color: $background_color;
     max-width: 630px;
     text-align: center;
     width: 50%;
@@ -54,7 +54,7 @@
   }
   .secureConnection {
     margin-top: 10px;
-    color: $main_background_color;
+    color: $background_color;
     animation: fadein 0.8s;
     font-style: italic;
     font-size: 8pt;
@@ -63,15 +63,15 @@
     width: 100px;
     border: none;
     height: 2px;
-    background: $main_background_color;
+    background: $background_color;
     opacity: 0.4;
     animation: fadein 0.8s;
     animation: growin 0.2s;
   }
   .button {
     animation: fadein 0.8s;
-    border-color: $main_background_color;
-    color: $main_background_color;
+    border-color: $background_color;
+    color: $background_color;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
@@ -82,16 +82,16 @@
     }
   }
   .button:hover {
-    background: $main_background_color;
+    background: $background_color;
     color: $accent_color;
   }
   .disclaimer {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    color: $main_background_color;
+    color: $background_color;
     font-size: 11px;
-    border: solid 1px $main_background_color;
+    border: solid 1px $background_color;
     border-radius: 4px;
     display: flex;
     flex-direction: row;
@@ -101,12 +101,12 @@
     .disclaimerIcon {
       font-size: 12px;
       padding: 8px 8px;
-      background: $main_background_color;
+      background: $background_color;
       display: flex;
       flex: 1;
       align-items: center;
       > span {
-        color: $main_background_color;
+        color: $background_color;
         background: $accent_color;
         border-radius: 50%;
         width: 26px;

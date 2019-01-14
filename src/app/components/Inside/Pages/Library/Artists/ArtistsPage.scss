@@ -52,7 +52,7 @@
           top: 1px;
           height: 1px;
           display: block;
-          background: $song_background_color;
+          background: $track_background_color;
         }
       }
 
@@ -92,7 +92,7 @@
         width: 41px;
         height: 41px;
         margin-left: 15px;
-        background: #cccccc;
+        background: $placeholder_container_color;
         border-radius: 50%;
         align-items: center;
         justify-content: center;

@@ -1,6 +1,8 @@
+@import '../../../../styles/settings/colors';
+
 .choices {
   width: 100%;
-  border-bottom: solid 2px #eeeeee;
+  border-bottom: solid 2px $background_tint_color;
 
   .selectionItem {
     padding: 10px 15px;
@@ -8,7 +10,7 @@
     display: inline-block;
     font-size: 1.1em;
     font-weight: 500;
-    border-bottom: solid 2px #eeeeee;
+    border-bottom: solid 2px $background_tint_color;
     margin-bottom: -2px;
 
     &:first-child {
@@ -20,12 +22,12 @@
     }
 
     &:hover {
-      border-bottom: solid 2px #ccc;
+      border-bottom: solid 2px $background_tint_color_strong;
     }
 
     &.selected {
-      border-bottom: solid 2px #fe2851;
-      color: #fe2851;
+      border-bottom: solid 2px $accent_color;
+      color: $accent_color;
     }
   }
 }
@@ -61,6 +63,6 @@
   .searchErrorDetails {
     font-size: 1.5em;
     display: block;
-    color: #999;
+    color: $text_color_weak;
   }
 }

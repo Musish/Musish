@@ -50,7 +50,7 @@ const dndSpec = {
 
     switch (monitor.getItemType()) {
       case DragDropType.SONG:
-        addToLibrary('songs', [item.song.id]);
+        addToLibrary('songs', [item.track.id]);
         break;
       case DragDropType.ALBUM:
         addToLibrary('albums', [item.album]);

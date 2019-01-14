@@ -23,6 +23,7 @@
     grid-template-rows: auto auto;
     grid-gap: 0 10px;
     justify-content: left;
+
     > * {
       margin: 5px 5px
     }
@@ -40,7 +41,7 @@
   }
 
   &::-webkit-scrollbar-track {
-    background: #ffffff;
+    background: $background_color;
     border-radius: 1px;
   }
 
@@ -71,6 +72,7 @@
   justify-content: left;
   padding: 5px 0;
   width: 0; // WTF, this shouldn't work but it makes it work and nothing else does. One day it may break, but until that day lets just completely forget that this is a thing...
+
   &.doubleRow {
     grid-template-rows: auto auto;
   }

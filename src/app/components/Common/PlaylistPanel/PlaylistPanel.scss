@@ -62,7 +62,12 @@
             cursor: pointer;
             margin: 10px 10px 10px 0;
 
-            .icon{
+            &:hover {
+              color: $accent_color;
+              background: $indiscreet_hover_color;
+            }
+
+            .icon {
               font-size: 8px;
               padding-right: 5px;
             }

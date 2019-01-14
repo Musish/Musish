@@ -13,7 +13,7 @@ export function getNextSongs(path) {
 export async function addSongsToPlaylist(playlistId, songs) {
   const payload = {
     data: songs.map(song => ({
-      id: song,
+      id: song.id,
       type: 'song',
     })),
   };

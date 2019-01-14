@@ -10,7 +10,7 @@ import PageContent from '../../../Common/PageContent/PageContent';
 import Loader from '../../../Common/Loader/Loader';
 import AlbumItem from '../../../Common/AlbumItem/AlbumItem';
 import PlaylistItem from '../../../Common/PlaylistItem/PlaylistItem';
-import SongGrid from '../../../Common/Songs/SongGrid/SongGrid';
+import TracksGrid from '../../../Common/Tracks/TracksGrid/TracksGrid';
 import * as MusicPlayerApi from '../../../../services/MusicPlayerApi';
 import ArtistItem from '../../../Common/ArtistItem/ArtistItem';
 
@@ -101,8 +101,8 @@ class SearchPage extends React.Component {
     });
   }
 
-  static playSong({ songs, index }) {
-    MusicPlayerApi.playSong(songs, index);
+  static playTrack({ songs, index }) {
+    MusicPlayerApi.playTrack(songs, index);
   }
 
   handleCatalogChange() {
@@ -123,12 +123,12 @@ class SearchPage extends React.Component {
     return (
       <>
         <h3>Songs</h3>
-        <SongGrid
+        <TracksGrid
           scrollElement={this.ref}
           tracks={songs}
           showArtist
           showAlbum
-          playSong={SearchPage.playSong}
+          playTrack={SearchPage.playTrack}
         />
       </>
     );

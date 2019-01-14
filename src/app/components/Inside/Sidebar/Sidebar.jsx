@@ -81,7 +81,7 @@ class Sidebar extends React.Component {
           )}
           <div className={classes.footer}>
             <span>
-              <a href={'https://github.com/Musish/Musish/issues/new'} target={'_blank'}>
+              <a href={'https://github.com/Musish/Musish/issues/new/choose'} target={'_blank'}>
                 Feedback
               </a>
               {' & '}

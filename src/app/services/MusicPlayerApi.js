@@ -3,9 +3,9 @@ import { createMediaItem } from '../utils/Utils';
 
 let originalQueue = null;
 
-export async function playSong(songs, index) {
+export async function playTrack(tracks, index) {
   const music = MusicKit.getInstance();
-  await setQueueItems(songs, index);
+  await setQueueItems(tracks, index);
   await music.player.play();
 }
 
@@ -35,14 +35,14 @@ export async function shufflePlayPlaylist(playlist) {
   await music.player.play();
 }
 
-export async function playNext(song) {
+export async function playNext(track) {
   await MusicKit.getInstance().player.queue.prepend({
-    items: [createMediaItem(song)],
+    items: [createMediaItem(track)],
   });
 }
 
-export async function playLater(song) {
-  await MusicKit.getInstance().player.queue.append({ items: [createMediaItem(song)] });
+export async function playLater(track) {
+  await MusicKit.getInstance().player.queue.append({ items: [createMediaItem(track)] });
 }
 
 export async function play() {
@@ -82,7 +82,7 @@ export async function shuffle() {
   const wasPlaying = isPlaying();
   setImmediate(() => {
     if (wasPlaying) {
-      play(); // TODO: Work out a better way to keep the song playing...
+      play(); // TODO: Work out a better way to keep the track playing...
     }
   });
 }
@@ -98,7 +98,7 @@ export async function unShuffle() {
   const wasPlaying = isPlaying();
   setImmediate(() => {
     if (wasPlaying) {
-      play(); // TODO: Work out a better way to keep the song playing...
+      play(); // TODO: Work out a better way to keep the track playing...
     }
   });
 }
@@ -136,22 +136,22 @@ function isSame(a, b) {
   );
 }
 
-export function isCurrentSong(song) {
+export function isCurrentTrack(track) {
   const playing = getPlayingItem();
 
   if (!playing) {
     return false;
   }
 
-  return isSame(song, playing);
+  return isSame(track, playing);
 }
 
 export function isPlaying() {
   return MusicKit.getInstance().player.isPlaying;
 }
 
-export function isSongPlaying(song) {
-  return MusicKit.getInstance().player.isPlaying && isCurrentSong(song);
+export function isTrackPlaying(track) {
+  return MusicKit.getInstance().player.isPlaying && isCurrentTrack(track);
 }
 
 export function volumeUp() {

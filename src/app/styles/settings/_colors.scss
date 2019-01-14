@@ -1,17 +1,32 @@
 // Colors
 
 $splash_background_color: #fb453f;
-$main_background_color: #ffffff;
+
+$brand_color: #222222;
+
+$background_color: #ffffff;
+
+
+$background_tint_color: #eeeeee;
+$background_tint_color_strong: #cccccc;
+
 $container_background: #f7f7f7;
 
-$song_background_color: rgba(220, 220, 220, 0.5);
+$track_background_color: rgba(220, 220, 220, 0.5);
 $sidebar_color: #f9f9f9;
 
 $accent_color: #fe2851;
 $secondary_color: #aaaaaa;
-$indiscreet_hover_color: #f1f1f1;
+$indiscreet_hover_color: #f9f9f9;
 $tertiary_color: #666666;
 
 $text_color: #666666;
+$text_color_strong: #333333;
+$text_color_weak: #999999;
 
-$player_icon_color: #888888;
+
+$player_button_color: #111111;
+$player_secondary_button_color: #888888;
+$player_volume_container_color: rgba(255, 255, 255, 0.8);
+
+$placeholder_container_color: #cccccc;

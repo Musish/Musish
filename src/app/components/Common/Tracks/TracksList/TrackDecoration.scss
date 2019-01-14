@@ -1,3 +1,5 @@
+@import '../../../../styles/settings/colors';
+
 .playingAnimation {
   border-radius: inherit;
   background: rgba(250, 250, 250, 0.75);
@@ -24,7 +26,7 @@
       bottom: 0;
       width: 3px;
       height: 5px;
-      background: #fe2851;
+      background: $accent_color;
       animation: audio-wave 0.95s infinite ease-in-out;
       transform: translateZ(0);
       animation-play-state: paused;
@@ -83,7 +85,7 @@
     border-radius: 3px;
     width: 40px;
     height: 40px;
-    background: #fafafa;
+    background: $placeholder_container_color;
 
     img {
       border-radius: inherit;
@@ -93,7 +95,7 @@
   }
 }
 
-.songIndex {
-  color: #fe2851;
+.trackIndex {
+  color: $accent_color;
   width: 24px;
 }

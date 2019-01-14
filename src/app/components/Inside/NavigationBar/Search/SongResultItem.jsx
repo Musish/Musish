@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types';
 import classes from './SearchBar.scss';
 import withMK from '../../../../hoc/withMK';
 import { createMediaItem } from '../../../../utils/Utils';
-import SongDecoration from '../../../Common/Songs/SongList/SongDecoration';
+import TrackDecoration from '../../../Common/Tracks/TracksList/TrackDecoration';
 
 function SongResultItem({ song, mk }) {
   const play = async () => {
@@ -26,7 +26,7 @@ function SongResultItem({ song, mk }) {
             <i className={'fab fa-apple'} />
           </div>
         )}
-        <SongDecoration song={song} showAlbum size={30} />
+        <TrackDecoration track={song} showAlbum size={30} />
       </div>
 
       <div className={classes.detailsContainer}>

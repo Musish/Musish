@@ -1,3 +1,5 @@
+@import '../../../../styles/settings/colors';
+
 .scrollWrapper {
   overflow: auto;
 
@@ -8,26 +10,26 @@
   }
 
   &::-webkit-scrollbar-track {
-    background: #ffffff;
+    background: $background_color;
     border-radius: 1px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: lighten(#fe2851, 40%);
+    background: lighten($accent_color, 40%);
     border-radius: 1px;
     cursor: pointer;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: #ffffff;
+    background: $background_color;
   }
 
   &:hover::-webkit-scrollbar-thumb {
-    background: lighten(#fe2851, 25%);
+    background: lighten($accent_color, 25%);
   }
 }
 
-.songGrid {
+.trackGrid {
   display: grid;
   grid-auto-flow: column dense;
   grid-template-rows: auto auto auto auto;
@@ -36,11 +38,11 @@
   justify-content: left;
   width: 0; // WTF, this shouldn't work but it makes it work and nothing else does. One day it may break, but until that day lets just completely forget that this is a thing...
 
-  .song {
+  .track {
     width: 350px;
     height: 50px;
 
-    &:nth-child(4n+1) :first-child > :first-child:before  { // This is getting a little bit too "creative" now...
+    &:nth-child(4n+1) > :first-child > :first-child:before  { // This is getting a little bit too "creative" now...
       display: none;
     }
   }
