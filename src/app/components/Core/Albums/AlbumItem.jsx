@@ -44,8 +44,8 @@ class AlbumItem extends Component {
         style={{ width: size }}
       >
         <ModalContext.Consumer>
-          {({ replace }) => (
-            <div onClick={() => this.handleOpen(replace)}>
+          {({ push }) => (
+            <div onClick={() => this.handleOpen(push)}>
               <ContextMenuTrigger
                 holdToDisplay={-1}
                 render={() => <AlbumContextMenu album={album} />}

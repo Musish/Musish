@@ -165,7 +165,7 @@ class AlbumPanel extends React.Component {
 
           {matchedCatalogAlbum && (
             <ModalContext.Consumer>
-              {({ replace }) => (
+              {({ push }) => (
                 <div className={classes.showCompleteContainer}>
                   <Route path={'/me/albums'}>
                     {({ match }) => (
@@ -174,7 +174,7 @@ class AlbumPanel extends React.Component {
                           if (match) {
                             this.props.history.push('/me/albums/');
                           }
-                          replace(
+                          push(
                             <AlbumPanel key={matchedCatalogAlbum.id} album={matchedCatalogAlbum} />
                           );
                         }}

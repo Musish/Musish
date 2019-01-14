@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-d
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import Alert from 'react-s-alert';
+import Mousetrap from 'mousetrap';
 import MusicKitProvider from './MusicKitProvider';
 import MusicKitAuthorizeProvider from './MusicKitAuthorizeProvider';
 import AlbumsPage from './Core/Albums/AlbumsPage';
@@ -33,6 +34,18 @@ class App extends React.Component {
       modalsContents: [],
       lyricsModalOpen: false,
     };
+
+    this.popModal = this.popModal.bind(this);
+  }
+
+  componentDidMount() {
+    Mousetrap.bind('esc', this.popModal, 'keyup');
+  }
+
+  popModal() {
+    this.setState(state => ({
+      modalsContents: state.modalsContents.slice(1),
+    }));
   }
 
   render() {
@@ -51,10 +64,7 @@ class App extends React.Component {
         this.setState(state => ({
           modalsContents: [...state.modalsContents.slice(0, -1), c],
         })),
-      pop: () =>
-        this.setState(state => ({
-          modalsContents: state.modalsContents.slice(1),
-        })),
+      pop: this.popModal,
       flush: () =>
         this.setState({
           modalsContents: [],

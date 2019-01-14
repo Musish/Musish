@@ -2,6 +2,7 @@ import React from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Mousetrap from 'mousetrap';
 import styles from './Player.scss';
 import {
   artworkForMediaItem,
@@ -12,7 +13,16 @@ import {
 import withMK from '../../../hoc/withMK';
 import QueueContext from './Queue/QueueContext';
 import LyricsModalContext from './Lyrics/LyricsModalContext';
-import { isShuffled, pause, play, shuffle, unShuffle } from '../../../services/MusicPlayerApi';
+import {
+  isShuffled,
+  pause,
+  play,
+  togglePlayback,
+  shuffle,
+  unShuffle,
+  volumeUp,
+  volumeDown,
+} from '../../../services/MusicPlayerApi';
 import PlayerTime from './PlayerTime';
 import AlbumPanel from '../Albums/AlbumPanel';
 import ModalContext from '../../common/Modal/ModalContext';
@@ -31,6 +41,42 @@ class Player extends React.Component {
     this.toggleVolume = this.toggleVolume.bind(this);
     this.getVolumeIconClasses = this.getVolumeIconClasses.bind(this);
     this.handleOpenAlbum = this.handleOpenAlbum.bind(this);
+  }
+
+  componentDidMount() {
+    // Disable default scroll behaviour on click
+    Mousetrap.bind(
+      ['space', 'left', 'right'],
+      e => {
+        e.preventDefault();
+      },
+      'keydown'
+    );
+
+    // Playback controls
+    Mousetrap.bind('left', this.handlePrevious, 'keyup');
+    Mousetrap.bind('right', this.handleNext, 'keyup');
+    Mousetrap.bind('space', togglePlayback, 'keyup');
+
+    // Volume controls (VOLUME UP)
+    Mousetrap.bind(
+      'up',
+      e => {
+        e.preventDefault();
+        volumeUp();
+      },
+      'keydown'
+    );
+
+    // Volume controls (VOLUME DOWN)
+    Mousetrap.bind(
+      'down',
+      e => {
+        e.preventDefault();
+        volumeDown();
+      },
+      'keydown'
+    );
   }
 
   handlePrevious() {
@@ -109,13 +155,13 @@ class Player extends React.Component {
     return 'fas fa-volume-up';
   }
 
-  handleOpenAlbum(replace) {
+  handleOpenAlbum(push) {
     const nowPlayingItem = this.props.mk.mediaItem && this.props.mk.mediaItem.item;
     const meta = nowPlayingItem.assets[0].metadata;
 
     const id = meta.playlistId;
 
-    replace(<AlbumPanel key={id} id={id} />);
+    push(<AlbumPanel key={id} id={id} />);
   }
 
   render() {
