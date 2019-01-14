@@ -96,6 +96,11 @@ class ArtistPage extends React.Component {
       <PageContent innerRef={this.ref}>
         {geniusData && (
           <div className={classes.artistHeader} style={headerStyles}>
+            <a href={'https://genius.com/'} target={'_blank'}>
+              <div className={classes.geniusCredit}>
+                <span>Data provided by Genius</span>
+              </div>
+            </a>
             <div className={classes.artistHeaderContainer}>
               <div className={classes.artistHeaderPicture} style={imageStyles} />
             </div>
