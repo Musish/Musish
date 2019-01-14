@@ -183,7 +183,7 @@ class SearchPage extends React.Component {
       <>
         <h3>Artists</h3>
         <div className={classes.searchArtistsGrid}>
-          {artists.map(artist => (
+          {artists.slice(0, 12).map(artist => (
             <ArtistItem artist={artist} size={41} key={artist.id} />
           ))}
         </div>
@@ -239,9 +239,9 @@ class SearchPage extends React.Component {
         ) : (
           <>
             {songs}
+            {artists}
             {albums}
             {playlists}
-            {artists}
           </>
         )}
       </PageContent>
