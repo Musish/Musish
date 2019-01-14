@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { DragSource } from 'react-dnd';
 import { getTime } from '../../../../utils/Utils';
-import classes from './SongListItem.scss';
-import SongDecoration from './SongDecoration';
+import classes from './TracksListItem.scss';
+import TrackDecoration from './TrackDecoration';
 import DragDropType from '../../../../utils/Constants/DragDropType';
 import ContextMenuTrigger from '../../ContextMenu/ContextMenuTrigger';
-import SongContextMenu from '../../ContextMenu/Types/Track/SongContextMenu';
-import { isSongPlaying } from '../../../../services/MusicPlayerApi';
+import TrackContextMenu from '../../ContextMenu/Types/Track/TrackContextMenu';
+import { isTrackPlaying } from '../../../../services/MusicPlayerApi';
 
-class SongListItem extends React.Component {
+class TracksListItem extends React.Component {
   constructor(props) {
     super(props);
 
@@ -19,32 +19,35 @@ class SongListItem extends React.Component {
   }
 
   async handleClick() {
-    const { song, songs, index } = this.props;
+    const { track, tracks, index } = this.props;
 
-    this.props.playSong({ song, songs, index });
+    this.props.playTrack({ track, tracks, index });
   }
 
   render() {
     const {
       showArtist,
       showAlbum,
-      song,
+      track,
       connectDragSource,
       isOver,
-      songs,
+      tracks,
       index,
       className,
     } = this.props;
-    const { attributes } = song;
+    const { attributes } = track;
 
     if (!attributes) {
       return (
-        <div className={cx(classes.song, classes.disabledSong, className)} style={this.props.style}>
-          <div className={[classes.songWrapper]}>
-            <div className={classes.songBacker} />
-            <SongDecoration song={song} showAlbum={showAlbum} />
-            <div className={classes.songInfo}>
-              <span className={classes.songTitle}>{'Song not available'}</span>
+        <div
+          className={cx(classes.track, classes.disabledTrack, className)}
+          style={this.props.style}
+        >
+          <div className={[classes.trackWrapper]}>
+            <div className={classes.trackBacker} />
+            <TrackDecoration track={track} showAlbum={showAlbum} />
+            <div className={classes.trackInfo}>
+              <span className={classes.trackTitle}>{'Track not available'}</span>
             </div>
           </div>
         </div>
@@ -63,41 +66,41 @@ class SongListItem extends React.Component {
       <div
         className={cx(
           {
-            [classes.indexedSong]: !showAlbum,
-            [classes.playing]: isSongPlaying(song),
+            [classes.indexedTrack]: !showAlbum,
+            [classes.playing]: isTrackPlaying(track),
             [classes.droppable]: isOver,
-            [classes.disabledSong]: !song.attributes.playParams,
+            [classes.disabledTrack]: !track.attributes.playParams,
           },
-          classes.song,
+          classes.track,
           className
         )}
         onClick={this.handleClick}
         style={this.props.style}
       >
         <ContextMenuTrigger
-          attributes={{ className: [classes.songWrapper] }}
+          attributes={{ className: [classes.trackWrapper] }}
           holdToDisplay={-1}
-          render={() => <SongContextMenu song={song} songs={songs} index={index} />}
+          render={() => <TrackContextMenu track={track} tracks={tracks} index={index} />}
         >
-          <div className={classes.songBacker} />
-          <SongDecoration song={song} showAlbum={showAlbum} />
-          <div className={classes.songInfo}>
-            <span className={classes.songTitle}>
-              <span className={classes.songName}>{attributes.name}</span>
+          <div className={classes.trackBacker} />
+          <TrackDecoration track={track} showAlbum={showAlbum} />
+          <div className={classes.trackInfo}>
+            <span className={classes.trackTitle}>
+              <span className={classes.trackName}>{attributes.name}</span>
               {explicit}
             </span>
             {(showArtist || showAlbum) && (
-              <span className={classes.songMetaInfo}>
+              <span className={classes.trackMetaInfo}>
                 {showArtist && attributes.artistName}
                 {showArtist && showAlbum && ' - '}
                 {showAlbum && attributes.albumName}
               </span>
             )}
           </div>
-          <span className={classes.songRightSide}>
-            <span className={classes.songDuration}>{duration}</span>
+          <span className={classes.trackRightSide}>
+            <span className={classes.trackDuration}>{duration}</span>
             <span
-              className={classes.songActions}
+              className={classes.trackActions}
               onClick={e => {
                 e.stopPropagation();
                 return false;
@@ -105,7 +108,7 @@ class SongListItem extends React.Component {
             >
               <ContextMenuTrigger
                 holdToDisplay={1}
-                render={() => <SongContextMenu song={song} songs={songs} index={index} />}
+                render={() => <TrackContextMenu track={track} tracks={tracks} index={index} />}
               >
                 <i className="fas fa-ellipsis-h" />
               </ContextMenuTrigger>
@@ -117,20 +120,20 @@ class SongListItem extends React.Component {
   }
 }
 
-SongListItem.propTypes = {
-  song: PropTypes.any.isRequired,
+TracksListItem.propTypes = {
+  track: PropTypes.any.isRequired,
   index: PropTypes.number.isRequired,
-  songs: PropTypes.array.isRequired,
+  tracks: PropTypes.array.isRequired,
   style: PropTypes.object,
   showArtist: PropTypes.bool.isRequired,
   showAlbum: PropTypes.bool.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   isOver: PropTypes.bool,
-  playSong: PropTypes.func.isRequired,
+  playTrack: PropTypes.func.isRequired,
   className: PropTypes.any,
 };
 
-SongListItem.defaultProps = {
+TracksListItem.defaultProps = {
   style: {},
   isOver: false,
   className: null,
@@ -139,7 +142,7 @@ SongListItem.defaultProps = {
 const dndSpec = {
   beginDrag(props) {
     return {
-      song: props.song,
+      track: props.track,
     };
   },
 };
@@ -151,4 +154,4 @@ function dndCollect(connect, monitor) {
   };
 }
 
-export default DragSource(DragDropType.SONG, dndSpec, dndCollect)(SongListItem);
+export default DragSource(DragDropType.SONG, dndSpec, dndCollect)(TracksListItem);

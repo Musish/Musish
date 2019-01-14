@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Link, Route, withRouter } from 'react-router-dom';
 import classes from './AlbumPanel.scss';
 import { artworkForMediaItem, humanifyMillis } from '../../../utils/Utils';
-import SongList from '../Songs/SongList/SongList';
+import TracksList from '../Tracks/TracksList/TracksList';
 import Loader from '../Loader/Loader';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
 import * as MusicApi from '../../../services/MusicApi';
@@ -24,7 +24,7 @@ class AlbumPanel extends React.Component {
     this.ref = React.createRef();
     this.store = {};
 
-    this.playSong = this.playSong.bind(this);
+    this.playTrack = this.playTrack.bind(this);
     this.playAlbum = this.playAlbum.bind(this);
     this.shufflePlayAlbum = this.shufflePlayAlbum.bind(this);
     this.onSetItems = this.onSetItems.bind(this);
@@ -77,7 +77,7 @@ class AlbumPanel extends React.Component {
     });
   }
 
-  playSong({ index }) {
+  playTrack({ index }) {
     MusicPlayerApi.playAlbum(this.state.album, index);
   }
 
@@ -150,7 +150,7 @@ class AlbumPanel extends React.Component {
           </span>
 
           {artistName}
-          <SongList
+          <TracksList
             scrollElement={this.ref}
             scrollElementModifier={e => e && e.parentElement}
             load={MusicApi.infiniteLoadRelationships(
@@ -160,7 +160,7 @@ class AlbumPanel extends React.Component {
               this.store
             )}
             onSetItems={this.onSetItems}
-            playSong={this.playSong}
+            playTrack={this.playTrack}
           />
 
           {matchedCatalogAlbum && (

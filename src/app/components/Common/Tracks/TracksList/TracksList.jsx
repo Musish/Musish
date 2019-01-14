@@ -1,16 +1,16 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-import classes from './SongList.scss';
+import classes from './TracksList.scss';
 import InfiniteScroll from '../../InfiniteLoader/InfiniteScroll';
-import SongListItem from './SongListItem';
+import TrackListItem from './TracksListItem';
 
-class SongList extends React.Component {
+class TracksList extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      songs: null,
+      tracks: null,
     };
 
     this.rowRenderer = this.rowRenderer.bind(this);
@@ -19,25 +19,25 @@ class SongList extends React.Component {
 
   onSetItems(state) {
     this.setState({
-      songs: state.items,
+      tracks: state.items,
     });
     this.props.onSetItems(state);
   }
 
-  rowRenderer({ item: song, index, isScrolling, isVisible, key, style }) {
-    const { songs } = this.state;
-    const { showArtist, showAlbum, playSong } = this.props;
+  rowRenderer({ item: track, index, isScrolling, isVisible, key, style }) {
+    const { tracks } = this.state;
+    const { showArtist, showAlbum, playTrack } = this.props;
 
     return (
-      <SongListItem
+      <TrackListItem
         key={key}
-        song={song}
+        track={track}
         index={index}
-        songs={songs}
+        tracks={tracks}
         showArtist={showArtist}
         showAlbum={showAlbum}
         style={style}
-        playSong={playSong}
+        playTrack={playTrack}
       />
     );
   }
@@ -53,7 +53,7 @@ class SongList extends React.Component {
     } = this.props;
 
     return (
-      <div className={classes.songList}>
+      <div className={classes.trackList}>
         <InfiniteScroll
           onSetItems={this.onSetItems}
           scrollElement={scrollElement}
@@ -68,7 +68,7 @@ class SongList extends React.Component {
   }
 }
 
-SongList.propTypes = {
+TracksList.propTypes = {
   showArtist: PropTypes.bool,
   showAlbum: PropTypes.bool,
   scrollElement: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
@@ -76,10 +76,10 @@ SongList.propTypes = {
   load: PropTypes.func,
   tracks: PropTypes.array,
   onSetItems: PropTypes.func,
-  playSong: PropTypes.func.isRequired,
+  playTrack: PropTypes.func.isRequired,
 };
 
-SongList.defaultProps = {
+TracksList.defaultProps = {
   showArtist: false,
   showAlbum: false,
   scrollElement: null,
@@ -89,4 +89,4 @@ SongList.defaultProps = {
   tracks: null,
 };
 
-export default SongList;
+export default TracksList;

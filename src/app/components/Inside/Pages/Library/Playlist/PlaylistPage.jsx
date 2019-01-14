@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import PageContent from '../../../../Common/PageContent/PageContent';
 import PageTitle from '../../../../Common/PageTitle/PageTitle';
-import SongList from '../../../../Common/Songs/SongList/SongList';
+import TracksList from '../../../../Common/Tracks/TracksList/TracksList';
 import { artworkForMediaItem, humanifyMillis } from '../../../../../utils/Utils';
 import classes from './PlaylistPage.scss';
 import * as MusicApi from '../../../../../services/MusicApi';
@@ -17,7 +17,7 @@ class PlaylistPage extends React.Component {
       playlistId: this.props.match.params.id,
       runtime: '',
       playlist: null,
-      songs: [],
+      tracks: [],
       end: false,
     };
 
@@ -25,7 +25,7 @@ class PlaylistPage extends React.Component {
     this.store = {};
 
     this.onSetItems = this.onSetItems.bind(this);
-    this.playSong = this.playSong.bind(this);
+    this.playTrack = this.playTrack.bind(this);
     this.playPlaylist = this.playPlaylist.bind(this);
     this.shufflePlayPlaylist = this.shufflePlayPlaylist.bind(this);
     this.playlistLoader = this.playlistLoader.bind(this);
@@ -56,13 +56,13 @@ class PlaylistPage extends React.Component {
     return this.state.playlistId;
   }
 
-  onSetItems({ items: songs, end }) {
+  onSetItems({ items: tracks, end }) {
     this.setState({
-      songs,
+      tracks,
       end,
     });
 
-    const playlistLength = songs.reduce(
+    const playlistLength = tracks.reduce(
       (totalDuration, track) =>
         totalDuration + (track.attributes ? track.attributes.durationInMillis : 0),
       0
@@ -73,7 +73,7 @@ class PlaylistPage extends React.Component {
     });
   }
 
-  playSong({ index }) {
+  playTrack({ index }) {
     MusicPlayerApi.playPlaylist(this.state.playlist, index);
   }
 
@@ -86,7 +86,7 @@ class PlaylistPage extends React.Component {
   }
 
   renderHeader() {
-    const { playlist, runtime, songs, end } = this.state;
+    const { playlist, runtime, tracks, end } = this.state;
 
     if (!playlist) {
       return null;
@@ -110,7 +110,7 @@ class PlaylistPage extends React.Component {
               )}
             </span>
             <span className={classes.titleMeta}>
-              {`${songs.length}${end ? '' : '+'} songs, ${runtime}`}
+              {`${tracks.length}${end ? '' : '+'} songs, ${runtime}`}
             </span>
             <div className={classes.playActions}>
               <button type={'button'} onClick={this.playPlaylist} className={classes.button}>
@@ -140,7 +140,7 @@ class PlaylistPage extends React.Component {
       <PageContent innerRef={this.scrollRef}>
         <PageTitle context={'My Library'} />
         {this.renderHeader()}
-        <SongList
+        <TracksList
           load={MusicApi.infiniteLoadRelationships(
             this.getPlaylistId(),
             this.playlistLoader,
@@ -151,7 +151,7 @@ class PlaylistPage extends React.Component {
           showAlbum
           showArtist
           onSetItems={this.onSetItems}
-          playSong={this.playSong}
+          playTrack={this.playTrack}
         />
       </PageContent>
     );

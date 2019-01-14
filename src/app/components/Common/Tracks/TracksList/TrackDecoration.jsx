@@ -1,15 +1,15 @@
 import React from 'react';
 import cx from 'classnames';
 import withMK from '../../../../hoc/withMK';
-import classes from './SongDecoration.scss';
+import classes from './TrackDecoration.scss';
 import { artworkForMediaItem } from '../../../../utils/Utils';
-import { isCurrentSong, isSongPlaying } from '../../../../services/MusicPlayerApi';
+import { isCurrentTrack, isTrackPlaying } from '../../../../services/MusicPlayerApi';
 
-function SongDecoration({ song, showAlbum, size = 40 }) {
-  const currentItem = isCurrentSong(song);
+function TrackDecoration({ track, showAlbum, size = 40 }) {
+  const currentItem = isCurrentTrack(track);
 
   const playingAnimation = (
-    <div className={cx(classes.playingAnimation, { [classes.animated]: isSongPlaying(song) })}>
+    <div className={cx(classes.playingAnimation, { [classes.animated]: isTrackPlaying(track) })}>
       <div>
         <span />
         <span />
@@ -25,12 +25,12 @@ function SongDecoration({ song, showAlbum, size = 40 }) {
         <span className={classes.albumArtwork}>
           {currentItem && playingAnimation}
           <span className={classes.artworkWrapper} style={{ width: size, height: size }}>
-            <img src={artworkForMediaItem(song, size)} alt="" />
+            <img src={artworkForMediaItem(track, size)} alt="" />
           </span>
         </span>
       ) : (
-        <span className={classes.songIndex}>
-          {currentItem ? playingAnimation : song.attributes.trackNumber}
+        <span className={classes.trackIndex}>
+          {currentItem ? playingAnimation : track.attributes.trackNumber}
         </span>
       )}
     </>
@@ -42,4 +42,4 @@ const bindings = {
   [MusicKit.Events.playbackStateDidChange]: 'playbackState',
 };
 
-export default withMK(SongDecoration, bindings);
+export default withMK(TrackDecoration, bindings);

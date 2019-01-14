@@ -3,12 +3,12 @@ import { MenuItem } from 'react-contextmenu';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { artworkForMediaItem } from '../../../../../utils/Utils';
-import classes from './SongContextMenu.scss';
-import { playLater, playNext, playSong } from '../../../../../services/MusicPlayerApi';
+import classes from './TrackContextMenu.scss';
+import { playLater, playNext, playTrack } from '../../../../../services/MusicPlayerApi';
 
-function SongContextMenu({ song, songs, index }) {
-  const { attributes } = song;
-  const artworkURL = artworkForMediaItem(song, 60);
+function TrackContextMenu({ track, tracks, index }) {
+  const { attributes } = track;
+  const artworkURL = artworkForMediaItem(track, 60);
   const inLibrary = attributes.playParams.isLibrary;
 
   return (
@@ -28,9 +28,9 @@ function SongContextMenu({ song, songs, index }) {
 
       <MenuItem divider />
 
-      <MenuItem onClick={() => playSong(songs, index)}>Play</MenuItem>
-      <MenuItem onClick={() => playNext(song)}>Play next</MenuItem>
-      <MenuItem onClick={() => playLater(song)}>Play later</MenuItem>
+      <MenuItem onClick={() => playTrack(tracks, index)}>Play</MenuItem>
+      <MenuItem onClick={() => playNext(track)}>Play next</MenuItem>
+      <MenuItem onClick={() => playLater(track)}>Play later</MenuItem>
 
       <MenuItem divider />
 
@@ -47,10 +47,10 @@ function SongContextMenu({ song, songs, index }) {
   );
 }
 
-SongContextMenu.propTypes = {
+TrackContextMenu.propTypes = {
   index: PropTypes.number.isRequired,
-  song: PropTypes.any.isRequired,
-  songs: PropTypes.array.isRequired,
+  track: PropTypes.any.isRequired,
+  tracks: PropTypes.array.isRequired,
 };
 
-export default withRouter(SongContextMenu);
+export default withRouter(TrackContextMenu);

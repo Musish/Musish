@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classes from './PlaylistPanel.scss';
 import { artworkForMediaItem, humanifyMillis } from '../../../utils/Utils';
-import SongList from '../Songs/SongList/SongList';
+import TracksList from '../Tracks/TracksList/TracksList';
 import Loader from '../Loader/Loader';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
 import * as MusicApi from '../../../services/MusicApi';
@@ -15,13 +15,13 @@ export default class PlaylistPanel extends React.Component {
     this.state = {
       playlist: null,
       runtime: 0,
-      items: [],
+      tracks: [],
     };
 
     this.ref = React.createRef();
     this.store = {};
 
-    this.playSong = this.playSong.bind(this);
+    this.playTrack = this.playTrack.bind(this);
     this.playPlaylist = this.playPlaylist.bind(this);
     this.shufflePlayPlaylist = this.shufflePlayPlaylist.bind(this);
     this.onSetItems = this.onSetItems.bind(this);
@@ -53,8 +53,8 @@ export default class PlaylistPanel extends React.Component {
     return this.props.id || this.props.playlist.id;
   }
 
-  onSetItems({ items }) {
-    const playlistLength = items.reduce(
+  onSetItems({ items: tracks }) {
+    const playlistLength = tracks.reduce(
       (totalDuration, track) =>
         totalDuration + (track.attributes ? track.attributes.durationInMillis : 0),
       0
@@ -62,11 +62,11 @@ export default class PlaylistPanel extends React.Component {
 
     this.setState({
       runtime: humanifyMillis(playlistLength),
-      items,
+      tracks,
     });
   }
 
-  playSong({ index }) {
+  playTrack({ index }) {
     MusicPlayerApi.playPlaylist(this.state.playlist, index);
   }
 
@@ -79,14 +79,14 @@ export default class PlaylistPanel extends React.Component {
   }
 
   render() {
-    const { playlist, runtime, items } = this.state;
+    const { playlist, runtime, tracks } = this.state;
 
     if (!playlist) {
       return <Loader />;
     }
 
     const artworkURL = artworkForMediaItem(playlist, 100);
-    const trackCount = playlist.attributes.trackCount || items.length;
+    const trackCount = playlist.attributes.trackCount || tracks.length;
 
     return (
       <div className={classes.panel} ref={this.ref}>
@@ -126,7 +126,7 @@ export default class PlaylistPanel extends React.Component {
           )}
         </div>
         <div className={classes.main}>
-          <SongList
+          <TracksList
             scrollElement={this.ref}
             scrollElementModifier={e => e && e.parentElement}
             load={MusicApi.infiniteLoadRelationships(
@@ -138,7 +138,7 @@ export default class PlaylistPanel extends React.Component {
             album={false}
             showArtist
             showAlbum
-            playSong={this.playSong}
+            playTrack={this.playTrack}
             onSetItems={this.onSetItems}
           />
         </div>

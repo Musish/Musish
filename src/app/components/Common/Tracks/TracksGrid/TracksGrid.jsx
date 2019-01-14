@@ -1,23 +1,23 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
-import classes from './SongGrid.scss';
-import SongListItem from '../SongList/SongListItem';
+import classes from './TracksGrid.scss';
+import TrackListItem from '../TracksList/TracksListItem';
 
-function SongGrid({ tracks, showArtist, showAlbum, playSong }) {
+function TracksGrid({ tracks, showArtist, showAlbum, playTrack }) {
   return (
     <div className={classes.scrollWrapper}>
-      <div className={classes.songGrid}>
+      <div className={classes.trackGrid}>
         {tracks.map((track, index) => (
-          <SongListItem
+          <TrackListItem
             key={track.id}
-            song={track}
+            track={track}
             index={index}
-            songs={tracks}
+            tracks={tracks}
             showArtist={showArtist}
             showAlbum={showAlbum}
-            playSong={playSong}
-            className={classes.song}
+            playTrack={playTrack}
+            className={classes.track}
           />
         ))}
       </div>
@@ -25,17 +25,17 @@ function SongGrid({ tracks, showArtist, showAlbum, playSong }) {
   );
 }
 
-SongGrid.propTypes = {
+TracksGrid.propTypes = {
   showArtist: PropTypes.bool,
   showAlbum: PropTypes.bool,
   tracks: PropTypes.array,
-  playSong: PropTypes.func.isRequired,
+  playTrack: PropTypes.func.isRequired,
 };
 
-SongGrid.defaultProps = {
+TracksGrid.defaultProps = {
   showArtist: false,
   showAlbum: false,
   tracks: null,
 };
 
-export default SongGrid;
+export default TracksGrid;

@@ -7,7 +7,7 @@ import browseData from './browse';
 import Loader from '../../../../Common/Loader/Loader';
 import ItemList from './ItemList';
 import * as MusicPlayerApi from '../../../../../services/MusicPlayerApi';
-import SongGrid from '../../../../Common/Songs/SongGrid/SongGrid';
+import TracksGrid from '../../../../Common/Tracks/TracksGrid/TracksGrid';
 
 class BrowsePage extends React.Component {
   constructor(props) {
@@ -34,8 +34,8 @@ class BrowsePage extends React.Component {
     this.getCharts();
   }
 
-  static playSong({ songs, index }) {
-    MusicPlayerApi.playSong(songs, index);
+  static playTrack({ tracks, index }) {
+    MusicPlayerApi.playTrack(tracks, index);
   }
 
   render() {
@@ -56,11 +56,11 @@ class BrowsePage extends React.Component {
         <h3>Top Songs</h3>
         <div className={classes.chartingSongs}>
           {charts ? (
-            <SongGrid
+            <TracksGrid
               tracks={charts.songs[0].data}
               showArtist
               showAlbum
-              playSong={BrowsePage.playSong}
+              playTrack={BrowsePage.playTrack}
             />
           ) : (
             <Loader />
