@@ -101,8 +101,8 @@ class SearchPage extends React.Component {
     });
   }
 
-  static playTrack({ songs, index }) {
-    MusicPlayerApi.playTrack(songs, index);
+  static playTrack({ tracks, index }) {
+    MusicPlayerApi.playTrack(tracks, index);
   }
 
   handleCatalogChange() {
