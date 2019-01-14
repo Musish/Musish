@@ -51,6 +51,14 @@ export async function play() {
 export async function pause() {
   await MusicKit.getInstance().player.pause();
 }
+export async function togglePlayback() {
+  const { player } = MusicKit.getInstance();
+  if (isPlaying()) {
+    await player.pause();
+  } else {
+    await player.play();
+  }
+}
 
 export async function seekToTime(time) {
   await MusicKit.getInstance().player.seekToTime(time);
@@ -144,4 +152,14 @@ export function isPlaying() {
 
 export function isSongPlaying(song) {
   return MusicKit.getInstance().player.isPlaying && isCurrentSong(song);
+}
+
+export function volumeUp() {
+  const { player } = MusicKit.getInstance();
+  player.volume = player.volume < 0.9 ? player.volume + 0.1 : 1;
+}
+
+export function volumeDown() {
+  const { player } = MusicKit.getInstance();
+  player.volume = player.volume > 0.1 ? player.volume - 0.1 : 0;
 }
