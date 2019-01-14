@@ -1,0 +1,12 @@
+@import '../../../styles/settings/colors';
+
+.pageTitle {
+  margin: 15px 0;
+  cursor: default;
+
+  .contextHeading {
+	text-transform: uppercase;
+	color: $accent_color;
+	font-size: 12px;
+  }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Loader from './common/Loader';
+import Loader from './Common/Loader/Loader';
 
 export default class MusicKitProvider extends React.Component {
   constructor(props) {

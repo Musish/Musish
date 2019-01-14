@@ -1,0 +1,70 @@
+.albumsGrid {
+  display: flex;
+  flex-wrap: wrap;
+
+  > div {
+    margin: 15px 10px;
+  }
+}
+
+.artistHeader {
+  background: #f2f2f2;
+  background-size: cover !important;
+  background-position: top center !important;
+  margin: 0 -1.5em;
+  height: 275px;
+  position: relative;
+
+  .geniusCredit {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 40px 40px 0;
+    border-color: transparent #ffff64 transparent transparent;
+
+    &:before {
+      content: ' ';
+      position: absolute;
+      display: block;
+      background: url(https://assets.genius.com/images/site-sprites-103a5308baf6273777615bb668b4b19fc937d01c.png) no-repeat -589px -942px;
+      height: 20px;
+      width: 20px;
+      right: -38px;
+      top: 3px;
+    }
+
+    > span {
+      position: absolute;
+      white-space: nowrap;
+      right: -7px;
+      top: 12px;
+      font-weight: 600;
+      font-size: 0.8em;
+    }
+  }
+
+  .artistHeaderContainer {
+    background: linear-gradient(to bottom,
+      rgba(255,255,255,0.75) 0%,
+      rgba(255,255,255,0.75) 75%,
+      rgba(255,255,255,1) 100%
+    );
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .artistHeaderPicture {
+      width: 175px;
+      height: 175px;
+      background: #ffffff;
+      background-size: cover !important;
+      background-position: top center !important;
+      border-radius: 50%;
+      box-shadow: 0px 3px 10px 0px rgba(0,0,0,0.15);
+    }
+  }
+}
