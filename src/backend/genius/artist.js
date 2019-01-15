@@ -1,22 +1,23 @@
 const secrets = require('../secrets.json');
 const utils = require('../utils');
 const appleMusicApi = require('../appleMusicApi');
+const { stringComparator } = require('./song');
 
 const axios = require('axios');
 
 async function findMatch(hits, name) {
-  if(hits.length === 0) {
+  if (hits.length === 0) {
     return null;
   }
 
   for (const hit of hits) {
-    if (hit.type === "artist" && hit.result.name.toLowerCase() == name.toLowerCase()) {
+    if (hit.type === 'artist' && stringComparator(hit.result.name, name)) {
       return hit.result;
     }
   }
 
   for (const hit of hits) {
-    if (hit.type === "artist") {
+    if (hit.type === 'artist') {
       return hit.result; // Returns the first artist it finds, if it cannot find one which directly matches the name.
     }
   }
@@ -25,10 +26,10 @@ async function findMatch(hits, name) {
 }
 
 async function fetchArtist(hit) {
-  const {data} = await axios.get(`https://api.genius.com${hit.api_path}`, {
+  const { data } = await axios.get(`https://api.genius.com${hit.api_path}`, {
     headers: {
       Authorization: `Bearer ${secrets.GENIUS_API_KEY}`,
-    }
+    },
   });
 
   const artist = data.response.artist;
@@ -71,7 +72,7 @@ async function handle({ artistId }) {
 }
 
 module.exports = {
-  details: async function(event) {
+  async details(event) {
     const params = event.queryStringParameters;
 
     try {
@@ -81,5 +82,5 @@ module.exports = {
     } catch (e) {
       return utils.generateError(500, e);
     }
-  }
+  },
 };

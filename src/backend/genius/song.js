@@ -1,5 +1,5 @@
 const querystring = require('querystring');
-const {compareTwoStrings} = require('string-similarity');
+const { compareTwoStrings } = require('string-similarity');
 const secrets = require('../secrets.json');
 const utils = require('../utils');
 
@@ -81,7 +81,7 @@ async function handle({ name, artist }) {
 }
 
 module.exports = {
-  details: async function(event) {
+  async details(event) {
     const params = event.queryStringParameters;
 
     try {
@@ -92,4 +92,5 @@ module.exports = {
       return utils.generateError(500, e);
     }
   },
+  stringComparator,
 };
