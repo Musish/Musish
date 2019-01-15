@@ -1,0 +1,33 @@
+@import '../../../assets/styles/settings/colors';
+
+.choices {
+  width: 100%;
+  border-bottom: solid 2px $background_tint_color;
+
+  .selectionItem {
+    padding: 10px 15px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 1.1em;
+    font-weight: 500;
+    border-bottom: solid 2px $background_tint_color;
+    margin-bottom: -2px;
+
+    &:first-child {
+      border-top-left-radius: 5px;
+    }
+
+    &:last-child {
+      border-top-right-radius: 5px;
+    }
+
+    &:hover {
+      border-bottom: solid 2px $background_tint_color_strong;
+    }
+
+    &.selected {
+      border-bottom: solid 2px $accent_color;
+      color: $accent_color;
+    }
+  }
+}

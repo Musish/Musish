@@ -1,4 +1,4 @@
-@import "../../../../styles/settings/colors";
+@import "../../../../assets/styles/settings/colors";
 
 .navSearch {
   display: flex;
@@ -20,15 +20,34 @@
   .navSearchWrapper {
     position: relative;
 
-    input {
+    input, button {
       -webkit-appearance: none;
       outline: none;
       padding: 8px 15px;
       text-align: center;
       border: solid 1px $background_tint_color;
-      border-radius: 5px;
+      color: $text_color;
       font-size: 11px;
       line-height: 15px;
+      background: $background_color;
+      border-right-width: 0;
+
+      &:first-child {
+        border-radius: 5px 0 0 5px;
+      }
+
+      &:last-child {
+        border-radius: 0 5px 5px 0;
+        border-right-width: 1px;
+      }
+
+      &:hover, &:active, &focus {
+        color: $text_color_strong;
+      }
+    }
+
+    button:hover {
+      background: $indiscreet_hover_color;
     }
 
     .results {

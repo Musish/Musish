@@ -99,7 +99,7 @@ class App extends React.Component {
                       <Route path={'/me/artists/:id'} component={ArtistsPage} />
                       <Route path={'/me/songs'} exact component={SongsPage} />
                       <Route path={'/artist/:id'} exact component={ArtistPage} />
-                      <Route path={'/browse'} exact component={BrowsePage} />
+                      <Route path={'/browse'} component={BrowsePage} />
                       <Route path={'/radio'} exact component={RadioPage} />
                       <Route
                         path={'/search/:source/:query'}
