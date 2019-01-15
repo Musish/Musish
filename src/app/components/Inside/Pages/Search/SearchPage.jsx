@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import cx from 'classnames';
 
 import classes from './SearchPage.scss';
 import withMK from '../../../../hoc/withMK';
@@ -13,6 +12,8 @@ import PlaylistItem from '../../../Common/PlaylistItem/PlaylistItem';
 import TracksGrid from '../../../Common/Tracks/TracksGrid/TracksGrid';
 import * as MusicPlayerApi from '../../../../services/MusicPlayerApi';
 import ArtistItem from '../../../Common/ArtistItem/ArtistItem';
+import Tabs from '../../../Common/Tabs/Tabs';
+import Tab from '../../../Common/Tabs/Tab';
 
 class SearchPage extends React.Component {
   constructor(props) {
@@ -30,8 +31,7 @@ class SearchPage extends React.Component {
 
     this.ref = React.createRef();
     this.search = this.search.bind(this);
-    this.handleCatalogChange = this.handleCatalogChange.bind(this);
-    this.handleLibraryChange = this.handleLibraryChange.bind(this);
+    this.renderResults = this.renderResults.bind(this);
   }
 
   componentDidMount() {
@@ -103,14 +103,6 @@ class SearchPage extends React.Component {
 
   static playTrack({ tracks, index }) {
     MusicPlayerApi.playTrack(tracks, index);
-  }
-
-  handleCatalogChange() {
-    this.props.history.push(`/search/catalog/${this.props.match.params.query}`);
-  }
-
-  handleLibraryChange() {
-    this.props.history.push(`/search/library/${this.props.match.params.query}`);
   }
 
   renderSongs() {
@@ -191,27 +183,7 @@ class SearchPage extends React.Component {
     );
   }
 
-  renderTabs() {
-    const { source } = this.props.match.params;
-    return (
-      <div className={classes.choices}>
-        <div
-          className={cx(classes.selectionItem, { [classes.selected]: source === 'catalog' })}
-          onClick={this.handleCatalogChange}
-        >
-          Apple Music
-        </div>
-        <div
-          className={cx(classes.selectionItem, { [classes.selected]: source === 'library' })}
-          onClick={this.handleLibraryChange}
-        >
-          My Library
-        </div>
-      </div>
-    );
-  }
-
-  render() {
+  renderResults() {
     const { loading } = this.state;
 
     const songs = this.renderSongs();
@@ -222,11 +194,7 @@ class SearchPage extends React.Component {
     const isEmpty = !(loading || songs || albums || playlists || artists);
 
     return (
-      <PageContent innerRef={this.ref}>
-        <PageTitle title={`Searching for ${this.props.match.params.query}`} context={'Search'} />
-
-        {this.renderTabs()}
-
+      <>
         {loading && <Loader />}
 
         {isEmpty ? (
@@ -244,6 +212,24 @@ class SearchPage extends React.Component {
             {playlists}
           </>
         )}
+      </>
+    );
+  }
+
+  render() {
+    const { query } = this.props.match.params;
+    return (
+      <PageContent innerRef={this.ref}>
+        <PageTitle title={`Searching for ${this.props.match.params.query}`} context={'Search'} />
+
+        <Tabs>
+          <Tab name={'Apple Music'} route={`/search/catalog/${query}`}>
+            {this.renderResults()}
+          </Tab>
+          <Tab name={'My Library'} route={`/search/library/${query}`}>
+            {this.renderResults()}
+          </Tab>
+        </Tabs>
       </PageContent>
     );
   }
@@ -251,7 +237,6 @@ class SearchPage extends React.Component {
 
 SearchPage.propTypes = {
   mk: PropTypes.any.isRequired,
-  history: PropTypes.object.isRequired,
   query: PropTypes.string.isRequired,
   match: PropTypes.any.isRequired,
 };
