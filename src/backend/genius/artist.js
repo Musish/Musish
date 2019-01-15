@@ -1,8 +1,6 @@
-const secrets = require('../secrets.json');
 const utils = require('../utils');
 const appleMusicApi = require('../appleMusicApi');
-const { stringComparator } = require('./song');
-
+const { stringComparator, geniusAxios } = require('../utils');
 const axios = require('axios');
 
 async function findMatch(hits, name) {
@@ -26,11 +24,7 @@ async function findMatch(hits, name) {
 }
 
 async function fetchArtist(hit) {
-  const { data } = await axios.get(`https://api.genius.com${hit.api_path}`, {
-    headers: {
-      Authorization: `Bearer ${secrets.GENIUS_API_KEY}`,
-    },
-  });
+  const { data } = await geniusAxios.get(hit.api_path);
 
   const artist = data.response.artist;
   delete artist.current_user_metadata;
