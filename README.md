@@ -8,7 +8,7 @@ Frustrated by the lack of access to the greatest bangers in our ever-growing mus
 
 ## What it does
 Plays music. Without hassle. In a web browser. With your Apple ID. Revolutionary.
-Musi.sh allows a user to authenticate using their Apple ID (while subscribed to Apple Music), and browse their Music library on the go. We plan to add music discovery, clean the UI up even more, and throw some glitter all over it before long! ✨
+Musish allows a user to authenticate using their Apple ID (while subscribed to Apple Music), and browse their Music library on the go. We plan to add music discovery, clean the UI up even more, and throw some glitter all over it before long! ✨
 
 ### To run locally
 ```bash
