@@ -16,7 +16,7 @@ export default class MusicKitProvider extends React.Component {
       developerToken: process.env.JWT_TOKEN,
       app: {
         name: 'Musish',
-        icon: '',
+        icon: 'https://raw.githubusercontent.com/Musish/Musish/assets/misc/authIcon.png',
         build: '1.0beta1',
         version: '1.0beta1',
       },
