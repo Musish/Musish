@@ -24,6 +24,7 @@ import ConnectedMenu from './Common/ContextMenu/ContextMenu';
 import LyricsModalContext from './Inside/Player/Lyrics/LyricsModalContext';
 import LyricsModal from './Inside/Player/Lyrics/LyricsModal';
 import SearchPage from './Inside/Pages/Search/SearchPage';
+import CuratorPage from './Inside/Pages/Catalog/Browse/Curator/CuratorPage';
 
 class App extends React.Component {
   constructor(props) {
@@ -99,6 +100,7 @@ class App extends React.Component {
                       <Route path={'/me/artists/:id'} component={ArtistsPage} />
                       <Route path={'/me/songs'} exact component={SongsPage} />
                       <Route path={'/artist/:id'} exact component={ArtistPage} />
+                      <Route path={'/curator/:id'} exact component={CuratorPage} />
                       <Route path={'/browse'} component={BrowsePage} />
                       <Route path={'/radio'} exact component={RadioPage} />
                       <Route

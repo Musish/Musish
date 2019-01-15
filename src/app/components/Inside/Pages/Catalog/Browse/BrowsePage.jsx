@@ -6,6 +6,7 @@ import * as MusicPlayerApi from '../../../../../services/MusicPlayerApi';
 import Tabs from '../../../../Common/Tabs/Tabs';
 import Tab from '../../../../Common/Tabs/Tab';
 import TopCharts from './TopCharts/TopCharts';
+import Playlists from './Playlists/Playlists';
 
 class BrowsePage extends React.Component {
   constructor(props) {
@@ -28,10 +29,7 @@ class BrowsePage extends React.Component {
             <TopCharts />
           </Tab>
           <Tab name={'Playlists'} route={'/browse/playlists'}>
-            <TopCharts />
-          </Tab>
-          <Tab name={'Genres'} route={'/browse/genres'}>
-            <TopCharts />
+            <Playlists />
           </Tab>
         </Tabs>
       </PageContent>

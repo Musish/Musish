@@ -85,7 +85,7 @@ export function getHeaders() {
   };
 }
 
-export function infiniteLoadRelationships(id, functionGenerator, key, store) {
+export function infiniteLoadRelationships(id, functionGenerator, key, store, dataModifier = d => d) {
   return async ({ offset }, { page }) => {
     if (page === 0) {
       const playlist = await functionGenerator(id, { offset });
@@ -94,7 +94,7 @@ export function infiniteLoadRelationships(id, functionGenerator, key, store) {
       // eslint-disable-next-line no-param-reassign
       store.nextUrl = data.next;
 
-      return data.data;
+      return dataModifier(data.data);
     }
 
     if (!store.nextUrl) {
@@ -106,7 +106,7 @@ export function infiniteLoadRelationships(id, functionGenerator, key, store) {
     // eslint-disable-next-line no-param-reassign
     store.nextUrl = data.next;
 
-    return data.data;
+    return dataModifier(data.data);
   };
 }
 
