@@ -16,5 +16,10 @@
     font-size: 20px;
     color: $brand_color;
     margin: 0;
+    display: flex;
+
+    > span {
+      margin: auto 6px auto 0;
+    }
   }
 }
