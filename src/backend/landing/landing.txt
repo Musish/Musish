@@ -1,0 +1,15 @@
+  __  __ _    _  _____ _____    _____ _    _
+ |  \/  | |  | |/ ____|_   _|  / ____| |  | |
+ | \  / | |  | | (___   | |   | (___ | |__| |
+ | |\/| | |  | |\___ \  | |    \___ \|  __  |
+ | |  | | |__| |____) |_| |_ _ ____) | |  | |
+ |_|  |_|\____/|_____/|_____(_)_____/|_|  |_|
+
+
+MUSI.SH, THE THIRD PARTY APPLE MUSIC WEB PLAYER.      
+
+Designed by nerds in California. Assembled in... a rush.
+
+Please visit our GitHub at https://github.com/Musish, we welcome contributions!
+
+-   The Musi.sh team 

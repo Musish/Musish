@@ -10,17 +10,23 @@ provider:
   region: us-east-1
 
 functions:
+  landing:
+    handler: landing/landing.landing
+    events:
+      - http:
+          path: /
+          method: get
   genius-song:
     handler: genius/song.details
     events:
       - http:
-          path: genius/song
+          path: /genius/song
           method: get
           cors: true
   genius-artist:
     handler: genius/artist.details
     events:
       - http:
-          path: genius/artist
+          path: /genius/artist
           method: get
           cors: true
