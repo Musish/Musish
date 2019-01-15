@@ -4,14 +4,20 @@ const appleMusicApi = require('../appleMusicApi');
 
 const axios = require('axios');
 
-async function findMatch(hits) {
+async function findMatch(hits, name) {
   if(hits.length === 0) {
     return null;
   }
 
   for (const hit of hits) {
-    if (hit.type === "artist") {
+    if (hit.type === "artist" && hit.result.name.toLowerCase() == name.toLowerCase()) {
       return hit.result;
+    }
+  }
+
+  for (const hit of hits) {
+    if (hit.type === "artist") {
+      return hit.result; // Returns the first artist it finds, if it cannot find one which directly matches the name.
     }
   }
 
@@ -55,7 +61,7 @@ async function handle({ artistId }) {
     return null;
   }
 
-  const match = await findMatch(hits);
+  const match = await findMatch(hits, artistName);
 
   if (match) {
     return await fetchArtist(match);
