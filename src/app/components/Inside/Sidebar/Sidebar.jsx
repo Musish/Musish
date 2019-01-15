@@ -46,7 +46,7 @@ class Sidebar extends React.Component {
         title={'Apple music'}
         items={[
           { to: '/', label: 'For You' },
-          { to: '/browse', label: 'Browse' },
+          { to: '/browse', label: 'Browse', exact: false },
           { to: '/radio', label: 'Radio' },
         ]}
       />
