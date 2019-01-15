@@ -152,6 +152,9 @@ class SearchBar extends React.Component {
               onFocus={this.handleShowResults}
               onBlur={this.handleHideResults}
             />
+            <button type={'submit'}>
+              <i className={'fas fa-search'} />
+            </button>
           </form>
 
           <div className={classes.results}>
