@@ -92,7 +92,7 @@ class Sidebar extends React.Component {
             <span className={classes.footnote}>
               {'Designed with '}
               <i className={'fa fa-heart'} />
-              {' by the Musi.sh team.'}
+              {' by the Musish team.'}
             </span>
           </div>
         </div>
