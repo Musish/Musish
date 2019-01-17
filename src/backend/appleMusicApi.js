@@ -18,4 +18,34 @@ module.exports = {
       return null;
     }
   },
+  fetchCharts: async (storefront) => {
+    try {
+      const { data } = await axios.get(`/v1/catalog/${storefront}/charts`, {
+        params: {
+          types: 'songs,albums,playlists',
+          limit: 36
+        }
+      });
+
+      return data.results;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
+  fetchAppleCurator: async (storefront, curator) => {
+    try {
+      const { data } = await axios.get(`/v1/catalog/${storefront}/apple-curators/${curator}`, {
+        params: {
+          types: 'songs,albums,playlists',
+          limit: 36
+        }
+      });
+
+      return data.results;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
 };
