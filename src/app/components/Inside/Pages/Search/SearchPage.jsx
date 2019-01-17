@@ -217,6 +217,7 @@ class SearchPage extends React.Component {
   }
 
   render() {
+    const { isAuthorized } = this.props.mk.instance;
     const { query } = this.props.match.params;
     return (
       <PageContent innerRef={this.ref}>
@@ -227,7 +228,22 @@ class SearchPage extends React.Component {
             {this.renderResults()}
           </Tab>
           <Tab name={'My Library'} route={`/search/library/${query}`}>
-            {this.renderResults()}
+            {isAuthorized ? (
+              this.renderResults()
+            ) : (
+              <div className={classes.searchError}>
+                <span
+                  className={classes.searchErrorTitle}
+                  role={'img'}
+                  aria-label={'loudly-crying'}
+                >
+                  😱
+                </span>
+                <span className={classes.searchErrorDetails}>
+                  You must login to search your library.
+                </span>
+              </div>
+            )}
           </Tab>
         </Tabs>
       </PageContent>

@@ -8,7 +8,7 @@ export default function NavigationBar() {
     <nav className={classes.navigationBar}>
       <h1 className={classes.brand}>
         <span className={'musicon musicon-logo'} />
-        {' Musi.sh'}
+        {' Musish'}
       </h1>
       <div style={{ flex: 1 }} />
       <SearchBar />

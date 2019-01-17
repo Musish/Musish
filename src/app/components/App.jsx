@@ -16,6 +16,7 @@ import PlaylistsPage from './Inside/Pages/Library/Playlists/PlaylistsPage';
 import RecentlyAddedPage from './Inside/Pages/Library/RecentlyAdded/RecentlyAddedPage';
 import ForYouPage from './Inside/Pages/Catalog/ForYou/ForYouPage';
 import BrowsePage from './Inside/Pages/Catalog/Browse/BrowsePage';
+import GenrePage from './Inside/Pages/Catalog/Browse/Genres/Genre/GenrePage';
 import RadioPage from './Inside/Pages/Catalog/Radio/RadioPage';
 import QueueContext from './Inside/Player/Queue/QueueContext';
 import ModalContext from './Common/Modal/ModalContext';
@@ -99,6 +100,7 @@ class App extends React.Component {
                       <Route path={'/me/artists/:id'} component={ArtistsPage} />
                       <Route path={'/me/songs'} exact component={SongsPage} />
                       <Route path={'/artist/:id'} exact component={ArtistPage} />
+                      <Route path={'/browse/genre/:id'} exact component={GenrePage} />
                       <Route path={'/browse'} component={BrowsePage} />
                       <Route path={'/radio'} exact component={RadioPage} />
                       <Route
