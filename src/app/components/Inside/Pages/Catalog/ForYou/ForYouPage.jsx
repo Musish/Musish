@@ -60,7 +60,7 @@ class ForYouPage extends React.Component {
     }
 
     if (!recentlyPlayed) {
-      return <Loader />;
+      return null;
     }
 
     return (
@@ -92,7 +92,7 @@ class ForYouPage extends React.Component {
     }
 
     if (!heavyRotation) {
-      return <Loader />;
+      return null;
     }
 
     return (
@@ -124,7 +124,7 @@ class ForYouPage extends React.Component {
     }
 
     if (!recommendations) {
-      return <Loader />;
+      return null;
     }
 
     return (
@@ -189,15 +189,19 @@ class ForYouPage extends React.Component {
   }
 
   render() {
+    const recentlyPlayed = this.renderRecentlyPlayed();
+    const heavyRotation = this.renderHeavyRotation();
+    const recommendations = this.renderRecommendations();
+
     return (
       <PageContent innerRef={this.ref}>
         <PageTitle title={'For You'} context={'Apple Music'} />
 
-        {this.renderRecentlyPlayed()}
+        {!(recentlyPlayed && heavyRotation && recommendations) && <Loader />}
 
-        {this.renderHeavyRotation()}
-
-        {this.renderRecommendations()}
+        {recentlyPlayed}
+        {heavyRotation}
+        {recommendations}
       </PageContent>
     );
   }

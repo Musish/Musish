@@ -5,7 +5,7 @@ import cx from 'classnames';
 import classes from './BrowsePage.scss';
 import PlaylistItem from '../../../../Common/PlaylistItem/PlaylistItem';
 import AlbumItem from '../../../../Common/AlbumItem/AlbumItem';
-import Loader from '../../../../Common/Loader/Loader';
+import CuratorItem from '../../../../Common/CuratorItem/CuratorItem';
 
 class ItemList extends React.Component {
   constructor(props) {
@@ -15,23 +15,39 @@ class ItemList extends React.Component {
       list: null,
     };
 
-    this.getItems = this.getItems.bind(this);
+    this.fetchItems = this.fetchItems.bind(this);
   }
 
-  async getItems(ids) {
+  async fetchItems(ids) {
     const music = MusicKit.getInstance();
-    const list =
-      this.props.type === 'playlist' ? await music.api.playlists(ids) : await music.api.albums(ids);
+    let items;
+
+    switch (this.props.type) {
+      case 'playlist':
+        items = await music.api.playlists(ids);
+        break;
+      case 'album':
+        items = await music.api.albums(ids);
+        break;
+      case 'curator':
+        items = await music.api.curators(ids);
+        break;
+      case 'apple-curator':
+        items = await music.api.appleCurators(ids);
+        break;
+      default:
+        return;
+    }
 
     this.setState({
-      list,
+      list: items,
     });
   }
 
   async componentDidMount() {
     const { list, listIds } = this.props;
     if (!list && listIds) {
-      this.getItems(this.props.listIds);
+      this.fetchItems(this.props.listIds);
     }
   }
 
@@ -43,25 +59,28 @@ class ItemList extends React.Component {
       gridTemplateRows: 'auto '.repeat(rows),
     };
 
+    if (!list) {
+      return null;
+    }
+
     return (
       <>
         <h3>{this.props.title}</h3>
         <div className={classes.scrollWrapper}>
           <div className={cx(classes.scrollGrid)} style={styles}>
-            {list ? (
-              list.map(item => {
-                switch (type) {
-                  case 'playlist':
-                    return <PlaylistItem key={item.id} playlist={item} size={size} />;
-                  case 'album':
-                    return <AlbumItem key={item.id} album={item} size={size} />;
-                  default:
-                    return null;
-                }
-              })
-            ) : (
-              <Loader />
-            )}
+            {list.map(item => {
+              switch (type) {
+                case 'playlist':
+                  return <PlaylistItem key={item.id} playlist={item} size={size} />;
+                case 'album':
+                  return <AlbumItem key={item.id} album={item} size={size} />;
+                case 'curator':
+                case 'apple-curator':
+                  return <CuratorItem key={item.id} curator={item} size={size} />;
+                default:
+                  return null;
+              }
+            })}
           </div>
         </div>
       </>

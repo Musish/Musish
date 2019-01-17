@@ -136,5 +136,28 @@
     "uk": "pl.19886d42a5cf41fcbcd277b519dd9e6a",
     "bollywood": "pl.d60caf02fcce4d7e9788fe01243b7c2c",
     "christian": "pl.fecfa8a26ea44ad581d4fe501892c8ff"
+  },
+  "genres": {
+    "african": 988656348,
+    "alternative": 988556214,
+    "blues": 976439528,
+    "children": 989066661,
+    "classical": 989071074,
+    "country": 976439534,
+    "dance": 989074778,
+    "dj": 1441811365,
+    "electronic": 989076708,
+    "hiphop": 989061185,
+    "jazz": 976439542,
+    "kpop": 988658197,
+    "metal": 988658201,
+    "new": 982347996,
+    "pop": 988588080,
+    "rnb": 988583890,
+    "reggae": 976439552,
+    "rock": 988581516,
+    "songwriter": 988578699,
+    "stage": 988578275,
+    "world": 97643958
   }
 }
