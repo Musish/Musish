@@ -42,6 +42,3 @@ functions:
           path: /genius/artist
           method: get
           cors: true
-
-plugins:
-  - serverless-offline
