@@ -85,7 +85,13 @@ export function getHeaders() {
   };
 }
 
-export function infiniteLoadRelationships(id, functionGenerator, key, store, dataModifier = d => d) {
+export function infiniteLoadRelationships(
+  id,
+  functionGenerator,
+  key,
+  store,
+  dataModifier = d => d
+) {
   return async ({ offset }, { page }) => {
     if (page === 0) {
       const playlist = await functionGenerator(id, { offset });

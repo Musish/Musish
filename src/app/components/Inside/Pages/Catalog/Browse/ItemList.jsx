@@ -5,7 +5,6 @@ import cx from 'classnames';
 import classes from './BrowsePage.scss';
 import PlaylistItem from '../../../../Common/PlaylistItem/PlaylistItem';
 import AlbumItem from '../../../../Common/AlbumItem/AlbumItem';
-import Loader from '../../../../Common/Loader/Loader';
 import CuratorItem from '../../../../Common/CuratorItem/CuratorItem';
 
 class ItemList extends React.Component {
@@ -60,28 +59,28 @@ class ItemList extends React.Component {
       gridTemplateRows: 'auto '.repeat(rows),
     };
 
+    if (!list) {
+      return null;
+    }
+
     return (
       <>
         <h3>{this.props.title}</h3>
         <div className={classes.scrollWrapper}>
           <div className={cx(classes.scrollGrid)} style={styles}>
-            {list ? (
-              list.map(item => {
-                switch (type) {
-                  case 'playlist':
-                    return <PlaylistItem key={item.id} playlist={item} size={size} />;
-                  case 'album':
-                    return <AlbumItem key={item.id} album={item} size={size} />;
-                  case 'curator':
-                  case 'apple-curator':
-                    return <CuratorItem key={item.id} curator={item} size={size} />;
-                  default:
-                    return null;
-                }
-              })
-            ) : (
-              <Loader />
-            )}
+            {list.map(item => {
+              switch (type) {
+                case 'playlist':
+                  return <PlaylistItem key={item.id} playlist={item} size={size} />;
+                case 'album':
+                  return <AlbumItem key={item.id} album={item} size={size} />;
+                case 'curator':
+                case 'apple-curator':
+                  return <CuratorItem key={item.id} curator={item} size={size} />;
+                default:
+                  return null;
+              }
+            })}
           </div>
         </div>
       </>

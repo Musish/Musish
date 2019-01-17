@@ -1,4 +1,4 @@
-@import "../../../../../../assets/styles/settings/colors";
+@import "../../../../../../../assets/styles/settings/colors";
 
 .curatorHeader {
   background-color: $placeholder_container_color;
@@ -26,11 +26,12 @@
       background-size: cover !important;
       background-position: top center !important;
       box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.15);
+      border-radius: 5%;
     }
   }
 }
 
-.searchGrid {
+.playlistGrid {
   display: flex;
   flex-wrap: wrap;
 

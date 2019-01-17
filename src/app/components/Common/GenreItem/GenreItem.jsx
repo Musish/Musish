@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import cx from 'classnames';
-import classes from './CuratorItem.scss';
+import classes from './GenreItem.scss';
 import { artworkForMediaItem } from '../../../utils/Utils';
 
-class CuratorItem extends Component {
+class GenreItem extends Component {
   constructor(props) {
     super(props);
 
@@ -16,7 +16,7 @@ class CuratorItem extends Component {
   handleOpen() {
     const id = this.props.id || this.props.curator.id;
 
-    this.props.history.push(`/curator/${id}`);
+    this.props.history.push(`/browse/genre/${id}`);
   }
 
   render() {
@@ -46,16 +46,16 @@ class CuratorItem extends Component {
   }
 }
 
-CuratorItem.propTypes = {
+GenreItem.propTypes = {
   history: PropTypes.any.isRequired,
   curator: PropTypes.any,
   id: PropTypes.any,
   size: PropTypes.number.isRequired,
 };
 
-CuratorItem.defaultProps = {
+GenreItem.defaultProps = {
   curator: null,
   id: null,
 };
 
-export default withRouter(CuratorItem);
+export default withRouter(GenreItem);

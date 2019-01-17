@@ -3,7 +3,7 @@ const secrets = require('./secrets.json');
 const axios = require('axios').create({
   baseURL: 'https://api.music.apple.com',
   headers: {
-    Authorization: `Bearer ${secrets.APPLE_DEVELOPER_TOKEN}`,
+    Authorization: `Bearer ${secrets.APPLE_TOKEN}`,
   },
 });
 
