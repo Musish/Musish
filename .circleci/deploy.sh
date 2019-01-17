@@ -37,7 +37,7 @@ cd src/backend
 cat >./secrets.json <<EOF
 {
   "NODE_ENV": "prod",
-  "BACKEND_URL": "$GENIUS_API_KEY",
+  "GENIUS_API_KEY": "$GENIUS_API_KEY",
   "APPLE_TOKEN": "$APPLE_TOKEN"
 }
 EOF
