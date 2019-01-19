@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <% if (htmlWebpackPlugin.options.env.GA_PROPERTY_ID) require('html-loader!./assets/partials/analytics.html') %>
+    <% if (htmlWebpackPlugin.options.env.GA_PROPERTY_ID){ %>
+    <%= require('html-loader!./assets/partials/analytics.html') %>
+    <% } %>
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
