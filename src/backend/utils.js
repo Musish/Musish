@@ -1,5 +1,5 @@
 const { compareTwoStrings } = require('string-similarity');
-const secrets = require('../secrets.json');
+const secrets = require('./secrets.json');
 
 const corsOrigin = '*';
 
