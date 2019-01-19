@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { artworkForMediaItem } from '../../../../../utils/Utils';
 import classes from './TrackContextMenu.scss';
 import { playLater, playNext, playTrack } from '../../../../../services/MusicPlayerApi';
+import { addToLibrary } from '../../../../../services/MusicApi';
 
 function TrackContextMenu({ track, tracks, index }) {
   const { attributes } = track;
@@ -32,15 +33,11 @@ function TrackContextMenu({ track, tracks, index }) {
       <MenuItem onClick={() => playNext(track)}>Play next</MenuItem>
       <MenuItem onClick={() => playLater(track)}>Play later</MenuItem>
 
-      <MenuItem divider />
-
-      <MenuItem onClick={() => null}>Show Artist</MenuItem>
-      <MenuItem onClick={() => null}>Show Album</MenuItem>
       {!inLibrary && (
         <>
           <MenuItem divider />
 
-          <MenuItem onClick={() => null}>Add to library</MenuItem>
+          <MenuItem onClick={() => addToLibrary('songs', [track.id])}>Add to library</MenuItem>
         </>
       )}
     </>

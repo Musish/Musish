@@ -12,4 +12,4 @@ Designed by nerds in California. Assembled in... a rush.
 
 Please visit our GitHub at https://github.com/Musish, we welcome contributions!
 
--   The Musi.sh team 
+-   The Musish team
