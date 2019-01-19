@@ -1,6 +1,14 @@
 const querystring = require('querystring');
+const {compareTwoStrings} = require('string-similarity');
+const secrets = require('../secrets.json');
 const utils = require('../utils');
-const { stringComparator, geniusAxios: axios } = require('../utils');
+
+const axios = require('axios').create({
+  baseURL: 'https://api.genius.com',
+  headers: {
+    Authorization: `Bearer ${secrets.GENIUS_API_KEY}`,
+  },
+});
 
 async function findMatch(hits, { name, artist }) {
   if (hits.length === 0) {
@@ -20,6 +28,19 @@ async function findMatch(hits, { name, artist }) {
   }
 
   return null;
+}
+
+function stringComparator(a, b) {
+  const na = normalizeSring(a);
+  const nb = normalizeSring(b);
+
+  const s = compareTwoStrings(na, nb);
+
+  return s >= 0.8;
+}
+
+function normalizeSring(s) {
+  return s.toLowerCase().replace(/[^0-9a-z]/gi, '');
 }
 
 async function fetchSong(hit) {
@@ -60,7 +81,7 @@ async function handle({ name, artist }) {
 }
 
 module.exports = {
-  async details(event) {
+  details: async function(event) {
     const params = event.queryStringParameters;
 
     try {
