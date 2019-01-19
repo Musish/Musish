@@ -33,7 +33,8 @@ config.plugins.push(
     meta: {
       viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
     },
-  })
+    env: process.env,
+  }),
 );
 
 config.plugins.push(new Dotenv());
