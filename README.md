@@ -1,6 +1,6 @@
 ![Musish](https://i.imgur.com/ROMO267.png)
 
-# Musish ([https://musi.sh/](https://musi.sh/))
+# Musish ([musi.sh](https://musi.sh/))
 The unofficial open source Apple Music webapp.
 
 Built with React and Apple's MusicKit JS while utilising the official Apple Music API.
@@ -16,7 +16,7 @@ Contains some serverless functions deployed with AWS Lambda to speed up certain 
 
 The Musish project welcomes contributions of all sorts; PRs, issues, feedback, comments, or even just sharing the project would all be infinitely useful to us!
 
-Please do remember to read our contributing guidlines before making a pull request.
+Please do remember to read our contributing guidelines before making a pull request.
 
 #### Generating an Apple Developer Token (JWT):
 Please reference [Apple's official guide](https://developer.apple.com/documentation/applemusicapi/getting_keys_and_creating_tokens) on generating the keys and an associated token.
@@ -24,7 +24,7 @@ Please reference [Apple's official guide](https://developer.apple.com/documentat
 You may also find pelauimagineering's [apple-music-token-generator](https://github.com/pelauimagineering/apple-music-token-generator) python script to be useful to generate the tokens.
 
 #### Generating a Genius Developer Token:
-If you wish to work onthe Musish project's serverless backend, you will require a Genius Developer token.
+If you wish to work on the Musish project's serverless backend, you will require a Genius Developer token.
 
 Create a client access token via [Genius' developer portal](https://genius.com/developers).
 
