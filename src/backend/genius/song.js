@@ -71,5 +71,4 @@ module.exports = {
       return utils.generateError(500, e);
     }
   },
-  stringComparator,
 };
