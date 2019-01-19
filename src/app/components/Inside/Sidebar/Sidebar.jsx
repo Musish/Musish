@@ -43,7 +43,7 @@ class Sidebar extends React.Component {
 
     const appleMusic = authorized ? (
       <SidebarMenu
-        title={'Apple music'}
+        title={'Apple Music'}
         items={[
           { to: '/', label: 'For You' },
           { to: '/browse', label: 'Browse', exact: false },
