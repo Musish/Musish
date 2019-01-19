@@ -18,22 +18,47 @@ The Musish project welcomes contributions of all sorts; PRs, issues, feedback, c
 
 Please do remember to read our contributing guidelines before making a pull request.
 
-#### Generating an Apple Developer Token (JWT):
+## Self hosting
+
+Building [Musi.sh](https://musi.sh/) requires [node](https://nodejs.org/en/) and [yarn](https://yarnpkg.com/lang/en/docs/install/).
+
+#### Running the Musish web app:
+
+##### 1. Generating an Apple Developer Token (JWT):
+Musish uses the Apple Music API and therefore you'll need a signed developer token from Apple.
+
 Please reference [Apple's official guide](https://developer.apple.com/documentation/applemusicapi/getting_keys_and_creating_tokens) on generating the keys and an associated token.
 
-You may also find pelauimagineering's [apple-music-token-generator](https://github.com/pelauimagineering/apple-music-token-generator) python script to be useful to generate the tokens.
+##### 2. Environment setup:
+Musish requires two environment variables to start. You'll need to enter your Apple Developer token as `APPLE_TOKEN`, and a link to your hosted Musish backend with `BACKEND_URL`.
 
-#### Generating a Genius Developer Token:
-If you wish to work on the Musish project's serverless backend, you will require a Genius Developer token.
-
-Create a client access token via [Genius' developer portal](https://genius.com/developers).
-
-#### .env template:
+.env.example:
 ```
 APPLE_TOKEN=your_apple_music_token
 BACKEND_URL=https://musish.app
 ```
 
+##### 3. Launch Musish
+Start webpack dev server on port 8080:
+```
+yarn start
+```
+
+*Or:*
+
+Build /dist for prod:
+```
+yarn build
+```
+This will create a directory called `dist` in the project root, these files can be served from a web server as static content.
+
+#### Running the Musish backend:
+We use [Serverless](https://serverless.com) to run our backend on AWS lambdas, however you can choose differetly here.
+
+##### Generating a Genius Developer Token:
+If you wish to work on the Musish project's serverless backend, you will require a Genius Developer token.
+
+Create a client access token via [Genius' developer portal](https://genius.com/developers).
 
 ## Is it safe?
 Musish uses official Apple public APIs and libraries to handle authentication. The user is prompted to login directly on a new window under the Apple.com domain. Apple.com returns the user a temporary valid token to allow their browser to make requests to Apple Music data only.
