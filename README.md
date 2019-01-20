@@ -38,7 +38,12 @@ APPLE_TOKEN=your_apple_music_token
 BACKEND_URL=https://musish.app
 ```
 
-##### 3. Launch Musish
+##### 3. Install dependencies:
+```
+yarn
+```
+
+##### 4. Launch Musish:
 Start webpack dev server on port 8080:
 ```
 yarn start
@@ -46,7 +51,6 @@ yarn start
 
 *Or:*
 
-Build /dist for prod:
 ```
 yarn build
 ```
