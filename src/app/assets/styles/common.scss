@@ -60,6 +60,7 @@ img {
     display: flex;
     flex-direction: column;
     width: 100%;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
   }
 
   #main-wrapper {
