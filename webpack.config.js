@@ -29,7 +29,7 @@ config.plugins.push(
   new HtmlWebpackPlugin({
     // Also generate a test.html
     template: 'src/app/app.html',
-    title: 'Musish | Apple Music Web Player',
+    title: 'Musish',
     meta: {
       viewport: 'width=device-width, initial-scale=1, shrink-to-fit=no',
     },
