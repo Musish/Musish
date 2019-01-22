@@ -57,7 +57,7 @@ yarn build
 This will create a directory called `dist` in the project root, these files can be served from a web server as static content.
 
 #### Running the Musish backend:
-We use [Serverless](https://serverless.com) to run our backend on AWS lambdas, however you can choose differetly here.
+We use [Serverless](https://serverless.com) to run our backend on AWS lambdas, however you can choose differently here.
 
 ##### Generating a Genius Developer Token:
 If you wish to work on the Musish project's serverless backend, you will require a Genius Developer token.
