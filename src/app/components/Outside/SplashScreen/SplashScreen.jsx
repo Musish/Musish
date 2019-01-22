@@ -38,7 +38,7 @@ class SplashScreen extends React.Component {
         </a>
         <div className={classes.title}>
           <div className={classes.brand}>
-            <span>Musish</span>
+            <h1>Musish</h1>
           </div>
           <div className={classes.betaLabel}>
             <span>beta</span>
