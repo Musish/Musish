@@ -21,13 +21,11 @@ export function getTime(ms) {
 }
 
 export function humanifyMillis(duration) {
-  const minutes = parseInt((duration / (1000 * 60)) % 60, 10);
-  const hours = parseInt((duration / (1000 * 60 * 60)) % 24, 10);
+  const musickitDuration = MusicKit.formattedMilliseconds(duration);
 
-  let humanReadable = `${minutes} minute${minutes === 1 ? 's' : ''}`;
-  if (hours > 0) {
-    humanReadable = `${hours} hour${hours === 1 ? 's' : ''}, ${humanReadable}`;
-  }
+  const hourFormatted = musickitDuration.hours === 1 ? 'hour' : 'hours';
+  const minuteFormatted = musickitDuration.minutes === 1 ? 'minute' : 'minutes';
+  const humanReadable = `${musickitDuration.hours} ${hourFormatted}, ${musickitDuration.minutes} ${minuteFormatted}`;
 
   return humanReadable;
 }
