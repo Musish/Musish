@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Mousetrap from 'mousetrap';
 import withMK from '../../../hoc/withMK';
 import styles from './Player.scss';
-import { volumeUp, volumeDown } from '../../../services/MusicPlayerApi';
 
 class VolumeControl extends React.Component {
   constructor(props) {
@@ -15,7 +14,7 @@ class VolumeControl extends React.Component {
     };
 
     this.getVolumeIconClasses = this.getVolumeIconClasses.bind(this);
-    this.handleVolumeChange = this.handleVolumeChange.bind(this);
+    this.handleVolumeBarChange = this.handleVolumeBarChange.bind(this);
     this.toggleVolume = this.toggleVolume.bind(this);
   }
 
@@ -25,9 +24,9 @@ class VolumeControl extends React.Component {
       'up',
       e => {
         e.preventDefault();
-        this.setState({
-          volume: volumeUp(),
-        });
+        const { player } = MusicKit.getInstance();
+        const newVolume = player.volume < 0.9 ? player.volume + 0.1 : 1;
+        this.changeVolume(newVolume);
       },
       'keydown'
     );
@@ -37,9 +36,9 @@ class VolumeControl extends React.Component {
       'down',
       e => {
         e.preventDefault();
-        this.setState({
-          volume: volumeDown(),
-        });
+        const { player } = MusicKit.getInstance();
+        const newVolume = player.volume > 0.1 ? player.volume - 0.1 : 0;
+        this.changeVolume(newVolume);
       },
       'keydown'
     );
@@ -63,24 +62,32 @@ class VolumeControl extends React.Component {
     return 'fas fa-volume-up';
   }
 
-  handleVolumeChange(e) {
-    this.props.mk.instance.player.volume = e.target.value;
-    this.setState({
-      volume: parseFloat(e.target.value),
-    });
+  handleVolumeBarChange(e) {
+    this.changeVolume(parseFloat(e.target.value));
+  }
+
+  changeVolume(volume, updateState = true) {
+    this.props.mk.instance.player.volume = volume;
+
+    if (updateState) {
+      this.setState({
+        volume,
+      });
+    }
   }
 
   toggleVolume() {
     const { player } = this.props.mk.instance;
+    const previousVolume = this.state.volume;
     const isMuted = player.volume === 0;
-    if (isMuted && this.state.volume === 0) {
-      this.setState({
-        volume: 0.25,
-      });
-      player.volume = 0.25;
-    } else {
-      player.volume = isMuted ? this.state.volume : 0;
+
+    if (isMuted && previousVolume === 0) {
+      this.changeVolume(0.25);
+      return;
     }
+
+    const newVolume = isMuted ? previousVolume : 0;
+    this.changeVolume(newVolume, false);
   }
 
   render() {
@@ -104,8 +111,8 @@ class VolumeControl extends React.Component {
               }}
               type={'range'}
               value={mk.instance.player.volume}
-              onChange={this.handleVolumeChange}
-              onClick={this.handleVolumeChange}
+              onChange={this.handleVolumeBarChange}
+              onClick={this.handleVolumeBarChange}
               min={0}
               max={1}
               step={0.01}
