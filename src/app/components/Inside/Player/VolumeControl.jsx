@@ -46,7 +46,7 @@ class VolumeControl extends React.Component {
   }
 
   getVolumeIconClasses() {
-    const { volume } = this.state;
+    const { volume } = this.props.mk.instance.player;
 
     if (volume === 0) {
       return 'fas fa-times';
@@ -72,7 +72,15 @@ class VolumeControl extends React.Component {
 
   toggleVolume() {
     const { player } = this.props.mk.instance;
-    player.volume = player.volume === 0 ? this.state.volume : 0;
+    const isMuted = player.volume === 0;
+    if (isMuted && this.state.volume == 0) {
+      this.setState({
+        volume: 0.5,
+      });
+      player.volume = 0.5;
+    } else {
+      player.volume = isMuted ? this.state.volume : 0;
+    }
   }
 
   render() {
