@@ -8,38 +8,29 @@ import withContext from '../../../hoc/withContext';
 import SidebarMenu from './SidebarMenu';
 import SidebarLibraryMenu from './SidebarLibraryMenu';
 import AuthorizeContext from '../NavigationBar/Authorize/AuthorizeContext';
+import InfiniteLoader from '../../Common/InfiniteLoader/InfiniteLoader';
+import PlaylistsContext from './PlaylistsContext';
 
 class Sidebar extends React.Component {
-  constructor(props) {
-    super(props);
+  static async loadPlaylists(params) {
+    const music = MusicKit.getInstance();
 
-    this.state = {
-      playlists: null,
-    };
+    return music.api.library.playlists(null, params);
   }
 
-  async componentDidMount() {
-    const playlists = this.context ? await this.props.mk.instance.api.library.playlists() : null;
-
-    this.setState({
-      playlists,
-    });
+  static renderPlaylists(args, { items }) {
+    return items.map(playlist => (
+      <PlaylistMenuItem
+        playlist={playlist}
+        to={`/me/playlists/${playlist.id}`}
+        label={playlist.attributes.name}
+        key={playlist.id}
+      />
+    ));
   }
 
   render() {
     const { authorized } = this.props;
-
-    const playlists =
-      authorized &&
-      this.state.playlists &&
-      this.state.playlists.map(playlist => (
-        <PlaylistMenuItem
-          playlist={playlist}
-          to={`/me/playlists/${playlist.id}`}
-          label={playlist.attributes.name}
-          key={playlist.id}
-        />
-      ));
 
     const appleMusic = authorized ? (
       <SidebarMenu
@@ -73,10 +64,21 @@ class Sidebar extends React.Component {
               ]}
             />
           )}
-          {playlists && (
+          {authorized && (
             <div className={classes.menu}>
               <h3>Playlists</h3>
-              <ul>{playlists}</ul>
+              <ul>
+                <PlaylistsContext.Consumer>
+                  {({ setItems }) => (
+                    <InfiniteLoader
+                      load={Sidebar.loadPlaylists}
+                      render={Sidebar.renderPlaylists}
+                      loadAll
+                      onSetItems={({ items }) => setItems(items)}
+                    />
+                  )}
+                </PlaylistsContext.Consumer>
+              </ul>
             </div>
           )}
           <div className={classes.footer}>
@@ -103,7 +105,6 @@ class Sidebar extends React.Component {
 }
 
 Sidebar.propTypes = {
-  mk: PropTypes.any.isRequired,
   authorized: PropTypes.bool.isRequired,
 };
 

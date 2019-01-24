@@ -1,11 +1,12 @@
 import React from 'react';
-import { MenuItem } from 'react-contextmenu';
+import { MenuItem, SubMenu } from 'react-contextmenu';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { artworkForMediaItem } from '../../../../../utils/Utils';
 import classes from './TrackContextMenu.scss';
 import { playLater, playNext, playTrack } from '../../../../../services/MusicPlayerApi';
-import { addToLibrary } from '../../../../../services/MusicApi';
+import { addToLibrary, addSongsToPlaylist } from '../../../../../services/MusicApi';
+import PlaylistsContext from '../../../../Inside/Sidebar/PlaylistsContext';
 
 function TrackContextMenu({ track, tracks, index }) {
   const { attributes } = track;
@@ -40,6 +41,18 @@ function TrackContextMenu({ track, tracks, index }) {
           <MenuItem onClick={() => addToLibrary('songs', [track.id])}>Add to library</MenuItem>
         </>
       )}
+
+      <PlaylistsContext.Consumer>
+        {({ playlists }) => (
+          <SubMenu title="Add to playlist" hoverDelay={0}>
+            {playlists.map(playlist => (
+              <MenuItem onClick={() => addSongsToPlaylist(playlist.id, [track])}>
+                {playlist.attributes.name}
+              </MenuItem>
+            ))}
+          </SubMenu>
+        )}
+      </PlaylistsContext.Consumer>
     </>
   );
 }
