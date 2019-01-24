@@ -11,7 +11,13 @@ export async function playTrack(tracks, index) {
 
 export async function playAlbum(album, index) {
   const music = MusicKit.getInstance();
-  await setQueueItems(album.relationships.tracks.data, index);
+  let albumData = album;
+  if (!albumData.relationships || !albumData.relationships.tracks) {
+    albumData = isNaN(album.id)
+      ? await music.api.library.album(album.id)
+      : await music.api.album(album.id);
+  }
+  await setQueueItems(albumData.relationships.tracks.data, index);
   await music.player.play();
 }
 
@@ -24,7 +30,13 @@ export async function shufflePlayAlbum(album) {
 
 export async function playPlaylist(playlist, index) {
   const music = MusicKit.getInstance();
-  await setQueueItems(playlist.relationships.tracks.data, index);
+  let playlistData = playlist;
+  if (!playlistData.relationships || !playlistData.relationships.tracks) {
+    playlistData = playlist.id.startsWith('p.')
+      ? await music.api.library.playlist(playlist.id)
+      : await music.api.playlist(playlist.id);
+  }
+  await setQueueItems(playlistData.relationships.tracks.data, index);
   await music.player.play();
 }
 

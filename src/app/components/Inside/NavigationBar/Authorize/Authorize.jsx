@@ -19,6 +19,7 @@ class Authorize extends Component {
 
   async login() {
     await this.props.mk.instance.authorize();
+    window.location.reload();
   }
 
   render() {

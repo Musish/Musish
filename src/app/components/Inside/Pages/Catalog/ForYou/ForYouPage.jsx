@@ -56,11 +56,11 @@ class ForYouPage extends React.Component {
     const { recentlyPlayed } = this.state;
 
     if (recentlyPlayed === false) {
-      return null;
+      return true; // No items
     }
 
     if (!recentlyPlayed) {
-      return null;
+      return null; // Loading items
     }
 
     return (
@@ -88,11 +88,11 @@ class ForYouPage extends React.Component {
     const { heavyRotation } = this.state;
 
     if (heavyRotation === false) {
-      return null;
+      return true; // No items
     }
 
     if (!heavyRotation) {
-      return null;
+      return null; // Loading items
     }
 
     return (
@@ -120,11 +120,11 @@ class ForYouPage extends React.Component {
     const { recommendations } = this.state;
 
     if (recommendations === false) {
-      return null;
+      return true; // No items
     }
 
     if (!recommendations) {
-      return null;
+      return null; // Loading items
     }
 
     return (
