@@ -157,9 +157,11 @@ export function isTrackPlaying(track) {
 export function volumeUp() {
   const { player } = MusicKit.getInstance();
   player.volume = player.volume < 0.9 ? player.volume + 0.1 : 1;
+  return player.volume;
 }
 
 export function volumeDown() {
   const { player } = MusicKit.getInstance();
   player.volume = player.volume > 0.1 ? player.volume - 0.1 : 0;
+  return player.volume;
 }
