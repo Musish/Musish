@@ -10,12 +10,13 @@ class MusicKitAuthorizeProvider extends React.Component {
     super(props);
 
     this.state = {
-      ready: true,
+      ready: false,
       browsing: false,
       isAuthorized: props.mk.instance.isAuthorized,
     };
 
     this.check = this.check.bind(this);
+    this.handleTokenCheck = this.handleTokenCheck.bind(this);
   }
 
   check({ authorizationStatus }) {
@@ -32,7 +33,31 @@ class MusicKitAuthorizeProvider extends React.Component {
     }
   }
 
+  async handleTokenCheck() {
+    const music = this.props.mk.instance;
+    if (!this.state.isAuthorized) {
+      this.setState({
+        ready: true,
+      });
+      return;
+    }
+
+    try {
+      await music.api.library.songs({ limit: 0 });
+    } catch (e) {
+      await music.unauthorize();
+    }
+
+    setImmediate(() => {
+      this.setState({
+        ready: true,
+      });
+    });
+  }
+
   componentDidMount() {
+    this.handleTokenCheck();
+
     MusicKit.getInstance().addEventListener(
       MusicKit.Events.authorizationStatusDidChange,
       this.check
@@ -40,13 +65,13 @@ class MusicKitAuthorizeProvider extends React.Component {
   }
 
   render() {
-    const { ready, isAuthorized } = this.state;
+    const { ready, isAuthorized, browsing } = this.state;
 
     if (!ready) {
       return <TokenLoader />;
     }
 
-    if (!isAuthorized && !this.state.browsing) {
+    if (!isAuthorized && !browsing) {
       return (
         <SplashScreen
           onClick={() => this.props.mk.instance.authorize()}
