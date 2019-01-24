@@ -7,7 +7,8 @@ import classes from './AlbumContextMenu.scss';
 import { playAlbum } from '../../../../../services/MusicPlayerApi';
 import ModalContext from '../../../Modal/ModalContext';
 import AlbumPanel from '../../../AlbumPanel/AlbumPanel';
-import { addToLibrary } from '../../../../../services/MusicApi';
+import { addAlbumToPlaylist, addToLibrary } from '../../../../../services/MusicApi';
+import PlaylistSelector from '../../../PlaylistSelector/PlaylistSelector';
 
 function AlbumContextMenu({ album }) {
   const { attributes } = album;
@@ -41,6 +42,7 @@ function AlbumContextMenu({ album }) {
           </MenuItem>
         )}
       </ModalContext.Consumer>
+
       {!inLibrary && (
         <>
           <MenuItem divider />
@@ -48,6 +50,28 @@ function AlbumContextMenu({ album }) {
           <MenuItem onClick={() => addToLibrary('albums', [album.id])}>Add to library</MenuItem>
         </>
       )}
+
+      <ModalContext.Consumer>
+        {({ push, pop }) => (
+          <MenuItem
+            onClick={() =>
+              push(
+                <PlaylistSelector
+                  onClick={async playlist => {
+                    await addAlbumToPlaylist(playlist.id, album.id);
+                    pop();
+                  }}
+                />,
+                {
+                  width: 'auto',
+                }
+              )
+            }
+          >
+            Add to playlist
+          </MenuItem>
+        )}
+      </ModalContext.Consumer>
     </>
   );
 }
