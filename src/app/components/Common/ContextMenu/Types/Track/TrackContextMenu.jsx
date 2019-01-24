@@ -1,12 +1,13 @@
 import React from 'react';
-import { MenuItem, SubMenu } from 'react-contextmenu';
+import { MenuItem } from 'react-contextmenu';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { artworkForMediaItem } from '../../../../../utils/Utils';
 import classes from './TrackContextMenu.scss';
 import { playLater, playNext, playTrack } from '../../../../../services/MusicPlayerApi';
 import { addToLibrary, addSongsToPlaylist } from '../../../../../services/MusicApi';
-import PlaylistsContext from '../../../../Inside/Sidebar/PlaylistsContext';
+import PlaylistSelector from '../../../PlaylistSelector/PlaylistSelector';
+import ModalContext from '../../../Modal/ModalContext';
 
 function TrackContextMenu({ track, tracks, index }) {
   const { attributes } = track;
@@ -42,17 +43,27 @@ function TrackContextMenu({ track, tracks, index }) {
         </>
       )}
 
-      <PlaylistsContext.Consumer>
-        {({ playlists }) => (
-          <SubMenu title="Add to playlist" hoverDelay={0}>
-            {playlists.map(playlist => (
-              <MenuItem onClick={() => addSongsToPlaylist(playlist.id, [track])}>
-                {playlist.attributes.name}
-              </MenuItem>
-            ))}
-          </SubMenu>
+      <ModalContext.Consumer>
+        {({ push, pop }) => (
+          <MenuItem
+            onClick={() =>
+              push(
+                <PlaylistSelector
+                  onClick={async playlist => {
+                    await addSongsToPlaylist(playlist.id, [track]);
+                    pop();
+                  }}
+                />,
+                {
+                  width: 'auto',
+                }
+              )
+            }
+          >
+            Add to playlist
+          </MenuItem>
         )}
-      </PlaylistsContext.Consumer>
+      </ModalContext.Consumer>
     </>
   );
 }

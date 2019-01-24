@@ -19,8 +19,8 @@ class Modal extends Component {
 
     const { style, width } = this.props;
     const inlineStyles = {
-      ...style,
       width,
+      ...style,
     };
 
     return (

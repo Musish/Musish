@@ -52,6 +52,20 @@ class App extends React.Component {
     }));
   }
 
+  renderModal(modalState) {
+    const modal = this.state.modalsContents[0];
+
+    return (
+      <Modal
+        key={this.state.modalsContents.length}
+        open
+        handleClose={modalState.pop}
+        render={() => modal.content}
+        style={modal.style}
+      />
+    );
+  }
+
   render() {
     const queueState = {
       show: this.state.showQueue,
@@ -60,13 +74,13 @@ class App extends React.Component {
     };
 
     const modalState = {
-      push: c =>
+      push: (content, style = {}) =>
         this.setState(state => ({
-          modalsContents: [c, ...state.modalsContents],
+          modalsContents: [{ content, style }, ...state.modalsContents],
         })),
-      replace: c =>
+      replace: (content, style = {}) =>
         this.setState(state => ({
-          modalsContents: [...state.modalsContents.slice(0, -1), c],
+          modalsContents: [...state.modalsContents.slice(0, -1), { content, style }],
         })),
       pop: this.popModal,
       flush: () =>
@@ -130,14 +144,7 @@ class App extends React.Component {
                           />
                           <Redirect to={'/'} />
                         </Switch>
-                        {this.state.modalsContents.length > 0 && (
-                          <Modal
-                            key={this.state.modalsContents.length}
-                            open
-                            handleClose={modalState.pop}
-                            render={() => this.state.modalsContents[0]}
-                          />
-                        )}
+                        {this.state.modalsContents.length > 0 && this.renderModal(modalState)}
                       </Layout>
                       <ConnectedMenu />
                       <Alert stack offset={60} />
