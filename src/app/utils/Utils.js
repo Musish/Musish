@@ -24,8 +24,19 @@ export function humanifyMillis(duration) {
   const musickitDuration = MusicKit.formattedMilliseconds(duration);
 
   const hourFormatted = musickitDuration.hours === 1 ? 'hour' : 'hours';
+  const hours = musickitDuration.hours === 0 ? `` : `${musickitDuration.hours} ${hourFormatted}`;
   const minuteFormatted = musickitDuration.minutes === 1 ? 'minute' : 'minutes';
-  const humanReadable = `${musickitDuration.hours} ${hourFormatted}, ${musickitDuration.minutes} ${minuteFormatted}`;
+  const minutes =
+    musickitDuration.minutes === 0 ? `` : `${musickitDuration.minutes} ${minuteFormatted}`;
+  const comma = musickitDuration.hours === 0 || musickitDuration.minutes === 0 ? `` : `, `;
+  const humanReadable = `${hours}${comma}${minutes}`;
+
+  return humanReadable;
+}
+
+export function humanifyTrackNumbers(trackNumber) {
+  const songs = trackNumber === 1 ? 'song' : 'songs';
+  const humanReadable = `${trackNumber} ${songs}`;
 
   return humanReadable;
 }
