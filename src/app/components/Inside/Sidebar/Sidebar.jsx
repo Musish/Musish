@@ -43,10 +43,10 @@ class Sidebar extends React.Component {
 
     const appleMusic = authorized ? (
       <SidebarMenu
-        title={'Apple music'}
+        title={'Apple Music'}
         items={[
           { to: '/', label: 'For You' },
-          { to: '/browse', label: 'Browse' },
+          { to: '/browse', label: 'Browse', exact: false },
           { to: '/radio', label: 'Radio' },
         ]}
       />
@@ -92,7 +92,7 @@ class Sidebar extends React.Component {
             <span className={classes.footnote}>
               {'Designed with '}
               <i className={'fa fa-heart'} />
-              {' by the Musi.sh team.'}
+              {' by the Musish team.'}
             </span>
           </div>
         </div>

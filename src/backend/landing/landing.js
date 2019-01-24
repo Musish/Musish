@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 module.exports = {
-  landing: function(event, context, callback) {
+  landing(event, context, callback) {
     const content = fs.readFileSync(`${__dirname}/landing.txt`, 'utf8');
 
     const response = {

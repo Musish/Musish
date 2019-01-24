@@ -38,7 +38,7 @@ class SplashScreen extends React.Component {
         </a>
         <div className={classes.title}>
           <div className={classes.brand}>
-            <span>Musi.sh</span>
+            <h1>Musish</h1>
           </div>
           <div className={classes.betaLabel}>
             <span>beta</span>
@@ -51,7 +51,7 @@ class SplashScreen extends React.Component {
         </h5>
         <hr />
         <p className={classes.accountCaption}>
-          Musi.sh uses your Apple Music library to provide you with an amazing listening experience.
+          Musish uses your Apple Music library to provide you with an amazing listening experience.
           Please connect your account below.
         </p>
         <button type={'button'} onClick={this.loginNavigate} className={classes.button}>
@@ -76,7 +76,7 @@ class SplashScreen extends React.Component {
           </div>
           <div className={classes.disclaimerText}>
             {
-              "Musi.sh is not affiliated with Apple, Inc. Our service does not access, collect, or store any personal or account information. 'Apple', 'Apple Music' and the Apple logo are trademarks of Apple, Inc."
+              "Musish is not affiliated with Apple, Inc. Our service does not access, collect, or store any personal or account information. 'Apple', 'Apple Music' and the Apple logo are trademarks of Apple, Inc."
             }
           </div>
         </div>
