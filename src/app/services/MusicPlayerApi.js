@@ -1,4 +1,4 @@
-import _shuffle from 'lodash.shuffle';
+import _shuffle from 'lodash/shuffle';
 import { createMediaItem } from '../utils/Utils';
 
 let originalQueue = null;
