@@ -88,14 +88,13 @@ export default class InfiniteLoader extends React.Component {
 
   componentDidUpdate() {
     const { loading, end } = this.state;
-    const { scrollElement, initialBuffer } = this.props;
+    const { scrollElement, initialBuffer, loadAll } = this.props;
 
-    if (
+    const isNearishBottom =
       scrollElement &&
-      !loading &&
-      !end &&
-      scrollElement.current.scrollHeight - initialBuffer <= scrollElement.current.clientHeight
-    ) {
+      scrollElement.current.scrollHeight - initialBuffer <= scrollElement.current.clientHeight;
+
+    if (!loading && !end && (isNearishBottom || loadAll)) {
       this.loadMore();
     }
   }
@@ -123,6 +122,7 @@ InfiniteLoader.propTypes = {
   scrollElement: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   limit: PropTypes.number,
   initialBuffer: PropTypes.number,
+  loadAll: PropTypes.bool,
 };
 
 InfiniteLoader.defaultProps = {
@@ -130,4 +130,5 @@ InfiniteLoader.defaultProps = {
   scrollElement: null,
   limit: 100,
   initialBuffer: 300,
+  loadAll: false,
 };

@@ -5,7 +5,9 @@ import { withRouter } from 'react-router-dom';
 import { artworkForMediaItem } from '../../../../../utils/Utils';
 import classes from './TrackContextMenu.scss';
 import { playLater, playNext, playTrack } from '../../../../../services/MusicPlayerApi';
-import { addToLibrary } from '../../../../../services/MusicApi';
+import { addToLibrary, addSongsToPlaylist } from '../../../../../services/MusicApi';
+import PlaylistSelector from '../../../PlaylistSelector/PlaylistSelector';
+import ModalContext from '../../../Modal/ModalContext';
 
 function TrackContextMenu({ track, tracks, index }) {
   const { attributes } = track;
@@ -40,6 +42,28 @@ function TrackContextMenu({ track, tracks, index }) {
           <MenuItem onClick={() => addToLibrary('songs', [track.id])}>Add to library</MenuItem>
         </>
       )}
+
+      <ModalContext.Consumer>
+        {({ push, pop }) => (
+          <MenuItem
+            onClick={() =>
+              push(
+                <PlaylistSelector
+                  onClick={async playlist => {
+                    await addSongsToPlaylist(playlist.id, [track]);
+                    pop();
+                  }}
+                />,
+                {
+                  width: 'auto',
+                }
+              )
+            }
+          >
+            Add to playlist
+          </MenuItem>
+        )}
+      </ModalContext.Consumer>
     </>
   );
 }

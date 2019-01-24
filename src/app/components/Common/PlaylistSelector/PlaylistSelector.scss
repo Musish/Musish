@@ -1,0 +1,11 @@
+@import '../../../assets/styles/settings/colors';
+
+.playlist {
+  padding: 10px 3px;
+  border-bottom: 1px solid $background_tint_color_strong;
+  cursor: pointer;
+
+  &:hover {
+    background: $background_tint_color;
+  }
+}
