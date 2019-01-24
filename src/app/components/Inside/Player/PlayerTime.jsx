@@ -87,7 +87,9 @@ class PlayerTime extends React.Component {
         value={this.getScrubberValue()}
         onChange={this.onScrub}
         onMouseDown={this.onStartScrubbing}
+        onTouchStart={this.onStartScrubbing}
         onMouseUp={this.onEndScrubbing}
+        onTouchEnd={this.onEndScrubbing}
         min={0}
         max={duration}
         step={1}
