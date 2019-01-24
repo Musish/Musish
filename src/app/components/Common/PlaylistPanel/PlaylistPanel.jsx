@@ -2,7 +2,7 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import classes from './PlaylistPanel.scss';
-import { artworkForMediaItem, humanifyMillis } from '../../../utils/Utils';
+import { artworkForMediaItem, humanifyMillis, humanifyTrackNumbers } from '../../../utils/Utils';
 import TracksList from '../Tracks/TracksList/TracksList';
 import Loader from '../Loader/Loader';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
@@ -100,7 +100,9 @@ export default class PlaylistPanel extends React.Component {
               <span className={classes.curator}>
                 {`Playlist by ${playlist.attributes.curatorName}`}
               </span>
-              <span className={classes.titleMeta}>{`${trackCount} songs, ${runtime}`}</span>
+              <span className={classes.titleMeta}>
+                {`${humanifyTrackNumbers(trackCount)}, ${runtime}`}
+              </span>
               <div className={classes.playActions}>
                 <button type={'button'} onClick={this.playPlaylist} className={classes.button}>
                   <i className={`${classes.icon} fas fa-play`} />

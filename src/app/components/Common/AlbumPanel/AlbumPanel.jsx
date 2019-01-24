@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Route, withRouter } from 'react-router-dom';
 import classes from './AlbumPanel.scss';
-import { artworkForMediaItem, humanifyMillis } from '../../../utils/Utils';
+import { artworkForMediaItem, humanifyMillis, humanifyTrackNumbers } from '../../../utils/Utils';
 import TracksList from '../Tracks/TracksList/TracksList';
 import Loader from '../Loader/Loader';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
@@ -139,7 +139,7 @@ class AlbumPanel extends React.Component {
             </button>
           </div>
           <span className={classes.albumRuntimeDescription}>
-            {`${album.attributes.trackCount} songs, ${runtime}`}
+            {`${humanifyTrackNumbers(album.attributes.trackCount)}, ${runtime}`}
           </span>
         </div>
 
