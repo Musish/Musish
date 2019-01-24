@@ -66,18 +66,18 @@ class VolumeControl extends React.Component {
   handleVolumeChange(e) {
     this.props.mk.instance.player.volume = e.target.value;
     this.setState({
-      volume: e.target.value,
+      volume: parseFloat(e.target.value),
     });
   }
 
   toggleVolume() {
     const { player } = this.props.mk.instance;
     const isMuted = player.volume === 0;
-    if (isMuted && this.state.volume == 0) {
+    if (isMuted && this.state.volume === 0) {
       this.setState({
-        volume: 0.5,
+        volume: 0.25,
       });
-      player.volume = 0.5;
+      player.volume = 0.25;
     } else {
       player.volume = isMuted ? this.state.volume : 0;
     }
