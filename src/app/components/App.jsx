@@ -74,6 +74,7 @@ class App extends React.Component {
     };
 
     const modalState = {
+      opened: this.state.modalsContents.length >= 1,
       push: (content, style = {}) =>
         this.setState(state => ({
           modalsContents: [{ content, style }, ...state.modalsContents],
