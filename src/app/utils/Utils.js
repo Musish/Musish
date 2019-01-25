@@ -48,3 +48,25 @@ export const ShuffleModeOff = 0;
 export const ShuffleModeSongs = 1;
 
 export const API_URL = 'https://api.music.apple.com';
+
+export const RATING_URL = (type, id) => {
+  const baseUrl = `${API_URL}/v1/me/ratings/`;
+  const endpoints = {
+    library: {
+      song: 'library-songs',
+      playlist: 'library-playlists',
+      album: 'library-playlists',
+    },
+    catalog: {
+      song: 'songs',
+      playlist: 'playlists',
+      album: 'albums',
+    },
+  };
+  const choice = isNaN(id) ? endpoints.library : endpoints.catalog;
+  if (!(type in choice)) {
+    return false;
+  }
+
+  return `${baseUrl}${choice[type]}/${id}`;
+};

@@ -7,9 +7,12 @@ import styles from '../Player.scss';
 class Rating extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       rating: 0,
+      loading: true,
     };
+
     this.toggleRating = this.toggleRating.bind(this);
     this.getRating = this.getRating.bind(this);
   }
@@ -22,37 +25,41 @@ class Rating extends React.Component {
     const rating = await getRating('song', this.props.nowPlayingItem.id);
     this.setState({
       rating,
+      loading: false,
     });
   }
 
-  toggleRating() {
+  async toggleRating() {
+    this.setState({
+      loading: true,
+    });
+
     if (this.state.rating === 1) {
-      setRating('song', this.props.nowPlayingItem.id, -1).then(result =>
+      return setRating('song', this.props.nowPlayingItem.id, -1).then(result =>
         this.setState({
           rating: result,
-        })
-      );
-    } else {
-      setRating('song', this.props.nowPlayingItem.id, this.state.rating + 1).then(result =>
-        this.setState({
-          rating: result,
+          loading: false,
         })
       );
     }
+    return setRating('song', this.props.nowPlayingItem.id, this.state.rating + 1).then(result =>
+      this.setState({
+        rating: result,
+        loading: false,
+      })
+    );
   }
 
   render() {
-    let heartClass = 'far fa-heart';
-    if (this.state.rating === 1) {
-      heartClass = 'fas fa-heart';
-    } else if (this.state.rating === -1) {
+    let heartClass = 'fas fa-heart';
+    if (this.state.rating === -1) {
       heartClass = 'fas fa-heart-broken';
     }
 
     return (
       <span
         className={cx(styles.controls, { [styles.enabled]: this.state.rating !== 0 })}
-        onClick={this.toggleRating}
+        onClick={this.state.loading ? e => '' : this.toggleRating}
       >
         <i className={heartClass} />
       </span>

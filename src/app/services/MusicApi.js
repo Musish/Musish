@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Alert from 'react-s-alert';
-import { API_URL } from '../utils/Utils';
+import { API_URL, RATING_URL } from '../utils/Utils';
 
 export function getNextSongs(path) {
   return axios({
@@ -147,58 +147,42 @@ export async function fetchFullCatalogAlbumFromLibraryAlbum(album) {
   return null;
 }
 
-function getRatingURL(type, id) {
-  const BASE_URL = `${API_URL}/v1/me/ratings/`;
-  const endpoints = {
-    library: {
-      song: 'library-songs',
-      playlist: 'library-playlists',
-      album: 'library-playlists',
-    },
-    catalog: {
-      song: 'songs',
-      playlist: 'playlists',
-      album: 'albums',
-    },
-  };
-  const choice = isNaN(id) ? endpoints.library : endpoints.catalog;
-  if (!(type in choice)) {
-    return false;
-  }
-  return `${BASE_URL}${choice[type]}/${id}`;
-}
+export async function getRating(type, id) {
+  const url = RATING_URL(type, id);
 
-export function getRating(type, id) {
-  const URL = getRatingURL(type, id);
-  if (!URL) {
+  if (!url) {
     return 0;
   }
+
   return axios({
     method: 'get',
-    url: URL,
+    url,
     headers: getHeaders(),
   })
     .then(response => response.data.data[0].attributes.value)
     .catch(error => 0);
 }
 
-export function setRating(type, id, rating) {
-  const URL = getRatingURL(type, id);
-  if (!URL) {
+export async function setRating(type, id, rating) {
+  const url = RATING_URL(type, id);
+
+  if (!url) {
     return 0;
   }
+
   if (rating === 0) {
     return axios({
       method: 'delete',
-      url: URL,
+      url,
       headers: getHeaders(),
     })
       .then(response => response.data.data[0].attributes.value)
       .catch(error => 0);
   }
+
   return axios({
     method: 'put',
-    url: URL,
+    url,
     data: {
       type: 'rating',
       attributes: {

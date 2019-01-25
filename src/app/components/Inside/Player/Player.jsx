@@ -191,10 +191,8 @@ class Player extends React.Component {
         <div className={styles.buttons}>
           <VolumeControl />
 
-          {this.props.authorized ? (
+          {this.props.authorized && (
             <Rating key={nowPlayingItem.id} nowPlayingItem={nowPlayingItem} />
-          ) : (
-            <></>
           )}
 
           <span
