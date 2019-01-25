@@ -11,9 +11,14 @@ class Rating extends React.Component {
       rating: 0,
     };
     this.toggleRating = this.toggleRating.bind(this);
+    this.getRating = this.getRating.bind(this);
   }
 
-  async componentDidMount() {
+  componentDidMount() {
+    this.getRating();
+  }
+
+  async getRating() {
     const rating = await getRating('song', this.props.nowPlayingItem.id);
     this.setState({
       rating,
