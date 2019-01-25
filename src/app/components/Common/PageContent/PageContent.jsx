@@ -1,5 +1,7 @@
 import React from 'react';
+import cx from 'classnames';
 import classes from './PageContent.scss';
+import ModalContext from '../Modal/ModalContext';
 
 export default class PageContent extends React.Component {
   constructor(props) {
@@ -25,9 +27,17 @@ export default class PageContent extends React.Component {
     const { mounted } = this.state;
 
     return (
-      <div className={classes.pageContent} ref={innerRef} {...rest}>
-        {mounted && this.props.children}
-      </div>
+      <ModalContext.Consumer>
+        {({ opened }) => (
+          <div
+            className={cx(classes.pageContent, { [classes.blurred]: opened })}
+            ref={innerRef}
+            {...rest}
+          >
+            {mounted && this.props.children}
+          </div>
+        )}
+      </ModalContext.Consumer>
     );
   }
 }
