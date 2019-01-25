@@ -20,12 +20,11 @@ import {
   togglePlayback,
   shuffle,
   unShuffle,
-  volumeUp,
-  volumeDown,
 } from '../../../services/MusicPlayerApi';
 import PlayerTime from './PlayerTime';
 import AlbumPanel from '../../Common/AlbumPanel/AlbumPanel';
 import ModalContext from '../../Common/Modal/ModalContext';
+import VolumeControl from './VolumeControl';
 
 class Player extends React.Component {
   constructor(props) {
@@ -37,9 +36,6 @@ class Player extends React.Component {
     this.handleAddToLibrary = this.handleAddToLibrary.bind(this);
     this.handleRepeat = this.handleRepeat.bind(this);
     this.handleShuffle = this.handleShuffle.bind(this);
-    this.handleVolumeChange = this.handleVolumeChange.bind(this);
-    this.toggleVolume = this.toggleVolume.bind(this);
-    this.getVolumeIconClasses = this.getVolumeIconClasses.bind(this);
     this.handleOpenAlbum = this.handleOpenAlbum.bind(this);
   }
 
@@ -57,26 +53,6 @@ class Player extends React.Component {
     Mousetrap.bind('left', this.handlePrevious, 'keyup');
     Mousetrap.bind('right', this.handleNext, 'keyup');
     Mousetrap.bind('space', togglePlayback, 'keyup');
-
-    // Volume controls (VOLUME UP)
-    Mousetrap.bind(
-      'up',
-      e => {
-        e.preventDefault();
-        volumeUp();
-      },
-      'keydown'
-    );
-
-    // Volume controls (VOLUME DOWN)
-    Mousetrap.bind(
-      'down',
-      e => {
-        e.preventDefault();
-        volumeDown();
-      },
-      'keydown'
-    );
   }
 
   handlePrevious() {
@@ -126,33 +102,6 @@ class Player extends React.Component {
     }
 
     this.forceUpdate();
-  }
-
-  handleVolumeChange(e) {
-    this.props.mk.instance.player.volume = e.target.value;
-  }
-
-  toggleVolume() {
-    const { player } = this.props.mk.instance;
-    player.volume = player.volume <= 0.5 ? 1 : 0;
-  }
-
-  getVolumeIconClasses() {
-    const { volume } = this.props.mk.instance.player;
-
-    if (volume === 0) {
-      return 'fas fa-times';
-    }
-
-    if (volume < 0.3) {
-      return 'fas fa-volume-off';
-    }
-
-    if (volume < 0.6) {
-      return 'fas fa-volume-down';
-    }
-
-    return 'fas fa-volume-up';
   }
 
   handleOpenAlbum(push) {
@@ -237,31 +186,7 @@ class Player extends React.Component {
         </div>
 
         <div className={styles.buttons}>
-          <span className={cx(styles.controls, styles.volumeControlWrapper)}>
-            <i className={this.getVolumeIconClasses()} onClick={this.toggleVolume} />
-            <div className={styles.volumeControlContainer}>
-              <div className={styles.volumeBarWrapper}>
-                <input
-                  className={cx(styles['progress-bar'], styles.volumeBar)}
-                  style={{
-                    background: `linear-gradient(
-                      to right,
-                      #fe2851 0%,
-                      #fe2851 ${mk.instance.player.volume * 100}%,
-                      #cccccc ${mk.instance.player.volume * 100}%,
-                      #cccccc 100%
-                    ) no-repeat`,
-                  }}
-                  type={'range'}
-                  value={mk.instance.player.volume}
-                  onChange={this.handleVolumeChange}
-                  min={0}
-                  max={1}
-                  step={0.01}
-                />
-              </div>
-            </div>
-          </span>
+          <VolumeControl />
 
           <span
             className={cx(styles.controls, styles.shuffle, {
@@ -312,7 +237,6 @@ const bindings = {
   [MusicKit.Events.queueItemsDidChange]: 'queueItems',
   [MusicKit.Events.queuePositionDidChange]: 'queuePosition',
   [MusicKit.Events.playbackStateDidChange]: 'playbackState',
-  [MusicKit.Events.playbackVolumeDidChange]: 'playbackVolume',
 };
 
 Player.propTypes = {

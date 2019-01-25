@@ -21,13 +21,21 @@ export function getTime(ms) {
 }
 
 export function humanifyMillis(duration) {
-  const minutes = parseInt((duration / (1000 * 60)) % 60, 10);
-  const hours = parseInt((duration / (1000 * 60 * 60)) % 24, 10);
+  const musickitDuration = MusicKit.formattedMilliseconds(duration);
 
-  let humanReadable = `${minutes} minute${minutes === 1 ? 's' : ''}`;
-  if (hours > 0) {
-    humanReadable = `${hours} hour${hours === 1 ? 's' : ''}, ${humanReadable}`;
-  }
+  const hourFormatted = musickitDuration.hours === 1 ? 'hour' : 'hours';
+  const hours = musickitDuration.hours === 0 ? '' : `${musickitDuration.hours} ${hourFormatted}`;
+  const minuteFormatted = musickitDuration.minutes === 1 ? 'minute' : 'minutes';
+  const minutes =
+    musickitDuration.minutes === 0 ? '' : `${musickitDuration.minutes} ${minuteFormatted}`;
+  const comma = musickitDuration.hours === 0 || musickitDuration.minutes === 0 ? '' : `, `;
+
+  return `${hours}${comma}${minutes}`;
+}
+
+export function humanifyTrackNumbers(trackNumber) {
+  const songs = trackNumber === 1 ? 'song' : 'songs';
+  const humanReadable = `${trackNumber} ${songs}`;
 
   return humanReadable;
 }

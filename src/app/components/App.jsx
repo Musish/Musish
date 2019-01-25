@@ -26,6 +26,7 @@ import LyricsModalContext from './Inside/Player/Lyrics/LyricsModalContext';
 import LyricsModal from './Inside/Player/Lyrics/LyricsModal';
 import SearchPage from './Inside/Pages/Search/SearchPage';
 import GoogleAnalyticsProvider from './GoogleAnalyticsProvider';
+import PlaylistsContext from './Inside/Sidebar/PlaylistsContext';
 
 class App extends React.Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class App extends React.Component {
       showQueue: false,
       modalsContents: [],
       lyricsModalOpen: false,
+      playlists: [],
     };
 
     this.popModal = this.popModal.bind(this);
@@ -50,6 +52,20 @@ class App extends React.Component {
     }));
   }
 
+  renderModal(modalState) {
+    const modal = this.state.modalsContents[0];
+
+    return (
+      <Modal
+        key={this.state.modalsContents.length}
+        open
+        handleClose={modalState.pop}
+        render={() => modal.content}
+        style={modal.style}
+      />
+    );
+  }
+
   render() {
     const queueState = {
       show: this.state.showQueue,
@@ -58,13 +74,13 @@ class App extends React.Component {
     };
 
     const modalState = {
-      push: c =>
+      push: (content, style = {}) =>
         this.setState(state => ({
-          modalsContents: [c, ...state.modalsContents],
+          modalsContents: [{ content, style }, ...state.modalsContents],
         })),
-      replace: c =>
+      replace: (content, style = {}) =>
         this.setState(state => ({
-          modalsContents: [...state.modalsContents.slice(0, -1), c],
+          modalsContents: [...state.modalsContents.slice(0, -1), { content, style }],
         })),
       pop: this.popModal,
       flush: () =>
@@ -79,58 +95,64 @@ class App extends React.Component {
       close: () => this.setState({ lyricsModalOpen: false }),
     };
 
+    const playlistsState = {
+      playlists: this.state.playlists,
+      setItems: items => {
+        this.setState({
+          playlists: items,
+        });
+      },
+    };
+
     return (
       <MusicKitProvider>
         <Router>
           <GoogleAnalyticsProvider>
             <MusicKitAuthorizeProvider>
-              <QueueContext.Provider value={queueState}>
-                <ModalContext.Provider value={modalState}>
-                  <LyricsModalContext.Provider value={lyricsModalState}>
-                    <Layout>
-                      <Switch>
-                        <Route path={'/'} exact component={ForYouPage} />
-                        <Route path={'/me/added'} component={RecentlyAddedPage} />
-                        <Route path={'/me/albums'} component={AlbumsPage} />
-                        <Route path={'/me/playlists'} exact component={PlaylistsPage} />
-                        <Route
-                          path={'/me/playlists/:id'}
-                          exact
-                          component={props => <Playlist key={props.location.pathname} {...props} />}
-                        />
-                        <Route path={'/me/artists'} exact component={ArtistsPage} />
-                        <Route path={'/me/artists/:id'} component={ArtistsPage} />
-                        <Route path={'/me/songs'} exact component={SongsPage} />
-                        <Route path={'/artist/:id'} exact component={ArtistPage} />
-                        <Route path={'/browse/genre/:id'} exact component={GenrePage} />
-                        <Route path={'/browse'} component={BrowsePage} />
-                        <Route path={'/radio'} exact component={RadioPage} />
-                        <Route
-                          path={'/search/:source/:query'}
-                          exact
-                          component={({
-                            match: {
-                              params: { source, query },
-                            },
-                          }) => <SearchPage key={`${source}${query}`} />}
-                        />
-                        <Redirect to={'/'} />
-                      </Switch>
-                      {this.state.modalsContents.length > 0 && (
-                        <Modal
-                          key={this.state.modalsContents.length}
-                          open
-                          handleClose={modalState.pop}
-                          render={() => this.state.modalsContents[0]}
-                        />
-                      )}
-                    </Layout>
-                    <ConnectedMenu />
-                    <Alert stack offset={60} />
-                    <LyricsModal />
-                  </LyricsModalContext.Provider>
-                </ModalContext.Provider>
-              </QueueContext.Provider>
+              <PlaylistsContext.Provider value={playlistsState}>
+                <QueueContext.Provider value={queueState}>
+                  <ModalContext.Provider value={modalState}>
+                    <LyricsModalContext.Provider value={lyricsModalState}>
+                      <Layout>
+                        <Switch>
+                          <Route path={'/'} exact component={ForYouPage} />
+                          <Route path={'/me/added'} component={RecentlyAddedPage} />
+                          <Route path={'/me/albums'} component={AlbumsPage} />
+                          <Route path={'/me/playlists'} exact component={PlaylistsPage} />
+                          <Route
+                            path={'/me/playlists/:id'}
+                            exact
+                            component={props => (
+                              <Playlist key={props.location.pathname} {...props} />
+                            )}
+                          />
+                          <Route path={'/me/artists'} exact component={ArtistsPage} />
+                          <Route path={'/me/artists/:id'} component={ArtistsPage} />
+                          <Route path={'/me/songs'} exact component={SongsPage} />
+                          <Route path={'/artist/:id'} exact component={ArtistPage} />
+                          <Route path={'/browse/genre/:id'} exact component={GenrePage} />
+                          <Route path={'/browse'} component={BrowsePage} />
+                          <Route path={'/radio'} exact component={RadioPage} />
+                          <Route
+                            path={'/search/:source/:query'}
+                            exact
+                            component={({
+                              match: {
+                                params: { source, query },
+                              },
+                            }) => <SearchPage key={`${source}${query}`} />}
+                          />
+                          <Redirect to={'/'} />
+                        </Switch>
+                        {this.state.modalsContents.length > 0 && this.renderModal(modalState)}
+                      </Layout>
+                      <ConnectedMenu />
+                      <Alert stack offset={60} />
+                      <LyricsModal />
+                    </LyricsModalContext.Provider>
+                  </ModalContext.Provider>
+                </QueueContext.Provider>
+              </PlaylistsContext.Provider>
             </MusicKitAuthorizeProvider>
           </GoogleAnalyticsProvider>
         </Router>
