@@ -3,7 +3,7 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  background: $sidebar_color;
+  background: #ffffff;
   border-right: solid 1px $background_color;
   height: 100%;
   min-height: 500px;
@@ -22,7 +22,7 @@
     }
 
     .menu {
-      background: $background_color;
+      background: $container_background;
       padding: 10px 15px;
       border-radius: 5px;
       border: solid 1px transparent;

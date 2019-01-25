@@ -23,11 +23,8 @@ class Authorize extends Component {
   }
 
   render() {
-    const button = this.props.authorized ? (
-      <span onClick={this.logout}>Logout</span>
-    ) : (
-      <span onClick={this.login}>Login</span>
-    );
+    return null;
+    const button = !this.props.authorized && <span onClick={this.login}>Login</span>;
 
     return <div className={classes.authorizeWrapper}>{button}</div>;
   }
