@@ -146,3 +146,67 @@ export async function fetchFullCatalogAlbumFromLibraryAlbum(album) {
   }
   return null;
 }
+
+function getRatingURL(type, id) {
+  const BASE_URL = `${API_URL}/v1/me/ratings/`;
+  const endpoints = {
+    library: {
+      song: 'library-songs',
+      playlist: 'library-playlists',
+      album: 'library-playlists',
+    },
+    catalog: {
+      song: 'songs',
+      playlist: 'playlists',
+      album: 'albums',
+    },
+  };
+  const choice = isNaN(id) ? endpoints.library : endpoints.catalog;
+  if (!(type in choice)) {
+    return false;
+  }
+  return `${BASE_URL}${choice[type]}/${id}`;
+}
+
+export function getRating(type, id) {
+  const URL = getRatingURL(type, id);
+  if (!URL) {
+    return 0;
+  }
+  return axios({
+    method: 'get',
+    url: URL,
+    headers: getHeaders(),
+  })
+    .then(response => response.data.data[0].attributes.value)
+    .catch(error => 0);
+}
+
+export function setRating(type, id, rating) {
+  const URL = getRatingURL(type, id);
+  if (!URL) {
+    return 0;
+  }
+  if (rating === 0) {
+    return axios({
+      method: 'delete',
+      url: URL,
+      headers: getHeaders(),
+    })
+      .then(response => response.data.data[0].attributes.value)
+      .catch(error => 0);
+  }
+  return axios({
+    method: 'put',
+    url: URL,
+    data: {
+      type: 'rating',
+      attributes: {
+        value: rating,
+      },
+    },
+    headers: getHeaders(),
+  })
+    .then(response => response.data.data[0].attributes.value)
+    .catch(error => 0);
+}
