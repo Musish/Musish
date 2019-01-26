@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Alert from 'react-s-alert';
-import { API_URL, RATING_URL } from '../utils/Utils';
+import { API_URL, getRatingUrl } from '../utils/Utils';
 
 export function getNextSongs(path) {
   return axios({
@@ -148,7 +148,7 @@ export async function fetchFullCatalogAlbumFromLibraryAlbum(album) {
 }
 
 export async function getRating(type, id) {
-  const url = RATING_URL(type, id);
+  const url = getRatingUrl(type, id);
 
   if (!url) {
     return 0;
@@ -168,7 +168,7 @@ export async function getRating(type, id) {
 }
 
 export async function setRating(type, id, rating) {
-  const url = RATING_URL(type, id);
+  const url = getRatingUrl(type, id);
 
   if (!url) {
     return 0;
