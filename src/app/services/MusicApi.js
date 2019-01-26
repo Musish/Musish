@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Alert from 'react-s-alert';
-import { API_URL } from '../utils/Utils';
+import { API_URL, getRatingUrl } from '../utils/Utils';
 
 export function getNextSongs(path) {
   return axios({
@@ -145,4 +145,62 @@ export async function fetchFullCatalogAlbumFromLibraryAlbum(album) {
     }
   }
   return null;
+}
+
+export async function getRating(type, id) {
+  const url = getRatingUrl(type, id);
+
+  if (!url) {
+    return 0;
+  }
+
+  try {
+    const response = await axios({
+      method: 'get',
+      url,
+      headers: getHeaders(),
+    });
+
+    return response.data.data[0].attributes.value;
+  } catch (e) {
+    return 0;
+  }
+}
+
+export async function setRating(type, id, rating) {
+  const url = getRatingUrl(type, id);
+
+  if (!url) {
+    return 0;
+  }
+
+  if (rating === 0) {
+    try {
+      const response = await axios({
+        method: 'delete',
+        url,
+        headers: getHeaders(),
+      });
+      return response.data.data[0].attributes.value;
+    } catch (e) {
+      return 0;
+    }
+  }
+
+  try {
+    const response = await axios({
+      method: 'put',
+      url,
+      data: {
+        type: 'rating',
+        attributes: {
+          value: rating,
+        },
+      },
+      headers: getHeaders(),
+    });
+    return response.data.data[0].attributes.value;
+  } catch (e) {
+    return 0;
+  }
 }
