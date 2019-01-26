@@ -154,13 +154,17 @@ export async function getRating(type, id) {
     return 0;
   }
 
-  return axios({
-    method: 'get',
-    url,
-    headers: getHeaders(),
-  })
-    .then(response => response.data.data[0].attributes.value)
-    .catch(error => 0);
+  try {
+    const response = await axios({
+      method: 'get',
+      url,
+      headers: getHeaders(),
+    });
+
+    return response.data.data[0].attributes.value;
+  } catch (e) {
+    return 0;
+  }
 }
 
 export async function setRating(type, id, rating) {
@@ -171,26 +175,32 @@ export async function setRating(type, id, rating) {
   }
 
   if (rating === 0) {
-    return axios({
-      method: 'delete',
-      url,
-      headers: getHeaders(),
-    })
-      .then(response => response.data.data[0].attributes.value)
-      .catch(error => 0);
+    try {
+      const response = await axios({
+        method: 'delete',
+        url,
+        headers: getHeaders(),
+      });
+      return response.data.data[0].attributes.value;
+    } catch (e) {
+      return 0;
+    }
   }
 
-  return axios({
-    method: 'put',
-    url,
-    data: {
-      type: 'rating',
-      attributes: {
-        value: rating,
+  try {
+    const response = await axios({
+      method: 'put',
+      url,
+      data: {
+        type: 'rating',
+        attributes: {
+          value: rating,
+        },
       },
-    },
-    headers: getHeaders(),
-  })
-    .then(response => response.data.data[0].attributes.value)
-    .catch(error => 0);
+      headers: getHeaders(),
+    });
+    return response.data.data[0].attributes.value;
+  } catch (e) {
+    return 0;
+  }
 }

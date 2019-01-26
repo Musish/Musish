@@ -35,19 +35,23 @@ class Rating extends React.Component {
     });
 
     if (this.state.rating === 1) {
-      return setRating('song', this.props.nowPlayingItem.id, -1).then(result =>
-        this.setState({
-          rating: result,
-          loading: false,
-        })
-      );
-    }
-    return setRating('song', this.props.nowPlayingItem.id, this.state.rating + 1).then(result =>
+      const rating = await setRating('song', this.props.nowPlayingItem.id, -1);
       this.setState({
-        rating: result,
+        rating,
         loading: false,
-      })
-    );
+      });
+
+      return rating;
+    }
+
+    const newRating = this.state.rating + 1;
+    const rating = await setRating('song', this.props.nowPlayingItem.id, newRating);
+    this.setState(prevState => ({
+      rating,
+      loading: false,
+    }));
+
+    return rating;
   }
 
   render() {
@@ -59,7 +63,7 @@ class Rating extends React.Component {
     return (
       <span
         className={cx(styles.controls, { [styles.enabled]: this.state.rating !== 0 })}
-        onClick={this.state.loading ? e => '' : this.toggleRating}
+        onClick={e => !this.state.loading && this.toggleRating()}
       >
         <i className={heartClass} />
       </span>
