@@ -80,259 +80,83 @@ const strings = new LocalizedStrings({
   },
   // POLISH
   pl: {
-    musishDescription: '',
-    securityMessage: '',
-    justBrowse: '',
-    legalNotice: '',
+    musishDescription:
+      'Musish używa biblioteki Apple Music, aby zapewnić Ci niesamowite wrażenia ' +
+      'słuchania Twojej ulubionej muzyki. Połącz się ze swoim kontem poniżej.',
+    connect: 'Połącz się z Apple Music',
+    securityMessage: ' Bezpieczne uwierzytelnianie przez Apple.com.',
+    justBrowse: 'Lub po prostu przeglądaj',
+    legalNotice:
+      'Musish nie jest stowarzyszona z Apple, Inc. Nasza usługa nie uzyskuje ' +
+      'dostępu, nie gromadzi ani nie przechowuje żadnych danych osobowych ani informacji o ' +
+      'koncie. "Apple", "Apple Music" i logo Apple są znakami towarowymi firmy Apple, Inc.',
 
     appleMusic: 'Muzyka Apple',
 
     logout: 'Wyloguj się',
     login: 'Zaloguj się',
-    searchMusic: '',
+    searchMusic: 'Wyszukaj muzykę',
 
-    play: '',
-    shuffle: '',
+    play: 'Odtwórz',
+    playNext: 'Odtwórz jako następna',
+    playLater: 'Odtwórz później',
+    shuffle: 'Mieszaj',
+    search: 'Szukaj',
+    searchingFor: 'Szukasz ',
 
-    forYou: '',
-    recentlyPlayed: '',
-    heavyRotation: '',
+    openAlbum: 'Otwórz Album',
+    openPlaylist: 'Otwórz Playliste',
+    addToPlaylist: 'Dodaj do Playlisty',
+    addToLibrary: 'Dodaj do Biblioteki',
 
-    browse: '',
-    topCharts: '',
-    genres: '',
-    topSongs: '',
-    dailyTop100: '',
-    topPlaylists: '',
-    topAlbums: '',
+    playlistBy: 'Playlista przez ',
 
-    radio: '',
-    radioMessage: '',
+    forYou: 'Dla Ciebie',
+    recentlyPlayed: 'Ostatnio odtwarzane',
+    heavyRotation: 'Często odtwarzane',
 
-    myLibrary: '',
-    recentlyAdded: '',
-    artists: '',
-    albums: '',
-    songs: '',
-    playlists: '',
+    browse: 'Przeglądaj',
+    topCharts: 'Lista Przebojów',
+    genres: 'Gatunki',
+    topSongs: 'Najlepsze Utwory',
+    dailyTop100: 'Codziennie Najlepsze 100',
+    topPlaylists: 'Najlepsze Playlisty',
+    topAlbums: 'Najlepsze Albumy',
 
-    feedback: '',
-    feedbackMessageOne: '',
-    feedbackMessageTwo: '',
+    radio: 'Radio',
+    radioMessage: 'Pracujemy nad dostarczeniem Radia do Ciebie jak najszybciej. Sprawdź później.',
 
-    lyrics: 'Tekst',
-    upNext: '',
+    myLibrary: 'Moja Biblioteka',
+    recentlyAdded: 'Ostatnio Dodane',
+    artists: 'Artyści',
+    albums: 'Albumy',
+    songs: 'Utwory',
+    playlists: 'Playlisty',
 
-    showCompleteAlbum: '',
-    hour: '',
-    hours: '',
-    minute: '',
-    minutes: '',
-  },
-  // FRENCH
-  fr: {
-    musishDescription: '',
-    securityMessage: '',
-    justBrowse: '',
-    legalNotice: '',
+    feedback: 'Twoje Opinie',
+    feedbackMessageOne: 'Zaprojektowany z ',
+    feedbackMessageTwo: ' przez zespół Musish.',
 
-    appleMusic: '',
+    lyrics: 'Tekst Piosenki',
+    upNext: 'W kolejce',
 
-    logout: '',
-    login: '',
-    searchMusic: '',
+    showCompleteAlbum: 'Pokaż Pełny Album',
+    hour: 'godzina',
+    hours: 'godziny',
+    minute: 'minuta',
+    minutes: 'minuty',
 
-    play: '',
-    shuffle: '',
+    oppsNoResultsFound: 'Opps, nie znaleziono żadnych wyników.',
+    trackNotAvailable: 'Utwór niedostępny',
 
-    forYou: '',
-    recentlyPlayed: '',
-    heavyRotation: '',
+    dataProvidedByGenius: 'Dane dostarczone przez Genius',
+    inYourPersonalLibrary: 'W twojej osobistej bibliotece',
+    youMustLoginToSearchYourLibrary: 'Musisz się zalogować, aby przeszukać bibliotekę.',
 
-    browse: '',
-    topCharts: '',
-    genres: '',
-    topSongs: '',
-    dailyTop100: '',
-    topPlaylists: '',
-    topAlbums: '',
-
-    radio: '',
-    radioMessage: '',
-
-    myLibrary: '',
-    recentlyAdded: '',
-    artists: '',
-    albums: '',
-    songs: '',
-    playlists: '',
-
-    feedback: '',
-    feedbackMessageOne: '',
-    feedbackMessageTwo: '',
-
-    lyrics: '',
-    upNext: '',
-
-    showCompleteAlbum: '',
-    hour: '',
-    hours: '',
-    minute: '',
-    minutes: '',
-  },
-  // LITHUANIAN
-  lt: {
-    musishDescription: '',
-    securityMessage: '',
-    justBrowse: '',
-    legalNotice: '',
-
-    appleMusic: '',
-
-    logout: '',
-    login: '',
-    searchMusic: '',
-
-    play: '',
-    shuffle: '',
-
-    forYou: '',
-    recentlyPlayed: '',
-    heavyRotation: '',
-
-    browse: '',
-    topCharts: '',
-    genres: '',
-    topSongs: '',
-    dailyTop100: '',
-    topPlaylists: '',
-    topAlbums: '',
-
-    radio: '',
-    radioMessage: '',
-
-    myLibrary: '',
-    recentlyAdded: '',
-    artists: '',
-    albums: '',
-    songs: '',
-    playlists: '',
-
-    feedback: '',
-    feedbackMessageOne: '',
-    feedbackMessageTwo: '',
-
-    lyrics: '',
-    upNext: '',
-
-    showCompleteAlbum: '',
-    hour: '',
-    hours: '',
-    minute: '',
-    minutes: '',
-  },
-  // SPANISH
-  es: {
-    musishDescription: '',
-    securityMessage: '',
-    justBrowse: '',
-    legalNotice: '',
-
-    appleMusic: '',
-
-    logout: '',
-    login: '',
-    searchMusic: '',
-
-    play: '',
-    shuffle: '',
-
-    forYou: '',
-    recentlyPlayed: '',
-    heavyRotation: '',
-
-    browse: '',
-    topCharts: '',
-    genres: '',
-    topSongs: '',
-    dailyTop100: '',
-    topPlaylists: '',
-    topAlbums: '',
-
-    radio: '',
-    radioMessage: '',
-
-    myLibrary: '',
-    recentlyAdded: '',
-    artists: '',
-    albums: '',
-    songs: '',
-    playlists: '',
-
-    feedback: '',
-    feedbackMessageOne: '',
-    feedbackMessageTwo: '',
-
-    lyrics: '',
-    upNext: '',
-
-    showCompleteAlbum: '',
-    hour: '',
-    hours: '',
-    minute: '',
-    minutes: '',
-  },
-  // GREEK
-  gr: {
-    musishDescription: '',
-    securityMessage: '',
-    justBrowse: '',
-    legalNotice: '',
-
-    appleMusic: '',
-
-    logout: '',
-    login: '',
-    searchMusic: '',
-
-    play: '',
-    shuffle: '',
-
-    forYou: '',
-    recentlyPlayed: '',
-    heavyRotation: '',
-
-    browse: '',
-    topCharts: '',
-    genres: '',
-    topSongs: '',
-    dailyTop100: '',
-    topPlaylists: '',
-    topAlbums: '',
-
-    radio: '',
-    radioMessage: '',
-
-    myLibrary: '',
-    recentlyAdded: '',
-    artists: '',
-    albums: '',
-    songs: '',
-    playlists: '',
-
-    feedback: '',
-    feedbackMessageOne: '',
-    feedbackMessageTwo: '',
-
-    lyrics: '',
-    upNext: '',
-
-    showCompleteAlbum: '',
-    hour: '',
-    hours: '',
-    minute: '',
-    minutes: '',
+    noLyricsAvailable: 'Brak dostępnych tekstów ',
   },
 });
+
+strings.setLanguage('pl');
 
 export default strings;
