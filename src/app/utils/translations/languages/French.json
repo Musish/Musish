@@ -1,24 +1,24 @@
 {
-  "musishDescription": "Musish utilise votre bibliothèque Apple Music pour vous offrir une expérience d'écoute incroyable. Veuillez connecter votre compte ci-dessous.",
+  "musishDescription": "Musish utilise votre bibliothèque Apple Music pour vous offrir une expérience d'écoute incroyable. Connectez-vous avec votre compte ci-dessous.",
   "connect": "Connectez-vous à Apple Music",
-  "securityMessage": " Authentification sécurisée via Apple.com.",
-  "justBrowse": "Ou simplement parcourir",
+  "securityMessage": "Authentification sécurisée via Apple.com",
+  "justBrowse": "Parcourir le catalogue",
   "legalNotice": "Musish n'est pas affilié à Apple, Inc. Notre service n'accède, ne collecte ni ne stocke aucune information personnelle ou relative à votre compte. 'Apple', 'Apple Music' et le logo Apple sont des marques commerciales de Apple, Inc.",
 
   "appleMusic": "Apple Music",
 
-  "logout": "Connectez - Out",
+  "logout": "Déconnexion",
   "login": "S'identifier",
-  "searchMusic": "Rechercher de la musique",
+  "searchMusic": "Rechercher",
 
   "play": "Jouer",
   "playNext": "Jouer ensuite",
-  "playLater": "Tu joueras plus tard",
-  "shuffle": "Mélanger",
+  "playLater": "Jouer plus tard",
+  "shuffle": "Mixer",
   "search": "Chercher",
-  "searchingFor": "À la recherche de ",
+  "searchingFor": "Recherche pour ",
 
-  "openAlbum": "Album Ouvert",
+  "openAlbum": "Ouvrir l'album",
   "openPlaylist": "Ouvrir la Playlist",
   "addToPlaylist": "Ajouter à la playlist",
   "addToLibrary": "Ajouter à la bibliothèque",
@@ -27,9 +27,9 @@
 
   "forYou": "Pour vous",
   "recentlyPlayed": "Joué récemment",
-  "heavyRotation": "Heavy Rotation",
+  "heavyRotation": "Joué fréquement",
 
-  "browse": "Feuilleter",
+  "browse": "Parcourir",
   "topCharts": "Le Hit-Parade",
   "genres": "Les Genres",
   "topSongs": "Top Chansons",
@@ -44,11 +44,11 @@
   "recentlyAdded": "Récemment Ajouté",
   "artists": "Artistes",
   "albums": "Albums",
-  "song": "Chanson",
-  "songs": "Chansons",
+  "song": "Titre",
+  "songs": "Titres",
   "playlists": "Playlists",
 
-  "feedback": "Retour d'information",
+  "feedback": "Commentaires",
   "feedbackMessageOne": "Conçu avec ",
   "feedbackMessageTwo": " par l'équipe Musish.",
 
@@ -62,7 +62,7 @@
   "minutes": "minutes",
 
   "oppsNoResultsFound": "Opps, aucun résultat trouvé.",
-  "trackNotAvailable": "Piste non disponible",
+  "trackNotAvailable": "Titre non disponible",
 
   "dataProvidedByGenius": "Données fournies par Genius",
   "inYourPersonalLibrary": "Dans votre bibliothèque personnelle",
