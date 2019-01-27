@@ -1,0 +1,69 @@
+{
+  "musishDescription": "Το Musish χρησιμοποιεί τη βιβλιοθήκη της Apple Music για να σας προσφέρει μια εκπληκτική εμπειρία ακρόασης. Παρακαλώ συνδεθείτε παρακάτω χρησιμοποιώντας στον λογαριασμό σας.",
+  "connect": "Συνδεθείτε στο Apple Music",
+  "securityMessage": " Ασφαλής συνδεση μέσω Apple.com.",
+  "justBrowse": "Ή απλά περιηγηθείτε",
+  "legalNotice": "Το Musish δεν σχετίζεται με την Apple, Inc. Η υπηρεσία μας δεν έχει πρόσβαση, δεν συλλέγει ούτε αποθηκεύει προσωπικές πληροφορίες ή πληροφορίες λογαριασμού. Η ‘Apple’, η ‘Apple Music’ και το λογότυπο της Apple είναι εμπορικά σήματα της Apple, Inc.",
+  "appleMusic": "Apple Music",
+
+  "logout": "Αποσυνδέση",
+  "login": "Σύνδεση",
+  "searchMusic": "Αναζήτηση μουσικής",
+
+  "play": "Αναπαραγωγή",
+  "playNext": "Επόμενο",
+  "playLater": "Αναπαραγωγή αργότερα",
+  "shuffle": "Τυχαία αναπαραγωγή",
+  "search": "Search",
+  "searchingFor": "Searching for ",
+
+  "openAlbum": "Άνοιγμα αλμπουμ",
+  "openPlaylist": "Aνοίξτε τη λίστα αναπαραγωγής",
+  "addToPlaylist": "Προσθήκη στην λίστα αναπαραγωγής",
+  "addToLibrary": "Προσθήκη στη μουσική βιβλιοθήκη",
+
+  "playlistBy": "Λίστα αναπαραγωγής από",
+
+  "forYou": "Για σένα",
+  "recentlyPlayed": "Πρόσφατη αναπαραγωγή",
+  "heavyRotation": "Heavy Rotation",
+  "browse": "Περιηγηθείτε",
+  "topCharts": "Top Charts",
+  "genres": "Genres",
+  "topSongs": "Κορυφαία τραγούδια",
+  "dailyTop100": "Καθημερινά Top 100",
+  "topPlaylists": "Κορυφαίες λίστες αναπαραγωγής",
+  "topAlbums": "Κορυφαία άλμπουμ",
+
+  "radio": "Ραδιόφωνο",
+  "radioMessage": "Εργαζόμαστε για να σας φέρουμε το ραδιόφωνο όσο πιο σύντομα γίνεται. Ελέγξτε ξανά αργότερα.",
+
+  "myLibrary": "Η μουσική βιβλιοθήκη μου",
+  "recentlyAdded": "Πρόσφατα",
+  "artists": "Καλλιτέχνες",
+  "albums": "Άλμπουμ",
+  "song": "Utwór",
+  "songs": "Τραγούδια",
+  "playlists": "Λίστες αναπαραγωγής",
+
+  "feedback": "Σχόλια",
+  "feedbackMessageOne": "Σχεδιασμένο με ",
+  "feedbackMessageTwo": " από την ομάδα του Musish.",
+
+  "lyrics": "Στίχοι",
+  "upNext": "Επόμενο",
+  "showCompleteAlbum": "Εμφάνιση πλήρους άλμπουμ",
+  "hour": "ώρα",
+  "hours": "ώρες",
+  "minute": "λεπτό",
+  "minutes": "λεπτά",
+
+  "oppsNoResultsFound": "Opps, no results found.",
+  "trackNotAvailable": "Track not available",
+
+  "dataProvidedByGenius": "Data Provided by Genius",
+  "inYourPersonalLibrary": "In your personal library",
+  "youMustLoginToSearchYourLibrary": "You must login to search your library.",
+
+  "noLyricsAvailable": "No lyrics available "
+}

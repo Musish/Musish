@@ -1,0 +1,72 @@
+{
+  "musishDescription": "Musish utilise votre bibliothèque Apple Music pour vous offrir une expérience d'écoute incroyable. Veuillez connecter votre compte ci-dessous.",
+  "connect": "Connectez-vous à Apple Music",
+  "securityMessage": " Authentification sécurisée via Apple.com.",
+  "justBrowse": "Ou simplement parcourir",
+  "legalNotice": "Musish n'est pas affilié à Apple, Inc. Notre service n'accède, ne collecte ni ne stocke aucune information personnelle ou relative à votre compte. 'Apple', 'Apple Music' et le logo Apple sont des marques commerciales de Apple, Inc.",
+
+  "appleMusic": "Apple Music",
+
+  "logout": "Connectez - Out",
+  "login": "S'identifier",
+  "searchMusic": "Rechercher de la musique",
+
+  "play": "Jouer",
+  "playNext": "Jouer ensuite",
+  "playLater": "Tu joueras plus tard",
+  "shuffle": "Mélanger",
+  "search": "Chercher",
+  "searchingFor": "À la recherche de ",
+
+  "openAlbum": "Album Ouvert",
+  "openPlaylist": "Ouvrir la Playlist",
+  "addToPlaylist": "Ajouter à la playlist",
+  "addToLibrary": "Ajouter à la bibliothèque",
+
+  "playlistBy": "Playlist par ",
+
+  "forYou": "Pour vous",
+  "recentlyPlayed": "Joué récemment",
+  "heavyRotation": "Heavy Rotation",
+
+  "browse": "Feuilleter",
+  "topCharts": "Le Hit-Parade",
+  "genres": "Les Genres",
+  "topSongs": "Top Chansons",
+  "dailyTop100": "Top 100 quotidien",
+  "topPlaylists": "Top Playlists",
+  "topAlbums": "Top Albums",
+
+  "radio": "Radio",
+  "radioMessage": "Nous travaillons à vous apporter la radio dès que possible. Revenez plus tard.",
+
+  "myLibrary": "Ma Bibliothèque",
+  "recentlyAdded": "Récemment Ajouté",
+  "artists": "Artistes",
+  "albums": "Albums",
+  "song": "Chanson",
+  "songs": "Chansons",
+  "playlists": "Playlists",
+
+  "feedback": "Retour d'information",
+  "feedbackMessageOne": "Conçu avec ",
+  "feedbackMessageTwo": " par l'équipe Musish.",
+
+  "lyrics": "Paroles",
+  "upNext": "Suivant",
+
+  "showCompleteAlbum": "Afficher l'album complet",
+  "hour": "heure",
+  "hours": "heures",
+  "minute": "minute",
+  "minutes": "minutes",
+
+  "oppsNoResultsFound": "Opps, aucun résultat trouvé.",
+  "trackNotAvailable": "Piste non disponible",
+
+  "dataProvidedByGenius": "Données fournies par Genius",
+  "inYourPersonalLibrary": "Dans votre bibliothèque personnelle",
+  "youMustLoginToSearchYourLibrary": "Vous devez vous connecter pour rechercher votre bibliothèque.",
+
+  "noLyricsAvailable": "Pas de paroles disponibles "
+}
