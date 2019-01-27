@@ -9,6 +9,7 @@ import PageContent from '../../../../Common/PageContent/PageContent';
 import InfiniteLoader from '../../../../Common/InfiniteLoader/InfiniteLoader';
 import Modal from '../../../../Common/Modal/Modal';
 import AlbumPanel from '../../../../Common/AlbumPanel/AlbumPanel';
+import translate from '../../../../../utils/translations/Translations';
 
 export default class AlbumsPage extends React.Component {
   constructor(props) {
@@ -60,7 +61,7 @@ export default class AlbumsPage extends React.Component {
           )}
         />
         <PageContent innerRef={this.ref}>
-          <PageTitle title={'Albums'} context={'My Library'} />
+          <PageTitle title={`${translate.albums}`} context={`${translate.myLibrary}`} />
 
           <InfiniteLoader
             scrollElement={this.ref}

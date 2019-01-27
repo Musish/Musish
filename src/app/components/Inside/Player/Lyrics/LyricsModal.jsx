@@ -9,6 +9,7 @@ import LyricsModalContext from './LyricsModalContext';
 import withContext from '../../../../hoc/withContext';
 import withMK from '../../../../hoc/withMK';
 import { getPlayingItem } from '../../../../services/MusicPlayerApi';
+import translate from '../../../../utils/translations/Translations';
 
 function LyricsModal({ opened, close, mk }) {
   if (!opened) {
@@ -24,7 +25,7 @@ function LyricsModal({ opened, close, mk }) {
           <div className={queueClasses.title}>
             <span>
               <i className="fas fa-grip-vertical" />
-              {' Lyrics'}
+              {` ${translate.lyrics}`}
             </span>
           </div>
           <div className={queueClasses.icons} onClick={close}>

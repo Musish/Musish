@@ -8,6 +8,7 @@ import { artworkForMediaItem, humanifyMillis } from '../../../../../utils/Utils'
 import classes from './PlaylistPage.scss';
 import * as MusicApi from '../../../../../services/MusicApi';
 import * as MusicPlayerApi from '../../../../../services/MusicPlayerApi';
+import translate from '../../../../../utils/translations/Translations';
 
 class PlaylistPage extends React.Component {
   constructor(props) {
@@ -104,22 +105,22 @@ class PlaylistPage extends React.Component {
             <span className={classes.name}>{playlist.attributes.name}</span>
             <span className={classes.curator}>
               {playlist.attributes.curatorName ? (
-                `Playlist by ${playlist.attributes.curatorName}`
+                `${translate.playlistBy} ${playlist.attributes.curatorName}`
               ) : (
-                <>In your personal library</>
+                <>{translate.inYourPersonalLibrary}</>
               )}
             </span>
             <span className={classes.titleMeta}>
-              {`${tracks.length}${end ? '' : '+'} songs, ${runtime}`}
+              {`${tracks.length}${end ? '' : '+'} + ' ' + ${translate.songs}, ${runtime}`}
             </span>
             <div className={classes.playActions}>
               <button type={'button'} onClick={this.playPlaylist} className={classes.button}>
                 <i className={`${classes.icon} fas fa-play`} />
-                Play
+                {translate.play}
               </button>
               <button type={'button'} onClick={this.shufflePlayPlaylist} className={classes.button}>
                 <i className={`${classes.icon} fas fa-random`} />
-                Shuffle
+                {translate.shuffle}
               </button>
             </div>
           </div>
@@ -138,7 +139,7 @@ class PlaylistPage extends React.Component {
   render() {
     return (
       <PageContent innerRef={this.scrollRef}>
-        <PageTitle context={'My Library'} />
+        <PageTitle context={`${translate.myLibrary}`} />
         {this.renderHeader()}
         <TracksList
           load={MusicApi.infiniteLoadRelationships(

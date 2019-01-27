@@ -24,13 +24,15 @@ const strings = new LocalizedStrings({
     playNext: 'Play Next',
     playLater: 'Play Later',
     shuffle: 'Shuffle',
+    search: 'Search',
+    searchingFor: 'Searching for ',
 
     openAlbum: 'Open Album',
     openPlaylist: 'Open Playlist',
     addToPlaylist: 'Add to Playlist',
     addToLibrary: 'Add to Library',
 
-    playlistBy: 'Platlist by ',
+    playlistBy: 'Playlist by ',
 
     forYou: 'For You',
     recentlyPlayed: 'Recently played',
@@ -55,8 +57,8 @@ const strings = new LocalizedStrings({
     playlists: 'Playlists',
 
     feedback: 'Feedback',
-    feedbackMessageOne: 'Designed with',
-    feedbackMessageTwo: 'by the Musish team.',
+    feedbackMessageOne: 'Designed with ',
+    feedbackMessageTwo: ' by the Musish team.',
 
     lyrics: 'Lyrics',
     upNext: 'Up next',
@@ -71,6 +73,10 @@ const strings = new LocalizedStrings({
     trackNotAvailable: 'Track not available',
 
     dataProvidedByGenius: 'Data Provided by Genius',
+    inYourPersonalLibrary: 'In your personal library',
+    youMustLoginToSearchYourLibrary: 'You must login to search your library.',
+
+    noLyricsAvailable: 'No lyrics available ',
   },
   // POLISH
   pl: {
