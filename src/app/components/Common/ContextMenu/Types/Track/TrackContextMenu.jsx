@@ -8,6 +8,7 @@ import { playLater, playNext, playTrack } from '../../../../../services/MusicPla
 import { addToLibrary, addSongsToPlaylist } from '../../../../../services/MusicApi';
 import PlaylistSelector from '../../../PlaylistSelector/PlaylistSelector';
 import ModalContext from '../../../Modal/ModalContext';
+import translate from '../../../../../utils/translations/Translations';
 
 function TrackContextMenu({ track, tracks, index }) {
   const { attributes } = track;
@@ -31,15 +32,17 @@ function TrackContextMenu({ track, tracks, index }) {
 
       <MenuItem divider />
 
-      <MenuItem onClick={() => playTrack(tracks, index)}>Play</MenuItem>
-      <MenuItem onClick={() => playNext(track)}>Play next</MenuItem>
-      <MenuItem onClick={() => playLater(track)}>Play later</MenuItem>
+      <MenuItem onClick={() => playTrack(tracks, index)}>{translate.play}</MenuItem>
+      <MenuItem onClick={() => playNext(track)}>{translate.playNext}</MenuItem>
+      <MenuItem onClick={() => playLater(track)}>{translate.playLater}</MenuItem>
 
       {!inLibrary && (
         <>
           <MenuItem divider />
 
-          <MenuItem onClick={() => addToLibrary('songs', [track.id])}>Add to library</MenuItem>
+          <MenuItem onClick={() => addToLibrary('songs', [track.id])}>
+            {translate.addToLibrary}
+          </MenuItem>
         </>
       )}
 
@@ -60,7 +63,7 @@ function TrackContextMenu({ track, tracks, index }) {
               )
             }
           >
-            Add to playlist
+            {translate.addToPlaylist}
           </MenuItem>
         )}
       </ModalContext.Consumer>

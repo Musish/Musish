@@ -10,6 +10,7 @@ import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
 import * as MusicApi from '../../../services/MusicApi';
 import withMK from '../../../hoc/withMK';
 import ModalContext from '../Modal/ModalContext';
+import translate from '../../../utils/translations/Translations';
 
 class AlbumPanel extends React.Component {
   constructor(props) {
@@ -131,11 +132,11 @@ class AlbumPanel extends React.Component {
           <div className={classes.playActions}>
             <button type={'button'} onClick={this.playAlbum} className={classes.button}>
               <i className={`${classes.icon} fas fa-play`} />
-              Play
+              {translate.play}
             </button>
             <button type={'button'} onClick={this.shufflePlayAlbum} className={classes.button}>
               <i className={`${classes.icon} fas fa-random`} />
-              Shuffle
+              {translate.shuffle}
             </button>
           </div>
           <span className={classes.albumRuntimeDescription}>
@@ -179,7 +180,7 @@ class AlbumPanel extends React.Component {
                           );
                         }}
                       >
-                        Show complete album
+                        {translate.showCompleteAlbum}
                       </span>
                     )}
                   </Route>

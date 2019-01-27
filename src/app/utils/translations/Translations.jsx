@@ -21,7 +21,16 @@ const strings = new LocalizedStrings({
     searchMusic: 'Search music',
 
     play: 'Play',
+    playNext: 'Play Next',
+    playLater: 'Play Later',
     shuffle: 'Shuffle',
+
+    openAlbum: 'Open Album',
+    openPlaylist: 'Open Playlist',
+    addToPlaylist: 'Add to Playlist',
+    addToLibrary: 'Add to Library',
+
+    playlistBy: 'Platlist by ',
 
     forYou: 'For You',
     recentlyPlayed: 'Recently played',
@@ -57,6 +66,9 @@ const strings = new LocalizedStrings({
     hours: 'hours',
     minute: 'minute',
     minutes: 'minutes',
+
+    oppsNoResultsFound: 'Opps, no results found.',
+    trackNotAvailable: 'Track not available',
   },
   // POLISH
   pl: {
@@ -160,57 +172,6 @@ const strings = new LocalizedStrings({
     minute: '',
     minutes: '',
   },
-  // ITALIAN
-  it: {
-    musishDescription: '',
-    securityMessage: '',
-    justBrowse: '',
-    legalNotice: '',
-
-    appleMusic: '',
-
-    logout: '',
-    login: '',
-    searchMusic: '',
-
-    play: '',
-    shuffle: '',
-
-    forYou: '',
-    recentlyPlayed: '',
-    heavyRotation: '',
-
-    browse: '',
-    topCharts: '',
-    genres: '',
-    topSongs: '',
-    dailyTop100: '',
-    topPlaylists: '',
-    topAlbums: '',
-
-    radio: '',
-    radioMessage: '',
-
-    myLibrary: '',
-    recentlyAdded: '',
-    artists: '',
-    albums: '',
-    songs: '',
-    playlists: '',
-
-    feedback: '',
-    feedbackMessageOne: '',
-    feedbackMessageTwo: '',
-
-    lyrics: '',
-    upNext: '',
-
-    showCompleteAlbum: '',
-    hour: '',
-    hours: '',
-    minute: '',
-    minutes: '',
-  },
   // LITHUANIAN
   lt: {
     musishDescription: '',
@@ -264,57 +225,6 @@ const strings = new LocalizedStrings({
   },
   // SPANISH
   es: {
-    musishDescription: '',
-    securityMessage: '',
-    justBrowse: '',
-    legalNotice: '',
-
-    appleMusic: '',
-
-    logout: '',
-    login: '',
-    searchMusic: '',
-
-    play: '',
-    shuffle: '',
-
-    forYou: '',
-    recentlyPlayed: '',
-    heavyRotation: '',
-
-    browse: '',
-    topCharts: '',
-    genres: '',
-    topSongs: '',
-    dailyTop100: '',
-    topPlaylists: '',
-    topAlbums: '',
-
-    radio: '',
-    radioMessage: '',
-
-    myLibrary: '',
-    recentlyAdded: '',
-    artists: '',
-    albums: '',
-    songs: '',
-    playlists: '',
-
-    feedback: '',
-    feedbackMessageOne: '',
-    feedbackMessageTwo: '',
-
-    lyrics: '',
-    upNext: '',
-
-    showCompleteAlbum: '',
-    hour: '',
-    hours: '',
-    minute: '',
-    minutes: '',
-  },
-  // RUSSIAN
-  ru: {
     musishDescription: '',
     securityMessage: '',
     justBrowse: '',
