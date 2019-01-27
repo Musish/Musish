@@ -11,6 +11,6 @@ const strings = new LocalizedStrings({
   fr: french,
 });
 
-strings.setLanguage('fr');
+// strings.setLanguage('fr');
 
 export default strings;
