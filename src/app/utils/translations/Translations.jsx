@@ -53,6 +53,7 @@ const strings = new LocalizedStrings({
     recentlyAdded: 'Recently Added',
     artists: 'Artists',
     albums: 'Albums',
+    song: 'Song',
     songs: 'Songs',
     playlists: 'Playlists',
 
@@ -130,6 +131,7 @@ const strings = new LocalizedStrings({
     recentlyAdded: 'Ostatnio Dodane',
     artists: 'Artyści',
     albums: 'Albumy',
+    song: 'Utwór',
     songs: 'Utwory',
     playlists: 'Playlisty',
 

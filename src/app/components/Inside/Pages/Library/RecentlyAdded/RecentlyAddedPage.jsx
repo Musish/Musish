@@ -44,7 +44,7 @@ export default class RecentlyAddedPage extends React.Component {
   render() {
     return (
       <PageContent innerRef={this.ref}>
-        <PageTitle title={`${translate.recentlyAdded}`} context={`${translate.myLibrary}`} />
+        <PageTitle title={translate.recentlyAdded} context={translate.myLibrary} />
 
         <InfiniteLoader
           scrollElement={this.ref}

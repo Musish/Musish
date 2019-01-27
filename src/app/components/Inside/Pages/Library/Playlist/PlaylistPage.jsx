@@ -111,7 +111,7 @@ class PlaylistPage extends React.Component {
               )}
             </span>
             <span className={classes.titleMeta}>
-              {`${tracks.length}${end ? '' : '+'} + ' ' + ${translate.songs}, ${runtime}`}
+              {`${tracks.length}${end ? '' : '+'} ${translate.songs}, ${runtime}`}
             </span>
             <div className={classes.playActions}>
               <button type={'button'} onClick={this.playPlaylist} className={classes.button}>

@@ -57,7 +57,7 @@ class TopCharts extends React.Component {
         </div>
 
         <ItemList
-          title={`${translate.dailyTop100}`}
+          title={translate.dailyTop100}
           listIds={Object.values(browseData.top100).slice(0, 24)}
           type={'playlist'}
           size={120}
@@ -65,13 +65,13 @@ class TopCharts extends React.Component {
         />
 
         <ItemList
-          title={`${translate.topPlaylists}`}
+          title={translate.topPlaylists}
           list={charts ? charts.playlists[0].data : null}
           type={'playlist'}
         />
 
         <ItemList
-          title={`${translate.topAlbums}`}
+          title={translate.topAlbums}
           list={charts ? charts.albums[0].data : null}
           type={'album'}
           size={120}

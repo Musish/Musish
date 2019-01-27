@@ -43,7 +43,7 @@ export default class PlaylistsPage extends React.Component {
   render() {
     return (
       <PageContent innerRef={this.ref}>
-        <PageTitle title={`${translate.playlists}`} context={`${translate.myLibrary}`} />
+        <PageTitle title={translate.playlists} context={translate.myLibrary} />
         <InfiniteLoader
           scrollElement={this.ref}
           load={PlaylistsPage.load}
