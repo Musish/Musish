@@ -25,6 +25,9 @@ import PlayerTime from './PlayerTime';
 import AlbumPanel from '../../Common/AlbumPanel/AlbumPanel';
 import ModalContext from '../../Common/Modal/ModalContext';
 import VolumeControl from './VolumeControl';
+import Rating from './Rating/Rating';
+import AuthorizeContext from '../NavigationBar/Authorize/AuthorizeContext';
+import withContext from '../../../hoc/withContext';
 
 class Player extends React.Component {
   constructor(props) {
@@ -188,6 +191,10 @@ class Player extends React.Component {
         <div className={styles.buttons}>
           <VolumeControl />
 
+          {this.props.authorized && (
+            <Rating key={nowPlayingItem.id} nowPlayingItem={nowPlayingItem} />
+          )}
+
           <span
             className={cx(styles.controls, styles.shuffle, {
               [styles.enabled]: isRepeating,
@@ -241,6 +248,7 @@ const bindings = {
 
 Player.propTypes = {
   mk: PropTypes.any.isRequired,
+  authorized: PropTypes.bool.isRequired,
 };
 
-export default withMK(Player, bindings);
+export default withMK(withContext(Player, AuthorizeContext), bindings);

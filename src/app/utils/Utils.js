@@ -37,9 +37,8 @@ export function humanifyMillis(duration) {
 
 export function humanifyTrackNumbers(trackNumber) {
   const songs = trackNumber === 1 ? translate.song : translate.songs;
-  const humanReadable = `${trackNumber} ${songs}`;
 
-  return humanReadable;
+  return `${trackNumber} ${songs}`;
 }
 
 export const RepeatModeNone = 0;
@@ -50,3 +49,26 @@ export const ShuffleModeOff = 0;
 export const ShuffleModeSongs = 1;
 
 export const API_URL = 'https://api.music.apple.com';
+
+export const getRatingUrl = (type, id) => {
+  const baseUrl = `${API_URL}/v1/me/ratings/`;
+  const endpoints = {
+    library: {
+      song: 'library-songs',
+      playlist: 'library-playlists',
+      album: 'library-playlists',
+    },
+    catalog: {
+      song: 'songs',
+      playlist: 'playlists',
+      album: 'albums',
+    },
+  };
+
+  const choice = isNaN(id) ? endpoints.library : endpoints.catalog;
+  if (!(type in choice)) {
+    return false;
+  }
+
+  return `${baseUrl}${choice[type]}/${id}`;
+};
