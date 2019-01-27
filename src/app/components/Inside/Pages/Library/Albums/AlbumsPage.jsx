@@ -61,7 +61,7 @@ export default class AlbumsPage extends React.Component {
           )}
         />
         <PageContent innerRef={this.ref}>
-          <PageTitle title={`${translate.albums}`} context={`${translate.myLibrary}`} />
+          <PageTitle title={translate.albums} context={translate.myLibrary} />
 
           <InfiniteLoader
             scrollElement={this.ref}

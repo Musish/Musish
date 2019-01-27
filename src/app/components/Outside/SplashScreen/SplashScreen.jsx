@@ -56,8 +56,7 @@ class SplashScreen extends React.Component {
           {translate.connect}
         </button>
         <span className={classes.secureConnection}>
-          <i className={'fas fa-lock'} />
-          {translate.securityMessage}
+          {translate.formatString(translate.securityMessage, <i className={'fas fa-lock'} />)}
         </span>
         <button
           type={'button'}

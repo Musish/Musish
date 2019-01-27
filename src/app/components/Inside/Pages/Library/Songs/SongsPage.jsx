@@ -25,7 +25,7 @@ export default class SongsPage extends React.Component {
   render() {
     return (
       <PageContent innerRef={this.scrollRef}>
-        <PageTitle title={`${translate.songs}`} context={`${translate.myLibrary}`} />
+        <PageTitle title={translate.songs} context={translate.myLibrary} />
 
         <TracksList
           load={SongsPage.load}

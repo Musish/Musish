@@ -96,9 +96,7 @@ class Sidebar extends React.Component {
               </a>
             </span>
             <span className={classes.footnote}>
-              {translate.feedbackMessageOne}
-              <i className={'fa fa-heart'} />
-              {translate.feedbackMessageTwo}
+              {translate.formatString(translate.designCredits, <i className={'fa fa-heart'} />)}
             </span>
           </div>
         </div>

@@ -49,7 +49,7 @@ export default class ArtistAlbums extends React.Component {
 
     return (
       <>
-        <PageTitle title={artist.attributes.name} context={`${translate.myLibrary}`} />
+        <PageTitle title={artist.attributes.name} context={translate.myLibrary} />
         {this.renderArtists()}
       </>
     );

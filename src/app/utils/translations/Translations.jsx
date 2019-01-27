@@ -4,13 +4,15 @@ import polish from './languages/Polish';
 import greek from './languages/Greek';
 import french from './languages/French';
 
-const strings = new LocalizedStrings({
+const localization = new LocalizedStrings({
   en: english,
+  gb: english,
   pl: polish,
   gr: greek,
   fr: french,
 });
 
-// strings.setLanguage('fr');
+// This sets the defualt storefront language.
+localization.setLanguage('en');
 
-export default strings;
+export default localization;

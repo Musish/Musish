@@ -1,7 +1,7 @@
 {
   "musishDescription": "Musish utilise votre bibliothèque Apple Music pour vous offrir une expérience d'écoute incroyable. Veuillez connecter votre compte ci-dessous.",
   "connect": "Connectez-vous à Apple Music",
-  "securityMessage": " Authentification sécurisée via Apple.com.",
+  "securityMessage": "{0} Authentification sécurisée via Apple.com.",
   "justBrowse": "Ou simplement parcourir",
   "legalNotice": "Musish n'est pas affilié à Apple, Inc. Notre service n'accède, ne collecte ni ne stocke aucune information personnelle ou relative à votre compte. 'Apple', 'Apple Music' et le logo Apple sont des marques commerciales de Apple, Inc.",
 
@@ -16,14 +16,14 @@
   "playLater": "Tu joueras plus tard",
   "shuffle": "Mélanger",
   "search": "Chercher",
-  "searchingFor": "À la recherche de ",
+  "searchingFor": "À la recherche de {0}",
 
   "openAlbum": "Album Ouvert",
   "openPlaylist": "Ouvrir la Playlist",
   "addToPlaylist": "Ajouter à la playlist",
   "addToLibrary": "Ajouter à la bibliothèque",
 
-  "playlistBy": "Playlist par ",
+  "playlistBy": "Playlist par {0}",
 
   "forYou": "Pour vous",
   "recentlyPlayed": "Joué récemment",
@@ -49,8 +49,7 @@
   "playlists": "Playlists",
 
   "feedback": "Retour d'information",
-  "feedbackMessageOne": "Conçu avec ",
-  "feedbackMessageTwo": " par l'équipe Musish.",
+  "designCredits": "Conçu avec {0} par l'équipe Musish.",
 
   "lyrics": "Paroles",
   "upNext": "Suivant",
@@ -61,12 +60,12 @@
   "minute": "minute",
   "minutes": "minutes",
 
-  "oppsNoResultsFound": "Opps, aucun résultat trouvé.",
+  "noResultsFound": "Opps, aucun résultat trouvé.",
   "trackNotAvailable": "Piste non disponible",
 
   "dataProvidedByGenius": "Données fournies par Genius",
   "inYourPersonalLibrary": "Dans votre bibliothèque personnelle",
-  "youMustLoginToSearchYourLibrary": "Vous devez vous connecter pour rechercher votre bibliothèque.",
+  "unauthorisedLibrarySearch": "Vous devez vous connecter pour rechercher votre bibliothèque.",
 
   "noLyricsAvailable": "Pas de paroles disponibles "
 }

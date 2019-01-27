@@ -104,11 +104,9 @@ class PlaylistPage extends React.Component {
           <div className={classes.titleWrapper}>
             <span className={classes.name}>{playlist.attributes.name}</span>
             <span className={classes.curator}>
-              {playlist.attributes.curatorName ? (
-                `${translate.playlistBy} ${playlist.attributes.curatorName}`
-              ) : (
-                <>{translate.inYourPersonalLibrary}</>
-              )}
+              {playlist.attributes.curatorName
+                ? translate.formatString(translate.playlistBy, playlist.attributes.curatorName)
+                : translate.inYourPersonalLibrary}
             </span>
             <span className={classes.titleMeta}>
               {`${tracks.length}${end ? '' : '+'} ${translate.songs}, ${runtime}`}

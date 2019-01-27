@@ -26,10 +26,7 @@ class Genres extends Component {
 
     genreCurators.map(genre => {
       const updatedGenre = genre;
-      updatedGenre.attributes.name = updatedGenre.attributes.name.replace(
-        `${translate.appleMusic}`,
-        ''
-      );
+      updatedGenre.attributes.name = updatedGenre.attributes.name.replace(translate.appleMusic, '');
       return updatedGenre;
     });
 

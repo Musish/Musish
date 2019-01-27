@@ -203,7 +203,7 @@ class SearchPage extends React.Component {
             <span className={classes.searchErrorTitle} role={'img'} aria-label={'loudly-crying'}>
               😭
             </span>
-            <span className={classes.searchErrorDetails}>{translate.oppsNoResultsFound}</span>
+            <span className={classes.searchErrorDetails}>{translate.noResultsFound}</span>
           </div>
         ) : (
           <>
@@ -223,8 +223,8 @@ class SearchPage extends React.Component {
     return (
       <PageContent innerRef={this.ref}>
         <PageTitle
-          title={`${translate.searchingFor}${this.props.match.params.query}`}
-          context={`${translate.search}`}
+          title={translate.formatString(translate.searchingFor, this.props.match.params.query)}
+          context={translate.search}
         />
 
         <Tabs>
@@ -244,7 +244,7 @@ class SearchPage extends React.Component {
                   😱
                 </span>
                 <span className={classes.searchErrorDetails}>
-                  {translate.youMustLoginToSearchYourLibrary}
+                  {translate.unauthorisedLibrarySearch}
                 </span>
               </div>
             )}

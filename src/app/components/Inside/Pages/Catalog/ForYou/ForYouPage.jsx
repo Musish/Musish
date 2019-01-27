@@ -196,7 +196,7 @@ class ForYouPage extends React.Component {
 
     return (
       <PageContent innerRef={this.ref}>
-        <PageTitle title={`${translate.forYou}`} context={`${translate.appleMusic}`} />
+        <PageTitle title={translate.forYou} context={translate.appleMusic} />
 
         {!(recentlyPlayed && heavyRotation && recommendations) && <Loader />}
 

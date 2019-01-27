@@ -1,7 +1,7 @@
 {
   "musishDescription": "Το Musish χρησιμοποιεί τη βιβλιοθήκη της Apple Music για να σας προσφέρει μια εκπληκτική εμπειρία ακρόασης. Παρακαλώ συνδεθείτε παρακάτω χρησιμοποιώντας στον λογαριασμό σας.",
   "connect": "Συνδεθείτε στο Apple Music",
-  "securityMessage": " Ασφαλής συνδεση μέσω Apple.com.",
+  "securityMessage": "{0} Ασφαλής συνδεση μέσω Apple.com.",
   "justBrowse": "Ή απλά περιηγηθείτε",
   "legalNotice": "Το Musish δεν σχετίζεται με την Apple, Inc. Η υπηρεσία μας δεν έχει πρόσβαση, δεν συλλέγει ούτε αποθηκεύει προσωπικές πληροφορίες ή πληροφορίες λογαριασμού. Η ‘Apple’, η ‘Apple Music’ και το λογότυπο της Apple είναι εμπορικά σήματα της Apple, Inc.",
   "appleMusic": "Apple Music",
@@ -14,15 +14,15 @@
   "playNext": "Επόμενο",
   "playLater": "Αναπαραγωγή αργότερα",
   "shuffle": "Τυχαία αναπαραγωγή",
-  "search": "Search",
-  "searchingFor": "Searching for ",
+  "search": "Αναζήτηση",
+  "searchingFor": "Αναζήτηση {0}",
 
   "openAlbum": "Άνοιγμα αλμπουμ",
   "openPlaylist": "Aνοίξτε τη λίστα αναπαραγωγής",
   "addToPlaylist": "Προσθήκη στην λίστα αναπαραγωγής",
   "addToLibrary": "Προσθήκη στη μουσική βιβλιοθήκη",
 
-  "playlistBy": "Λίστα αναπαραγωγής από",
+  "playlistBy": "Λίστα αναπαραγωγής από {0}",
 
   "forYou": "Για σένα",
   "recentlyPlayed": "Πρόσφατη αναπαραγωγή",
@@ -47,8 +47,7 @@
   "playlists": "Λίστες αναπαραγωγής",
 
   "feedback": "Σχόλια",
-  "feedbackMessageOne": "Σχεδιασμένο με ",
-  "feedbackMessageTwo": " από την ομάδα του Musish.",
+  "designCredits": "Σχεδιασμένο με {0} από την ομάδα του Musish.",
 
   "lyrics": "Στίχοι",
   "upNext": "Επόμενο",
@@ -58,12 +57,12 @@
   "minute": "λεπτό",
   "minutes": "λεπτά",
 
-  "oppsNoResultsFound": "Opps, no results found.",
+  "noResultsFound": "Opps, no results found.",
   "trackNotAvailable": "Track not available",
 
   "dataProvidedByGenius": "Data Provided by Genius",
   "inYourPersonalLibrary": "In your personal library",
-  "youMustLoginToSearchYourLibrary": "You must login to search your library.",
+  "unauthorisedLibrarySearch": "You must login to search your library.",
 
   "noLyricsAvailable": "No lyrics available "
 }
