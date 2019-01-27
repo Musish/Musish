@@ -10,6 +10,8 @@ export default class MusicKitProvider extends React.Component {
     this.state = {
       ready: false,
     };
+
+    this.setLanguage = this.setLanguage.bind(this);
   }
 
   componentDidMount() {
@@ -23,10 +25,10 @@ export default class MusicKitProvider extends React.Component {
       },
     });
 
-    MusicKitProvider.setLanguage(MusicKit.getInstance().storekit.storefrontCountryCode);
+    this.setLanguage(MusicKit.getInstance().storekit.storefrontCountryCode);
 
     MusicKit.getInstance().addEventListener('storefrontCountryCodeDidChange', e => {
-      MusicKitProvider.setLanguage(e.storefrontCountryCode);
+      this.setLanguage(e.storefrontCountryCode);
     });
 
     this.setState({
@@ -34,8 +36,9 @@ export default class MusicKitProvider extends React.Component {
     });
   }
 
-  static setLanguage(countryCode) {
+  setLanguage(countryCode) {
     translate.setLanguage(countryCode);
+    this.forceUpdate();
   }
 
   render() {
