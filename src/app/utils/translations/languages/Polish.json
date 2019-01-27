@@ -1,0 +1,71 @@
+{
+  "musishDescription": "Musish używa biblioteki Apple Music, aby zapewnić Ci niesamowite wrażenia słuchania Twojej ulubionej muzyki. Połącz się ze swoim kontem poniżej.",
+  "connect": "Połącz się z Apple Music",
+  "securityMessage": "{0} Bezpieczne uwierzytelnianie przez Apple.com.",
+  "justBrowse": "Lub po prostu przeglądaj",
+  "legalNotice": "Musish nie jest stowarzyszona z Apple, Inc. Nasza usługa nie uzyskuje dostępu, nie gromadzi ani nie przechowuje żadnych danych osobowych ani informacji o koncie. \"Apple\", \"Apple Music\" i logo Apple są znakami towarowymi firmy Apple, Inc.",
+
+  "appleMusic": "Muzyka Apple",
+
+  "logout": "Wyloguj się",
+  "login": "Zaloguj się",
+  "searchMusic": "Wyszukaj muzykę",
+
+  "play": "Odtwórz",
+  "playNext": "Odtwórz jako następna",
+  "playLater": "Odtwórz później",
+  "shuffle": "Mieszaj",
+  "search": "Szukaj",
+  "searchingFor": "Szukasz {0}",
+
+  "openAlbum": "Otwórz Album",
+  "openPlaylist": "Otwórz Playliste",
+  "addToPlaylist": "Dodaj do Playlisty",
+  "addToLibrary": "Dodaj do Biblioteki",
+
+  "playlistBy": "Playlista przez {0}",
+
+  "forYou": "Dla Ciebie",
+  "recentlyPlayed": "Ostatnio odtwarzane",
+  "heavyRotation": "Często odtwarzane",
+
+  "browse": "Przeglądaj",
+  "topCharts": "Lista Przebojów",
+  "genres": "Gatunki",
+  "topSongs": "Najlepsze Utwory",
+  "dailyTop100": "Codziennie Najlepsze 100",
+  "topPlaylists": "Najlepsze Playlisty",
+  "topAlbums": "Najlepsze Albumy",
+
+  "radio": "Radio",
+  "radioMessage": "Pracujemy nad dostarczeniem Radia do Ciebie jak najszybciej. Sprawdź później.",
+
+  "myLibrary": "Moja Biblioteka",
+  "recentlyAdded": "Ostatnio Dodane",
+  "artists": "Artyści",
+  "albums": "Albumy",
+  "song": "Utwór",
+  "songs": "Utwory",
+  "playlists": "Playlisty",
+
+  "feedback": "Twoje Opinie",
+  "designCredits": "Zaprojektowany z {0} przez zespół Musish.",
+
+  "lyrics": "Tekst Piosenki",
+  "upNext": "W kolejce",
+
+  "showCompleteAlbum": "Pokaż Pełny Album",
+  "hour": "godzina",
+  "hours": "godziny",
+  "minute": "minuta",
+  "minutes": "minuty",
+
+  "noResultsFound": "Opps, nie znaleziono żadnych wyników.",
+  "trackNotAvailable": "Utwór niedostępny",
+
+  "dataProvidedByGenius": "Dane dostarczone przez Genius",
+  "inYourPersonalLibrary": "W twojej osobistej bibliotece",
+  "unauthorisedLibrarySearch": "Musisz się zalogować, aby przeszukać bibliotekę.",
+
+  "noLyricsAvailable": "Brak dostępnych tekstów "
+}

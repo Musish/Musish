@@ -7,6 +7,7 @@ import TracksList from '../Tracks/TracksList/TracksList';
 import Loader from '../Loader/Loader';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
 import * as MusicApi from '../../../services/MusicApi';
+import translate from '../../../utils/translations/Translations';
 
 export default class PlaylistPanel extends React.Component {
   constructor(props) {
@@ -98,7 +99,9 @@ export default class PlaylistPanel extends React.Component {
             <div className={classes.titleWrapper}>
               <span className={classes.name}>{playlist.attributes.name}</span>
               <span className={classes.curator}>
-                {`Playlist by ${playlist.attributes.curatorName}`}
+                {playlist.attributes.curatorName
+                  ? translate.formatString(translate.playlistBy, playlist.attributes.curatorName)
+                  : translate.inYourPersonalLibrary}
               </span>
               <span className={classes.titleMeta}>
                 {`${humanifyTrackNumbers(trackCount)}, ${runtime}`}
@@ -106,7 +109,7 @@ export default class PlaylistPanel extends React.Component {
               <div className={classes.playActions}>
                 <button type={'button'} onClick={this.playPlaylist} className={classes.button}>
                   <i className={`${classes.icon} fas fa-play`} />
-                  Play
+                  {translate.play}
                 </button>
                 <button
                   type={'button'}
@@ -114,7 +117,7 @@ export default class PlaylistPanel extends React.Component {
                   className={classes.button}
                 >
                   <i className={`${classes.icon} fas fa-random`} />
-                  Shuffle
+                  {translate.shuffle}
                 </button>
               </div>
             </div>

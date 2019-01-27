@@ -10,6 +10,7 @@ import SidebarLibraryMenu from './SidebarLibraryMenu';
 import AuthorizeContext from '../NavigationBar/Authorize/AuthorizeContext';
 import InfiniteLoader from '../../Common/InfiniteLoader/InfiniteLoader';
 import PlaylistsContext from './PlaylistsContext';
+import translate from '../../../utils/translations/Translations';
 
 class Sidebar extends React.Component {
   static async loadPlaylists(params) {
@@ -34,17 +35,20 @@ class Sidebar extends React.Component {
 
     const appleMusic = authorized ? (
       <SidebarMenu
-        title={'Apple Music'}
+        title={translate.appleMusic}
         items={[
-          { to: '/', label: 'For You' },
-          { to: '/browse', label: 'Browse', exact: false },
-          { to: '/radio', label: 'Radio' },
+          { to: '/', label: translate.forYou },
+          { to: '/browse', label: translate.browse, exact: false },
+          { to: '/radio', label: translate.radio },
         ]}
       />
     ) : (
       <SidebarMenu
-        title={'Apple music'}
-        items={[{ to: '/browse', label: 'Browse' }, { to: '/radio', label: 'Radio' }]}
+        title={translate.appleMusic}
+        items={[
+          { to: '/browse', label: translate.browse },
+          { to: '/radio', label: translate.radio },
+        ]}
       />
     );
 
@@ -54,19 +58,19 @@ class Sidebar extends React.Component {
           {appleMusic}
           {authorized && (
             <SidebarLibraryMenu
-              title={'My Library'}
+              title={translate.myLibrary}
               items={[
-                { to: '/me/added', label: 'Recently Added', exact: false },
-                { to: '/me/artists', label: 'Artists', exact: false },
-                { to: '/me/albums', label: 'Albums', exact: false },
-                { to: '/me/songs', label: 'Songs' },
-                { to: '/me/playlists', label: 'Playlists' },
+                { to: '/me/added', label: translate.recentlyAdded, exact: false },
+                { to: '/me/artists', label: translate.artists, exact: false },
+                { to: '/me/albums', label: translate.albums, exact: false },
+                { to: '/me/songs', label: translate.songs },
+                { to: '/me/playlists', label: translate.playlists },
               ]}
             />
           )}
           {authorized && (
             <div className={classes.menu}>
-              <h3>Playlists</h3>
+              <h3>{translate.playlists}</h3>
               <ul>
                 <PlaylistsContext.Consumer>
                   {({ setItems }) => (
@@ -84,7 +88,7 @@ class Sidebar extends React.Component {
           <div className={classes.footer}>
             <span>
               <a href={'https://github.com/Musish/Musish/issues/new/choose'} target={'_blank'}>
-                Feedback
+                {translate.feedback}
               </a>
               {' & '}
               <a href={'https://github.com/Musish/Musish'} target={'_blank'}>
@@ -92,9 +96,7 @@ class Sidebar extends React.Component {
               </a>
             </span>
             <span className={classes.footnote}>
-              {'Designed with '}
-              <i className={'fa fa-heart'} />
-              {' by the Musish team.'}
+              {translate.formatString(translate.designCredits, <i className={'fa fa-heart'} />)}
             </span>
           </div>
         </div>

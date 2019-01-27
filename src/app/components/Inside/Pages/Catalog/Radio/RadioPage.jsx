@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './RadioPage.scss';
+import translate from '../../../../../utils/translations/Translations';
 
 export default function RadioPage() {
   return (
@@ -7,9 +8,7 @@ export default function RadioPage() {
       <div className={classes.comingSoonIcon}>
         <i className={'fas fa-broadcast-tower'} />
       </div>
-      <span className={classes.comingSoon}>
-        {"We're working on bringing Radio to you ASAP. Check back later."}
-      </span>
+      <span className={classes.comingSoon}>{translate.radioMessage}</span>
     </div>
   );
 }

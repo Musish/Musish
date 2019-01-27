@@ -1,0 +1,72 @@
+{
+  "musishDescription": "Musish utilise votre bibliothèque Apple Music pour vous offrir une expérience d'écoute incroyable. Connectez-vous avec votre compte ci-dessous.",
+  "connect": "Connectez-vous à Apple Music",
+
+  "securityMessage": "{0} Authentification sécurisée via Apple.com",
+  "justBrowse": "Parcourir le catalogue",
+  "legalNotice": "Musish n'est pas affilié à Apple, Inc. Notre service n'accède, ne collecte ni ne stocke aucune information personnelle ou relative à votre compte. 'Apple', 'Apple Music' et le logo Apple sont des marques commerciales de Apple, Inc.",
+
+  "appleMusic": "Apple Music",
+
+  "logout": "Déconnexion",
+  "login": "S'identifier",
+  "searchMusic": "Rechercher",
+
+  "play": "Jouer",
+  "playNext": "Jouer ensuite",
+  "playLater": "Jouer plus tard",
+  "shuffle": "Mixer",
+  "search": "Chercher",
+  "searchingFor": "Recherche pour {0}",
+
+  "openAlbum": "Ouvrir l'album",
+  "openPlaylist": "Ouvrir la Playlist",
+  "addToPlaylist": "Ajouter à la playlist",
+  "addToLibrary": "Ajouter à la bibliothèque",
+
+  "playlistBy": "Playlist par {0}",
+
+  "forYou": "Pour vous",
+  "recentlyPlayed": "Joué récemment",
+  "heavyRotation": "Joué fréquement",
+
+  "browse": "Parcourir",
+  "topCharts": "Le Hit-Parade",
+  "genres": "Les Genres",
+  "topSongs": "Top Chansons",
+  "dailyTop100": "Top 100 quotidien",
+  "topPlaylists": "Top Playlists",
+  "topAlbums": "Top Albums",
+
+  "radio": "Radio",
+  "radioMessage": "Nous travaillons à vous apporter la radio dès que possible. Revenez plus tard.",
+
+  "myLibrary": "Ma Bibliothèque",
+  "recentlyAdded": "Récemment Ajouté",
+  "artists": "Artistes",
+  "albums": "Albums",
+  "song": "Titre",
+  "songs": "Titres",
+  "playlists": "Playlists",
+
+  "feedback": "Commentaires",
+  "designCredits": "Conçu avec {0} par l'équipe Musish.",
+
+  "lyrics": "Paroles",
+  "upNext": "Suivant",
+
+  "showCompleteAlbum": "Afficher l'album complet",
+  "hour": "heure",
+  "hours": "heures",
+  "minute": "minute",
+  "minutes": "minutes",
+
+  "oppsNoResultsFound": "Opps, aucun résultat trouvé.",
+  "trackNotAvailable": "Titre non disponible",
+
+  "dataProvidedByGenius": "Données fournies par Genius",
+  "inYourPersonalLibrary": "Dans votre bibliothèque personnelle",
+  "unauthorisedLibrarySearch": "Vous devez vous connecter pour rechercher votre bibliothèque.",
+
+  "noLyricsAvailable": "Pas de paroles disponibles "
+}

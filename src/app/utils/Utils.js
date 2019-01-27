@@ -1,3 +1,5 @@
+import translate from './translations/Translations';
+
 export function createMediaItem(song) {
   // eslint-disable-next-line no-param-reassign
   song.container = { id: song.id };
@@ -23,9 +25,9 @@ export function getTime(ms) {
 export function humanifyMillis(duration) {
   const musickitDuration = MusicKit.formattedMilliseconds(duration);
 
-  const hourFormatted = musickitDuration.hours === 1 ? 'hour' : 'hours';
+  const hourFormatted = musickitDuration.hours === 1 ? translate.hour : translate.hours;
   const hours = musickitDuration.hours === 0 ? '' : `${musickitDuration.hours} ${hourFormatted}`;
-  const minuteFormatted = musickitDuration.minutes === 1 ? 'minute' : 'minutes';
+  const minuteFormatted = musickitDuration.minutes === 1 ? translate.minute : translate.minutes;
   const minutes =
     musickitDuration.minutes === 0 ? '' : `${musickitDuration.minutes} ${minuteFormatted}`;
   const comma = musickitDuration.hours === 0 || musickitDuration.minutes === 0 ? '' : `, `;
@@ -34,7 +36,7 @@ export function humanifyMillis(duration) {
 }
 
 export function humanifyTrackNumbers(trackNumber) {
-  const songs = trackNumber === 1 ? 'song' : 'songs';
+  const songs = trackNumber === 1 ? translate.song : translate.songs;
 
   return `${trackNumber} ${songs}`;
 }

@@ -6,6 +6,7 @@ import classes from './Queue.scss';
 import withMK from '../../../../hoc/withMK';
 import QueueContext from './QueueContext';
 import QueueList from './QueueList';
+import translate from '../../../../utils/translations/Translations';
 
 class Queue extends Component {
   constructor(props) {
@@ -74,7 +75,7 @@ class Queue extends Component {
                 <div className={classes.title}>
                   <span>
                     <i className="fas fa-grip-vertical" />
-                    {' Up next'}
+                    {` ${translate.upNext}`}
                   </span>
                 </div>
                 <div className={classes.icons} onClick={doHide}>

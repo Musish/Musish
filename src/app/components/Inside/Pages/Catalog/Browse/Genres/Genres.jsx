@@ -4,6 +4,7 @@ import { genres } from '../browse';
 import classes from '../../../Search/SearchPage.scss';
 import Loader from '../../../../../Common/Loader/Loader';
 import GenreItem from '../../../../../Common/GenreItem/GenreItem';
+import translate from '../../../../../../utils/translations/Translations';
 
 class Genres extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class Genres extends Component {
 
     genreCurators.map(genre => {
       const updatedGenre = genre;
-      updatedGenre.attributes.name = updatedGenre.attributes.name.replace('Apple Music', '');
+      updatedGenre.attributes.name = updatedGenre.attributes.name.replace(translate.appleMusic, '');
       return updatedGenre;
     });
 

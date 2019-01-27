@@ -14,6 +14,7 @@ import * as MusicPlayerApi from '../../../../services/MusicPlayerApi';
 import ArtistItem from '../../../Common/ArtistItem/ArtistItem';
 import Tabs from '../../../Common/Tabs/Tabs';
 import Tab from '../../../Common/Tabs/Tab';
+import translate from '../../../../utils/translations/Translations';
 
 class SearchPage extends React.Component {
   constructor(props) {
@@ -114,7 +115,7 @@ class SearchPage extends React.Component {
 
     return (
       <>
-        <h3>Songs</h3>
+        <h3>{translate.songs}</h3>
         <TracksGrid
           scrollElement={this.ref}
           tracks={songs}
@@ -135,7 +136,7 @@ class SearchPage extends React.Component {
 
     return (
       <>
-        <h3>Albums</h3>
+        <h3>{translate.albums}</h3>
         <div className={classes.searchGrid}>
           {albums.map(album => (
             <AlbumItem key={album.id} album={album} size={120} />
@@ -154,7 +155,7 @@ class SearchPage extends React.Component {
 
     return (
       <>
-        <h3>Playlists</h3>
+        <h3>{translate.playlists}</h3>
         <div className={classes.searchGrid}>
           {playlists.map(playlist => (
             <PlaylistItem key={playlist.id} playlist={playlist} size={120} />
@@ -173,7 +174,7 @@ class SearchPage extends React.Component {
 
     return (
       <>
-        <h3>Artists</h3>
+        <h3>{translate.artists}</h3>
         <div className={classes.searchArtistsGrid}>
           {artists.slice(0, 12).map(artist => (
             <ArtistItem artist={artist} size={41} key={artist.id} />
@@ -202,7 +203,7 @@ class SearchPage extends React.Component {
             <span className={classes.searchErrorTitle} role={'img'} aria-label={'loudly-crying'}>
               😭
             </span>
-            <span className={classes.searchErrorDetails}>Oops, no results found.</span>
+            <span className={classes.searchErrorDetails}>{translate.noResultsFound}</span>
           </div>
         ) : (
           <>
@@ -221,13 +222,16 @@ class SearchPage extends React.Component {
     const { query } = this.props.match.params;
     return (
       <PageContent innerRef={this.ref}>
-        <PageTitle title={`Searching for ${this.props.match.params.query}`} context={'Search'} />
+        <PageTitle
+          title={translate.formatString(translate.searchingFor, this.props.match.params.query)}
+          context={translate.search}
+        />
 
         <Tabs>
-          <Tab name={'Apple Music'} route={`/search/catalog/${query}`}>
+          <Tab name={translate.appleMusic} route={`/search/catalog/${query}`}>
             {this.renderResults()}
           </Tab>
-          <Tab name={'My Library'} route={`/search/library/${query}`}>
+          <Tab name={translate.myLibrary} route={`/search/library/${query}`}>
             {isAuthorized ? (
               this.renderResults()
             ) : (
@@ -240,7 +244,7 @@ class SearchPage extends React.Component {
                   😱
                 </span>
                 <span className={classes.searchErrorDetails}>
-                  You must login to search your library.
+                  {translate.unauthorisedLibrarySearch}
                 </span>
               </div>
             )}

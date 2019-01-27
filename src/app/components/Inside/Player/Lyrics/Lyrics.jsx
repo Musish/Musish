@@ -4,6 +4,7 @@ import classes from './LyricsModal.scss';
 
 import backend from '../../../../services/Backend';
 import Loader from '../../../Common/Loader/Loader';
+import translate from '../../../../utils/translations/Translations';
 
 const iframeCss = `
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
@@ -62,7 +63,7 @@ class Lyrics extends React.Component {
     if (geniusSong === false) {
       return (
         <div className={classes.noMatch}>
-          {'No lyrics available '}
+          {translate.noLyricsAvailable}
           <span role={'img'} aria-label={'crying'}>
             😢
           </span>
@@ -77,7 +78,7 @@ class Lyrics extends React.Component {
     return (
       <div className={classes.lyricsSection}>
         <iframe
-          title={'Lyrics'}
+          title={translate.lyrics}
           srcDoc={geniusSong.embed_content + iframeCss}
           frameBorder="0"
           style={{ height: '100%', width: '100%' }}

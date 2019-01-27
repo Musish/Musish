@@ -7,6 +7,7 @@ import classes from './ForYouPage.scss';
 import Loader from '../../../../Common/Loader/Loader';
 import AlbumItem from '../../../../Common/AlbumItem/AlbumItem';
 import PlaylistItem from '../../../../Common/PlaylistItem/PlaylistItem';
+import translate from '../../../../../utils/translations/Translations';
 
 class ForYouPage extends React.Component {
   constructor(props) {
@@ -65,7 +66,7 @@ class ForYouPage extends React.Component {
 
     return (
       <>
-        <h3>Recently played</h3>
+        <h3>{translate.recentlyPlayed}</h3>
         <div className={cx(classes.scrollWrapper)}>
           <div className={classes.scrollGrid}>
             {recentlyPlayed.map(item => {
@@ -97,7 +98,7 @@ class ForYouPage extends React.Component {
 
     return (
       <>
-        <h3>Heavy Rotation</h3>
+        <h3>{translate.heavyRotation}</h3>
         <div className={classes.scrollWrapper}>
           <div className={classes.scrollGrid}>
             {heavyRotation.map(item => {
@@ -195,7 +196,7 @@ class ForYouPage extends React.Component {
 
     return (
       <PageContent innerRef={this.ref}>
-        <PageTitle title={'For You'} context={'Apple Music'} />
+        <PageTitle title={translate.forYou} context={translate.appleMusic} />
 
         {!(recentlyPlayed && heavyRotation && recommendations) && <Loader />}
 

@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import cx from 'classnames';
 
 import classes from './SplashScreen.scss';
+import translate from '../../../utils/translations/Translations';
 
 class SplashScreen extends React.Component {
   constructor(props) {
@@ -50,23 +51,19 @@ class SplashScreen extends React.Component {
           {' Music... ish.'}
         </h5>
         <hr />
-        <p className={classes.accountCaption}>
-          Musish uses your Apple Music library to provide you with an amazing listening experience.
-          Please connect your account below.
-        </p>
+        <p className={classes.accountCaption}>{translate.musishDescription}</p>
         <button type={'button'} onClick={this.loginNavigate} className={classes.button}>
-          Connect to Apple Music
+          {translate.connect}
         </button>
         <span className={classes.secureConnection}>
-          <i className={'fas fa-lock'} />
-          {' Secure authentication via Apple.com.'}
+          {translate.formatString(translate.securityMessage, <i className={'fas fa-lock'} />)}
         </span>
         <button
           type={'button'}
           onClick={this.browseNavigate}
           className={cx(classes.button, classes.browseButton)}
         >
-          Or just browse
+          {translate.justBrowse}
         </button>
         <div className={classes.disclaimer}>
           <div className={classes.disclaimerIcon}>
@@ -74,11 +71,7 @@ class SplashScreen extends React.Component {
               <i className="fas fa-info icon" />
             </span>
           </div>
-          <div className={classes.disclaimerText}>
-            {
-              "Musish is not affiliated with Apple, Inc. Our service does not access, collect, or store any personal or account information. 'Apple', 'Apple Music' and the Apple logo are trademarks of Apple, Inc."
-            }
-          </div>
+          <div className={classes.disclaimerText}>{translate.legalNotice}</div>
         </div>
       </div>
     );

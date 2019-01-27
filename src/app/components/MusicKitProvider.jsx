@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Loader from './Common/Loader/Loader';
+import translate from '../utils/translations/Translations';
 
 export default class MusicKitProvider extends React.Component {
   constructor(props) {
@@ -9,6 +10,8 @@ export default class MusicKitProvider extends React.Component {
     this.state = {
       ready: false,
     };
+
+    this.setLanguage = this.setLanguage.bind(this);
   }
 
   componentDidMount() {
@@ -22,9 +25,20 @@ export default class MusicKitProvider extends React.Component {
       },
     });
 
+    this.setLanguage(MusicKit.getInstance().storekit.storefrontCountryCode);
+
+    MusicKit.getInstance().addEventListener('storefrontCountryCodeDidChange', e => {
+      this.setLanguage(e.storefrontCountryCode);
+    });
+
     this.setState({
       ready: true,
     });
+  }
+
+  setLanguage(countryCode) {
+    translate.setLanguage(countryCode);
+    this.forceUpdate();
   }
 
   render() {

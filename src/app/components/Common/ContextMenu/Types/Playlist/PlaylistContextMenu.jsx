@@ -9,6 +9,7 @@ import ModalContext from '../../../Modal/ModalContext';
 import PlaylistPanel from '../../../PlaylistPanel/PlaylistPanel';
 import { addPlaylistToPlaylist, addToLibrary } from '../../../../../services/MusicApi';
 import PlaylistSelector from '../../../PlaylistSelector/PlaylistSelector';
+import translate from '../../../../../utils/translations/Translations';
 
 function PlaylistContextMenu({ playlist }) {
   const { attributes } = playlist;
@@ -31,14 +32,14 @@ function PlaylistContextMenu({ playlist }) {
 
       <MenuItem divider />
 
-      <MenuItem onClick={() => playPlaylist(playlist, 0)}>Play</MenuItem>
+      <MenuItem onClick={() => playPlaylist(playlist, 0)}>{translate.play}</MenuItem>
 
       <MenuItem divider />
 
       <ModalContext.Consumer>
         {({ push }) => (
           <MenuItem onClick={() => push(<PlaylistPanel playlist={playlist} />)}>
-            Open Playlist
+            {translate.openPlaylist}
           </MenuItem>
         )}
       </ModalContext.Consumer>
@@ -48,7 +49,7 @@ function PlaylistContextMenu({ playlist }) {
           <MenuItem divider />
 
           <MenuItem onClick={() => addToLibrary('playlists', [playlist.id])}>
-            Add to library
+            {translate.addToLibrary}
           </MenuItem>
         </>
       )}
@@ -70,7 +71,7 @@ function PlaylistContextMenu({ playlist }) {
               )
             }
           >
-            Add to playlist
+            {translate.addToPlaylist}
           </MenuItem>
         )}
       </ModalContext.Consumer>

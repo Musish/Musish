@@ -3,6 +3,7 @@ import AlbumPanel from '../../../../Common/AlbumPanel/AlbumPanel';
 import Loader from '../../../../Common/Loader/Loader';
 import PageTitle from '../../../../Common/PageTitle/PageTitle';
 import PageContent from '../../../../Common/PageContent/PageContent';
+import translate from '../../../../../utils/translations/Translations';
 
 export default class ArtistAlbums extends React.Component {
   constructor(props) {
@@ -48,7 +49,7 @@ export default class ArtistAlbums extends React.Component {
 
     return (
       <>
-        <PageTitle title={artist.attributes.name} context={'My Library'} />
+        <PageTitle title={artist.attributes.name} context={translate.myLibrary} />
         {this.renderArtists()}
       </>
     );

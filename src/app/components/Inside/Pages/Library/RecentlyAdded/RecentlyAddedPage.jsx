@@ -5,6 +5,7 @@ import PageTitle from '../../../../Common/PageTitle/PageTitle';
 import PageContent from '../../../../Common/PageContent/PageContent';
 import InfiniteLoader from '../../../../Common/InfiniteLoader/InfiniteLoader';
 import PlaylistItem from '../../../../Common/PlaylistItem/PlaylistItem';
+import translate from '../../../../../utils/translations/Translations';
 
 export default class RecentlyAddedPage extends React.Component {
   constructor(props) {
@@ -43,7 +44,7 @@ export default class RecentlyAddedPage extends React.Component {
   render() {
     return (
       <PageContent innerRef={this.ref}>
-        <PageTitle title={'Recently Added'} context={'My Library'} />
+        <PageTitle title={translate.recentlyAdded} context={translate.myLibrary} />
 
         <InfiniteLoader
           scrollElement={this.ref}
