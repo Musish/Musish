@@ -6,6 +6,7 @@ import PageTitle from '../../../../Common/PageTitle/PageTitle';
 import PageContent from '../../../../Common/PageContent/PageContent';
 import AlbumItem from '../../../../Common/AlbumItem/AlbumItem';
 import backend from '../../../../../services/Backend';
+import translate from '../../../../../utils/translations/Translations';
 
 class ArtistPage extends React.Component {
   constructor(props) {
@@ -98,7 +99,7 @@ class ArtistPage extends React.Component {
           <div className={classes.artistHeader} style={headerStyles}>
             <a href={'https://genius.com/'} target={'_blank'}>
               <div className={classes.geniusCredit}>
-                <span>Data provided by Genius</span>
+                <span>{translate.dataProvidedByGenius}</span>
               </div>
             </a>
             <div className={classes.artistHeaderContainer}>
@@ -108,7 +109,7 @@ class ArtistPage extends React.Component {
         )}
         <PageTitle title={artist ? artist.attributes.name : '...'} context={'Apple Music'} />
         {geniusData && geniusData.plainDescription}
-        <h3>Albums</h3>
+        <h3>{translate.albums}</h3>
 
         {artist && (
           <div className={classes.albumsGrid}>

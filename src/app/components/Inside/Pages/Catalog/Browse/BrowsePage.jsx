@@ -7,6 +7,7 @@ import Tabs from '../../../../Common/Tabs/Tabs';
 import Tab from '../../../../Common/Tabs/Tab';
 import TopCharts from './TopCharts/TopCharts';
 import Genres from './Genres/Genres';
+import translate from '../../../../../utils/translations/Translations';
 
 class BrowsePage extends React.Component {
   constructor(props) {
@@ -22,13 +23,13 @@ class BrowsePage extends React.Component {
   render() {
     return (
       <PageContent innerRef={this.ref}>
-        <PageTitle title={'Browse'} context={'Apple Music'} />
+        <PageTitle title={`${translate.browse}`} context={`${translate.appleMusic}`} />
 
         <Tabs>
-          <Tab name={'Top Charts'} route={'/browse'}>
+          <Tab name={`${translate.topCharts}`} route={'/browse'}>
             <TopCharts />
           </Tab>
-          <Tab name={'Genres'} route={'/browse/genres'}>
+          <Tab name={`${translate.genres}`} route={'/browse/genres'}>
             <Genres />
           </Tab>
         </Tabs>

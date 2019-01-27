@@ -12,6 +12,7 @@ import AlbumResultItem from './AlbumResultItem';
 import ArtistResultItem from './ArtistResultItem';
 import PlaylistResultItem from './PlaylistResultItem';
 import AuthorizeContext from '../Authorize/AuthorizeContext';
+import translate from '../../../../utils/translations/Translations';
 
 class SearchBar extends React.Component {
   constructor(props) {
@@ -146,7 +147,7 @@ class SearchBar extends React.Component {
           >
             <input
               type="text"
-              placeholder="Search music"
+              placeholder={`${translate.searchMusic}`}
               value={query}
               onChange={this.handleSearch}
               onFocus={this.handleShowResults}

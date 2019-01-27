@@ -45,7 +45,7 @@ const strings = new LocalizedStrings({
     topAlbums: 'Top Albums',
 
     radio: 'Radio',
-    radioMessage: `We're working on bringing Radio to you ASAP. Check back later`,
+    radioMessage: `We're working on bringing Radio to you ASAP. Check back later.`,
 
     myLibrary: 'My Library',
     recentlyAdded: 'Recently Added',
@@ -69,6 +69,8 @@ const strings = new LocalizedStrings({
 
     oppsNoResultsFound: 'Opps, no results found.',
     trackNotAvailable: 'Track not available',
+
+    dataProvidedByGenius: 'Data Provided by Genius',
   },
   // POLISH
   pl: {
