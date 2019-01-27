@@ -120,7 +120,7 @@ class AlbumPanel extends React.Component {
     const artistName = artistId ? (
       <Link to={`/artist/${artistId}`}>{album.attributes.artistName}</Link>
     ) : (
-      <span className={classes.subtitle}>{album.attributes.artistName}</span>
+      album.attributes.artistName
     );
 
     return (
@@ -150,7 +150,8 @@ class AlbumPanel extends React.Component {
             {explicit}
           </span>
 
-          {artistName}
+          <span className={classes.subtitle}>{artistName}</span>
+
           <TracksList
             scrollElement={this.ref}
             scrollElementModifier={e => e && e.parentElement}
