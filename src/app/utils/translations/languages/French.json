@@ -15,12 +15,12 @@
   "play": "Jouer",
   "playNext": "Jouer ensuite",
   "playLater": "Jouer plus tard",
-  "shuffle": "Mixer",
-  "search": "Chercher",
+  "shuffle": "Aléatoire",
+  "search": "Rechercher",
   "searchingFor": "Recherche pour {0}",
 
   "openAlbum": "Ouvrir l'album",
-  "openPlaylist": "Ouvrir la Playlist",
+  "openPlaylist": "Ouvrir la playlist",
   "addToPlaylist": "Ajouter à la playlist",
   "addToLibrary": "Ajouter à la bibliothèque",
 
@@ -31,12 +31,12 @@
   "heavyRotation": "Joué fréquement",
 
   "browse": "Parcourir",
-  "topCharts": "Le Hit-Parade",
-  "genres": "Les Genres",
-  "topSongs": "Top Chansons",
-  "dailyTop100": "Top 100 quotidien",
-  "topPlaylists": "Top Playlists",
-  "topAlbums": "Top Albums",
+  "topCharts": "Classement",
+  "genres": "Genres",
+  "topSongs": "Chansons",
+  "dailyTop100": "Le top 100 du jour",
+  "topPlaylists": "Playlists",
+  "topAlbums": "Albums",
 
   "radio": "Radio",
   "radioMessage": "Nous travaillons à vous apporter la radio dès que possible. Revenez plus tard.",
@@ -61,12 +61,12 @@
   "minute": "minute",
   "minutes": "minutes",
 
-  "oppsNoResultsFound": "Opps, aucun résultat trouvé.",
+  "oppsNoResultsFound": "Oups, aucun résultat trouvé.",
   "trackNotAvailable": "Titre non disponible",
 
   "dataProvidedByGenius": "Données fournies par Genius",
   "inYourPersonalLibrary": "Dans votre bibliothèque personnelle",
   "unauthorisedLibrarySearch": "Vous devez vous connecter pour rechercher votre bibliothèque.",
 
-  "noLyricsAvailable": "Pas de paroles disponibles "
+  "noLyricsAvailable": "Pas de paroles disponibles"
 }
