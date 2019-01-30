@@ -37,7 +37,7 @@ class ArtistsList extends React.Component {
                 </span>
               </div>
               <div>
-                <span className={classes.artistName}>{artist.attributes.name}</span>
+                <div className={classes.artistName}>{artist.attributes.name}</div>
               </div>
             </Link>
           )}
