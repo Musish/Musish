@@ -1,0 +1,71 @@
+{
+  "musishDescription": "Musish usa la tua libreria Apple Music per fornirti una fantastica esperienza d'ascolto. Puoi connetterti al tuo account qui sotto.",
+  "connect": "Connettiti a Apple Music",
+  "securityMessage": "{0} Autenticazione sicura tramite Apple.com.",
+  "justBrowse": "Altrimenti esplora soltanto",
+  "legalNotice": "Musish non è affiliata ad Apple, Inc. Il nostro servizio non ha accesso, non acquisice, o salva alcuna informazione personale o sull'account. 'Apple', 'Apple Music' e il logo Apple sono marchi registrati di Apple, Inc.",
+
+  "appleMusic": "Apple Music",
+
+  "logout": "Logout",
+  "login": "Login",
+  "searchMusic": "Cerca musica",
+
+  "play": "Play",
+  "playNext": "Riproduci come successiva",
+  "playLater": "Riproduci in seguito",
+  "shuffle": "Riproduzione casuale",
+  "search": "Cerca",
+  "searchingFor": "Cerca {0}",
+
+  "openAlbum": "Apri Album",
+  "openPlaylist": "Apri Playlist",
+  "addToPlaylist": "Aggiungi a Playlist",
+  "addToLibrary": "Aggiungi alla Libreria",
+
+  "playlistBy": "Playlist di {0}",
+
+  "forYou": "Per te",
+  "recentlyPlayed": "Acoltati di recente",
+  "heavyRotation": "Heavy Rotation",
+
+  "browse": "Scopri",
+  "topCharts": "Classifiche",
+  "genres": "Generi",
+  "topSongs": "Tracce in evidenza",
+  "dailyTop100": "Top 100 giornaliera",
+  "topPlaylists": "Playlist popolari",
+  "topAlbums": "Album popolari",
+
+  "radio": "Radio",
+  "radioMessage": "Stiamo lavorando per portarti la radio il prima possibile. Ricontrolla più avanti.",
+
+  "myLibrary": "Libreria",
+  "recentlyAdded": "Aggiunti di recente",
+  "artists": "Artisti",
+  "albums": "Album",
+  "song": "Canzone",
+  "songs": "Canzoni",
+  "playlists": "Playlist",
+
+  "feedback": "Feedback",
+  "designCredits": "Creato col {0} dal team di Musish.",
+
+  "lyrics": "Testo",
+  "upNext": "In Coda",
+
+  "showCompleteAlbum": "Mostra Album Completo",
+  "hour": "ora",
+  "hours": "ore",
+  "minute": "minuto",
+  "minutes": "minuti",
+
+  "noResultsFound": "Oops, nessun risultato trovato.",
+  "trackNotAvailable": "Traccia non disponibile",
+
+  "dataProvidedByGenius": "Dati forniti da Genius",
+  "inYourPersonalLibrary": "Nella tua libreria personale",
+  "unauthorisedLibrarySearch": "Devi effettuare il login per cercare nella tua libreria.",
+
+  "noLyricsAvailable": "Nessun testo disponibile "
+}
