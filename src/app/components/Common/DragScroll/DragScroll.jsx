@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default class DragScroll extends React.Component {
+class DragScroll extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,7 +17,7 @@ export default class DragScroll extends React.Component {
         className={this.props.className}
         onMouseUp={this.mouseUpHandle.bind(this)}
         onMouseMove={this.mouseMoveHandle.bind(this)}
-        ref='container'
+        ref={(c) => { this.container = c; }}
         style={{ pointerEvents: this.state.pointerEvents }}
       >
         {this.props.children && this.renderChildren(this.props.children)}
@@ -37,23 +38,27 @@ export default class DragScroll extends React.Component {
   mouseUpHandle(e) {
     if (this.state.dragging) {
       setTimeout(() => {
-        this.state.pointerEvents = 'auto';
-        this.setState(this.state);
+        this.setState({
+          pointerEvents: 'auto',
+        });
       }, 100);
-      this.state.dragging = false;
-      this.setState(this.state);
+      this.setState({
+        dragging: false,
+      });
     }
   }
 
   mouseDownHandle(e) {
     if (!this.state.dragging) {
-      this.state.dragging = true;
-      this.setState(this.state);
+      this.setState({
+        dragging: true,
+      });
       this.lastClientX = e.clientX;
       this.lastClientY = e.clientY;
       setTimeout(() => {
-        this.state.pointerEvents = 'none';
-        this.setState(this.state);
+        this.setState({
+          pointerEvents: 'none',
+        });
       }, 100);
 
       e.preventDefault();
@@ -62,35 +67,42 @@ export default class DragScroll extends React.Component {
 
   mouseMoveHandle(e) {
     if (this.state.dragging) {
-      this.refs.container.scrollLeft -= -this.lastClientX + (this.lastClientX = e.clientX);
-      this.refs.container.scrollTop -= -this.lastClientY + (this.lastClientY = e.clientY);
+      this.container.scrollLeft -= -this.lastClientX + (this.lastClientX = e.clientX);
+      this.container.scrollTop -= -this.lastClientY + (this.lastClientY = e.clientY);
     }
   }
 
   renderChildren(dom, type) {
     if (this.isArray(dom)) {
-      return dom.map((item, index) => {
-        return React.cloneElement(item, {
+      return dom.map((item, index) => 
+        React.cloneElement(item, {
           key: item.key || index,
           onMouseUp: this.mouseUpHandle.bind(this),
-          onMouseDown: this.mouseDownHandle.bind(this)
-        });
-      });
-    } else if ('object' == typeof dom) {
+          onMouseDown: this.mouseDownHandle.bind(this),
+        })
+      );
+    } else if ('object' === typeof dom) {
       return React.cloneElement(dom, {
         onMouseUp: this.mouseUpHandle.bind(this),
-        onMouseDown: this.mouseDownHandle.bind(this)
+        onMouseDown: this.mouseDownHandle.bind(this),
       });
     }
+    return;
   }
 
-  isArray(object) {
+  static isArray(object) {
     return (
       object &&
       typeof object === 'object' &&
       typeof object.length === 'number' &&
       typeof object.splice === 'function' &&
-      !object.propertyIsEnumerable('length')
+      !{}.propertyIsEnumerable.call(object, 'length')
     );
   }
 }
+
+DragScroll.propTypes = {
+  children: PropTypes.node.isRequired
+};
+
+export default DragScroll;

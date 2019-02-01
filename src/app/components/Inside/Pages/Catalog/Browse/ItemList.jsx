@@ -6,7 +6,7 @@ import classes from './BrowsePage.scss';
 import PlaylistItem from '../../../../Common/PlaylistItem/PlaylistItem';
 import AlbumItem from '../../../../Common/AlbumItem/AlbumItem';
 import CuratorItem from '../../../../Common/CuratorItem/CuratorItem';
-import DragScroll from "../../../../Common/DragScroll/DragScroll";
+import DragScroll from '../../../../Common/DragScroll/DragScroll';
 
 class ItemList extends React.Component {
   constructor(props) {
