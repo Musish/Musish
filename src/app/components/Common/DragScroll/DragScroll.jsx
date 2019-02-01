@@ -91,7 +91,7 @@ class DragScroll extends React.Component {
     return dom;
   }
 
-  static isArray(object) {
+  isArray(object) {
     return (
       object &&
       typeof object === 'object' &&
@@ -105,6 +105,10 @@ class DragScroll extends React.Component {
 DragScroll.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.any,
+};
+
+DragScroll.defaultProps = {
+  className: null,
 };
 
 export default DragScroll;
