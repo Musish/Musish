@@ -5,9 +5,8 @@ class DragScroll extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: props.dataSource,
       dragging: false,
-      pointerEvents: 'auto'
+      pointerEvents: 'auto',
     };
   }
 
@@ -15,9 +14,11 @@ class DragScroll extends React.Component {
     return (
       <div
         className={this.props.className}
-        onMouseUp={this.mouseUpHandle.bind(this)}
-        onMouseMove={this.mouseMoveHandle.bind(this)}
-        ref={(c) => { this.container = c; }}
+        onMouseUp={this.mouseUpHandle}
+        onMouseMove={this.mouseMoveHandle}
+        ref={c => {
+          this.container = c;
+        }}
         style={{ pointerEvents: this.state.pointerEvents }}
       >
         {this.props.children && this.renderChildren(this.props.children)}
@@ -26,13 +27,13 @@ class DragScroll extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('mouseup', this.mouseUpHandle.bind(this));
-    window.addEventListener('mousemove', this.mouseMoveHandle.bind(this));
+    window.addEventListener('mouseup', this.mouseUpHandle);
+    window.addEventListener('mousemove', this.mouseMoveHandle);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('mouseup', this.mouseUpHandle.bind(this));
-    window.removeEventListener('mousemove', this.mouseMoveHandle.bind(this));
+    window.removeEventListener('mouseup', this.mouseUpHandle);
+    window.removeEventListener('mousemove', this.mouseMoveHandle);
   }
 
   mouseUpHandle(e) {
@@ -77,17 +78,17 @@ class DragScroll extends React.Component {
       return dom.map((item, index) => 
         React.cloneElement(item, {
           key: item.key || index,
-          onMouseUp: this.mouseUpHandle.bind(this),
-          onMouseDown: this.mouseDownHandle.bind(this),
+          onMouseUp: this.mouseUpHandle,
+          onMouseDown: this.mouseDownHandle,
         })
       );
-    } else if ('object' === typeof dom) {
+    } else if (typeof dom === 'object') {
       return React.cloneElement(dom, {
-        onMouseUp: this.mouseUpHandle.bind(this),
-        onMouseDown: this.mouseDownHandle.bind(this),
+        onMouseUp: this.mouseUpHandle,
+        onMouseDown: this.mouseDownHandle,
       });
     }
-    return;
+    return dom;
   }
 
   static isArray(object) {
@@ -102,7 +103,8 @@ class DragScroll extends React.Component {
 }
 
 DragScroll.propTypes = {
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
+  className: PropTypes.any,
 };
 
 export default DragScroll;
