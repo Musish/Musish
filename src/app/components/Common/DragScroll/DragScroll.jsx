@@ -75,14 +75,15 @@ class DragScroll extends React.Component {
 
   renderChildren(dom, type) {
     if (this.isArray(dom)) {
-      return dom.map((item, index) => 
+      return dom.map((item, index) =>
         React.cloneElement(item, {
           key: item.key || index,
           onMouseUp: this.mouseUpHandle,
           onMouseDown: this.mouseDownHandle,
         })
       );
-    } else if (typeof dom === 'object') {
+    }
+    if (typeof dom === 'object') {
       return React.cloneElement(dom, {
         onMouseUp: this.mouseUpHandle,
         onMouseDown: this.mouseDownHandle,
@@ -91,7 +92,7 @@ class DragScroll extends React.Component {
     return dom;
   }
 
-  isArray(object) {
+  static isArray(object) {
     return (
       object &&
       typeof object === 'object' &&
