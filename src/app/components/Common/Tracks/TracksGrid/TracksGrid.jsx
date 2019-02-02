@@ -3,10 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classes from './TracksGrid.scss';
 import TrackListItem from '../TracksList/TracksListItem';
+import DragScroll from '../../DragScroll/DragScroll';
 
 function TracksGrid({ tracks, showArtist, showAlbum, playTrack }) {
   return (
-    <div className={classes.scrollWrapper}>
+    <DragScroll className={classes.scrollWrapper}>
       <div className={classes.trackGrid}>
         {tracks.map((track, index) => (
           <TrackListItem
@@ -21,7 +22,7 @@ function TracksGrid({ tracks, showArtist, showAlbum, playTrack }) {
           />
         ))}
       </div>
-    </div>
+    </DragScroll>
   );
 }
 
