@@ -11,10 +11,10 @@
   "login": "Login",
   "searchMusic": "Cerca musica",
 
-  "play": "Play",
+  "play": "Riproduci",
   "playNext": "Riproduci come successiva",
   "playLater": "Riproduci in seguito",
-  "shuffle": "Riproduzione casuale",
+  "shuffle": "Casuale",
   "search": "Cerca",
   "searchingFor": "Cerca {0}",
 
