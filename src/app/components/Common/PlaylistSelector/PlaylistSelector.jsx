@@ -10,7 +10,7 @@ function PlaylistSelector(props) {
   return (
     <div>
       {playlists.map(playlist => (
-        <div key={playlist.id} className={classes.playlist} onClick={onClick}>
+        <div key={playlist.id} className={classes.playlist} onClick={() => onClick(playlist)}>
           {playlist.attributes.name}
         </div>
       ))}
