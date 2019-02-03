@@ -44,7 +44,7 @@ function collect(connect, monitor) {
 }
 
 const dndSpec = {
-  canDrop(props) {
+  canDrop() {
     return true;
   },
   drop(props, monitor) {
@@ -53,7 +53,7 @@ const dndSpec = {
 
     switch (monitor.getItemType()) {
       case DragDropType.SONG:
-        MusicApi.addSongsToPlaylist(playlist.id, [item.song.id]);
+        MusicApi.addSongsToPlaylist(playlist.id, [item.track]);
         break;
       case DragDropType.ALBUM:
         MusicApi.addAlbumToPlaylist(playlist.id, item.album);
