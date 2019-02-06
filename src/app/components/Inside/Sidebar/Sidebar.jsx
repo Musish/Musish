@@ -92,7 +92,7 @@ class Sidebar extends React.Component {
               </a>
               {' & '}
               <a href={'https://github.com/Musish/Musish'} target={'_blank'}>
-                Github
+                GitHub
               </a>
             </span>
             <span className={classes.footnote}>
