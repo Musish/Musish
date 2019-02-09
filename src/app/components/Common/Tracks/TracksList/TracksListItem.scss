@@ -150,6 +150,10 @@
     pointer-events: none !important;
     cursor: not-allowed !important;
 
+    .trackDuration {
+      display: none;
+    }
+
     .trackInfo {
       opacity: 0.5;
     }
