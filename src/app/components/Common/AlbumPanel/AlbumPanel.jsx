@@ -105,10 +105,12 @@ class AlbumPanel extends React.Component {
       return <Loader />;
     }
 
+    let albumRuntimeDescription;
+
     if (runtime) {
-      const albumRuntimeDescription = `${humanifyTrackNumbers(album.attributes.trackCount)}, ${runtime}`;
+      albumRuntimeDescription = `${humanifyTrackNumbers(album.attributes.trackCount)}, ${runtime}`;
     } else {
-      const albumRuntimeDescription = humanifyTrackNumbers(album.attributes.trackCount);
+      albumRuntimeDescription = humanifyTrackNumbers(album.attributes.trackCount);
     }
 
     const artworkURL = artworkForMediaItem(album, 220);
