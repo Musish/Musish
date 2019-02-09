@@ -61,7 +61,11 @@ class TracksListItem extends React.Component {
       </div>
     );
 
-    const duration = getTime(attributes.durationInMillis);
+    if (getTime(attributes.durationInMillis)) {
+      const duration = getTime(attributes.durationInMillis);
+    } else {
+      const duration = '';
+    }
 
     return connectDragSource(
       <div

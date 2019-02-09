@@ -105,6 +105,12 @@ class AlbumPanel extends React.Component {
       return <Loader />;
     }
 
+    if (runtime) {
+      const albumRuntimeDescription = `${humanifyTrackNumbers(album.attributes.trackCount)}, ${runtime}`;
+    } else {
+      const albumRuntimeDescription = humanifyTrackNumbers(album.attributes.trackCount);
+    }
+
     const artworkURL = artworkForMediaItem(album, 220);
 
     const explicit = album.attributes.contentRating === 'explicit' && (
@@ -140,7 +146,7 @@ class AlbumPanel extends React.Component {
             </button>
           </div>
           <span className={classes.albumRuntimeDescription}>
-            {`${humanifyTrackNumbers(album.attributes.trackCount)}, ${runtime}`}
+            {`${albumRuntimeDescription}`}
           </span>
         </div>
 
