@@ -26,13 +26,31 @@ class ArtistPage extends React.Component {
 
     let artist;
     if (isCatalog) {
-      artist = await music.api.artist(id, { include: 'albums' });
+      artist = await music.api.artist(id);
     } else {
-      artist = await music.api.library.artist(id, { include: 'albums' });
+      artist = await music.api.library.artist(id);
     }
 
     this.setState({
       artist,
+    });
+  }
+
+  async fetchAlbums() {
+    const music = MusicKit.getInstance();
+
+    const { id } = this.props.match.params;
+    const isCatalog = /^\d+$/.test(id);
+
+    let albums;
+    if (isCatalog) {
+      albums = await music.api.artist(id, { include: 'albums' });
+    } else {
+      albums = await music.api.library.artist(id, { include: 'albums' });
+    }
+
+    this.setState({
+      albums,
     });
   }
 
@@ -73,18 +91,20 @@ class ArtistPage extends React.Component {
 
   componentDidMount() {
     this.fetchArtist();
+    this.fetchAlbums();
     this.fetchGeniusData();
   }
 
   componentDidUpdate() {
     if (this.state.artist && this.state.artist.id !== this.props.match.params.id) {
       this.fetchArtist();
+      this.fetchAlbums();
       this.fetchGeniusData();
     }
   }
 
   render() {
-    const { artist, geniusData } = this.state;
+    const { artist, albums, geniusData } = this.state;
 
     const headerStyles = {
       background: geniusData ? `url(${geniusData.header_image_url})` : '#f2f2f2',
@@ -111,9 +131,9 @@ class ArtistPage extends React.Component {
         {geniusData && geniusData.plainDescription}
         <h3>{translate.albums}</h3>
 
-        {artist && (
+        {albums && (
           <div className={classes.albumsGrid}>
-            {artist.relationships.albums.data.map(album => (
+            {albums.map(album => (
               <AlbumItem key={album.id} album={album} size={120} />
             ))}
           </div>
