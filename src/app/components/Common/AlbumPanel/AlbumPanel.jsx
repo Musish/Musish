@@ -148,7 +148,7 @@ class AlbumPanel extends React.Component {
             </button>
           </div>
           <span className={classes.albumRuntimeDescription}>
-            {`${albumRuntimeDescription}`}
+            {albumRuntimeDescription}
           </span>
         </div>
 
