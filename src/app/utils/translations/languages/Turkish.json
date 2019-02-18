@@ -1,0 +1,71 @@
+{
+  "musishDescription": "Musish Apple Music arşivinizi kullanarak size mükemmel bir dinleme deneyimi sunar. Lütfen hesabınızı aşağıdan bağlayın.",
+  "connect": "Apple Music ile bağlan",
+  "securityMessage": "{0} Apple.com ile güvenli bağlantı.",
+  "justBrowse": "Ya da sadece göz at",
+  "legalNotice": "Musish Apple, Inc ile bağlantılı değildir. Servisimiz hiçbir kişisel bilgiye ya da hesaba ulaşmaz, kaydetmez ya da saklamaz. 'Apple', 'Apple Music' ve Apple logosu Apple, Inc. şirketine aittir.",
+
+  "appleMusic": "Apple Music",
+
+  "logout": "Çıkış",
+  "login": "Giriş",
+  "searchMusic": "Müzik ara",
+
+  "play": "Çal",
+  "playNext": "Sıradaki Yap",
+  "playLater": "Sonra Çal",
+  "shuffle": "Karışık",
+  "search": "Arama",
+  "searchingFor": "{0} aranıyor",
+
+  "openAlbum": "Albümü Aç",
+  "openPlaylist": "Listeyi Aç",
+  "addToPlaylist": "Listeye Ekle",
+  "addToLibrary": "Arşive Ekle",
+
+  "playlistBy": "{0} Listesi",
+
+  "forYou": "Sizin İçin",
+  "recentlyPlayed": "Son Çalınan",
+  "heavyRotation": "Hızlı Geçiş",
+
+  "browse": "Göz At",
+  "topCharts": "Top Listeler",
+  "genres": "Türler",
+  "topSongs": "Top Şarkılar",
+  "dailyTop100": "Günlük Top 100",
+  "topPlaylists": "Top Çalma Listeleri",
+  "topAlbums": "Top Albümler",
+
+  "radio": "Radyo",
+  "radioMessage": "Radyoyu size ulaştırmak için çalışıyoruz. Daha sonra tekrar deneyin.",
+
+  "myLibrary": "Müziklerim",
+  "recentlyAdded": "Son Eklenenler",
+  "artists": "Sanatçılar",
+  "albums": "Albümler",
+  "song": "Şarkı",
+  "songs": "Şarkılar",
+  "playlists": "Çalma Listeleri",
+
+  "feedback": "Geri bildirim",
+  "designCredits": "{0} ile Musish takımı tarafından tasarlandı.",
+
+  "lyrics": "Şarkı Sözleri",
+  "upNext": "Sıradaki",
+
+  "showCompleteAlbum": "Tüm Albümü Göster",
+  "hour": "saat",
+  "hours": "saat",
+  "minute": "dakika",
+  "minutes": "dakika",
+
+  "noResultsFound": "Ahh, hiç sonuç bulunamadı.",
+  "trackNotAvailable": "Parça bulunamadı",
+
+  "dataProvidedByGenius": "Veri Genius tarafından sağlandı",
+  "inYourPersonalLibrary": "Kişisel kütüphanenizde",
+  "unauthorisedLibrarySearch": "Kütüphanenizde arama yapabilmek için giriş yapmalısınız.",
+
+  "noLyricsAvailable": "Alt yazı bulunamadı"
+}
