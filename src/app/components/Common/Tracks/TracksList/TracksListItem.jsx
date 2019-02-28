@@ -128,10 +128,10 @@ TracksListItem.propTypes = {
   style: PropTypes.object,
   showArtist: PropTypes.bool.isRequired,
   showAlbum: PropTypes.bool.isRequired,
-  connectDragSource: PropTypes.func.isRequired,
-  isOver: PropTypes.bool,
   playTrack: PropTypes.func.isRequired,
   className: PropTypes.any,
+  connectDragSource: PropTypes.func.isRequired,
+  isOver: PropTypes.bool,
 };
 
 TracksListItem.defaultProps = {
