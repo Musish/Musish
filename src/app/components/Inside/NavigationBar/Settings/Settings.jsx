@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import classes from './Settings.scss';
-import withMK from '../../../../hoc/withMK';
+import useMK from '../../../../hoc/useMK';
 
-function Settings(props) {
-  const [bitrate, setBitrate] = useState(props.mk.instance.bitrate);
+function Settings() {
+  const bindings = {
+    [MusicKit.Events.playbackBitrateDidChange]: 'playbackBitrate',
+  };
+  const mk = useMK(bindings);
+  const [bitrate, setBitrate] = useState(mk.instance.bitrate);
   return (
     <span className={classes.settingsWrapper}>
       <i className="fas fa-cog" />
@@ -20,8 +23,8 @@ function Settings(props) {
                 value={MusicKit.PlaybackBitrate.HIGH}
                 checked={bitrate === MusicKit.PlaybackBitrate.HIGH}
                 onChange={() => {
-                  MusicKit.getInstance().bitrate = MusicKit.PlaybackBitrate.HIGH;
-                  setBitrate(props.mk.instance.bitrate);
+                  mk.instance.bitrate = MusicKit.PlaybackBitrate.HIGH;
+                  setBitrate(mk.instance.bitrate);
                 }}
               />
               High (256kbps)
@@ -36,8 +39,8 @@ function Settings(props) {
                 value={MusicKit.PlaybackBitrate.STANDARD}
                 checked={bitrate === MusicKit.PlaybackBitrate.STANDARD}
                 onChange={() => {
-                  MusicKit.getInstance().bitrate = MusicKit.PlaybackBitrate.STANDARD;
-                  setBitrate(props.mk.instance.bitrate);
+                  mk.instance.bitrate = MusicKit.PlaybackBitrate.STANDARD;
+                  setBitrate(mk.instance.bitrate);
                 }}
               />
               Standard (64kbps)
@@ -49,12 +52,4 @@ function Settings(props) {
   );
 }
 
-Settings.propTypes = {
-  mk: PropTypes.any.isRequired,
-};
-
-const bindings = {
-  [MusicKit.Events.playbackBitrateDidChange]: 'playbackBitrate',
-};
-
-export default withMK(Settings, bindings);
+export default Settings;
