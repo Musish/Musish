@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import classes from './Settings.scss';
-import useMK from '../../../../hoc/useMK';
+import useMK from '../../../../hooks/useMK';
 
 export default function Settings() {
-  const bindings = {
+  const mk = useMK({
     [MusicKit.Events.playbackBitrateDidChange]: 'playbackBitrate',
-  };
-  const mk = useMK(bindings);
+  });
   const [bitrate, setBitrate] = useState(mk.instance.bitrate);
+
   return (
     <span className={classes.settingsWrapper}>
       <i className="fas fa-cog" />
