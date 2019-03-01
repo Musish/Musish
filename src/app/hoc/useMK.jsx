@@ -1,33 +1,33 @@
 import { useState, useEffect } from 'react';
 
 export default function useMK(bindings) {
-  const [event, setEvent] = useState({});
+  const [events, setEvents] = useState({});
 
-  function handleEventChange(status, e) {
-    const temp = event;
-    temp[status] = e;
-    setEvent(temp);
+  function handleEventChange(key, e) {
+    setEvents({
+      ...events,
+      [key]: e,
+    });
   }
 
   useEffect(() => {
     const bindingFunctions = {};
-    for (const eventMK of Object.keys(bindings)) {
-      const tempEvent = bindings[eventMK];
-      const handler = e => handleEventChange(tempEvent, e);
-      bindingFunctions[eventMK] = handler;
-      MusicKit.getInstance().addEventListener(eventMK, handler);
+    for (const [eventName, key] of Object.entries(bindings)) {
+      const handler = e => handleEventChange(key, e);
+      bindingFunctions[eventName] = handler;
+      MusicKit.getInstance().addEventListener(eventName, handler);
     }
     // Specify how to clean up after this effect:
     return function cleanup() {
-      for (const eventMK of Object.keys(bindings)) {
-        MusicKit.getInstance().removeEventListener(eventMK, bindingFunctions[eventMK]);
-        delete bindingFunctions[eventMK];
+      for (const eventName of Object.keys(bindings)) {
+        MusicKit.getInstance().removeEventListener(eventName, bindingFunctions[eventName]);
+        delete bindingFunctions[eventName];
       }
     };
   });
 
   return {
     instance: MusicKit.getInstance(),
-    ...event,
+    ...events,
   };
 }

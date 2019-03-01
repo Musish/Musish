@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import classes from './Settings.scss';
 import useMK from '../../../../hoc/useMK';
 
-function Settings() {
+export default function Settings() {
   const bindings = {
     [MusicKit.Events.playbackBitrateDidChange]: 'playbackBitrate',
   };
@@ -51,5 +51,3 @@ function Settings() {
     </span>
   );
 }
-
-export default Settings;
