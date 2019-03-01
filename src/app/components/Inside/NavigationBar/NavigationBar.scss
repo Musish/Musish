@@ -14,12 +14,19 @@
   .brand {
     line-height: 65px;
     font-size: 20px;
-    color: $brand_color;
     margin: 0;
     display: flex;
 
-    > span {
-      margin: auto 6px auto 0;
+    a {
+      color: $brand_color;
+
+      &:hover {
+        color: $accent_color;
+      }
+
+      > span {
+        margin: auto 6px auto 0;
+      }
     }
   }
 }
