@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import AlbumPanel from '../../../../Common/AlbumPanel/AlbumPanel';
 import Loader from '../../../../Common/Loader/Loader';
 import PageTitle from '../../../../Common/PageTitle/PageTitle';
 import PageContent from '../../../../Common/PageContent/PageContent';
 import translate from '../../../../../utils/translations/Translations';
 
-export default class ArtistAlbums extends React.Component {
+class ArtistAlbums extends React.Component {
   constructor(props) {
     super(props);
 
@@ -59,3 +60,9 @@ export default class ArtistAlbums extends React.Component {
     return <PageContent>{this.renderContent()}</PageContent>;
   }
 }
+
+ArtistAlbums.propTypes = {
+  id: PropTypes.string.isRequired,
+};
+
+export default ArtistAlbums;

@@ -1,0 +1,52 @@
+@import '../../../../assets/styles/settings/colors';
+
+.settingsWrapper {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: flex-end;
+  margin-left: 21px;
+  position: relative;
+
+  > i {
+    color: $player_secondary_button_color;
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  > .settingsControlWrapper {
+    position: absolute;
+    display: none;
+    padding: 10px;
+    z-index: 5;
+    background: $player_volume_container_color;
+    border-radius: 5px;
+    width: 170px;
+    top: 50px;
+    box-shadow: 0 3px 10px -3px rgba(0, 0, 0, 0.25);
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+
+    h5 {
+      font-size: 15px;
+      color: $text_color_strong;
+      margin-bottom: 10px;
+    }
+
+    .radioWrapper {
+      display: flex;
+      color: $text_color;
+      font-size: 12px;
+      margin-bottom: 5px;
+
+      input {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  &:hover > .settingsControlWrapper {
+    display: flex;
+  }
+}

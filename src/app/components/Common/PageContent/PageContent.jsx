@@ -1,7 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import classes from './PageContent.scss';
 
-export default class PageContent extends React.Component {
+class PageContent extends React.Component {
   constructor(props) {
     super(props);
 
@@ -31,3 +32,10 @@ export default class PageContent extends React.Component {
     );
   }
 }
+
+PageContent.propTypes = {
+  innerRef: PropTypes.any.isRequired,
+  children: PropTypes.any.isRequired,
+};
+
+export default PageContent;
