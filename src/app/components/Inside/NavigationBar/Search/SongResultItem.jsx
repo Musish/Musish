@@ -3,14 +3,16 @@ import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { DragSource } from 'react-dnd';
 import classes from './SearchBar.scss';
-import withMK from '../../../../hoc/withMK';
 import { createMediaItem } from '../../../../utils/Utils';
 import TrackDecoration from '../../../Common/Tracks/TracksList/TrackDecoration';
 import DragDropType from '../../../../utils/Constants/DragDropType';
 import TrackContextMenu from '../../../Common/ContextMenu/Types/Track/TrackContextMenu';
 import ContextMenuTrigger from '../../../Common/ContextMenu/ContextMenuTrigger';
+import useMK from '../../../../hooks/useMK';
 
-function SongResultItem({ song, mk, connectDragSource, isOver }) {
+function SongResultItem({ song, connectDragSource, isOver }) {
+  const mk = useMK();
+
   const play = async () => {
     const music = mk.instance;
     await music.setQueue({
@@ -79,4 +81,4 @@ function dndCollect(connect, monitor) {
   };
 }
 
-export default DragSource(DragDropType.SONG, dndSpec, dndCollect)(withMK(SongResultItem));
+export default DragSource(DragDropType.SONG, dndSpec, dndCollect)(SongResultItem);
