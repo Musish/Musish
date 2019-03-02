@@ -10,10 +10,6 @@
       input {
         border-bottom-right-radius: 0;
       }
-
-      .results {
-        display: flex;
-      }
     }
   }
 
@@ -67,8 +63,24 @@
       flex-direction: column;
       z-index: 3100;
 
+      &.show {
+        display: flex;
+      }
+
       .resultsContainer {
         overflow: auto;
+
+        .empty {
+          text-align: center;
+          padding: 20px 0;
+
+          i {
+            display: block;
+            font-size: 1.5em;
+            color: mix($text_color, $background_color, 50%);
+            margin-bottom: 10px;
+          }
+        }
 
         .section {
           .title {
