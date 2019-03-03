@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { artworkForMediaItem } from '../../../../../utils/Utils';
 import classes from './PlaylistContextMenu.scss';
-import { playPlaylist } from '../../../../../services/MusicPlayerApi';
+import { playPlaylist, playNext, playLater } from '../../../../../services/MusicPlayerApi';
 import ModalContext from '../../../Modal/ModalContext';
 import PlaylistPanel from '../../../PlaylistPanel/PlaylistPanel';
 import { addPlaylistToPlaylist, addToLibrary } from '../../../../../services/MusicApi';
@@ -33,6 +33,8 @@ function PlaylistContextMenu({ playlist }) {
       <MenuItem divider />
 
       <MenuItem onClick={() => playPlaylist(playlist, 0)}>{translate.play}</MenuItem>
+      <MenuItem onClick={() => playNext(playlist)}>{translate.playNext}</MenuItem>
+      <MenuItem onClick={() => playLater(playlist)}>{translate.playLater}</MenuItem>
 
       <MenuItem divider />
 
