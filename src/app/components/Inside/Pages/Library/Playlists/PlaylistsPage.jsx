@@ -30,7 +30,7 @@ export default class PlaylistsPage extends React.Component {
 
   static renderItems({ items }) {
     const playlists = items.map(playlist => (
-      <PlaylistItem key={playlist.id} playlist={playlist} size={170} />
+      <PlaylistItem key={playlist.id} playlist={playlist} size={150} />
     ));
 
     return <div className={classes.playlistsGrid}>{playlists}</div>;
