@@ -57,7 +57,6 @@ function SongResultItem({ song, connectDragSource, isOver }) {
 
 SongResultItem.propTypes = {
   song: PropTypes.any.isRequired,
-  mk: PropTypes.any.isRequired,
   connectDragSource: PropTypes.func.isRequired,
   isOver: PropTypes.bool,
 };
