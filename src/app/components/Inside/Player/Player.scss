@@ -1,9 +1,8 @@
 @import '../../../assets/styles/settings/colors';
 
 .player {
-  background: $background_color;
+  background: $container_background;
   padding: 20px 15px;
-  border-radius: 5px;
   margin-top: 14px;
 
   .main-info {
