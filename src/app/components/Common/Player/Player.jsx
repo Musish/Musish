@@ -25,6 +25,7 @@ import VolumeControl from './VolumeControl';
 import Rating from './Rating/Rating';
 import { AuthorizeContext } from '../../Providers/AuthorizeProvider';
 import withContext from '../../../hoc/withContext';
+import translate from '../../../utils/translations/Translations';
 import { withModal } from '../../Providers/ModalProvider';
 import { withLyricsModal } from '../../Providers/LyricsModalProvider';
 import { withQueueModal } from '../../Providers/QueueProvider';
@@ -116,23 +117,31 @@ class Player extends React.Component {
 
     const artistName = hasMeta ? (
       <Link to={`/artist/${nowPlayingItem.assets[0].metadata.artistId}`}>
-        <span className={cx(styles.artistName, styles.link)}>
+        <span
+          className={cx(styles.artistName, styles.link)}
+          title={nowPlayingItem.attributes.artistName}
+        >
           {nowPlayingItem.attributes.artistName}
         </span>
       </Link>
     ) : (
-      <span className={cx(styles.artistName)}>{nowPlayingItem.attributes.artistName}</span>
+      <span className={cx(styles.artistName)} title={nowPlayingItem.attributes.artistName}>
+        {nowPlayingItem.attributes.artistName}
+      </span>
     );
 
     const albumName = hasMeta ? (
       <span
         className={cx(styles.albumName, styles.link)}
         onClick={() => this.handleOpenAlbum(modal.replace)}
+        title={nowPlayingItem.attributes.albumName}
       >
         {nowPlayingItem.attributes.albumName}
       </span>
     ) : (
-      <span className={cx(styles.albumName)}>{nowPlayingItem.attributes.albumName}</span>
+      <span className={cx(styles.albumName)} title={nowPlayingItem.attributes.albumName}>
+        {nowPlayingItem.attributes.albumName}
+      </span>
     );
 
     return (
@@ -142,26 +151,26 @@ class Player extends React.Component {
             <img src={artworkURL} className={styles.image} alt={'album artwork'} />
           </div>
           <div className={styles.track}>
-            <h1>{nowPlayingItem.title}</h1>
+            <h1 title={nowPlayingItem.title}>{nowPlayingItem.title}</h1>
             {artistName}
             {albumName}
           </div>
         </div>
         <PlayerTime nowPlayingItem={nowPlayingItem} />
         <div className={styles.buttons}>
-          <span onClick={this.handlePrevious}>
+          <span onClick={this.handlePrevious} title={translate.playerBackward}>
             <i className={'fas fa-backward'} />
           </span>
           {mk.instance.player.isPlaying ? (
-            <span className={styles.main} onClick={pause}>
+            <span className={styles.main} onClick={pause} title={translate.playerPause}>
               <i className={'fas fa-pause'} />
             </span>
           ) : (
-            <span className={styles.main} onClick={play}>
+            <span className={styles.main} onClick={play} title={translate.playerPlay}>
               <i className={'fas fa-play'} />
             </span>
           )}
-          <span onClick={this.handleNext}>
+          <span onClick={this.handleNext} title={translate.playerForward}>
             <i className={'fas fa-forward'} />
           </span>
         </div>
@@ -179,6 +188,7 @@ class Player extends React.Component {
               [styles.one]: repeatMode === RepeatModeOne,
             })}
             onClick={this.handleRepeat}
+            title={translate[`playerToggleRepeatFrom${repeatMode}`]}
           >
             <i className={'fas fa-redo-alt'} />
           </span>
@@ -186,12 +196,14 @@ class Player extends React.Component {
           <span
             className={cx(styles.controls, { [styles.enabled]: isShuffled() })}
             onClick={this.handleShuffle}
+            title={isShuffled() ? translate.playerUnshuffle : translate.playerShuffle}
           >
             <i className={'fas fa-random'} />
           </span>
 
           <span
             className={cx(styles.controls, { [styles.enabled]: lyricsModal.isOpen })}
+            title={lyricsModal.isOpen ? translate.playerCloseLyrics : translate.playerShowLyrics}
             onClick={() =>
               lyricsModal.isOpen ? lyricsModal.close() : lyricsModal.open(nowPlayingItem)
             }
@@ -202,6 +214,7 @@ class Player extends React.Component {
           <span
             className={cx(styles.controls, { [styles.enabled]: queueModal.isOpen })}
             onClick={queueModal.isOpen ? queueModal.close : queueModal.open}
+            title={queueModal.isOpen ? translate.playerHideQueue : translate.playerShowQueue}
           >
             <i className={'fas fa-list-ol'} />
           </span>

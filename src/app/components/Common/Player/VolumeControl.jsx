@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Mousetrap from 'mousetrap';
 import withMK from '../../../hoc/withMK';
 import styles from './Player.scss';
+import translate from '../../../utils/translations/Translations';
 
 class VolumeControl extends React.Component {
   constructor(props) {
@@ -90,7 +91,10 @@ class VolumeControl extends React.Component {
     const { mk } = this.props;
 
     return (
-      <span className={cx(styles.controls, styles.volumeControlWrapper)}>
+      <span
+        className={cx(styles.controls, styles.volumeControlWrapper)}
+        title={translate.playerVolume}
+      >
         <i className={this.getVolumeIconClasses()} onClick={this.toggleVolume} />
         <div className={styles.volumeControlContainer}>
           <div className={styles.volumeBarWrapper}>
