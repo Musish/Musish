@@ -2,7 +2,7 @@
 
 .navigationBar {
   height: 65px;
-  background: $container_background;
+  background: $background_color;
   box-shadow: 0 3px 2px -2px rgba(0, 0, 0, 0.1);
   text-align: center;
   z-index: 300;
@@ -12,20 +12,27 @@
   padding-right: 1.5em;
 
   .brand {
-    line-height: 65px;
     font-size: 20px;
     margin: 0;
     display: flex;
 
     a {
       color: $brand_color;
+      height: 100%;
+      align-items: center;
+      margin: auto 6px auto 0;
+      display: flex;
 
       &:hover {
         color: $accent_color;
       }
 
-      > span {
-        margin: auto 6px auto 0;
+      .icon {
+        margin-top: 4px;
+      }
+
+      .name {
+        margin-left: 10px;
       }
     }
   }

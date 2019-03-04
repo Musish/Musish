@@ -44,6 +44,10 @@ class App extends React.Component {
 
   componentDidMount() {
     Mousetrap.bind('esc', this.popModal, 'keyup');
+
+    if (process.env.NODE_ENV !== 'development') {
+      document.addEventListener('contextmenu', event => event.preventDefault());
+    }
   }
 
   popModal() {
