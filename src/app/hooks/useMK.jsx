@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export default function useMK(bindings) {
+export default function useMK(bindings = {}) {
   const [events, setEvents] = useState({});
 
   function handleEventChange(key, e) {
