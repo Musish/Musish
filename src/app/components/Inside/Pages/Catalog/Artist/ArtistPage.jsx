@@ -11,6 +11,7 @@ import translate from '../../../../../utils/translations/Translations';
 class ArtistPage extends React.Component {
   constructor(props) {
     super(props);
+    this.ref = React.createRef();
 
     this.state = {
       artist: null,
@@ -63,6 +64,11 @@ class ArtistPage extends React.Component {
     }
 
     const { data } = await backend.get(`/genius/artist?artistId=${id}`);
+    if (!data) {
+      // Backend return null for artists without details
+      return;
+    }
+
     data.plainDescription = ArtistPage.flattenDesc(data.description.dom.children);
 
     this.setState({
