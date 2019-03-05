@@ -10,7 +10,7 @@
   top: 66px;
   bottom: 0;
   width: 280px;
-  padding: 10px 0;
+  padding: 0;
 
   .menus {
     flex: 1;
@@ -23,8 +23,9 @@
 
     .menu {
       background: $background_color;
-      padding: 10px 0px;
+      padding: 10px 0;
       border: solid 1px $background_color;
+      margin-top: 15px;
 
       &.dndSeeking {
         border: dashed 1px lighten($accent_color, 20%);
@@ -35,16 +36,13 @@
         color: $background_color;
       }
 
-      &:not(:first-child) {
-        margin-top: 15px;
-      }
-
       h3 {
+        margin: 0 0 10px;
+        padding: 0 24px;
         color: $accent_color;
-        font-weight: 500;
-        font-size: 14px;
-        margin: 0 24px 0;
-        padding: 0;
+        font-weight: 700;
+        font-size: 12px;
+        text-transform: uppercase;
       }
 
       ul {
@@ -66,6 +64,10 @@
             width: 100%;
             display: block;
             border: solid 1px transparent;
+
+            &:hover {
+              color: $text_color_strong;
+            }
 
             &.dndSeeking {
               border: dashed 1px lighten($accent_color, 20%);
