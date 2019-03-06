@@ -90,11 +90,9 @@ class ArtistPage extends React.Component {
       attributes.target = '_blank';
     }
 
-    return React.createElement(
-      object.tag,
-      { ...attributes, ...props },
-      ArtistPage.flattenDesc(object.children)
-    );
+    // handle elements without children sunch as `<br>`
+    const children = object.children ? ArtistPage.flattenDesc(object.children) : null;
+    return React.createElement(object.tag, { ...attributes, ...props }, children);
   }
 
   componentDidMount() {
