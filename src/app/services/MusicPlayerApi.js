@@ -47,14 +47,58 @@ export async function shufflePlayPlaylist(playlist) {
   await music.player.play();
 }
 
-export async function playNext(track) {
-  await MusicKit.getInstance().player.queue.prepend({
-    items: [createMediaItem(track)],
-  });
+export async function playNext(item) {
+  let items;
+  const music = MusicKit.getInstance();
+  if (item.type === 'songs' || item.type === 'library-songs') {
+    items = [item];
+  } else if (item.type === 'albums' || item.type === 'library-albums') {
+    let albumData = item;
+    if (!albumData.relationships || !albumData.relationships.tracks) {
+      albumData = isNaN(item.id)
+        ? await music.api.library.album(item.id)
+        : await music.api.album(item.id);
+    }
+    items = albumData.relationships.tracks.data;
+  } else if (item.type === 'playlists' || item.type === 'library-playlists') {
+    let playlistData = item;
+    if (!playlistData.relationships || !playlistData.relationships.tracks) {
+      playlistData = item.id.startsWith('p.')
+        ? await music.api.library.playlist(item.id)
+        : await music.api.playlist(item.id);
+    }
+    items = playlistData.relationships.tracks.data;
+  } else {
+    return;
+  }
+  await prependQueueItems(items);
 }
 
-export async function playLater(track) {
-  await MusicKit.getInstance().player.queue.append({ items: [createMediaItem(track)] });
+export async function playLater(item) {
+  let items;
+  const music = MusicKit.getInstance();
+  if (item.type === 'songs' || item.type === 'library-songs') {
+    items = [item];
+  } else if (item.type === 'albums' || item.type === 'library-albums') {
+    let albumData = item;
+    if (!albumData.relationships || !albumData.relationships.tracks) {
+      albumData = isNaN(item.id)
+        ? await music.api.library.album(item.id)
+        : await music.api.album(item.id);
+    }
+    items = albumData.relationships.tracks.data;
+  } else if (item.type === 'playlists' || item.type === 'library-playlists') {
+    let playlistData = item;
+    if (!playlistData.relationships || !playlistData.relationships.tracks) {
+      playlistData = item.id.startsWith('p.')
+        ? await music.api.library.playlist(item.id)
+        : await music.api.playlist(item.id);
+    }
+    items = playlistData.relationships.tracks.data;
+  } else {
+    return;
+  }
+  await appendQueueItems(items);
 }
 
 export async function play() {
@@ -136,6 +180,16 @@ export async function setQueueItems(items, index) {
   }
 
   await MusicKit.getInstance().setQueue(s);
+}
+
+export async function prependQueueItems(items) {
+  const s = { items: items.map(createMediaItem) };
+  await MusicKit.getInstance().player.queue.prepend(s);
+}
+
+export async function appendQueueItems(items) {
+  const s = { items: items.map(createMediaItem) };
+  await MusicKit.getInstance().player.queue.append(s);
 }
 
 function isSame(a, b) {

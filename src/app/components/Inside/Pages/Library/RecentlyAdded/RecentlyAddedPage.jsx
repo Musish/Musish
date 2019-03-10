@@ -26,9 +26,9 @@ export default class RecentlyAddedPage extends React.Component {
         {items.map(item => {
           switch (item.type) {
             case 'library-playlists':
-              return <PlaylistItem key={item.id} playlist={item} size={170} />;
+              return <PlaylistItem key={item.id} playlist={item} size={150} />;
             case 'library-albums':
-              return <AlbumItem key={item.id} album={item} size={170} />;
+              return <AlbumItem key={item.id} album={item} size={150} />;
             default:
               return null;
           }

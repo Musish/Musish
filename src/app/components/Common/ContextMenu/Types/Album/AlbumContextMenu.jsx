@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { artworkForMediaItem } from '../../../../../utils/Utils';
 import classes from './AlbumContextMenu.scss';
-import { playAlbum } from '../../../../../services/MusicPlayerApi';
+import { playAlbum, playNext, playLater } from '../../../../../services/MusicPlayerApi';
 import ModalContext from '../../../Modal/ModalContext';
 import AlbumPanel from '../../../AlbumPanel/AlbumPanel';
 import { addAlbumToPlaylist, addToLibrary } from '../../../../../services/MusicApi';
@@ -33,6 +33,8 @@ function AlbumContextMenu({ album }) {
       <MenuItem divider />
 
       <MenuItem onClick={() => playAlbum(album, 0)}>{translate.play}</MenuItem>
+      <MenuItem onClick={() => playNext(album)}>{translate.playNext}</MenuItem>
+      <MenuItem onClick={() => playLater(album)}>{translate.playLater}</MenuItem>
 
       <MenuItem divider />
 

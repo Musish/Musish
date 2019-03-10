@@ -25,10 +25,22 @@ class SearchBar extends React.Component {
       libraryData: null,
     };
 
+    this.renderType = this.renderType.bind(this);
+    this.renderResults = this.renderResults.bind(this);
     this.handleShowResults = this.handleShowResults.bind(this);
-    this.handleHideResults = this.handleHideResults.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.search = debounce(this.search, 400, { maxWait: 1000 }).bind(this);
+
+    this.ref = React.createRef();
+  }
+
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClick);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClick);
   }
 
   handleShowResults() {
@@ -37,7 +49,15 @@ class SearchBar extends React.Component {
     });
   }
 
-  handleHideResults() {
+  handleClick(event) {
+    if (this.ref.current.contains(event.target)) {
+      return;
+    }
+
+    if (event.target.closest('.react-contextmenu')) {
+      return;
+    }
+
     this.setState({
       showResults: false,
     });
@@ -109,7 +129,7 @@ class SearchBar extends React.Component {
     return [...libraryItems, ...catalogItems];
   }
 
-  renderResults(label, type, rowRenderer) {
+  renderType(label, type, rowRenderer) {
     const songs = this.getItems(type);
 
     if (!songs || songs.length === 0) {
@@ -127,6 +147,39 @@ class SearchBar extends React.Component {
     );
   }
 
+  renderResults() {
+    const songs = this.renderType(translate.songs, 'songs', song => (
+      <SongResultItem song={song} key={song.id} />
+    ));
+    const albums = this.renderType(translate.albums, 'albums', album => (
+      <AlbumResultItem album={album} size={30} key={album.id} />
+    ));
+    const artists = this.renderType(translate.artists, 'artists', artist => (
+      <ArtistResultItem artist={artist} key={artist.id} />
+    ));
+    const playlists = this.renderType(translate.playlists, 'playlists', playlist => (
+      <PlaylistResultItem playlist={playlist} size={30} key={playlist.id} />
+    ));
+
+    if (!(songs || albums || artists || playlists)) {
+      return (
+        <div className={classes.empty}>
+          <i className={'fas fa-search'} />
+          Enter a phrase to search Apple Music.
+        </div>
+      );
+    }
+
+    return (
+      <>
+        {songs}
+        {albums}
+        {artists}
+        {playlists}
+      </>
+    );
+  }
+
   render() {
     const { query, showResults } = this.state;
     const { location } = this.props;
@@ -137,7 +190,7 @@ class SearchBar extends React.Component {
 
     return (
       <div className={cx(classes.navSearch, { [classes.active]: showResults })}>
-        <div className={classes.navSearchWrapper}>
+        <div ref={this.ref} className={classes.navSearchWrapper}>
           <form
             onSubmit={e => {
               e.preventDefault();
@@ -151,28 +204,14 @@ class SearchBar extends React.Component {
               value={query}
               onChange={this.handleSearch}
               onFocus={this.handleShowResults}
-              onBlur={this.handleHideResults}
             />
             <button type={'submit'}>
               <i className={'fas fa-search'} />
             </button>
           </form>
 
-          <div className={classes.results}>
-            <div className={classes.resultsContainer}>
-              {this.renderResults(translate.songs, 'songs', song => (
-                <SongResultItem song={song} key={song.id} />
-              ))}
-              {this.renderResults(translate.albums, 'albums', album => (
-                <AlbumResultItem album={album} size={30} key={album.id} />
-              ))}
-              {this.renderResults(translate.artists, 'artists', artist => (
-                <ArtistResultItem artist={artist} key={artist.id} />
-              ))}
-              {this.renderResults(translate.playlists, 'playlists', playlist => (
-                <PlaylistResultItem playlist={playlist} size={30} key={playlist.id} />
-              ))}
-            </div>
+          <div className={cx(classes.results, { [classes.show]: showResults })}>
+            <div className={classes.resultsContainer}>{this.renderResults()}</div>
           </div>
         </div>
       </div>

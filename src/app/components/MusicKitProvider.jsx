@@ -23,6 +23,7 @@ export default class MusicKitProvider extends React.Component {
         build: '1.0beta1',
         version: '1.0beta1',
       },
+      bitrate: MusicKit.PlaybackBitrate.HIGH,
     });
 
     this.setLanguage(MusicKit.getInstance().storekit.storefrontCountryCode);

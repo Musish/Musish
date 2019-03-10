@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import withMK from '../../../../hoc/withMK';
 import classes from './TrackDecoration.scss';
@@ -36,6 +37,16 @@ function TrackDecoration({ track, showAlbum, size = 40 }) {
     </>
   );
 }
+
+TrackDecoration.propTypes = {
+  track: PropTypes.any.isRequired,
+  showAlbum: PropTypes.bool.isRequired,
+  size: PropTypes.number,
+};
+
+TrackDecoration.defaultProps = {
+  size: 40,
+};
 
 const bindings = {
   [MusicKit.Events.mediaItemDidChange]: 'mediaItem',

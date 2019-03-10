@@ -56,10 +56,12 @@ class ArtistPage extends React.Component {
 
   async fetchGeniusData() {
     const { id } = this.props.match.params;
+
     const isCatalog = /^\d+$/.test(id);
     if (!isCatalog) {
       return;
     }
+
     const { data } = await backend.get(`/genius/artist?artistId=${id}`);
     data.plainDescription = ArtistPage.flattenDesc(data.description.dom.children);
 
@@ -127,6 +129,7 @@ class ArtistPage extends React.Component {
             </div>
           </div>
         )}
+
         <PageTitle title={artist ? artist.attributes.name : '...'} context={'Apple Music'} />
         {geniusData && geniusData.plainDescription}
         <h3>{translate.albums}</h3>

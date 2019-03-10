@@ -3,14 +3,14 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  background: $sidebar_color;
-  border-right: solid 1px $background_color;
+  background: $background_color;
+  border-right: solid 2px $background_tint_color;
   height: 100%;
   min-height: 500px;
   top: 66px;
   bottom: 0;
   width: 280px;
-  padding: 10px;
+  padding: 0;
 
   .menus {
     flex: 1;
@@ -23,9 +23,9 @@
 
     .menu {
       background: $background_color;
-      padding: 10px 15px;
-      border-radius: 5px;
-      border: solid 1px transparent;
+      padding: 10px 0;
+      border: solid 1px $background_color;
+      margin-top: 15px;
 
       &.dndSeeking {
         border: dashed 1px lighten($accent_color, 20%);
@@ -36,16 +36,13 @@
         color: $background_color;
       }
 
-      &:not(:first-child) {
-        margin-top: 15px;
-      }
-
       h3 {
+        margin: 0 0 10px;
+        padding: 0 24px;
         color: $accent_color;
-        font-weight: 500;
-        font-size: 14px;
-        margin: 0;
-        padding: 0;
+        font-weight: 700;
+        font-size: 12px;
+        text-transform: uppercase;
       }
 
       ul {
@@ -56,18 +53,21 @@
         li {
           color: $text_color_strong;
           font-weight: 500;
-          margin: 2px 0px;
+          margin: 0;
 
           a {
             margin: 0;
-            padding: 2px 12px;
+            padding: 12px 24px;
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
-            width: 210px;
+            width: 100%;
             display: block;
-            border-radius: 4px;
             border: solid 1px transparent;
+
+            &:hover {
+              color: $text_color_strong;
+            }
 
             &.dndSeeking {
               border: dashed 1px lighten($accent_color, 20%);
@@ -79,9 +79,9 @@
             }
 
             &.active {
-              background: $accent_color;
-              border: solid 1px $accent_color;
-              color: $background_color;
+              background: $container_background;
+              border: solid 1px $container_background;
+              color: $text_color_strong;
               font-weight: 500;
             }
           }
