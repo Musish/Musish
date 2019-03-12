@@ -3,7 +3,8 @@
 .navigationBar {
   height: 65px;
   background: $background_color;
-  box-shadow: 0 3px 2px -2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 3px 2px -2px rgba($background_color_inverted, 0.1);
+  border-bottom: solid 1px 0 3px 2px -2px rgba($background_color_inverted, 0.1);
   text-align: center;
   z-index: 300;
   width: 100%;

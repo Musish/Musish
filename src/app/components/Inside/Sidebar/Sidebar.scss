@@ -51,7 +51,6 @@
         padding: 0;
 
         li {
-          color: $text_color_strong;
           font-weight: 500;
           margin: 0;
 
@@ -64,6 +63,7 @@
             width: 100%;
             display: block;
             border: solid 1px transparent;
+            color: $text_color_weak;
 
             &:hover {
               color: $text_color_strong;

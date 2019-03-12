@@ -3,7 +3,8 @@
 .react-contextmenu {
   background: $background_color;
   border: none;
-  box-shadow: 0 3px 8px -2px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 3px 8px -2px rgba(0, 0, 0, 0.85);
+  color: $text_color;
 
   @supports (-webkit-backdrop-filter: blur(7px)) {
     background: rgba($background_color, 0.90);
@@ -12,6 +13,7 @@
 
   .react-contextmenu-item:not(.react-contextmenu-item--divider) {
     background-color: transparent;
+    color: $text_color;
 
     &:hover {
       background-color: $accent_color;
