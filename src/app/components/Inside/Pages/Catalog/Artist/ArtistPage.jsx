@@ -7,6 +7,7 @@ import PageContent from '../../../../Common/PageContent/PageContent';
 import AlbumItem from '../../../../Common/AlbumItem/AlbumItem';
 import backend from '../../../../../services/Backend';
 import translate from '../../../../../utils/translations/Translations';
+import PlaylistItem from '../../../../Common/PlaylistItem/PlaylistItem';
 
 class ArtistPage extends React.Component {
   constructor(props) {
@@ -54,6 +55,22 @@ class ArtistPage extends React.Component {
     });
   }
 
+  async fetchPlaylists() {
+    const music = MusicKit.getInstance();
+
+    const { id } = this.props.match.params;
+    const isCatalog = /^\d+$/.test(id);
+
+    let playlists;
+    if (isCatalog) {
+      playlists = await music.api.artist(id, { include: 'playlists' });
+    }
+
+    this.setState({
+      playlists,
+    });
+  }
+
   async fetchGeniusData() {
     const { id } = this.props.match.params;
 
@@ -94,6 +111,7 @@ class ArtistPage extends React.Component {
   componentDidMount() {
     this.fetchArtist();
     this.fetchAlbums();
+    this.fetchPlaylists();
     this.fetchGeniusData();
   }
 
@@ -101,12 +119,13 @@ class ArtistPage extends React.Component {
     if (this.state.artist && this.state.artist.id !== this.props.match.params.id) {
       this.fetchArtist();
       this.fetchAlbums();
+      this.fetchPlaylists();
       this.fetchGeniusData();
     }
   }
 
   render() {
-    const { artist, albums, geniusData } = this.state;
+    const { artist, albums, playlists, geniusData } = this.state;
 
     const headerStyles = {
       background: geniusData ? `url(${geniusData.header_image_url})` : '#f2f2f2',
@@ -132,13 +151,28 @@ class ArtistPage extends React.Component {
 
         <PageTitle title={artist ? artist.attributes.name : '...'} context={'Apple Music'} />
         {geniusData && geniusData.plainDescription}
-        <h3>{translate.albums}</h3>
 
         {albums && (
-          <div className={classes.albumsGrid}>
-            {albums.map(album => (
-              <AlbumItem key={album.id} album={album} size={120} />
-            ))}
+          <div>
+            <h3>{translate.albums}</h3>
+
+            <div className={classes.albumsGrid}>
+              {albums.map(album => (
+                <AlbumItem key={album.id} album={album} size={120} />
+              ))}
+            </div>
+          </div>
+        )}
+
+        {playlists && (
+          <div>
+            <h3>{translate.playlists}</h3>
+
+            <div className={classes.playlistsGrid}>
+              {playlists.map(playlist => (
+                <PlaylistItem key={playlist.id} playlist={playlist} size={120} />
+              ))}
+            </div>
           </div>
         )}
       </PageContent>
