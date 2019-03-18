@@ -153,7 +153,7 @@ class ArtistPage extends React.Component {
         {geniusData && geniusData.plainDescription}
 
         {albums && (
-          <div>
+          <>
             <h3>{translate.albums}</h3>
 
             <div className={classes.albumsGrid}>
@@ -161,11 +161,11 @@ class ArtistPage extends React.Component {
                 <AlbumItem key={album.id} album={album} size={120} />
               ))}
             </div>
-          </div>
+          </>
         )}
 
         {playlists && (
-          <div>
+          <>
             <h3>{translate.playlists}</h3>
 
             <div className={classes.playlistsGrid}>
@@ -173,7 +173,7 @@ class ArtistPage extends React.Component {
                 <PlaylistItem key={playlist.id} playlist={playlist} size={120} />
               ))}
             </div>
-          </div>
+          </>
         )}
       </PageContent>
     );
