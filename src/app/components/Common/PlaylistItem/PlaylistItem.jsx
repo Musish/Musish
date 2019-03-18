@@ -49,14 +49,14 @@ class PlaylistItem extends Component {
                     src={artwork}
                     className={classes.image}
                     style={{ width: size, height: size }}
-                    alt={playlist.attributes.name}
-                    title={playlist.attributes.name}
+                    alt={playlist.name}
+                    title={playlist.name}
                   />
                 </div>
 
                 <div className={classes.descriptionContainer}>
                   <span className={classes.playlistName} style={{ width: size }}>
-                    {playlist.attributes.name}
+                    {playlist.name}
                   </span>
                 </div>
               </ContextMenuTrigger>

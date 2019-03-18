@@ -17,16 +17,10 @@ functions:
           path: /
           method: get
   browse-charts:
-    handler: browse/browse.charts
+    handler: browse/browse.overview
     events:
       - http:
-          path: /browse/charts
-          method: get
-  browse-playlists:
-    handler: browse/browse.playlists
-    events:
-      - http:
-          path: /browse/playlists
+          path: /browse/overview
           method: get
   genius-song:
     handler: genius/song.details
@@ -42,3 +36,6 @@ functions:
           path: /genius/artist
           method: get
           cors: true
+
+plugins:
+  - serverless-offline

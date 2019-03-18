@@ -6,5 +6,8 @@
   "dependencies": {
     "axios": "^0.18.0",
     "string-similarity": "^3.0.0"
+  },
+  "devDependencies": {
+    "serverless-offline": "^4.9.1"
   }
 }

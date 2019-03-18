@@ -48,4 +48,19 @@ module.exports = {
       return null;
     }
   },
+  fetchBrowseData: async (storefrontIdentifier) => {
+    try {
+      const { data } = await axios.get(
+        'https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewGrouping?id=130',
+        {
+          headers: { 'x-apple-store-front': storefrontIdentifier }
+        }
+      );
+
+      return data;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
 };

@@ -3,29 +3,33 @@ const appleMusicApi = require('../appleMusicApi');
 
 async function charts({ storefront }) {
   const chartsData = await appleMusicApi.fetchCharts(storefront);
+
   return chartsData;
 }
 
-async function playlists({ storefront }) {
-  const playlistsData = await appleMusicApi.fetchCharts(storefront);
-  return playlistsData;
+async function overview({ storefront }) {
+  const data = await appleMusicApi.fetchBrowseData('143444-2,32 t:music31');
+
+  console.log(data.pageData.fcStructure);
+
+  const featuredContent = [];
+  for ()
+
+  const response = {
+
+  };
+
+  return data;
 }
 
 module.exports = {
-  charts: async function(event) {
+  overview: async function(event) {
     try {
       const params = event.queryStringParameters;
-      const chartsData = await charts(params);
-      return utils.generateResponse(200, chartsData);
-    } catch (e) {
-      return utils.generateError(500, e);
-    }
-  },
-  playlists: async function(event) {
-    try {
-      const params = event.queryStringParameters;
-      const playlistsData = await playlists(playlistsData);
-      return utils.generateResponse(200, playlistsData);
+
+      const browseData = await overview(params);
+
+      return utils.generateResponse(200, browseData);
     } catch (e) {
       return utils.generateError(500, e);
     }
