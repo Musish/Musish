@@ -48,6 +48,30 @@ module.exports = {
       return null;
     }
   },
+  fetchAlbums: async (storefront, ids) => {
+    let albums = [];
+
+    for (let i = 0, j = ids.length; i < j; i += 100) {
+      const blockIds = ids.slice(i, i + 100);
+
+      const idParams = blockIds.reduce((acc, id) => acc + `,${id}`);
+
+      try {
+        const { data } = await axios.get(`/v1/catalog/${storefront}/albums`, {
+          params: {
+            ids: idParams,
+            include: null,
+          }
+        });
+
+        albums = [...albums, ...data.data];
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    return albums;
+  },
   fetchBrowseData: async (storefrontIdentifier) => {
     try {
       const { data } = await axios.get(
