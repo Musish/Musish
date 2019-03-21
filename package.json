@@ -55,5 +55,8 @@
   "scripts": {
     "start": "encore dev-server --hot",
     "build": "encore production"
+  },
+  "devDependencies": {
+    "favicons-webpack-plugin": "^0.0.9"
   }
 }
