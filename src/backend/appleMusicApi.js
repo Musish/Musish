@@ -72,6 +72,52 @@ module.exports = {
 
     return albums;
   },
+  fetchPlaylists: async (storefront, ids) => {
+    let playlists = [];
+
+    for (let i = 0, j = ids.length; i < j; i += 25) {
+      const blockIds = ids.slice(i, i + 25);
+
+      const idParams = blockIds.reduce((acc, id) => acc + `,${id}`);
+
+      try {
+        const { data } = await axios.get(`/v1/catalog/${storefront}/playlists`, {
+          params: {
+            ids: idParams,
+          }
+        });
+
+        playlists = [...playlists, ...data.data];
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    return playlists;
+  },
+  fetchSongs: async (storefront, ids) => {
+    let songs = [];
+
+    for (let i = 0, j = ids.length; i < j; i += 300) {
+      const blockIds = ids.slice(i, i + 300);
+
+      const idParams = blockIds.reduce((acc, id) => acc + `,${id}`);
+
+      try {
+        const { data } = await axios.get(`/v1/catalog/${storefront}/songs`, {
+          params: {
+            ids: idParams,
+          }
+        });
+
+        songs = [...songs, ...data.data];
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    return songs;
+  },
   fetchBrowseData: async (storefrontIdentifier) => {
     try {
       const { data } = await axios.get(
