@@ -5,7 +5,7 @@ import classes from './ArtistPage.scss';
 import PageTitle from '../../../../Common/PageTitle/PageTitle';
 import PageContent from '../../../../Common/PageContent/PageContent';
 import AlbumItem from '../../../../Common/AlbumItem/AlbumItem';
-import backend from '../../../../../services/Backend';
+import * as Backend from '../../../../../services/Backend';
 import translate from '../../../../../utils/translations/Translations';
 
 class ArtistPage extends React.Component {
@@ -62,7 +62,7 @@ class ArtistPage extends React.Component {
       return;
     }
 
-    const { data } = await backend.get(`/genius/artist?artistId=${id}`);
+    const { data } = await Backend.getArtist(id);
     data.plainDescription = ArtistPage.flattenDesc(data.description.dom.children);
 
     this.setState({

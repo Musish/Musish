@@ -5,9 +5,9 @@ import PageTitle from '../../../../Common/PageTitle/PageTitle';
 import * as MusicPlayerApi from '../../../../../services/MusicPlayerApi';
 import Tabs from '../../../../Common/Tabs/Tabs';
 import Tab from '../../../../Common/Tabs/Tab';
-import TopCharts from './TopCharts/TopCharts';
 import Genres from './Genres/Genres';
 import translate from '../../../../../utils/translations/Translations';
+import Overview from './Overview/Overview';
 
 class BrowsePage extends React.Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class BrowsePage extends React.Component {
 
         <Tabs>
           <Tab name={`${translate.topCharts}`} route={'/browse'}>
-            <TopCharts />
+            <Overview />
           </Tab>
           <Tab name={`${translate.genres}`} route={'/browse/genres'}>
             <Genres />

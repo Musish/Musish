@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classes from './LyricsModal.scss';
 
-import backend from '../../../../services/Backend';
+import * as Backend from '../../../../services/Backend';
 import Loader from '../../../Common/Loader/Loader';
 import translate from '../../../../utils/translations/Translations';
 
@@ -46,7 +46,7 @@ class Lyrics extends React.Component {
     const qsName = encodeURIComponent(song.attributes.name);
     const qsArtist = encodeURIComponent(song.attributes.artistName);
 
-    const { data } = await backend.get(`/genius/song?name=${qsName}&artist=${qsArtist}`);
+    const { data } = await Backend.getGeniusData(qsArtist, qsName);
 
     this.setState({
       geniusSong: data || false,

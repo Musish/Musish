@@ -24,7 +24,6 @@ export default class MusicKitProvider extends React.Component {
         version: '1.0beta1',
       },
       bitrate: MusicKit.PlaybackBitrate.HIGH,
-      features: ['api-data-store'],
       debug: true,
     });
 

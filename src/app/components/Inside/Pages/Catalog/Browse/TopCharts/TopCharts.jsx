@@ -20,6 +20,10 @@ class TopCharts extends React.Component {
     this.getCharts = this.getCharts.bind(this);
   }
 
+  componentDidMount() {
+    this.getCharts();
+  }
+
   async getCharts() {
     const music = MusicKit.getInstance();
     const charts = await music.api.charts(['songs', 'albums', 'playlists'], { limit: 36 });
@@ -27,10 +31,6 @@ class TopCharts extends React.Component {
     this.setState({
       charts,
     });
-  }
-
-  componentDidMount() {
-    this.getCharts();
   }
 
   static playTrack({ tracks, index }) {
