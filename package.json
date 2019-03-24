@@ -55,5 +55,8 @@
   "scripts": {
     "start": "encore dev-server --hot",
     "build": "encore production"
+  },
+  "devDependencies": {
+    "serverless-offline": "^4.9.2"
   }
 }

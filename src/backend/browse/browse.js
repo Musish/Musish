@@ -1,10 +1,23 @@
 const utils = require('../utils');
 const appleMusicApi = require('../appleMusicApi');
 
+const layoutTypes = {
+  FEATURE: 316,
+  // GENRES: 322,
+  TILE: 326,
+  SONG: 327,
+  TILE_WIDE: 385,
+  TILE_LARGE: 387,
+  LINK: 391,
+};
+
 const contentTypes = {
   SONG: 1,
   ALBUM: 2,
   PLAYLIST: 46,
+  // RADIO: 51, TODO: Is this radio, or is it radio video recording? How does radio even work?
+  FEATURED_ITEM: 317,
+  // FEATURED_PAGE: 320, TODO: PAGE? What really is this type?
   // TODO: ARTISTS
   // TODO: MUSIC VIDEOS?
   // TODO: OTHERS???
@@ -23,70 +36,91 @@ async function overview({ storefront }) {
     playlists: new Set([]),
   };
 
+  function normaliseItem(item) {
+    if (parseInt(item.fcKind) === contentTypes.FEATURED_ITEM) {
+      const itemId = normaliseItem(item.link);
+      if (!itemId) {
+        return null;
+      }
+      return {
+        tag: item.designBadge,
+        itemId,
+      };
+    }
+
+    let typeId;
+    if (item.kindIds && item.kindIds[0]) {
+      typeId = item.kindIds[0];
+    } else if (item.link.kindIds && item.link.kindIds[0]) {
+      typeId = item.link.kindIds[0];
+    } else {
+      return null;
+    }
+
+    let contentId;
+    if (item.contentId) {
+      contentId = item.contentId;
+    } else if (item.link.contentId) {
+      contentId = item.link.contentId;
+    } else {
+      return null;
+    }
+
+    switch (typeId) {
+      case contentTypes.ALBUM:
+        content.albums.add(contentId);
+        return contentId;
+      case contentTypes.PLAYLIST:
+        content.playlists.add(contentId);
+        return contentId;
+      case contentTypes.SONG:
+        content.songs.add(contentId);
+        return contentId;
+      default:
+        console.error(`Unexpected type id: ${typeId}, found in set`);
+        return null;
+    }
+  }
+
   function normaliseItems(items) {
     return items.reduce((acc, item) => {
       // TODO: Artists
-      const typeId = item.link.kindIds && item.link.kindIds[0];
 
-      if (!typeId) {
+      const content = normaliseItem(item);
+      if (!content) {
+        console.log(item);
         return acc;
       }
 
-      switch (typeId) {
-        case contentTypes.ALBUM:
-          content.albums.add(item.contentId);
-          return [...acc, item.link.contentId];
-        case contentTypes.PLAYLIST:
-          content.playlists.add(item.contentId);
-          return [...acc, item.link.contentId];
-        default:
-          console.error(`Unexpected type id: ${typeId}, found in set`);
-          return acc;
-      }
+      return acc.concat(content);
     }, [])
   }
 
-  // Nope, these change.
-  // ITUNES STORE SECTIONS:
-  // 0: features
-  // 1: genres
-  // 2: playlists
-  // 3: hot songs
-  // 4: music video playlists
-  // 5: new releases (albums)
-  // 6: videos
-  // 7: coming soon
-  // 8:
-  // 9:
-  // 10:
-  // 11:
+  response.sections = data.pageData.fcStructure.model.children
+    .reduce((accum, section) => {
+      const layoutType = Object.keys(layoutTypes).find(type => layoutTypes[type] === parseInt(section.fcKind));
 
-  // NEW MUSIC SECTION: FEATURES
-  response.features = normaliseItems(pageSections[0].children);
+      if (!layoutType) {
+        console.log(`Found non supported layout type: ${section.fcKind}`);
+        return accum;
+      }
 
-  // NEW MUSIC SECTION: PLAYLISTS
-  response.playlists = pageSections[2].content.map(playlist => {
-    content.playlists.add(playlist.contentId);
-    return playlist.contentId;
-  });
+      let items = [];
+      let content = section.content || section.children;
+      if (content) {
+        items = normaliseItems(content);
+      }
 
-  // NEW MUSIC SECTION: HOT SONGS
-  response.hotSongs = pageSections[3].content.map(song => {
-    content.songs.add(song.contentId);
-    return song.contentId;
-  });
+      if (items.length === 0) {
+        return accum;
+      }
 
-  // NEW MUSIC SECTION: NEW RELEASES
-  response.newReleases = pageSections[5].content.map(album => {
-    content.albums.add(album.contentId);
-    return album.contentId;
-  });
-
-  // NEW MUSIC SECTION: COMING SOON
-  response.comingSoon = pageSections[7].content.map(album => {
-    content.albums.add(album.contentId);
-    return album.contentId;
-  });
+      return accum.concat({
+        name: section.name,
+        content: items,
+        type: layoutType,
+      });
+    }, []);
 
   // Add lookup content info from apple music API
   response.lookup = { };

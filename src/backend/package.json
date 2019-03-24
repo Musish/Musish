@@ -8,6 +8,6 @@
     "string-similarity": "^3.0.0"
   },
   "devDependencies": {
-    "serverless-offline": "^4.9.1"
+    "serverless-offline": "^4.9.2"
   }
 }
