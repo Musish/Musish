@@ -30,10 +30,9 @@ class AlbumItem extends Component {
 
   render() {
     const { album, size, connectDragSource, isOver } = this.props;
-    console.log(album);
-    const artwork = MusicKit.formatArtworkURL(album.artwork || album.attributes.artwork, size, size);
+    const artwork = MusicKit.formatArtworkURL(album.attributes.artwork, size, size);
 
-    const explicit = album.contentRating === 'explicit' && (
+    const explicit = album.attributes.contentRating === 'explicit' && (
       <div className={classes.explicit}>
         <span>E</span>
       </div>
@@ -56,18 +55,18 @@ class AlbumItem extends Component {
                     src={artwork}
                     className={classes.image}
                     style={{ width: size, height: size }}
-                    alt={album.name}
-                    title={album.name}
+                    alt={album.attributes.name}
+                    title={album.attributes.name}
                   />
                 </div>
 
                 <div className={classes.descriptionContainer}>
                   <span className={classes.albumTitle} style={{ width: size }}>
-                    <div className={classes.albumName}>{album.name}</div>
+                    <div className={classes.albumName}>{album.attributes.name}</div>
                     {explicit}
                   </span>
                   <span className={classes.artistName} style={{ width: size }}>
-                    {album.artistName}
+                    {album.attributes.artistName}
                   </span>
                 </div>
               </ContextMenuTrigger>

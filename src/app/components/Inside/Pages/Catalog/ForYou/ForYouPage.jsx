@@ -131,22 +131,24 @@ class ForYouPage extends React.Component {
     return (
       <>
         {recommendations.map(recList => {
-          const items = recList.contents ? recList.contents : recList.recommendations;
-          const isGroup = recList.isGroupRecommendation;
+          const items = recList.relationships.contents
+            ? recList.relationships.contents
+            : recList.relationships.recommendations;
+          const isGroup = recList.attributes.isGroupRecommendation;
           return (
             <React.Fragment key={recList.id}>
-              <h3>{recList.title.stringForDisplay}</h3>
+              <h3>{recList.attributes.title.stringForDisplay}</h3>
               <div className={cx(classes.scrollWrapper)}>
                 <div className={cx(classes.scrollWrapper, { [classes.groupedScroller]: isGroup })}>
                   <div className={classes.scrollGrid}>
-                    {items.map((item, i) => {
+                    {items.data.map((item) => {
                       switch (item.type) {
                         case 'playlists':
                           return <PlaylistItem key={item.id} playlist={item} size={120} />;
                         case 'albums':
                           return <AlbumItem key={item.id} album={item} size={120} />;
                         case 'personal-recommendation': {
-                          const recommendationName = item.reason.stringForDisplay;
+                          const recommendationName = item.attributes.reason.stringForDisplay;
                           return (
                             <div
                               key={`${item.id}-${recommendationName}`}
@@ -156,7 +158,7 @@ class ForYouPage extends React.Component {
                                 {recommendationName}
                               </span>
                               <div className={classes.personalRecommendationsGrid}>
-                                {item.contents.map(subItem => {
+                                {item.relationships.contents.data.map(subItem => {
                                   const subId = `${item.id}-${subItem.id}`;
                                   switch (subItem.type) {
                                     case 'playlists':

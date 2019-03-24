@@ -20,11 +20,10 @@ export default class MusicKitProvider extends React.Component {
       app: {
         name: 'Musish',
         icon: 'https://raw.githubusercontent.com/Musish/Musish/assets/misc/authIcon.png',
-        build: '1.0beta1',
-        version: '1.0beta1',
+        build: '1.1',
+        version: '1.1',
       },
       bitrate: MusicKit.PlaybackBitrate.HIGH,
-      debug: true,
     });
 
     this.setLanguage(MusicKit.getInstance().storekit.storefrontCountryCode);
