@@ -20,7 +20,6 @@ export async function getBrowseOverview(storefrontId) {
   const store = mappings.find(c => c.code === countryCode);
   const defaultLanguage = store.languages[0];
   const { url } = defaultLanguage.sections.newMusic;
-  console.log(store);
 
   const res = await client.get(url, {
     headers: {

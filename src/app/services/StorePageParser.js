@@ -96,7 +96,7 @@ export async function normalisePageData(page) {
             url: itemData.url,
             artwork: {
               ...itemData.artwork,
-              url: itemData.artwork.url.replace('{c}.{f}', 'cc.jpeg'),
+              url: itemData.artwork.url.replace('{c}', 'cc').replace('{f}', 'jpeg'),
             },
             editorialArtwork: itemData.editorialArtwork,
             lastModifiedDate: itemData.lastModifiedDate,
@@ -107,7 +107,35 @@ export async function normalisePageData(page) {
           },
         };
       case ContentTypes.SONG:
-        return contentId;
+        return {
+          id: itemData.id,
+          type: 'songs',
+          href: `/v1/catalog/${storefrontId}/songs/${itemData.id}`,
+          attributes: {
+          //  previews: [
+          //    {
+          //      url: 'https://audio-ssl.itunes.apple.com/apple-assets-us-std-000001/AudioPreview123/v4/5f/e7/79/5fe77930-23e7-e2bc-f481-0aaefa11a767/mzaf_5210516116320012511.plus.aac.p.m4a'
+          //    },
+          //  ],
+            artwork: itemData.artwork,
+            artistName: itemData.artistName,
+            url: itemData.url,
+            discNumber: itemData.discNumber,
+            genreNames: itemData.genreNames,
+            // durationInMillis:
+            //  itemData.offers.find(offer => offer.type === 'buy').assets[0].duration * 1000,
+            releaseDate: itemData.releaseDate,
+            name: itemData.name,
+            // isrc: 'USSM11809229',
+            albumName: itemData.collectionName,
+            playParams: {
+              id: itemData.id,
+              kind: 'song',
+            },
+            trackNumber: itemData.trackNumber,
+            composerName: itemData.composer && itemData.composer.name,
+          },
+        };
       default:
         console.error(`Unexpected type id: ${typeId}, found in set`);
         return null;

@@ -26,11 +26,15 @@ function FeaturePanel(props) {
           if (!item) {
             return null;
           }
-          switch (item.type) {
+          const data = {
+            ...item.item,
+            tag: item.tag,
+          };
+          switch (data.type) {
             case 'playlists':
-              return <FeaturedPlaylist key={item.id} playlist={item} />;
+              return <FeaturedPlaylist key={data.id} playlist={data} />;
             case 'albums':
-              return <FeaturedAlbum key={item.id} album={item} />;
+              return <FeaturedAlbum key={data.id} album={data} />;
             default:
               return null;
           }
