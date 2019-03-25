@@ -23,29 +23,13 @@ class Overview extends React.Component {
   }
 
   async getOverview() {
-    const data = await Backend.getBrowseOverview();
+    const pageData = await Backend.getBrowseOverview(MusicKit.getInstance().api.storefrontId);
+    const data = await StorePageParser.normalisePageData(pageData);
 
     console.log(data);
 
-    const temp = await StorePageParser.normalisePageData(data);
-    console.log(temp);
-
-    return;
-
-    const sections = data.sections.map(section => ({
-      ...section,
-      content: section.content.map(item => {
-        const itemId = typeof item === 'string' ? item : item.itemId;
-        const content = data.lookup[itemId];
-        if (item.tag) {
-          content.tag = item.tag;
-        }
-        return content;
-      }),
-    }));
-
     this.setState({
-      sections,
+      sections: data.content,
     });
   }
 

@@ -94,7 +94,10 @@ export async function normalisePageData(page) {
             curatorName: itemData.curatorName,
             description: itemData.description,
             url: itemData.url,
-            artwork: itemData.artwork,
+            artwork: {
+              ...itemData.artwork,
+              url: itemData.artwork.url.replace('{c}.{f}', 'cc.jpeg'),
+            },
             editorialArtwork: itemData.editorialArtwork,
             lastModifiedDate: itemData.lastModifiedDate,
             playParams: {
