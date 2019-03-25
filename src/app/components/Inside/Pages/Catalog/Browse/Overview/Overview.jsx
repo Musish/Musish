@@ -28,12 +28,16 @@ class Overview extends React.Component {
       ...section,
       content: section.content.map(item => {
         const itemId = typeof item === 'string' ? item : item.itemId;
-        return data.lookup[itemId];
+        const content = data.lookup[itemId];
+        if (item.tag) {
+          content.tag = item.tag;
+        }
+        return content;
       }),
     }));
 
     this.setState({
-      sections: sections,
+      sections,
     });
   }
 

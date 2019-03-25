@@ -2,9 +2,9 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import classes from './BrowsePage.scss';
-import PlaylistItem from '../../../../Common/PlaylistItem/PlaylistItem';
-import AlbumItem from '../../../../Common/AlbumItem/AlbumItem';
+import classes from '../BrowsePage.scss';
+import PlaylistItem from '../../../../../Common/PlaylistItem/PlaylistItem';
+import AlbumItem from '../../../../../Common/AlbumItem/AlbumItem';
 
 function TilePanel(props) {
   const { items, rows, size } = props;

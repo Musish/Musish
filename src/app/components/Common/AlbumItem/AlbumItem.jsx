@@ -10,6 +10,7 @@ import ModalContext from '../Modal/ModalContext';
 import DragDropType from '../../../utils/Constants/DragDropType';
 import ContextMenuTrigger from '../ContextMenu/ContextMenuTrigger';
 import AlbumContextMenu from '../ContextMenu/Types/Album/AlbumContextMenu';
+import { artworkForMediaItem } from '../../../utils/Utils';
 
 class AlbumItem extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class AlbumItem extends Component {
 
   render() {
     const { album, size, connectDragSource, isOver } = this.props;
-    const artwork = MusicKit.formatArtworkURL(album.attributes.artwork, size, size);
+    const artwork = artworkForMediaItem(album, size);
 
     const explicit = album.attributes.contentRating === 'explicit' && (
       <div className={classes.explicit}>

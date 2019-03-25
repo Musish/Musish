@@ -141,7 +141,7 @@ class ForYouPage extends React.Component {
               <div className={cx(classes.scrollWrapper)}>
                 <div className={cx(classes.scrollWrapper, { [classes.groupedScroller]: isGroup })}>
                   <div className={classes.scrollGrid}>
-                    {items.data.map((item) => {
+                    {items.data.map(item => {
                       switch (item.type) {
                         case 'playlists':
                           return <PlaylistItem key={item.id} playlist={item} size={120} />;

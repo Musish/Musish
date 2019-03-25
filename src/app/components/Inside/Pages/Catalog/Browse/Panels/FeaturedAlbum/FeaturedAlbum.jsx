@@ -5,11 +5,12 @@ import { withRouter } from 'react-router-dom';
 import { DragSource } from 'react-dnd';
 import cx from 'classnames';
 import classes from './FeaturedAlbum.scss';
-import AlbumPanel from '../../../../../Common/AlbumPanel/AlbumPanel';
-import AlbumContextMenu from '../../../../../Common/ContextMenu/Types/Album/AlbumContextMenu';
-import ContextMenuTrigger from '../../../../../Common/ContextMenu/ContextMenuTrigger';
-import ModalContext from '../../../../../Common/Modal/ModalContext';
-import DragDropType from '../../../../../../utils/Constants/DragDropType';
+import AlbumPanel from '../../../../../../Common/AlbumPanel/AlbumPanel';
+import AlbumContextMenu from '../../../../../../Common/ContextMenu/Types/Album/AlbumContextMenu';
+import ContextMenuTrigger from '../../../../../../Common/ContextMenu/ContextMenuTrigger';
+import ModalContext from '../../../../../../Common/Modal/ModalContext';
+import DragDropType from '../../../../../../../utils/Constants/DragDropType';
+import { artworkForMediaItem } from '../../../../../../../utils/Utils';
 
 class FeaturedAlbum extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class FeaturedAlbum extends Component {
 
   render() {
     const { album, connectDragSource, isOver } = this.props;
-    const artwork = MusicKit.formatArtworkURL(album.attributes.artwork, 150, 150);
+    const artwork = MusicKit.formatArtworkURL(album.attributes.artwork, 416, 240);
 
     const explicit = album.attributes.contentRating === 'explicit' && (
       <div className={classes.explicit}>
@@ -47,6 +48,15 @@ class FeaturedAlbum extends Component {
                 holdToDisplay={-1}
                 render={() => <AlbumContextMenu album={album} />}
               >
+                <div className={classes.descriptionContainer}>
+                  <span className={classes.featureTag}>{album.tag}</span>
+                  <span className={classes.albumTitle}>
+                    <div className={classes.albumName}>{album.attributes.name}</div>
+                    {explicit}
+                  </span>
+                  <span className={classes.artistName}>{album.attributes.artistName}</span>
+                </div>
+
                 <div className={classes.imageContainer}>
                   <img
                     src={artwork}
@@ -54,16 +64,6 @@ class FeaturedAlbum extends Component {
                     alt={album.attributes.name}
                     title={album.attributes.name}
                   />
-                </div>
-
-                <div className={classes.descriptionContainer}>
-                  <span className={classes.albumTitle}>
-                    <div className={classes.albumName}>{album.attributes.name}</div>
-                    {explicit}
-                  </span>
-                  <span className={classes.artistName}>
-                    {album.attributes.artistName}
-                  </span>
                 </div>
               </ContextMenuTrigger>
             </div>

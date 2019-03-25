@@ -1,42 +1,37 @@
 import React, { Component } from 'react';
 
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import { DragSource } from 'react-dnd';
+import { withRouter } from 'react-router-dom';
 import cx from 'classnames';
-import classes from './FeaturedAlbum.scss';
-import AlbumPanel from '../../../../../../Common/AlbumPanel/AlbumPanel';
-import AlbumContextMenu from '../../../../../../Common/ContextMenu/Types/Album/AlbumContextMenu';
-import ContextMenuTrigger from '../../../../../../Common/ContextMenu/ContextMenuTrigger';
+import classes from './FeaturedPlaylist.scss';
+import PlaylistPanel from '../../../../../../Common/PlaylistPanel/PlaylistPanel';
+import { artworkForMediaItem } from '../../../../../../../utils/Utils';
 import ModalContext from '../../../../../../Common/Modal/ModalContext';
+import ContextMenuTrigger from '../../../../../../Common/ContextMenu/ContextMenuTrigger';
+import PlaylistContextMenu from '../../../../../../Common/ContextMenu/Types/Playlist/PlaylistContextMenu';
 import DragDropType from '../../../../../../../utils/Constants/DragDropType';
 
-class FeaturedAlbum extends Component {
+class FeaturedPlaylist extends Component {
   constructor(props) {
     super(props);
 
     this.handleOpen = this.handleOpen.bind(this);
   }
 
-  handleOpen(replace) {
-    const { id } = this.props.album;
-
+  handleOpen(push) {
+    const id = this.props.id || this.props.playlist.id;
     if (this.props.navigate) {
-      this.props.history.push(`/me/albums/${id}`);
-    } else {
-      replace(<AlbumPanel key={id} id={id} />);
+      this.props.history.push(`/playlists/${id}`);
+      return;
     }
+
+    push(<PlaylistPanel id={id} />);
   }
 
   render() {
-    const { album, connectDragSource, isOver } = this.props;
-    const artwork = MusicKit.formatArtworkURL(album.attributes.artwork, 150, 150);
-
-    const explicit = album.attributes.contentRating === 'explicit' && (
-      <div className={classes.explicit}>
-        <span>E</span>
-      </div>
-    );
+    const { playlist, connectDragSource, isOver } = this.props;
+    const artwork = MusicKit.formatArtworkURL(playlist.attributes.artwork, 416, 240);
 
     return connectDragSource(
       <div className={cx(classes.container, { [classes.droppable]: isOver })}>
@@ -45,25 +40,20 @@ class FeaturedAlbum extends Component {
             <div onClick={() => this.handleOpen(push)}>
               <ContextMenuTrigger
                 holdToDisplay={-1}
-                render={() => <AlbumContextMenu album={album} />}
+                render={() => <PlaylistContextMenu playlist={playlist} />}
               >
+                <div className={classes.descriptionContainer}>
+                  <span className={classes.featureTag}>{playlist.tag}</span>
+                  <span className={classes.playlistName}>{playlist.attributes.name}</span>
+                </div>
+
                 <div className={classes.imageContainer}>
                   <img
                     src={artwork}
                     className={classes.image}
-                    alt={album.attributes.name}
-                    title={album.attributes.name}
+                    alt={playlist.attributes.name}
+                    title={playlist.attributes.name}
                   />
-                </div>
-
-                <div className={classes.descriptionContainer}>
-                  <span className={classes.albumTitle}>
-                    <div className={classes.albumName}>{album.attributes.name}</div>
-                    {explicit}
-                  </span>
-                  <span className={classes.artistName}>
-                    {album.attributes.artistName}
-                  </span>
                 </div>
               </ContextMenuTrigger>
             </div>
@@ -74,24 +64,26 @@ class FeaturedAlbum extends Component {
   }
 }
 
-FeaturedAlbum.propTypes = {
+FeaturedPlaylist.propTypes = {
   navigate: PropTypes.bool,
   history: PropTypes.any.isRequired,
-  album: PropTypes.any,
+  playlist: PropTypes.any,
+  id: PropTypes.any,
   connectDragSource: PropTypes.func.isRequired,
   isOver: PropTypes.bool,
 };
 
-FeaturedAlbum.defaultProps = {
+FeaturedPlaylist.defaultProps = {
   navigate: false,
-  album: null,
+  playlist: null,
+  id: null,
   isOver: false,
 };
 
 const dndSpec = {
   beginDrag(props) {
     return {
-      album: props.album.id,
+      playlist: props.id || props.playlist.id,
     };
   },
 };
@@ -103,4 +95,4 @@ function dndCollect(connect, monitor) {
   };
 }
 
-export default DragSource(DragDropType.ALBUM, dndSpec, dndCollect)(withRouter(FeaturedAlbum));
+export default DragSource(DragDropType.PLAYLIST, dndSpec, dndCollect)(withRouter(FeaturedPlaylist));

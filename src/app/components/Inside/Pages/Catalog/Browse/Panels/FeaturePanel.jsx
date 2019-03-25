@@ -2,9 +2,11 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import classes from './BrowsePage.scss';
-import PlaylistItem from '../../../../Common/PlaylistItem/PlaylistItem';
-import AlbumItem from '../../../../Common/AlbumItem/AlbumItem';
+import classes from '../BrowsePage.scss';
+import PlaylistItem from '../../../../../Common/PlaylistItem/PlaylistItem';
+import AlbumItem from '../../../../../Common/AlbumItem/AlbumItem';
+import FeaturedAlbum from './FeaturedAlbum/FeaturedAlbum';
+import FeaturedPlaylist from './FeaturedPlaylist/FeaturedPlaylist';
 
 function FeaturePanel(props) {
   const { items, rows, size } = props;
@@ -26,9 +28,9 @@ function FeaturePanel(props) {
           }
           switch (item.type) {
             case 'playlists':
-              return <PlaylistItem key={item.id} playlist={item} size={size} />;
+              return <FeaturedPlaylist key={item.id} playlist={item} />;
             case 'albums':
-              return <AlbumItem key={item.id} album={item} size={size} />;
+              return <FeaturedAlbum key={item.id} album={item} />;
             default:
               return null;
           }

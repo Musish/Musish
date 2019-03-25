@@ -8,6 +8,7 @@ import Tab from '../../../../Common/Tabs/Tab';
 import Genres from './Genres/Genres';
 import translate from '../../../../../utils/translations/Translations';
 import Overview from './Overview/Overview';
+import TopCharts from './TopCharts/TopCharts';
 
 class BrowsePage extends React.Component {
   constructor(props) {
@@ -26,10 +27,13 @@ class BrowsePage extends React.Component {
         <PageTitle title={`${translate.browse}`} context={`${translate.appleMusic}`} />
 
         <Tabs>
-          <Tab name={`${translate.topCharts}`} route={'/browse'}>
+          <Tab name={`${translate.overview}`} route={'/browse'}>
             <Overview />
           </Tab>
-          <Tab name={`${translate.genres}`} route={'/browse/genres'}>
+          <Tab name={translate.topCharts} route={'/browse/topcharts'}>
+            <TopCharts />
+          </Tab>
+          <Tab name={translate.genres} route={'/browse/genres'}>
             <Genres />
           </Tab>
         </Tabs>
