@@ -74,3 +74,5 @@ node_modules/
 .env
 .serverless
 secrets.json
+
+src/backend/browse/mapping.json

@@ -1,0 +1,652 @@
+[
+  {
+    "name": "Algeria",
+    "code": "DZ",
+    "storefrontId": 143563
+  },
+  {
+    "name": "Angola",
+    "code": "AO",
+    "storefrontId": 143564
+  },
+  {
+    "name": "Anguilla",
+    "code": "AI",
+    "storefrontId": 143538
+  },
+  {
+    "name": "Antigua & Barbuda",
+    "code": "AG",
+    "storefrontId": 143540
+  },
+  {
+    "name": "Argentina",
+    "code": "AR",
+    "storefrontId": 143505
+  },
+  {
+    "name": "Armenia",
+    "code": "AM",
+    "storefrontId": 143524
+  },
+  {
+    "name": "Australia",
+    "code": "AU",
+    "storefrontId": 143460
+  },
+  {
+    "name": "Austria",
+    "code": "AT",
+    "storefrontId": 143445
+  },
+  {
+    "name": "Azerbaijan",
+    "code": "AZ",
+    "storefrontId": 143568
+  },
+  {
+    "name": "Bahrain",
+    "code": "BH",
+    "storefrontId": 143559
+  },
+  {
+    "name": "Bangladesh",
+    "code": "BD",
+    "storefrontId": 143490
+  },
+  {
+    "name": "Barbados",
+    "code": "BB",
+    "storefrontId": 143541
+  },
+  {
+    "name": "Belarus",
+    "code": "BY",
+    "storefrontId": 143565
+  },
+  {
+    "name": "Belgium",
+    "code": "BE",
+    "storefrontId": 143446
+  },
+  {
+    "name": "Belize",
+    "code": "BZ",
+    "storefrontId": 143555
+  },
+  {
+    "name": "Bermuda",
+    "code": "BM",
+    "storefrontId": 143542
+  },
+  {
+    "name": "Bolivia",
+    "code": "BO",
+    "storefrontId": 143556
+  },
+  {
+    "name": "Botswana",
+    "code": "BW",
+    "storefrontId": 143525
+  },
+  {
+    "name": "Brazil",
+    "code": "BR",
+    "storefrontId": 143503
+  },
+  {
+    "name": "British Virgin Islands",
+    "code": "VG",
+    "storefrontId": 143543
+  },
+  {
+    "name": "Brunei",
+    "code": "BN",
+    "storefrontId": 143560
+  },
+  {
+    "name": "Bulgaria",
+    "code": "BG",
+    "storefrontId": 143526
+  },
+  {
+    "name": "Canada",
+    "code": "CA",
+    "storefrontId": 143455
+  },
+  {
+    "name": "Cayman Islands",
+    "code": "KY",
+    "storefrontId": 143544
+  },
+  {
+    "name": "Chile",
+    "code": "CL",
+    "storefrontId": 143483
+  },
+  {
+    "name": "China",
+    "code": "CN",
+    "storefrontId": 143465
+  },
+  {
+    "name": "Colombia",
+    "code": "CO",
+    "storefrontId": 143501
+  },
+  {
+    "name": "Costa Rica",
+    "code": "CR",
+    "storefrontId": 143495
+  },
+  {
+    "name": "Cote D’Ivoire",
+    "code": "CI",
+    "storefrontId": 143527
+  },
+  {
+    "name": "Croatia",
+    "code": "HR",
+    "storefrontId": 143494
+  },
+  {
+    "name": "Cyprus",
+    "code": "CY",
+    "storefrontId": 143557
+  },
+  {
+    "name": "Czech Republic",
+    "code": "CZ",
+    "storefrontId": 143489
+  },
+  {
+    "name": "Denmark",
+    "code": "DK",
+    "storefrontId": 143458
+  },
+  {
+    "name": "Dominica",
+    "code": "DM",
+    "storefrontId": 143545
+  },
+  {
+    "name": "Dominican Rep.",
+    "code": "DO",
+    "storefrontId": 143508
+  },
+  {
+    "name": "Ecuador",
+    "code": "EC",
+    "storefrontId": 143509
+  },
+  {
+    "name": "Egypt",
+    "code": "EG",
+    "storefrontId": 143516
+  },
+  {
+    "name": "El Salvador",
+    "code": "SV",
+    "storefrontId": 143506
+  },
+  {
+    "name": "Estonia",
+    "code": "EE",
+    "storefrontId": 143518
+  },
+  {
+    "name": "Finland",
+    "code": "FI",
+    "storefrontId": 143447
+  },
+  {
+    "name": "France",
+    "code": "FR",
+    "storefrontId": 143442
+  },
+  {
+    "name": "Germany",
+    "code": "DE",
+    "storefrontId": 143443
+  },
+  {
+    "name": "Ghana",
+    "code": "GH",
+    "storefrontId": 143573
+  },
+  {
+    "name": "Greece",
+    "code": "GR",
+    "storefrontId": 143448
+  },
+  {
+    "name": "Grenada",
+    "code": "GD",
+    "storefrontId": 143546
+  },
+  {
+    "name": "Guatemala",
+    "code": "GT",
+    "storefrontId": 143504
+  },
+  {
+    "name": "Guyana",
+    "code": "GY",
+    "storefrontId": 143553
+  },
+  {
+    "name": "Honduras",
+    "code": "HN",
+    "storefrontId": 143510
+  },
+  {
+    "name": "Hong Kong",
+    "code": "HK",
+    "storefrontId": 143463
+  },
+  {
+    "name": "Hungary",
+    "code": "HU",
+    "storefrontId": 143482
+  },
+  {
+    "name": "Iceland",
+    "code": "IS",
+    "storefrontId": 143558
+  },
+  {
+    "name": "India",
+    "code": "IN",
+    "storefrontId": 143467
+  },
+  {
+    "name": "Indonesia",
+    "code": "ID",
+    "storefrontId": 143476
+  },
+  {
+    "name": "Ireland",
+    "code": "IE",
+    "storefrontId": 143449
+  },
+  {
+    "name": "Israel",
+    "code": "IL",
+    "storefrontId": 143491
+  },
+  {
+    "name": "Italy",
+    "code": "IT",
+    "storefrontId": 143450
+  },
+  {
+    "name": "Jamaica",
+    "code": "JM",
+    "storefrontId": 143511
+  },
+  {
+    "name": "Japan",
+    "code": "JP",
+    "storefrontId": 143462
+  },
+  {
+    "name": "Jordan",
+    "code": "JO",
+    "storefrontId": 143528
+  },
+  {
+    "name": "Kazakstan",
+    "code": "KZ",
+    "storefrontId": 143517
+  },
+  {
+    "name": "Kenya",
+    "code": "KE",
+    "storefrontId": 143529
+  },
+  {
+    "name": "Korea, Republic Of",
+    "code": "KR",
+    "storefrontId": 143466
+  },
+  {
+    "name": "Kuwait",
+    "code": "KW",
+    "storefrontId": 143493
+  },
+  {
+    "name": "Latvia",
+    "code": "LV",
+    "storefrontId": 143519
+  },
+  {
+    "name": "Lebanon",
+    "code": "LB",
+    "storefrontId": 143497
+  },
+  {
+    "name": "Liechtenstein",
+    "code": "LI",
+    "storefrontId": 143522
+  },
+  {
+    "name": "Lithuania",
+    "code": "LT",
+    "storefrontId": 143520
+  },
+  {
+    "name": "Luxembourg",
+    "code": "LU",
+    "storefrontId": 143451
+  },
+  {
+    "name": "Macau",
+    "code": "MO",
+    "storefrontId": 143515
+  },
+  {
+    "name": "Macedonia",
+    "code": "MK",
+    "storefrontId": 143530
+  },
+  {
+    "name": "Madagascar",
+    "code": "MG",
+    "storefrontId": 143531
+  },
+  {
+    "name": "Malaysia",
+    "code": "MY",
+    "storefrontId": 143473
+  },
+  {
+    "name": "Maldives",
+    "code": "MV",
+    "storefrontId": 143488
+  },
+  {
+    "name": "Mali",
+    "code": "ML",
+    "storefrontId": 143532
+  },
+  {
+    "name": "Malta",
+    "code": "MT",
+    "storefrontId": 143521
+  },
+  {
+    "name": "Mauritius",
+    "code": "MU",
+    "storefrontId": 143533
+  },
+  {
+    "name": "Mexico",
+    "code": "MX",
+    "storefrontId": 143468
+  },
+  {
+    "name": "Moldova, Republic Of",
+    "code": "MD",
+    "storefrontId": 143523
+  },
+  {
+    "name": "Montserrat",
+    "code": "MS",
+    "storefrontId": 143547
+  },
+  {
+    "name": "Nepal",
+    "code": "NP",
+    "storefrontId": 143484
+  },
+  {
+    "name": "Netherlands",
+    "code": "NL",
+    "storefrontId": 143452
+  },
+  {
+    "name": "New Zealand",
+    "code": "NZ",
+    "storefrontId": 143461
+  },
+  {
+    "name": "Nicaragua",
+    "code": "NI",
+    "storefrontId": 143512
+  },
+  {
+    "name": "Niger",
+    "code": "NE",
+    "storefrontId": 143534
+  },
+  {
+    "name": "Nigeria",
+    "code": "NG",
+    "storefrontId": 143561
+  },
+  {
+    "name": "Norway",
+    "code": "NO",
+    "storefrontId": 143457
+  },
+  {
+    "name": "Oman",
+    "code": "OM",
+    "storefrontId": 143562
+  },
+  {
+    "name": "Pakistan",
+    "code": "PK",
+    "storefrontId": 143477
+  },
+  {
+    "name": "Panama",
+    "code": "PA",
+    "storefrontId": 143485
+  },
+  {
+    "name": "Paraguay",
+    "code": "PY",
+    "storefrontId": 143513
+  },
+  {
+    "name": "Peru",
+    "code": "PE",
+    "storefrontId": 143507
+  },
+  {
+    "name": "Philippines",
+    "code": "PH",
+    "storefrontId": 143474
+  },
+  {
+    "name": "Poland",
+    "code": "PL",
+    "storefrontId": 143478
+  },
+  {
+    "name": "Portugal",
+    "code": "PT",
+    "storefrontId": 143453
+  },
+  {
+    "name": "Qatar",
+    "code": "QA",
+    "storefrontId": 143498
+  },
+  {
+    "name": "Romania",
+    "code": "RO",
+    "storefrontId": 143487
+  },
+  {
+    "name": "Russia",
+    "code": "RU",
+    "storefrontId": 143469
+  },
+  {
+    "name": "Saudi Arabia",
+    "code": "SA",
+    "storefrontId": 143479
+  },
+  {
+    "name": "Senegal",
+    "code": "SN",
+    "storefrontId": 143535
+  },
+  {
+    "name": "Serbia",
+    "code": "RS",
+    "storefrontId": 143500
+  },
+  {
+    "name": "Singapore",
+    "code": "SG",
+    "storefrontId": 143464
+  },
+  {
+    "name": "Slovakia",
+    "code": "SK",
+    "storefrontId": 143496
+  },
+  {
+    "name": "Slovenia",
+    "code": "SI",
+    "storefrontId": 143499
+  },
+  {
+    "name": "South Africa",
+    "code": "ZA",
+    "storefrontId": 143472
+  },
+  {
+    "name": "Spain",
+    "code": "ES",
+    "storefrontId": 143454
+  },
+  {
+    "name": "Sri Lanka",
+    "code": "LK",
+    "storefrontId": 143486
+  },
+  {
+    "name": "St. Kitts & Nevis",
+    "code": "KN",
+    "storefrontId": 143548
+  },
+  {
+    "name": "St. Lucia",
+    "code": "LC",
+    "storefrontId": 143549
+  },
+  {
+    "name": "St. Vincent & The Grenadines",
+    "code": "VC",
+    "storefrontId": 143550
+  },
+  {
+    "name": "Suriname",
+    "code": "SR",
+    "storefrontId": 143554
+  },
+  {
+    "name": "Sweden",
+    "code": "SE",
+    "storefrontId": 143456
+  },
+  {
+    "name": "Switzerland",
+    "code": "CH",
+    "storefrontId": 143459
+  },
+  {
+    "name": "Taiwan",
+    "code": "TW",
+    "storefrontId": 143470
+  },
+  {
+    "name": "Tanzania",
+    "code": "TZ",
+    "storefrontId": 143572
+  },
+  {
+    "name": "Thailand",
+    "code": "TH",
+    "storefrontId": 143475
+  },
+  {
+    "name": "The Bahamas",
+    "code": "BS",
+    "storefrontId": 143539
+  },
+  {
+    "name": "Trinidad & Tobago",
+    "code": "TT",
+    "storefrontId": 143551
+  },
+  {
+    "name": "Tunisia",
+    "code": "TN",
+    "storefrontId": 143536
+  },
+  {
+    "name": "Turkey",
+    "code": "TR",
+    "storefrontId": 143480
+  },
+  {
+    "name": "Turks & Caicos",
+    "code": "TC",
+    "storefrontId": 143552
+  },
+  {
+    "name": "Uganda",
+    "code": "UG",
+    "storefrontId": 143537
+  },
+  {
+    "name": "UK",
+    "code": "GB",
+    "storefrontId": 143444
+  },
+  {
+    "name": "Ukraine",
+    "code": "UA",
+    "storefrontId": 143492
+  },
+  {
+    "name": "United Arab Emirates",
+    "code": "AE",
+    "storefrontId": 143481
+  },
+  {
+    "name": "Uruguay",
+    "code": "UY",
+    "storefrontId": 143514
+  },
+  {
+    "name": "USA",
+    "code": "US",
+    "storefrontId": 143441
+  },
+  {
+    "name": "Uzbekistan",
+    "code": "UZ",
+    "storefrontId": 143566
+  },
+  {
+    "name": "Venezuela",
+    "code": "VE",
+    "storefrontId": 143502
+  },
+  {
+    "name": "Vietnam",
+    "code": "VN",
+    "storefrontId": 143471
+  },
+  {
+    "name": "Yemen",
+    "code": "YE",
+    "storefrontId": 143571
+  }
+]
