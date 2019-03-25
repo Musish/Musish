@@ -2,29 +2,15 @@ const utils = require('../utils');
 const appleMusicApi = require('../appleMusicApi');
 const dataTypes = require('./dataTypes');
 
-async function overview({ storefront }) {
-  // TODO: STOREFRONT MAPPINGS
-  const data = await appleMusicApi.fetchBrowseData('143444-2,32 t:music31');
+async function overview({ storefront, key, id }) {
+  const data = await appleMusicApi.fetchActivityData('143444-2,32 t:music31', 'gb', key, id);
   const response = {};
 
   const content = {
-    songs: new Set([]),
-    albums: new Set([]),
     playlists: new Set([]),
   };
 
   function normaliseItem(item) {
-    if (parseInt(item.fcKind) === dataTypes.contentTypes.FEATURED_ITEM) {
-      const itemId = normaliseItem(item.link);
-      if (!itemId) {
-        return null;
-      }
-      return {
-        tag: item.designBadge,
-        itemId,
-      };
-    }
-
     let typeId;
     if (item.kindIds && item.kindIds[0]) {
       typeId = item.kindIds[0];
@@ -44,14 +30,8 @@ async function overview({ storefront }) {
     }
 
     switch (typeId) {
-      case dataTypes.contentTypes.ALBUM:
-        content.albums.add(contentId);
-        return contentId;
       case dataTypes.contentTypes.PLAYLIST:
         content.playlists.add(contentId);
-        return contentId;
-      case dataTypes.contentTypes.SONG:
-        content.songs.add(contentId);
         return contentId;
       default:
         console.error(`Unexpected type id: ${typeId}, found in set`);
@@ -102,35 +82,23 @@ async function overview({ storefront }) {
   // Add lookup content info from apple music API
   response.lookup = { };
 
-  const albumPayloads = await appleMusicApi.fetchAlbums(storefront, Array.from(content.albums));
-  albumPayloads.forEach(album => {
-    delete album.relationships;
-    response.lookup[album.id] = album;
-  });
-
   const playlistPayloads = await appleMusicApi.fetchPlaylists(storefront, Array.from(content.playlists));
   playlistPayloads.forEach(playlist => {
     delete playlist.relationships;
     response.lookup[playlist.id] = playlist;
   });
 
-  const songPayloads = await appleMusicApi.fetchSongs(storefront, Array.from(content.songs));
-  songPayloads.forEach(song => {
-    delete song.relationships;
-    response.lookup[song.id] = song;
-  });
-
   return response;
 }
 
 module.exports = {
-  overview: async function(event) {
+  overview: async  function(event) {
     try {
       const params = event.queryStringParameters;
 
-      const browseData = await overview(params);
+      const activityData = await overview(params);
 
-      return utils.generateResponse(200, browseData);
+      return utils.generateResponse(200, activityData);
     } catch (e) {
       return utils.generateError(500, e);
     }

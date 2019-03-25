@@ -16,12 +16,21 @@ functions:
       - http:
           path: /
           method: get
-  browse-charts:
+
+  browse-overview:
     handler: browse/browse.overview
     events:
       - http:
           path: /browse/overview
           method: get
+
+  browse-activity:
+    handler: browse/activity.overview
+    events:
+      - http:
+          path: /browse/activity
+          method: get
+
   genius-song:
     handler: genius/song.details
     events:
@@ -29,6 +38,7 @@ functions:
           path: /genius/song
           method: get
           cors: true
+
   genius-artist:
     handler: genius/artist.details
     events:
@@ -36,6 +46,7 @@ functions:
           path: /genius/artist
           method: get
           cors: true
+
 
 plugins:
   - serverless-offline

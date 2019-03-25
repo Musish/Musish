@@ -133,4 +133,19 @@ module.exports = {
       return null;
     }
   },
+  fetchActivityData: async (storefrontIdentifier, storefront, key, id) => {
+    try {
+      const { data } = await axios.get(
+        `https://itunes.apple.com/${storefront}/activity/${key}/${id}`,
+        {
+          headers: { 'x-apple-store-front': storefrontIdentifier }
+        }
+      );
+
+      return data;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  },
 };

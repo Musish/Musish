@@ -1,0 +1,99 @@
+@import '../../../../../../../assets/styles/settings/colors';
+
+@mixin wrapTo($width) {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: $width;
+  display: block;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  margin: 15px 10px;
+  transform: scale(1);
+  transition: transform 0.3s;
+
+  &.droppable {
+    color: $accent_color;
+  }
+
+  .imageContainer {
+    width: 100%;
+    background: $container_background;
+    border-radius: 8px;
+    height: 0;
+    padding-top: 100%;
+    position: relative;
+
+    .image {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      transition: opacity 0.2s;
+    }
+  }
+
+  &:hover {
+    transform: scale(1.025);
+
+    .image {
+      opacity: 0.8;
+    }
+  }
+
+  &:active {
+    transform: scale(0.975);
+  }
+
+  .descriptionContainer {
+    text-align: left;
+    width: 100%;
+
+    > span {
+      display:block;
+      @include wrapTo(100%);
+
+      &.albumTitle {
+        margin: 10px 0 5px 0;
+        display: flex;
+        width: 100%;
+
+        .albumName {
+          flex: 1;
+          font-weight: 400;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        .explicit {
+          background: $secondary_color;
+          color: $background_color;
+          display: flex;
+          flex-shrink: 0;
+          width: 12px;
+          height: 12px;
+          align-items: center;
+          justify-content: center;
+          font-weight: 300;
+          border-radius: 3px;
+          font-size: 9px;
+          margin-left: 5px;
+          margin-top: 2px;
+        }
+      }
+
+      &.artistName {
+        font-weight: 300;
+        color: $secondary_color;
+        margin: 0;
+      }
+    }
+  }
+}
