@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import Loader from '../../../../../Common/Loader/Loader';
 import * as MusicPlayerApi from '../../../../../../services/MusicPlayerApi';
 import * as Backend from '../../../../../../services/Backend';
+import * as StorePageParser from '../../../../../../services/StorePageParser';
 import BrowseSection from './BrowseSection';
 
 class Overview extends React.Component {
@@ -23,6 +24,13 @@ class Overview extends React.Component {
 
   async getOverview() {
     const data = await Backend.getBrowseOverview();
+
+    console.log(data);
+
+    const temp = await StorePageParser.normalisePageData(data);
+    console.log(temp);
+
+    return;
 
     const sections = data.sections.map(section => ({
       ...section,

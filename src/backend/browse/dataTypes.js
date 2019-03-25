@@ -1,5 +1,5 @@
 module.exports = {
-  layoutTypes: {
+  LayoutTypes: {
     FEATURE: 316,
     // GENRES: 322,
     TILE: 326,
@@ -8,7 +8,7 @@ module.exports = {
     TILE_LARGE: 387,
     LINK: 391,
   },
-  contentTypes: {
+  ContentTypes: {
     SONG: 1,
     ALBUM: 2,
     PLAYLIST: 46,

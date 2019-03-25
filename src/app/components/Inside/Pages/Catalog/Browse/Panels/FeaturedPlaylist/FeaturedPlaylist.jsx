@@ -6,7 +6,6 @@ import { withRouter } from 'react-router-dom';
 import cx from 'classnames';
 import classes from './FeaturedPlaylist.scss';
 import PlaylistPanel from '../../../../../../Common/PlaylistPanel/PlaylistPanel';
-import { artworkForMediaItem } from '../../../../../../../utils/Utils';
 import ModalContext from '../../../../../../Common/Modal/ModalContext';
 import ContextMenuTrigger from '../../../../../../Common/ContextMenu/ContextMenuTrigger';
 import PlaylistContextMenu from '../../../../../../Common/ContextMenu/Types/Playlist/PlaylistContextMenu';
