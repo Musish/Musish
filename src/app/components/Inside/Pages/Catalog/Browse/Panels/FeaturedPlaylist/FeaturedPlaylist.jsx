@@ -30,7 +30,16 @@ class FeaturedPlaylist extends Component {
 
   render() {
     const { playlist, connectDragSource, isOver } = this.props;
-    const artwork = MusicKit.formatArtworkURL(playlist.attributes.artwork, 416, 240);
+
+    const coverArtwork = MusicKit.formatArtworkURL(
+      playlist.attributes.editorialArtwork.subscriptionHero,
+      240,
+      416
+    ).replace('{c}', 'sr');
+    const coverArtworkBackgroundColor =
+      playlist.attributes.editorialArtwork.subscriptionHero.bgColor;
+
+    const caption = playlist.attributes.description.short;
 
     return connectDragSource(
       <div className={cx(classes.container, { [classes.droppable]: isOver })}>
@@ -46,13 +55,17 @@ class FeaturedPlaylist extends Component {
                   <span className={classes.playlistName}>{playlist.attributes.name}</span>
                 </div>
 
-                <div className={classes.imageContainer}>
+                <div className={classes.coverContainer}>
                   <img
-                    src={artwork}
-                    className={classes.image}
+                    src={coverArtwork}
+                    className={classes.cover}
                     alt={playlist.attributes.name}
                     title={playlist.attributes.name}
+                    style={{ background: `#${coverArtworkBackgroundColor}` }}
                   />
+                  <div className={classes.detailsOverlay}>
+                    <p className={classes.caption}>{caption}</p>
+                  </div>
                 </div>
               </ContextMenuTrigger>
             </div>

@@ -10,13 +10,13 @@
 
 .container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  align-items: flex-end;
   cursor: pointer;
-  margin: 15px 10px;
+  margin: 15px 5px;
   transform: scale(1);
   transition: transform 0.3s;
-  height: 330px;
+  height: 310px;
 
   &.droppable {
     color: $accent_color;
@@ -73,18 +73,45 @@
     }
   }
 
-  .imageContainer {
+  .coverContainer {
+    position: relative;
     width: 416px;
     height: 240px;
     background: $container_background;
+    margin-top: 10px;
     border-radius: 8px;
 
-    .image {
+    .cover {
       width: 100%;
       height: 100%;
       border-radius: 6px;
       transition: opacity 0.2s;
       object-fit: cover;
+    }
+
+    .detailsOverlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 20px 20px 12px;
+      min-height: 60px;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0px, rgba(0, 0, 0, 0) 60px, rgba(0, 0, 0, 0) 100%) no-repeat;
+
+      .caption {
+        flex: 1;
+        margin: 0;
+        color: #ffffff;
+      }
+
+      .albumArtwork {
+        width: 60px;
+        height: 60px;
+        margin-left: 20px;
+        border-radius: 3px;
+      }
     }
   }
 

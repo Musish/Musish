@@ -10,7 +10,6 @@ import AlbumContextMenu from '../../../../../../Common/ContextMenu/Types/Album/A
 import ContextMenuTrigger from '../../../../../../Common/ContextMenu/ContextMenuTrigger';
 import ModalContext from '../../../../../../Common/Modal/ModalContext';
 import DragDropType from '../../../../../../../utils/Constants/DragDropType';
-import { artworkForMediaItem } from '../../../../../../../utils/Utils';
 
 class FeaturedAlbum extends Component {
   constructor(props) {
@@ -31,13 +30,16 @@ class FeaturedAlbum extends Component {
 
   render() {
     const { album, connectDragSource, isOver } = this.props;
-    const artwork = MusicKit.formatArtworkURL(album.attributes.artwork, 416, 240);
 
-    const explicit = album.attributes.contentRating === 'explicit' && (
-      <div className={classes.explicit}>
-        <span>E</span>
-      </div>
-    );
+    const albumArtwork = MusicKit.formatArtworkURL(album.attributes.artwork, 60, 60);
+    const coverArtwork = MusicKit.formatArtworkURL(
+      album.attributes.editorialArtwork.subscriptionHero,
+      240,
+      416
+    ).replace('{c}', 'sr');
+    const coverArtworkBackgroundColor = album.attributes.editorialArtwork.subscriptionHero.bgColor;
+
+    const caption = album.attributes.editorialNotes.short;
 
     return connectDragSource(
       <div className={cx(classes.container, { [classes.droppable]: isOver })}>
@@ -52,18 +54,28 @@ class FeaturedAlbum extends Component {
                   <span className={classes.featureTag}>{album.tag}</span>
                   <span className={classes.albumTitle}>
                     <div className={classes.albumName}>{album.attributes.name}</div>
-                    {explicit}
                   </span>
                   <span className={classes.artistName}>{album.attributes.artistName}</span>
                 </div>
 
-                <div className={classes.imageContainer}>
+                <div className={classes.coverContainer}>
                   <img
-                    src={artwork}
-                    className={classes.image}
+                    src={coverArtwork}
+                    className={classes.cover}
                     alt={album.attributes.name}
                     title={album.attributes.name}
+                    style={{ background: `#${coverArtworkBackgroundColor}` }}
                   />
+                  <div className={classes.detailsOverlay}>
+                    <p className={classes.caption}>{caption}</p>
+                    <img
+                      src={albumArtwork}
+                      className={classes.albumArtwork}
+                      alt={album.attributes.name}
+                      title={album.attributes.name}
+                      style={{ background: `#${coverArtworkBackgroundColor}` }}
+                    />
+                  </div>
                 </div>
               </ContextMenuTrigger>
             </div>

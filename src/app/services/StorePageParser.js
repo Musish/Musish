@@ -67,10 +67,10 @@ export async function normalisePageData(page) {
             artistName: itemData.artistName,
             isSingle: itemData.trackCount === 1,
             url: itemData.url,
-            isComplete: false,
+            isComplete: false, // TODO: This.
             genreNames: itemData.genreNames,
-            trackCount: 21,
-            isMasteredForItunes: false,
+            trackCount: 21, // TODO: This.
+            isMasteredForItunes: false, // TODO: This.
             releaseDate: itemData.releaseDate,
             name: itemData.name,
             // recordLabel: '???', TODO: This.
@@ -96,7 +96,7 @@ export async function normalisePageData(page) {
             url: itemData.url,
             artwork: {
               ...itemData.artwork,
-              url: itemData.artwork.url.replace('{c}', 'cc').replace('{f}', 'jpeg'),
+              url: itemData.artwork.url.replace('{c}', 'cc'),
             },
             editorialArtwork: itemData.editorialArtwork,
             lastModifiedDate: itemData.lastModifiedDate,
