@@ -3,8 +3,6 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import classes from '../BrowsePage.scss';
-import PlaylistItem from '../../../../../Common/PlaylistItem/PlaylistItem';
-import AlbumItem from '../../../../../Common/AlbumItem/AlbumItem';
 import FeaturedAlbum from './FeaturedAlbum/FeaturedAlbum';
 import FeaturedPlaylist from './FeaturedPlaylist/FeaturedPlaylist';
 

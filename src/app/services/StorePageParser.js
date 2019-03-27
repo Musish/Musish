@@ -15,6 +15,7 @@ export const ContentTypes = {
   // RADIO: 51, TODO: Is this radio, or is it radio video recording? How does radio even work?
   FEATURED_ITEM: 317,
   // FEATURED_PAGE: 320, TODO: PAGE? What really is this type?
+  TILE_WIDE: 386,
   // TODO: ARTISTS
   // TODO: MUSIC VIDEOS?
   // TODO: OTHERS???

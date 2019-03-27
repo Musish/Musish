@@ -48,7 +48,7 @@
     height: 240px;
     margin-top: 10px;
     background: $container_background;
-    border-radius: 8px;
+    border-radius: 6px;
 
     .cover {
       width: 100%;
@@ -68,6 +68,7 @@
       padding: 0 20px 20px 12px;
       min-height: 60px;
       background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0px, rgba(0, 0, 0, 0) 60px, rgba(0, 0, 0, 0) 100%) no-repeat;
+      border-radius: 0 0 6px 6px;
 
       .caption {
         flex: 1;
