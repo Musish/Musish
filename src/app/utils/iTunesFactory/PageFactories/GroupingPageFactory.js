@@ -1,35 +1,25 @@
 import React from 'react';
 import Factory from '../Factory';
-import iTunesFactory from '../iTunesFactory';
-import { LayoutTypes } from '../../../services/StorePageParser';
+import iTunesFactory, { ContentTypes } from '../iTunesFactory';
 
 export default class SongsFactory extends Factory {
+  constructor(data) {
+    super(data, data.storePlatformData.results);
+
+    this.enabledTypes = [ContentTypes.TILE_LIST];
+  }
+
   collect() {
     return this.data.pageData.fcStructure.model.children.reduce((accum, section) => {
-      const layoutType = Object.keys(LayoutTypes).find(
-        type => LayoutTypes[type] === parseInt(section.fcKind, 10)
-      );
+      const contentType = parseInt(section.fcKind, 10);
 
-      if (!layoutType) {
+      if (!this.enabledTypes.includes(contentType)) {
         console.log(`Skipping non supported section layout type: ${section.fcKind}`);
         return accum;
       }
 
-      let items = [];
-      const content = section.content || section.children;
-      if (content) {
-        items = iTunesFactory(content, this.lockup);
-      }
-
-      if (items.length === 0) {
-        return accum;
-      }
-
-      return accum.concat({
-        name: section.name,
-        content: items,
-        type: layoutType,
-      });
+      console.log(`grouping section added: ${contentType}`);
+      return accum.concat(iTunesFactory(section, this.lockup));
     }, []);
   }
 

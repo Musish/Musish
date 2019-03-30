@@ -3,8 +3,8 @@ import { withRouter } from 'react-router-dom';
 import Loader from '../../../../../Common/Loader/Loader';
 import * as MusicPlayerApi from '../../../../../../services/MusicPlayerApi';
 import * as Backend from '../../../../../../services/Backend';
-import * as StorePageParser from '../../../../../../services/StorePageParser';
 import BrowseSection from './BrowseSection';
+import iTunesFactory from '../../../../../../utils/iTunesFactory/iTunesFactory';
 
 class Overview extends React.Component {
   constructor(props) {
@@ -24,12 +24,14 @@ class Overview extends React.Component {
 
   async getOverview() {
     const pageData = await Backend.getBrowseOverview(MusicKit.getInstance().api.storefrontId);
-    const data = await StorePageParser.normalisePageData(pageData);
+    // const data = await StorePageParser.normalisePageData(pageData);
 
-    console.log(data);
+    const newData = await iTunesFactory(pageData).render();
+
+    console.log(newData);
 
     this.setState({
-      sections: data.content,
+      sections: newData, // TODO: data.content,
     });
   }
 
