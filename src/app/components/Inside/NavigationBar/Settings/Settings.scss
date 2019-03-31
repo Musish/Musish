@@ -1,52 +1,70 @@
 @import '../../../../assets/styles/settings/colors';
 
-.settingsWrapper {
-  align-items: center;
+.settings {
   display: flex;
-  height: 100%;
-  justify-content: flex-end;
-  margin-left: 21px;
-  position: relative;
+  flex-direction: column;
+  justify-content: center;
 
-  > i {
-    color: $player_secondary_button_color;
-    font-size: 18px;
-    cursor: pointer;
-  }
-
-  > .settingsControlWrapper {
-    position: absolute;
-    display: none;
-    padding: 10px;
-    z-index: 5;
-    background: $player_volume_container_color;
-    border-radius: 5px;
-    width: 170px;
-    top: 50px;
-    box-shadow: 0 3px 10px -3px rgba(0, 0, 0, 0.25);
+  .settingsWrapper {
     align-items: center;
-    flex-direction: column;
-    justify-content: space-between;
+    display: flex;
+    justify-content: flex-end;
+    margin-left: 21px;
+    position: relative;
 
-    h5 {
-      font-size: 15px;
-      color: $text_color_strong;
-      margin-bottom: 10px;
+    > i {
+      color: $player_secondary_button_color;
+      font-size: 18px;
+      cursor: pointer;
     }
 
-    .radioWrapper {
-      display: flex;
-      color: $text_color;
-      font-size: 12px;
-      margin-bottom: 5px;
+    > .settingsControlWrapper {
+      position: absolute;
+      display: none;
+      padding: 10px;
+      width: 170px;
+      align-items: center;
+      justify-content: space-between;
+      top: 150%;
+      right: 0;
+      background: $background_color;
+      overflow: hidden;
+      max-height: 70vh;
+      box-shadow: 0 8px 36px -10px rgba(150, 150, 150, 0.75);
+      border-radius: 6px 0 6px 6px;
+      margin-right: 1px;
+      text-align: left;
+      flex-direction: column;
+      z-index: 4000;
 
-      input {
-        margin-right: 10px;
+      h5 {
+        font-size: 15px;
+        color: $text_color_strong;
+        margin-bottom: 10px;
+      }
+
+      .radioWrapper {
+        display: flex;
+        color: $text_color;
+        font-size: 12px;
+        margin-bottom: 5px;
+
+        input {
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+  &:hover {
+    > .settingsWrapper {
+      > .settingsControlWrapper {
+        display: flex;
       }
     }
   }
 
-  &:hover > .settingsControlWrapper {
-    display: flex;
+  @supports (-webkit-backdrop-filter: blur(10px)) {
+    background: rgba($background_color, 0.85);
+    -webkit-backdrop-filter: blur(10px) saturate(180%);
   }
 }
