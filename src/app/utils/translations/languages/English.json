@@ -67,5 +67,8 @@
   "inYourPersonalLibrary": "In your personal library",
   "unauthorisedLibrarySearch": "You must login to search your library.",
 
-  "noLyricsAvailable": "No lyrics available "
+  "noLyricsAvailable": "No lyrics available ",
+
+  "lfmConnect": "Connect",
+  "lfmDisonnect": "Disconnect"
 }

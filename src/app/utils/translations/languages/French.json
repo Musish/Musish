@@ -61,12 +61,15 @@
   "minute": "minute",
   "minutes": "minutes",
 
-  "oppsNoResultsFound": "Oups, aucun résultat trouvé.",
+  "noResultsFound": "Oups, aucun résultat trouvé.",
   "trackNotAvailable": "Titre non disponible",
 
   "dataProvidedByGenius": "Données fournies par Genius",
   "inYourPersonalLibrary": "Dans votre bibliothèque personnelle",
   "unauthorisedLibrarySearch": "Vous devez vous connecter pour rechercher votre bibliothèque.",
 
-  "noLyricsAvailable": "Pas de paroles disponibles"
+  "noLyricsAvailable": "Pas de paroles disponibles",
+
+  "lfmConnect": "Connecter",
+  "lfmDisonnect": "Déconnecter"
 }
