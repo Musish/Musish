@@ -70,9 +70,19 @@ workflows:
   build_test_deploy:
     jobs:
       - setup
+        filters:
+          branches:
+            ignore:
+                - gh-pages
+                - assets
       - eslint:
           requires:
             - setup
+          filters:
+            branches:
+              ignore:
+                - gh-pages
+                - assets
       - deploy:
           requires:
             - eslint
