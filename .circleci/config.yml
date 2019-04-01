@@ -69,7 +69,7 @@ workflows:
 
   build_test_deploy:
     jobs:
-      - setup
+      - setup:
         filters:
           branches:
             ignore:
