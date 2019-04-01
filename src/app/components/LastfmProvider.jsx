@@ -94,8 +94,6 @@ function LastfmProvider({ children, mk }) {
   }
 
   async function fetchSK(token) {
-    localStorage.setItem('lastfm_token', token);
-
     const params = {
       token,
     };
@@ -111,7 +109,6 @@ function LastfmProvider({ children, mk }) {
     setConnected(false);
 
     localStorage.removeItem('lastfm_sk');
-    localStorage.removeItem('lastfm_token');
   }
 
   async function fetchToken() {
