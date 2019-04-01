@@ -42,6 +42,8 @@ jobs:
     environment:
       - TARGET_BRANCH: gh-pages
     steps:
+      - attach_workspace:
+          at: .
 #      - deploy:
 #          name: Deploy
 #          command: ./.circleci/deploy.sh
@@ -52,6 +54,8 @@ jobs:
   eslint:
     executor: my-executor
     steps:
+      - attach_workspace:
+          at: .
       - run:
           name: Make Reports folder
           command: mkdir -p ~/reports
