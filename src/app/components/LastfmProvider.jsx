@@ -5,6 +5,7 @@ import axios from 'axios';
 import qs from 'qs';
 import Alert from 'react-s-alert';
 import withMK from '../hoc/withMK';
+import translate from '../utils/translations/Translations';
 
 const apikey = process.env.LASTFM_API_KEY;
 const secret = process.env.LASTFM_SECRET;
@@ -131,8 +132,10 @@ function LastfmProvider({ children, mk }) {
       if (token) {
         try {
           await fetchSK(token);
+          Alert.success(translate.lfmConnectSuccess);
         } catch (e) {
           reset();
+          Alert.error(translate.lfmConnectError);
         }
       } else {
         reset();

@@ -71,5 +71,7 @@
   "noLyricsAvailable": "Pas de paroles disponibles",
 
   "lfmConnect": "Connecter",
-  "lfmDisonnect": "Déconnecter"
+  "lfmDisconnect": "Déconnecter",
+  "lfmConnectSuccess": "Last.fm est maintenant connecté",
+  "lfmConnectError": "Impossible de connecter Last.fm"
 }

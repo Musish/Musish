@@ -70,5 +70,7 @@
   "noLyricsAvailable": "No lyrics available ",
 
   "lfmConnect": "Connect",
-  "lfmDisonnect": "Disconnect"
+  "lfmDisconnect": "Disconnect",
+  "lfmConnectSuccess": "Last.fm is now connected!",
+  "lfmConnectError": "Could not connect to Last.fm"
 }
