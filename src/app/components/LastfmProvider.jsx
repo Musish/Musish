@@ -27,7 +27,7 @@ function LastfmProvider({ children, mk }) {
     };
 
     if (sk) {
-      params.sk = localStorage.getItem('lastfm_sk');
+      params.sk = getSK();
     }
 
     params.api_sig = sign(params);
