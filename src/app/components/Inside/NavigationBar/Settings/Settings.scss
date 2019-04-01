@@ -28,6 +28,18 @@
     flex-direction: column;
     justify-content: space-between;
 
+    .section {
+      margin-bottom: 10px;
+
+      .lastfmButton {
+        background: $accent_color;
+        color: $background_color;
+        border-radius: 4px;
+        padding: 5px;
+        cursor: pointer;
+      }
+    }
+
     h5 {
       font-size: 15px;
       color: $text_color_strong;

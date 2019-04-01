@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import classes from './Settings.scss';
 import useMK from '../../../../hooks/useMK';
+import { LastfmContext } from '../../../LastfmProvider';
+import translate from '../../../../utils/translations/Translations';
 
 export default function Settings() {
+  const { login, reset, connected } = useContext(LastfmContext);
+
   const mk = useMK({
     [MusicKit.Events.playbackBitrateDidChange]: 'playbackBitrate',
   });
@@ -12,7 +16,19 @@ export default function Settings() {
     <span className={classes.settingsWrapper}>
       <i className="fas fa-cog" />
       <div className={classes.settingsControlWrapper}>
-        <div className={classes.bitrateToggleWrapper}>
+        <div className={classes.section}>
+          <h5>Last.fm</h5>
+          {connected ? (
+            <div className={classes.lastfmButton} onClick={reset}>
+              {translate.lfmDisconnect}
+            </div>
+          ) : (
+            <div className={classes.lastfmButton} onClick={login}>
+              {translate.lfmConnect}
+            </div>
+          )}
+        </div>
+        <div className={classes.section}>
           <h5>Playback quality</h5>
           <span className={classes.radioWrapper}>
             <label htmlFor="high-bitrate">
