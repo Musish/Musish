@@ -34,7 +34,7 @@ function LastfmProvider({ children, mk }) {
     params.format = 'json';
 
     const config = {
-      url: 'http://ws.audioscrobbler.com/2.0/',
+      url: 'https://ws.audioscrobbler.com/2.0/',
     };
 
     if (isWrite) {
