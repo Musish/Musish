@@ -72,7 +72,7 @@ function LastfmProvider({ children, mk }) {
         }
       }
 
-      console.error(e);
+      throw e;
     }
   }
 
@@ -139,7 +139,6 @@ function LastfmProvider({ children, mk }) {
         }
       } else {
         reset();
-        console.error('Missing Lastfm token');
       }
     }
   }
