@@ -1,14 +1,14 @@
-version: 2
-jobs:
-  build:
-    branches:
-      only:
-        - master
-        - feature/lyrics
+version: 2.1
+
+executors:
+  my-executor:
     docker:
       - image: circleci/node:8
-    environment:
-      - TARGET_BRANCH: gh-pages
+    working_directory: /tmp/workspace
+
+jobs:
+  setup:
+    executor: my-executor
     steps:
       - checkout
       - restore_cache:
@@ -29,6 +29,53 @@ jobs:
             - node_modules
             - src/backend/node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}-{{ checksum "src/backend/yarn.lock" }}
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+          # taken to be the root directory of the workspace.
+          root: .
+          # Must be relative path from root
+          paths:
+            - .
+
+  deploy:
+    executor: my-executor
+    environment:
+      - TARGET_BRANCH: gh-pages
+    steps:
+#      - deploy:
+#          name: Deploy
+#          command: ./.circleci/deploy.sh
+      - run:
+          name: Mock Deploy
+          command: echo "Deploy"
+
+  eslint:
+    executor: my-executor
+    steps:
+      - run:
+          name: Make Reports folder
+          command: mkdir -p ~/reports
+      - run:
+          name: Run ESLint
+          command: yarn eslint --format junit --output-file ~/reports/eslint.xml
+      - store_test_results:
+          path: ~/reports
+      - store_artifacts:
+          path: ~/reports
+
+workflows:
+  version: 2
+
+  build_test_deploy:
+    jobs:
+      - setup
+      - eslint:
+          requires:
+            - setup
       - deploy:
-          name: Deploy
-          command: ./.circleci/deploy.sh
+          requires:
+            - eslint
+          filters:
+            branches:
+              only:
+                - master
