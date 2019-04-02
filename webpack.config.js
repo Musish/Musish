@@ -10,7 +10,7 @@ Encore.setOutputPath('build/')
   .addEntry('app', './src/app/index.jsx')
   .enableSingleRuntimeChunk()
   .cleanupOutputBeforeBuild()
-  .enableSourceMaps(!Encore.isProduction())
+  .enableSourceMaps(true)
   // enables hashed filenames (e.g. app.abc123.css)
   .enableVersioning(Encore.isProduction())
   .configureCssLoader(config => {

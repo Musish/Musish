@@ -5,12 +5,13 @@
   "license": "MIT",
   "husky": {
     "hooks": {
-      "pre-commit": "eslint \"src/**/*.{js,jsx}\" -c .eslintrc"
+      "pre-commit": "yarn eslint"
     }
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
+    "@sentry/browser": "^4.6.6",
     "@symfony/webpack-encore": "^0.22.1",
     "axios": "^0.18.0",
     "babel-eslint": "^10.0.1",
@@ -31,12 +32,14 @@
     "html-webpack-plugin": "^3.2.0",
     "husky": "^1.3.0",
     "include-media": "^1.4.9",
+    "js-md5": "^0.7.3",
     "lodash": "^4.17.11",
     "mousetrap": "^1.6.2",
     "node-sass": "^4.10.0",
     "normalize.css": "^8.0.1",
     "prettier": "^1.15.3",
     "prop-types": "^15.6.2",
+    "qs": "^6.7.0",
     "react": "^16.8.3",
     "react-content-loader": "^3.4.1",
     "react-contextmenu": "^2.10.0",
@@ -55,6 +58,7 @@
   },
   "scripts": {
     "start": "encore dev-server --hot",
-    "build": "encore production"
+    "build": "encore production",
+    "eslint": "eslint \"src/**/*.{js,jsx}\" -c .eslintrc"
   }
 }

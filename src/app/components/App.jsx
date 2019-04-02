@@ -27,6 +27,8 @@ import LyricsModal from './Inside/Player/Lyrics/LyricsModal';
 import SearchPage from './Inside/Pages/Search/SearchPage';
 import GoogleAnalyticsProvider from './GoogleAnalyticsProvider';
 import PlaylistsContext from './Inside/Sidebar/PlaylistsContext';
+import SentryBoundary from './SentryBoundary';
+import LastfmProvider from './LastfmProvider';
 
 class App extends React.Component {
   constructor(props) {
@@ -109,58 +111,62 @@ class App extends React.Component {
     };
 
     return (
-      <MusicKitProvider>
-        <Router>
-          <GoogleAnalyticsProvider>
-            <MusicKitAuthorizeProvider>
-              <PlaylistsContext.Provider value={playlistsState}>
-                <QueueContext.Provider value={queueState}>
-                  <ModalContext.Provider value={modalState}>
-                    <LyricsModalContext.Provider value={lyricsModalState}>
-                      <Layout>
-                        <Switch>
-                          <Route path={'/'} exact component={ForYouPage} />
-                          <Route path={'/me/added'} component={RecentlyAddedPage} />
-                          <Route path={'/me/albums'} component={AlbumsPage} />
-                          <Route path={'/me/playlists'} exact component={PlaylistsPage} />
-                          <Route
-                            path={'/me/playlists/:id'}
-                            exact
-                            component={props => (
-                              <Playlist key={props.location.pathname} {...props} />
-                            )}
-                          />
-                          <Route path={'/me/artists'} exact component={ArtistsPage} />
-                          <Route path={'/me/artists/:id'} component={ArtistsPage} />
-                          <Route path={'/me/songs'} exact component={SongsPage} />
-                          <Route path={'/artist/:id'} exact component={ArtistPage} />
-                          <Route path={'/browse/genre/:id'} exact component={GenrePage} />
-                          <Route path={'/browse'} component={BrowsePage} />
-                          <Route path={'/radio'} exact component={RadioPage} />
-                          <Route
-                            path={'/search/:source/:query'}
-                            exact
-                            component={({
-                              match: {
-                                params: { source, query },
-                              },
-                            }) => <SearchPage key={`${source}${query}`} />}
-                          />
-                          <Redirect to={'/'} />
-                        </Switch>
-                        {this.state.modalsContents.length > 0 && this.renderModal(modalState)}
-                      </Layout>
-                      <ConnectedMenu />
-                      <Alert stack offset={60} />
-                      <LyricsModal />
-                    </LyricsModalContext.Provider>
-                  </ModalContext.Provider>
-                </QueueContext.Provider>
-              </PlaylistsContext.Provider>
-            </MusicKitAuthorizeProvider>
-          </GoogleAnalyticsProvider>
-        </Router>
-      </MusicKitProvider>
+      <SentryBoundary>
+        <MusicKitProvider>
+          <Router>
+            <GoogleAnalyticsProvider>
+              <MusicKitAuthorizeProvider>
+                <PlaylistsContext.Provider value={playlistsState}>
+                  <QueueContext.Provider value={queueState}>
+                    <ModalContext.Provider value={modalState}>
+                      <LyricsModalContext.Provider value={lyricsModalState}>
+                        <LastfmProvider>
+                          <Layout>
+                            <Switch>
+                              <Route path={'/'} exact component={ForYouPage} />
+                              <Route path={'/me/added'} component={RecentlyAddedPage} />
+                              <Route path={'/me/albums'} component={AlbumsPage} />
+                              <Route path={'/me/playlists'} exact component={PlaylistsPage} />
+                              <Route
+                                path={'/me/playlists/:id'}
+                                exact
+                                component={props => (
+                                  <Playlist key={props.location.pathname} {...props} />
+                                )}
+                              />
+                              <Route path={'/me/artists'} exact component={ArtistsPage} />
+                              <Route path={'/me/artists/:id'} component={ArtistsPage} />
+                              <Route path={'/me/songs'} exact component={SongsPage} />
+                              <Route path={'/artist/:id'} exact component={ArtistPage} />
+                              <Route path={'/browse/genre/:id'} exact component={GenrePage} />
+                              <Route path={'/browse'} component={BrowsePage} />
+                              <Route path={'/radio'} exact component={RadioPage} />
+                              <Route
+                                path={'/search/:source/:query'}
+                                exact
+                                component={({
+                                  match: {
+                                    params: { source, query },
+                                  },
+                                }) => <SearchPage key={`${source}${query}`} />}
+                              />
+                              <Redirect to={'/'} />
+                            </Switch>
+                            {this.state.modalsContents.length > 0 && this.renderModal(modalState)}
+                          </Layout>
+                          <ConnectedMenu />
+                          <Alert stack offset={60} />
+                          <LyricsModal />
+                        </LastfmProvider>
+                      </LyricsModalContext.Provider>
+                    </ModalContext.Provider>
+                  </QueueContext.Provider>
+                </PlaylistsContext.Provider>
+              </MusicKitAuthorizeProvider>
+            </GoogleAnalyticsProvider>
+          </Router>
+        </MusicKitProvider>
+      </SentryBoundary>
     );
   }
 }

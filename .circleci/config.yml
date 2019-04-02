@@ -1,14 +1,14 @@
-version: 2
-jobs:
-  build:
-    branches:
-      only:
-        - master
-        - feature/lyrics
+version: 2.1
+
+executors:
+  musish-executor:
     docker:
       - image: circleci/node:8
-    environment:
-      - TARGET_BRANCH: gh-pages
+    working_directory: /tmp/workspace
+
+jobs:
+  setup:
+    executor: musish-executor
     steps:
       - checkout
       - restore_cache:
@@ -21,14 +21,72 @@ jobs:
       - run:
           name: Install dependencies
           command: cd src/backend && yarn
-      - run:
-          name: Install Serverless CLI
-          command: sudo npm i -g serverless@1.35.1
       - save_cache:
           paths:
             - node_modules
             - src/backend/node_modules
           key: v1-dependencies-{{ checksum "yarn.lock" }}-{{ checksum "src/backend/yarn.lock" }}
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+          # taken to be the root directory of the workspace.
+          root: .
+          # Must be relative path from root
+          paths:
+            - .
+
+  deploy:
+    executor: musish-executor
+    environment:
+      - TARGET_BRANCH: gh-pages
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install Serverless CLI
+          command: sudo npm i -g serverless@1.35.1
       - deploy:
           name: Deploy
           command: ./.circleci/deploy.sh
+
+  eslint:
+    executor: musish-executor
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Make Reports folder
+          command: mkdir -p ~/reports
+      - run:
+          name: Run ESLint
+          command: yarn eslint --format junit --output-file ~/reports/eslint.xml
+      - store_test_results:
+          path: ~/reports
+      - store_artifacts:
+          path: ~/reports
+
+workflows:
+  version: 2
+
+  build_test_deploy:
+    jobs:
+      - setup:
+        filters:
+          branches:
+            ignore:
+                - gh-pages
+                - assets
+      - eslint:
+          requires:
+            - setup
+          filters:
+            branches:
+              ignore:
+                - gh-pages
+                - assets
+      - deploy:
+          requires:
+            - eslint
+          filters:
+            branches:
+              only:
+                - master
