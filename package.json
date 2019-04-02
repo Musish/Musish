@@ -5,7 +5,7 @@
   "license": "MIT",
   "husky": {
     "hooks": {
-      "pre-commit": "eslint \"src/**/*.{js,jsx}\" -c .eslintrc"
+      "pre-commit": "yarn eslint"
     }
   },
   "dependencies": {
@@ -58,6 +58,7 @@
   },
   "scripts": {
     "start": "encore dev-server --hot",
-    "build": "encore production"
+    "build": "encore production",
+    "eslint": "eslint \"src/**/*.{js,jsx}\" -c .eslintrc"
   }
 }
