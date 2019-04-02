@@ -42,6 +42,9 @@ jobs:
       - attach_workspace:
           at: .
       - run:
+          name: Fix Github Clone Issue
+          command: mkdir -p ~/.ssh/ && echo -e "Host github.com\n\tStrictHostKeyChecking no\n" > ~/.ssh/config
+      - run:
           name: Install Serverless CLI
           command: sudo npm i -g serverless@1.35.1
       - deploy:
