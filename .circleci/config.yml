@@ -73,11 +73,11 @@ workflows:
   build_test_deploy:
     jobs:
       - setup:
-        filters:
-          branches:
-            ignore:
-              - gh-pages
-              - assets
+          filters:
+            branches:
+              ignore:
+                - gh-pages
+                - assets
       - eslint:
           requires:
             - setup
