@@ -1,0 +1,3 @@
+files:
+  - source: src/app/utils/translations/languages/English.json
+    translation: src/app/utils/translations/languages/%language%.json
