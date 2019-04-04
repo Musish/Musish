@@ -1,0 +1,76 @@
+{
+  "musishDescription": "Musish usa sua biblioteca do Apple Music para proporcionar uma incrível experiência sonora. Por favor, conecte sua conta abaixo.",
+  "connect": "Conectar ao Apple Music",
+  "securityMessage": "{0} Autenticação segura via Apple.com.",
+  "justBrowse": "Ou apenas navegue",
+  "legalNotice": "Musish não é afiliado com Apple, Inc. Nosso serviço não acessa, coleta ou armazena quaisquer dados pessoais da sua conta. 'Apple', 'Apple Music' e o logotipo Apple são marcas registradas da Apple, Inc.",
+
+  "appleMusic": "Apple Music",
+
+  "logout": "Sair",
+  "login": "Entrar",
+  "searchMusic": "Buscar música",
+
+  "play": "Reproduzir",
+  "playNext": "Reproduzir próxima",
+  "playLater": "Reproduzir anterior",
+  "shuffle": "Aleatório",
+  "search": "Buscar",
+  "searchingFor": "Buscando por {0}",
+
+  "openAlbum": "Abrir álbum",
+  "openPlaylist": "Abrir playlist",
+  "addToPlaylist": "Adicionar a uma playlist",
+  "addToLibrary": "Adicionar à biblioteca",
+
+  "playlistBy": "Playlist por {0}",
+
+  "forYou": "Para você",
+  "recentlyPlayed": "Reproduzidas recentemente",
+  "heavyRotation": "Somente em alta",
+
+  "browse": "Explorar",
+  "topCharts": "Top Charts",
+  "genres": "Gêneros",
+  "topSongs": "Faixas em destaque",
+  "dailyTop100": "Top 100 do dia",
+  "topPlaylists": "Playlists em destaque",
+  "topAlbums": " Álbuns em destaque",
+
+  "radio": "Rádio",
+  "radioMessage": "Estamos trabalhando para trazer o Rádio assim que possível. Volte em breve.",
+
+  "myLibrary": "Minha biblioteca",
+  "recentlyAdded": "Adicionadas recentemente",
+  "artists": "Artistas",
+  "albums": "Álbuns",
+  "song": "Música",
+  "songs": "Músicas",
+  "playlists": "Playlists",
+
+  "feedback": "Feedback",
+  "designCredits": "Desenvolvido com {0} pela equipe Musish.",
+
+  "lyrics": "Letras",
+  "upNext": "Seguintes",
+
+  "showCompleteAlbum": "Mostrar álbum completo",
+  "hour": "hora",
+  "hours": "horas",
+  "minute": "minuto",
+  "minutes": "minutos",
+
+  "noResultsFound": "Oops, nada encontrado.",
+  "trackNotAvailable": "Faixa não disponível",
+
+  "dataProvidedByGenius": "Dados fornecidos por Genius",
+  "inYourPersonalLibrary": "Na sua biblioteca pessoal",
+  "unauthorisedLibrarySearch": "Você precisa fazer login para buscar na sua biblioteca.",
+
+  "noLyricsAvailable": "Nenhuma letra disponível ",
+
+  "lfmConnect": "Conectar",
+  "lfmDisconnect": "Desconectar",
+  "lfmConnectSuccess": "Last.fm está conectado!",
+  "lfmConnectError": "Não foi possível conectar ao Last.fm"
+}
