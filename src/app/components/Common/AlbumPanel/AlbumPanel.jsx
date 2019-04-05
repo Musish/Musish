@@ -152,6 +152,14 @@ class AlbumPanel extends React.Component {
 
           <span className={classes.subtitle}>{artistName}</span>
 
+          {album.attributes.editorialNotes && album.attributes.editorialNotes.standard && (
+            <div className={classes.description}>
+              <span
+                dangerouslySetInnerHTML={{ __html: album.attributes.editorialNotes.standard }} // eslint-disable-line react/no-danger
+              />
+            </div>
+          )}
+
           <TracksList
             scrollElement={this.ref}
             scrollElementModifier={e => e && e.parentElement}

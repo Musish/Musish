@@ -103,6 +103,11 @@
         color: $accent_color;
       }
     }
+
+    .description {
+      display: block;
+      margin-bottom: 10px;
+    }
   }
 
   .showCompleteContainer {
