@@ -17,6 +17,9 @@ cd ..
 touch .env
 echo "APPLE_TOKEN=$APPLE_TOKEN" >> .env
 echo "BACKEND_URL=$GENIUS_API_URL" >> .env
+echo "SENTRY_DSN=$SENTRY_DSN" >> .env
+echo "LASTFM_API_KEY=$LASTFM_API_KEY" >> .env
+echo "LASTFM_SECRET=$LASTFM_SECRET" >> .env
 
 yarn build
 

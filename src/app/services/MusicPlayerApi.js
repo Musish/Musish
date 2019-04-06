@@ -11,20 +11,23 @@ export async function playTrack(tracks, index) {
 
 export async function playAlbum(album, index) {
   const music = MusicKit.getInstance();
+
   let albumData = album;
   if (!albumData.relationships || !albumData.relationships.tracks) {
     albumData = isNaN(album.id)
       ? await music.api.library.album(album.id)
       : await music.api.album(album.id);
   }
+
   await setQueueItems(albumData.relationships.tracks.data, index);
+
   await music.player.play();
 }
 
 export async function shufflePlayAlbum(album) {
   const music = MusicKit.getInstance();
   const queue = _shuffle(album.relationships.tracks.data);
-  await setQueueItems(queue, 0);
+  await setQueueItems(queue, 0, album);
   await music.player.play();
 }
 
@@ -36,14 +39,14 @@ export async function playPlaylist(playlist, index) {
       ? await music.api.library.playlist(playlist.id)
       : await music.api.playlist(playlist.id);
   }
-  await setQueueItems(playlistData.relationships.tracks.data, index);
+  await setQueueItems(playlistData.relationships.tracks.data, index, playlist);
   await music.player.play();
 }
 
 export async function shufflePlayPlaylist(playlist) {
   const music = MusicKit.getInstance();
   const queue = _shuffle(playlist.relationships.tracks.data);
-  await setQueueItems(queue, 0);
+  await setQueueItems(queue, 0, playlist);
   await music.player.play();
 }
 
@@ -167,28 +170,23 @@ export function getQueueItems() {
   return MusicKit.getInstance().player.queue.items;
 }
 
-export async function setQueueItems(items, index) {
-  const s = {
-    items: items.map(createMediaItem),
-    startPosition: index,
-  };
+export async function setQueueItems(items, index, container = null) {
+  const startPosition = !isNaN(index) ? index : MusicKit.getInstance().player.queue.position;
 
-  s.startPosition = index;
+  await MusicKit.getInstance().setQueue({
+    items: items.map(item => createMediaItem(item, container)),
+  });
 
-  if (isNaN(index)) {
-    s.startPosition = MusicKit.getInstance().player.queue.position;
-  }
-
-  await MusicKit.getInstance().setQueue(s);
+  await MusicKit.getInstance().player.changeToMediaAtIndex(startPosition);
 }
 
-export async function prependQueueItems(items) {
-  const s = { items: items.map(createMediaItem) };
+export async function prependQueueItems(items, container = null) {
+  const s = { items: items.map(item => createMediaItem(item, container)) };
   await MusicKit.getInstance().player.queue.prepend(s);
 }
 
-export async function appendQueueItems(items) {
-  const s = { items: items.map(createMediaItem) };
+export async function appendQueueItems(items, container = null) {
+  const s = { items: items.map(item => createMediaItem(item, container)) };
   await MusicKit.getInstance().player.queue.append(s);
 }
 

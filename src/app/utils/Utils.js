@@ -1,10 +1,26 @@
 import translate from './translations/Translations';
 
-export function createMediaItem(song) {
-  // eslint-disable-next-line no-param-reassign
-  song.container = { id: song.id };
+export function createMediaItem(song, container = null) {
+  if (container) {
+    const containerName =
+      container.type === 'albums' || container.type === 'library-albums' ? 'albums' : 'playlists';
 
-  return song;
+    return {
+      ...song,
+      container: {
+        id: container.id,
+        type: container.type,
+        name: containerName,
+      },
+    };
+  }
+
+  return {
+    ...song,
+    container: {
+      id: song.id,
+    },
+  };
 }
 
 export function artworkForMediaItem(item, size) {

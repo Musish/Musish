@@ -1,0 +1,71 @@
+{
+    "musishDescription": "Musish использует вашу библиотеку Apple Music чтобы доставить вам невероятный опыт прослушивания музыки. Пожалуйста, подключите ниже вашу учётную запись.",
+    "connect": "Подключиться к Apple Music",
+    "securityMessage": "{0} Безопасная аутентификация с помошью Apple.com.",
+    "justBrowse": "Или просто просматривать",
+    "legalNotice": "Musish не связан с Apple, Inc. Наш сервис не имеет доступа, не собирает и не хранит личную информацию или информацию об учётной записи. 'Apple', 'Apple Music' и логотип Apple являются товарными знаками Apple, Inc.",
+  
+    "appleMusic": "Apple Music",
+  
+    "logout": "Выйти",
+    "login": "Войти",
+    "searchMusic": "Поиск музыки",
+  
+    "play": "Воспроизвести",
+    "playNext": "Воспроизвести следующей",
+    "playLater": "Воспроизвести далее",
+    "shuffle": "Перемешать",
+    "search": "Поиск",
+    "searchingFor": "Искать {0}",
+  
+    "openAlbum": "Перейти к альбому",
+    "openPlaylist": "Перейти к плейлисту",
+    "addToPlaylist": "Добавить в плейлист",
+    "addToLibrary": "Добавить в медиатеку",
+  
+    "playlistBy": "Владелец плейлиста {0}",
+  
+    "forYou": "Для вас",
+    "recentlyPlayed": "Вы недавно слушали",
+    "heavyRotation": "Тяжелое вращение",
+  
+    "browse": "Обзор",
+    "topCharts": "Топ чартов",
+    "genres": "Жанры",
+    "topSongs": "Топ песен",
+    "dailyTop100": "Ежедневный топ 100",
+    "topPlaylists": "Топ плейлистов",
+    "topAlbums": "Топ альбомов",
+  
+    "radio": "Радио",
+    "radioMessage": "Мы работаем над тем, чтобы как можно быстрее сделать доступным Радио. Вернитесь позже.",
+  
+    "myLibrary": "Моя медиатека",
+    "recentlyAdded": "Недавно добавленные",
+    "artists": "Артисты",
+    "albums": "Альбомы",
+    "song": "Песня",
+    "songs": "Песни",
+    "playlists": "Плейлисты",
+  
+    "feedback": "Обратная связь",
+    "designCredits": "Создано с {0} командой Musish.",
+  
+    "lyrics": "Текст",
+    "upNext": "Далее",
+  
+    "showCompleteAlbum": "Показать весь альбом",
+    "hour": "час",
+    "hours": "часов",
+    "minute": "минута",
+    "minutes": "минут",
+  
+    "noResultsFound": "Ой, ничего не найдено.",
+    "trackNotAvailable": "Песня недоступна",
+  
+    "dataProvidedByGenius": "Данные представлены Genius",
+    "inYourPersonalLibrary": "В вашу личную медиатеку",
+    "unauthorisedLibrarySearch": "Вы должны войти, чтобы просматривать вашу медиатеку.",
+  
+    "noLyricsAvailable": "Текст недоступен "
+  }

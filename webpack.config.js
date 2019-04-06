@@ -3,13 +3,14 @@
 const Dotenv = require('dotenv-webpack');
 const Encore = require('@symfony/webpack-encore');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 Encore.setOutputPath('build/')
   .setPublicPath('/')
   .addEntry('app', './src/app/index.jsx')
   .enableSingleRuntimeChunk()
   .cleanupOutputBeforeBuild()
-  .enableSourceMaps(!Encore.isProduction())
+  .enableSourceMaps(true)
   // enables hashed filenames (e.g. app.abc123.css)
   .enableVersioning(Encore.isProduction())
   .configureCssLoader(config => {
@@ -44,5 +45,39 @@ if (!Encore.isProduction()) {
     disableDotRule: true,
   };
 }
+
+config.plugins.push(new FaviconsWebpackPlugin({
+  // Your source logo
+  logo: `${__dirname}/src/app/assets/images/musish-favicon.svg`,
+  // The prefix for all image files (might be a folder or a name)
+  prefix: 'icons-[hash]/',
+  // Emit all stats of the generated icons
+  emitStats: false,
+  // The name of the json containing all favicon information
+  statsFilename: 'iconstats-[hash].json',
+  // Generate a cache file with control hashes and
+  // don't rebuild the favicons until those hashes change
+  persistentCache: true,
+  // Inject the html into the html-webpack-plugin
+  inject: true,
+  // favicon background color (see https://github.com/haydenbleasel/favicons#usage)
+  background: 'transparent',
+  // favicon app title (see https://github.com/haydenbleasel/favicons#usage)
+  title: 'Musish',
+
+  // which icons should be generated (see https://github.com/haydenbleasel/favicons#usage)
+  icons: {
+    android: true,
+    appleIcon: true,
+    appleStartup: true,
+    coast: false,
+    favicons: true,
+    firefox: true,
+    opengraph: false,
+    twitter: false,
+    yandex: false,
+    windows: false
+  }
+}));
 
 module.exports = config;
