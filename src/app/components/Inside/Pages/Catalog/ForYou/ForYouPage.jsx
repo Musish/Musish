@@ -131,10 +131,17 @@ class ForYouPage extends React.Component {
     return (
       <>
         {recommendations.map(recList => {
-          const items = recList.relationships.contents
-            ? recList.relationships.contents
-            : recList.relationships.recommendations;
+          const { relationships } = recList;
+
+          if (!relationships) {
+            return null;
+          }
+
+          const items = relationships.contents
+            ? relationships.contents
+            : relationships.recommendations;
           const isGroup = recList.attributes.isGroupRecommendation;
+
           return (
             <React.Fragment key={recList.id}>
               <h3>{recList.attributes.title.stringForDisplay}</h3>
