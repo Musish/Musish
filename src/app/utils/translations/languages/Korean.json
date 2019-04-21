@@ -26,7 +26,7 @@
 
   "playlistBy": "{0}의 플레이리스트",
 
-  "forYou": "For You", // don't have to be translated. Apple Music(kor) also uses this.
+  "forYou": "For You",
   "recentlyPlayed": "최근에 재생된 항목",
   "heavyRotation": "무한반복",
 
@@ -49,7 +49,7 @@
   "songs": "노래",
   "playlists": "플레이리스트",
 
-  "feedback": "Feedback", // don't have to be translated. this one is better
+  "feedback": "Feedback",
   "designCredits": "Musish팀의 {0}으로 디자인되었습니다.",
 
   "lyrics": "가사",
