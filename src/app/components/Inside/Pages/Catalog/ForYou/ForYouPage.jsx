@@ -137,8 +137,9 @@ class ForYouPage extends React.Component {
 
       const items = relationships.contents ? relationships.contents : relationships.recommendations;
       const isGroup = group.attributes.isGroupRecommendation;
+      const shouldRenderLegacyGroup = !!group.attributes.title;
 
-      if (isGroup) {
+      if (isGroup && !shouldRenderLegacyGroup) {
         return relationships.recommendations.data.map(nestedGroup => renderGroup(nestedGroup));
       }
 
