@@ -16,24 +16,24 @@
       width: 48%;
       height: 30px;
       animation: fadein 0.8s;
-      border-color: $sidebar_color;
-      background: $sidebar_color;
-      color: $tertiary_color;
+      border-color: $color_buttonBackground;
+      background: $color_buttonBackground;
+      color: $color_buttonText;
       border-radius: 4px;
       align-content: center;
       cursor: pointer;
-      line-height: 0px;
+      line-height: 0;
       margin: 10px 0;
 
-      .icon{
+      &:hover {
+        color: $color_buttonTextHover;
+        background: $color_buttonBackgroundHover;
+      }
+
+      .icon {
         font-size: 9px;
         padding-right: 5px;
       }
-    }
-
-    .button:hover {
-      color: $accent_color;
-      background: $indiscreet_hover_color;
     }
   }
 
@@ -44,7 +44,7 @@
       border-radius: 8px;
       width: 220px;
       height: 220px;
-      background: $container_background;
+      background: $color_itemPlaceholder;
       
       img {
         border-radius: inherit;
@@ -56,7 +56,7 @@
     .albumRuntimeDescription {
       display: block;
       text-align: center;
-      color: $tertiary_color;
+      color: $color_textWeak;
       font-size: 12px;
       margin-top: 5px;
     }
@@ -79,8 +79,8 @@
       }
 
       .explicit > span {
-          background: $secondary_color;
-          color: $background_color;
+          background: $color_explicitBackground;
+          color: $color_explicitText;
           display: flex;
           flex-shrink: 0;
           width: 12px;
@@ -97,11 +97,11 @@
     
     .subtitle {
       display: block;
-      color: $tertiary_color;
+      color: $color_textWeak;
       margin-bottom: 10px;
       
       > a:hover {
-        color: $accent_color;
+        color: $color_accent;
       }
     }
 
@@ -115,13 +115,13 @@
     margin-top: 10px;
 
     > span {
-      color: $accent_color;
+      color: $color_accent;
       cursor: pointer;
       font-size: 0.9em;
       margin-left: 35px;
 
       &:hover {
-        color: darken($accent_color, 20%);
+        color: darken($color_accent, 20%);
       }
     }
   }

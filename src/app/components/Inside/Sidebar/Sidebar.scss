@@ -3,7 +3,7 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  background: $background_color;
+  background: $color_background;
   border-right: solid 2px $background_tint_color;
   height: 100%;
   min-height: 500px;
@@ -22,24 +22,24 @@
     }
 
     .menu {
-      background: $background_color;
+      background: $color_background;
       padding: 10px 0;
-      border: solid 1px $background_color;
+      border: solid 1px $color_background;
       margin-top: 15px;
 
       &.dndSeeking {
-        border: dashed 1px lighten($accent_color, 20%);
+        border: dashed 1px lighten($color_accent, 20%);
       }
 
       &.dndHovered {
-        background: lighten($accent_color, 20%);
-        color: $background_color;
+        background: lighten($color_accent, 20%);
+        color: $color_background;
       }
 
       h3 {
         margin: 0 0 10px;
         padding: 0 24px;
-        color: $accent_color;
+        color: $color_accent;
         font-weight: 700;
         font-size: 12px;
         text-transform: uppercase;
@@ -51,7 +51,7 @@
         padding: 0;
 
         li {
-          color: $text_color_strong;
+          color: $color_textStrong;
           font-weight: 500;
           margin: 0;
 
@@ -66,22 +66,22 @@
             border: solid 1px transparent;
 
             &:hover {
-              color: $text_color_strong;
+              color: $color_textStrong;
             }
 
             &.dndSeeking {
-              border: dashed 1px lighten($accent_color, 20%);
+              border: dashed 1px lighten($color_accent, 20%);
             }
 
             &.dndHovered {
-              background: lighten($accent_color, 20%);
-              color: $background_color;
+              background: lighten($color_accent, 20%);
+              color: $color_background;
             }
 
             &.active {
               background: $container_background;
               border: solid 1px $container_background;
-              color: $text_color_strong;
+              color: $color_textStrong;
               font-weight: 500;
             }
           }
@@ -99,7 +99,7 @@
         color: lighten($tertiary_color, 10%);
 
         &:hover {
-          color: $accent_color;
+          color: $color_accent;
         }
       }
 

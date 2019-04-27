@@ -11,7 +11,7 @@
 }
 
 .artistHeader {
-  background-color: $placeholder_container_color;
+  background-color: $color_placeholder;
   background-size: cover !important;
   background-position: top center !important;
   margin: 0 -1.5em;
@@ -63,7 +63,7 @@
     .artistHeaderPicture {
       width: 175px;
       height: 175px;
-      background-color: $background_color;
+      background-color: $color_background;
       background-size: cover !important;
       background-position: top center !important;
       border-radius: 50%;

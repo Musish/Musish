@@ -12,7 +12,7 @@
   padding: 10px;
 
   .personalRecommendationsTitle {
-    color: $text_color;
+    color: $color_text;
     margin-left: 5px;
   }
 
@@ -41,22 +41,22 @@
   }
 
   &::-webkit-scrollbar-track {
-    background: $background_color;
+    background: $color_background;
     border-radius: 1px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: lighten($accent_color, 40%);
+    background: lighten($color_accent, 40%);
     border-radius: 1px;
     cursor: pointer;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: $accent_color;
+    background: $color_accent;
   }
 
   &:hover::-webkit-scrollbar-thumb {
-    background: lighten($accent_color, 25%);
+    background: lighten($color_accent, 25%);
   }
 
   &::-webkit-scrollbar-corner {

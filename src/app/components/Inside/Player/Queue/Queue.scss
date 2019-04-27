@@ -10,7 +10,7 @@
   margin-left: -137.5px;
   z-index: 2000;
   overflow: hidden;
-  background: $background_color;
+  background: $color_background;
   border-radius: 8px;
   box-shadow: 0 8px 36px -10px rgba(150, 150, 150, 0.75);
   animation: fadein 0.1s;
@@ -22,8 +22,8 @@
   height: 45px;
   display: flex;
   flex-direction: row;
-  background: $accent_color;
-  color: $background_color;
+  background: $color_accent;
+  color: $color_background;
   cursor: pointer;
   padding: 0 15px;
   flex-shrink: 0;
@@ -47,7 +47,7 @@
 
     &.icons {
       font-size: 16px;
-      color: $background_color;
+      color: $color_background;
       cursor: pointer;
       margin-left: 20px;
 
@@ -79,7 +79,7 @@
   height: 54px;
   margin-top: 1px;
   border-bottom: 1px solid #efefef;
-  background: $background_color;
+  background: $color_background;
   color: #333333;
   z-index: 10000;
 
@@ -96,7 +96,7 @@
   }
 
   &.playing {
-    color: $accent_color;
+    color: $color_accent;
     font-weight: 500;
   }
 
@@ -160,7 +160,7 @@
       padding: 5px 5px;
       margin-right: 15px;
       margin-left:5px;
-      color: $background_color;
+      color: $color_background;
       cursor: pointer;
       transition: color 0.1s;
     }
@@ -169,7 +169,7 @@
   &:hover {
     .removeButton {
       i {
-        color: $accent_color;
+        color: $color_accent;
       }
     }
   }

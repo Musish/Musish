@@ -35,7 +35,7 @@
         &.link {
           &:hover {
             cursor: pointer;
-            color: $accent_color;
+            color: $color_accent;
           }
         }
       }
@@ -88,8 +88,8 @@
     border-radius: 2px;
     background: linear-gradient(
         to right,
-        $accent_color 0%,
-        $accent_color 50%,
+        $color_accent 0%,
+        $color_accent 50%,
         white 50%,
         white 100%
       )
@@ -148,9 +148,9 @@
       }
 
       &.enabled {
-        color: $accent_color;
+        color: $color_accent;
         &:hover {
-          color: darken($accent_color, 10%);
+          color: darken($color_accent, 10%);
         }
       }
 
@@ -167,7 +167,7 @@
           font-weight: 500;
           font-size: 12px;
           line-height: 12px;
-          background: $background_color;
+          background: $color_background;
           border-radius: 2px;
           text-align: center;
         }

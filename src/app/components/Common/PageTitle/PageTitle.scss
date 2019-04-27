@@ -3,10 +3,11 @@
 .pageTitle {
   margin: 15px 0;
   cursor: default;
+  color: $color_textStrong;
 
   .contextHeading {
 	text-transform: uppercase;
-	color: $accent_color;
+	color: $color_pageTitle;
 	font-size: 12px;
   }
 }

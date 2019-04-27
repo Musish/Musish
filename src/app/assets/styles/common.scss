@@ -3,8 +3,8 @@
 body {
   min-height: 100vh;
   margin: 0;
-  background: $background_color;
-  color: $text_color_strong;
+  background: $color_background;
+  color: $color_text;
   overflow: hidden;
   font-style: normal;
   font-weight: 400;
@@ -32,7 +32,7 @@ a {
 }
 
 a:hover {
-  color: #fe2851;
+  color: $color_accent;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -42,9 +42,9 @@ h1, h2, h3, h4, h5, h6 {
 button {
   -webkit-appearance: none;
   background: none;
-  border: solid 1px #fe2851;
+  border: solid 1px $color_accent;
   padding: 10px 15px;
-  color: #fe2851;
+  color: $color_accent;
   font-size: 11px;
   cursor: pointer;
 }

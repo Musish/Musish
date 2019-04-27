@@ -32,8 +32,8 @@
       margin-bottom: 10px;
 
       .lastfmButton {
-        background: $accent_color;
-        color: $background_color;
+        background: $color_accent;
+        color: $color_background;
         border-radius: 4px;
         padding: 5px;
         cursor: pointer;
@@ -42,13 +42,13 @@
 
     h5 {
       font-size: 15px;
-      color: $text_color_strong;
+      color: $color_textStrong;
       margin-bottom: 10px;
     }
 
     .radioWrapper {
       display: flex;
-      color: $text_color;
+      color: $color_text;
       font-size: 12px;
       margin-bottom: 5px;
 

@@ -19,12 +19,12 @@
   transition: transform 0.3s;
 
   &.droppable {
-    color: $accent_color;
+    color: $color_itemDroppableText;
   }
 
   .imageContainer {
     width: 100%;
-    background: $container_background;
+    background: $color_itemPlaceholder;
     border-radius: 8px;
     height: 0;
     padding-top: 100%;
@@ -42,6 +42,7 @@
 
   &:hover {
     transform: scale(1.025);
+
     .image {
       opacity: 0.8;
     }
@@ -61,7 +62,7 @@
     align-items: center;
     justify-content: center;
     background: rgba(255, 255, 255, 0.65);
-    color: $text_color_strong;
+    color: $color_textStrong;
     font-weight: 600;
 
     > span {

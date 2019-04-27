@@ -12,7 +12,7 @@
     .artworkWrapper {
       width: 60px;
       height: 60px;
-      background: $secondary_color;
+      background: $color_placeholder;
       border-radius: 3px;
 
       > img {
@@ -43,8 +43,7 @@
 
     h2, h3 {
       font-size: 12px;
-      color: $text_color_strong;
-      font-weight: 400;
+      font-weight: 600;
     }
 
     h3 {

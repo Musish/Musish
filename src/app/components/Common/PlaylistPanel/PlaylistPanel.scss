@@ -19,7 +19,7 @@
         border-radius: 8px;
         width: 95px;
         height: 95px;
-        background: $container_background;
+        background: $color_itemPlaceholder;
 
         img {
           border-radius: inherit;
@@ -39,13 +39,13 @@
 
         .curator {
           display: block;
-          color: $tertiary_color;
+          color: $color_textWeak;
         }
 
         .titleMeta {
           display: block;
           margin-top: 4px;
-          color: $tertiary_color;
+          color: $color_textWeak;
           font-size: 12px;
         }
 
@@ -54,28 +54,23 @@
             padding: 0 25px;
             height: 25px;
             animation: fadein 0.8s;
-            border-color: $sidebar_color;
-            background: $sidebar_color;
-            color: $tertiary_color;
+            border-color: $color_buttonBackground;
+            background: $color_buttonBackground;
+            color: $color_buttonText;
             border-radius: 4px;
             align-content: center;
             cursor: pointer;
             margin: 10px 10px 10px 0;
 
             &:hover {
-              color: $accent_color;
-              background: $indiscreet_hover_color;
+              color: $color_buttonTextHover;
+              background: $color_buttonBackgroundHover;
             }
 
             .icon {
               font-size: 8px;
               padding-right: 5px;
             }
-          }
-
-          .button:hover {
-            color: $accent_color;
-            background: $indiscreet_hover_color;
           }
         }
       }

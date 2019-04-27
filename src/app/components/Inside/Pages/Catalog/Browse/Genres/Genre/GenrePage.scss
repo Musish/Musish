@@ -1,7 +1,7 @@
 @import "../../../../../../../assets/styles/settings/colors";
 
 .curatorHeader {
-  background-color: $placeholder_container_color;
+  background-color: $color_placeholder;
   background-size: cover !important;
   background-position: top center !important;
   margin: 0 -1.5em;
@@ -22,7 +22,7 @@
     .curatorHeaderPicture {
       width: 175px;
       height: 175px;
-      background-color: $background_color;
+      background-color: $color_background;
       background-size: cover !important;
       background-position: top center !important;
       box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.15);

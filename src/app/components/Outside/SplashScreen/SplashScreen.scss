@@ -1,8 +1,8 @@
 @import '../../../assets/styles/settings/colors';
 
 .splashContainer {
-  background: $splash_background_color
-  linear-gradient(315deg, #cd3c5a, $splash_background_color);
+  background: $color_splashBackground
+  linear-gradient(315deg, #cd3c5a, $color_splashBackground);
   background-size: 100% 100%;
 
   width: 100%;
@@ -29,8 +29,8 @@
       margin-top: 22px;
       span {
         font-weight: 400;
-        color: $accent_color;
-        background: $background_color;
+        color: $color_accent;
+        background: $color_background;
         border-radius: 3px;
         padding: 4px 10px;
       }
@@ -46,7 +46,7 @@
     text-align: center;
   }
   .accountCaption {
-    color: $background_color;
+    color: $color_background;
     max-width: 630px;
     text-align: center;
     width: 50%;
@@ -54,7 +54,7 @@
   }
   .secureConnection {
     margin-top: 10px;
-    color: $background_color;
+    color: $color_background;
     animation: fadein 0.8s;
     font-style: italic;
     font-size: 8pt;
@@ -63,15 +63,15 @@
     width: 100px;
     border: none;
     height: 2px;
-    background: $background_color;
+    background: $color_background;
     opacity: 0.4;
     animation: fadein 0.8s;
     animation: growin 0.2s;
   }
   .button {
     animation: fadein 0.8s;
-    border-color: $background_color;
-    color: $background_color;
+    border-color: $color_background;
+    color: $color_background;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
@@ -82,16 +82,16 @@
     }
   }
   .button:hover {
-    background: $background_color;
-    color: $accent_color;
+    background: $color_background;
+    color: $color_accent;
   }
   .disclaimer {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    color: $background_color;
+    color: $color_background;
     font-size: 11px;
-    border: solid 1px $background_color;
+    border: solid 1px $color_background;
     border-radius: 4px;
     display: flex;
     flex-direction: row;
@@ -101,13 +101,13 @@
     .disclaimerIcon {
       font-size: 12px;
       padding: 8px 8px;
-      background: $background_color;
+      background: $color_background;
       display: flex;
       flex: 1;
       align-items: center;
       > span {
-        color: $background_color;
-        background: $accent_color;
+        color: $color_background;
+        background: $color_accent;
         border-radius: 50%;
         width: 26px;
         height: 26px;

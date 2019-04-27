@@ -22,10 +22,10 @@
       padding: 8px 15px;
       text-align: center;
       border: solid 1px $background_tint_color;
-      color: $text_color;
+      color: $color_text;
       font-size: 11px;
       line-height: 15px;
-      background: $background_color;
+      background: $color_background;
       border-right-width: 0;
 
       &:first-child {
@@ -38,7 +38,7 @@
       }
 
       &:hover, &:active, &focus {
-        color: $text_color_strong;
+        color: $color_textStrong;
       }
     }
 
@@ -52,7 +52,7 @@
       position: absolute;
       top: 100%;
       right: 0;
-      background: $background_color;
+      background: $color_background;
       width: 320px;
       overflow: hidden;
       max-height: 70vh;
@@ -77,7 +77,7 @@
           i {
             display: block;
             font-size: 1.5em;
-            color: mix($text_color, $background_color, 50%);
+            color: mix($color_text, $color_background, 50%);
             margin-bottom: 10px;
           }
         }
@@ -89,7 +89,7 @@
 
           .title {
             background: $background_tint_color;
-            color: $text_color_strong;
+            color: $color_textStrong;
             text-transform: uppercase;
             font-weight: bold;
             padding: 12px 10px;
@@ -104,7 +104,7 @@
 
           &:hover {
             background: $indiscreet_hover_color;
-            color: $accent_color
+            color: $color_accent
           }
 
           &.song, &.album, &.playlist {
@@ -148,7 +148,7 @@
 
                 > i {
                   font-size: 10px;
-                  color: $accent_color;
+                  color: $color_accent;
                   margin-left: 1px;
                   margin-bottom: 1px;
                   z-index: 320;
@@ -162,7 +162,7 @@
 
             > i {
               font-size: 10px;
-              color: $accent_color;
+              color: $color_accent;
               padding: 0 4px;
             }
           }
@@ -176,18 +176,18 @@
       }
 
       @supports (-webkit-backdrop-filter: blur(10px)) {
-        background: rgba($background_color, 0.85);
+        background: rgba($color_background, 0.85);
         -webkit-backdrop-filter: blur(10px) saturate(180%);
 
         .resultsContainer {
           .section {
             .title {
-              background: rgba($background_color, 0.5);
+              background: rgba($color_background, 0.5);
             }
 
             .result:hover {
               background: rgba($indiscreet_hover_color, 0.7);
-              color: $accent_color
+              color: $color_accent
             }
           }
         }

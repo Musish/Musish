@@ -10,22 +10,22 @@
   }
 
   &::-webkit-scrollbar-track {
-    background: $background_color;
+    background: $color_background;
     border-radius: 1px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: lighten($accent_color, 40%);
+    background: lighten($color_accent, 40%);
     border-radius: 1px;
     cursor: pointer;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: $background_color;
+    background: $color_background;
   }
 
   &:hover::-webkit-scrollbar-thumb {
-    background: lighten($accent_color, 25%);
+    background: lighten($color_accent, 25%);
   }
 }
 

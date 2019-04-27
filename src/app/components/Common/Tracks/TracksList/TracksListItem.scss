@@ -89,7 +89,7 @@
 
     .trackTitle {
       font-size: 12px;
-      color: $text_color_strong;
+      color: $color_textStrong;
       display: flex;
 
       .trackName {
@@ -100,7 +100,7 @@
 
       .explicit {
         background: $secondary_color;
-        color: $background_color;
+        color: $color_background;
         display: flex;
         flex-shrink: 0;
         width: 12px;
@@ -122,7 +122,7 @@
 
     .trackActions {
       display: none;
-      color: $accent_color;
+      color: $color_accent;
       z-index: 100;
 
       > * {

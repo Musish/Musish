@@ -1,32 +1,84 @@
-// Colors
+// CORE:
+$color_background: #ffffff;
+$color_accent: #fe2851;
 
-$splash_background_color: #fb453f;
+// BORDERS:
+$color_border: #eeeeee;
+$color_borderStrong: #cccccc;
 
-$brand_color: #222222;
+// TYPOGRAPHY:
+$color_text: #333333;
+$color_textStrong: #111111;
+$color_textWeak: #666666;
+$color_textFaint: #aaaaaa;
 
-$background_color: #ffffff;
+
+// ---------------------------------------------------
+// COMPONENT COLOR MAPPINGS:
+
+// SPLASH PAGE:
+$color_splashBackground: #fb453f;
+
+// PLACEHOLDERS:
+$color_placeholder: #cccccc;
+
+// BUTTONS:
+$color_buttonBackground: #f9f9f9;
+$color_buttonText: $color_textWeak;
+$color_buttonBackgroundHover: #f4f4f4;
+$color_buttonTextHover: $color_accent;
+
+// TOASTER:
+$color_toasterBackground: $color_background;
+
+// ITEM CONTAINER:
+$color_itemPlaceholder: #cccccc;
+$color_itemDroppableText: $color_accent;
+
+// NAVIGATION:
+$color_navigationBackground: $color_background;
+$color_navigationBrand: #222222;
+
+// CONTEXT MENU:
+$color_contextMenuBackground: $color_background;
+$color_contextMenuText: $color_textStrong;
+
+// EXPLICIT ICON:
+$color_explicitBackground: #aaaaaa;
+$color_explicitText: #ffffff;
+
+// PAGE TITLE:
+$color_pageTitle: $color_textStrong;
+$color_pageTitleContext: $color_accent;
+
+// LOADER:
+$color_loader: $color_accent;
+
+// MODAL:
+$color_modalBackground: $color_background;
+$color_modalBacking: rgba($color_background, 0.5);
+
+// SCROLLBARS:
+$color_scrollerBackground: $color_background;
+$color_scrollerThumb: lighten($color_accent, 40%);
+$color_scrollerThumbHover: lighten($color_accent, 25%);
 
 
-$background_tint_color: #eeeeee;
-$background_tint_color_strong: #cccccc;
 
+
+
+// LEGACY:
 $container_background: #f7f7f7;
 
 $track_background_color: rgba(220, 220, 220, 0.5);
 $sidebar_color: #f9f9f9;
 
-$accent_color: #fe2851;
 $secondary_color: #aaaaaa;
 $indiscreet_hover_color: #f9f9f9;
 $tertiary_color: #666666;
-
-$text_color: #666666;
-$text_color_strong: #333333;
-$text_color_weak: #999999;
-
 
 $player_button_color: #111111;
 $player_secondary_button_color: #888888;
 $player_volume_container_color: rgba(255, 255, 255, 0.8);
 
-$placeholder_container_color: #cccccc;
+

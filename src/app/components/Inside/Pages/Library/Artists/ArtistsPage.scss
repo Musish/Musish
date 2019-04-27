@@ -75,7 +75,7 @@
       }
 
       .activeArtist {
-        color: $accent_color;
+        color: $color_accent;
         .artistBacker:after {
           background: $container_background;
         }
@@ -92,7 +92,7 @@
         width: 41px;
         height: 41px;
         margin-left: 15px;
-        background: $placeholder_container_color;
+        background: $color_placeholder;
         border-radius: 50%;
         align-items: center;
         justify-content: center;

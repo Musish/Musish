@@ -1,9 +1,11 @@
+@import '../settings/colors';
+
 .react-contextmenu {
-  background-color: #ffffff;
+  background-color: $color_contextMenuBackground;
   background-clip: padding-box;
   border: 1px solid rgba(210, 210, 210, 1);
   border-radius: 3px;
-  color: #373a3c;
+  color: $color_contextMenuText;
   font-size: 14px;
   margin: 0;
   outline: none;
@@ -22,7 +24,7 @@
   .react-contextmenu-item {
     background: 0 0;
     border: 0;
-    color: #373a3c;
+    color: $color_contextMenuText;
     cursor: pointer;
     font-weight: 400;
     line-height: 1.2;
@@ -31,22 +33,10 @@
     white-space: nowrap;
 
     &.react-contextmenu-item--active, &.react-contextmenu-item--selected {
-      color: #fff;
-      background-color: #fe2851;
-      border-color: #fe2851;
+      color: $color_contextMenuBackground;
+      background-color: $color_accent;
+      border-color: $color_accent;
       text-decoration: none;
-    }
-
-    &.react-contextmenu-item--disabled {
-      background-color: transparent;
-      border-color: rgba(0, 0, 0, 0.15);
-      color: #878a8c;
-
-      &:hover {
-        background-color: transparent;
-        border-color: rgba(0, 0, 0, 0.15);
-        color: #878a8c;
-      }
     }
   }
 

@@ -1,10 +1,12 @@
+@import '../settings/colors';
+
 .s-alert-box,
 .s-alert-box * {
   box-sizing: border-box;
 }
 
 .s-alert-box {
-  background: #ffffff;
+  background: $color_toasterBackground;
   box-shadow: 0 5px 20px -3px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
 }
@@ -15,21 +17,21 @@
 }
 
 .s-alert-info {
-  background: #fff;
+  background: $color_toasterBackground;
   color: #00A2D3;
 }
 
 .s-alert-success {
-  background: #fff;
+  background: $color_toasterBackground;
   color: #27AE60;
 }
 
 .s-alert-warning {
-  background: #fff;
+  background: $color_toasterBackground;
   color: #F1C40F;
 }
 
 .s-alert-error {
-  background: #fff;
+  background: $color_toasterBackground;
   color: #E74C3C;
 }
