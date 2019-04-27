@@ -1,10 +1,8 @@
 @import '../../../assets/styles/settings/colors';
 
 .splashContainer {
-  background: $color_splashBackground
-  linear-gradient(315deg, #cd3c5a, $color_splashBackground);
+  background: $color_splashBackground;
   background-size: 100% 100%;
-
   width: 100%;
   height: 100%;
   display: flex;
@@ -20,22 +18,26 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+
     .brand h1 {
       font-size: 48pt;
       font-weight: 600;
     }
+
     .betaLabel {
       margin-left: 10px;
       margin-top: 22px;
+
       span {
         font-weight: 400;
         color: $color_accent;
-        background: $color_background;
+        background: $color_splashText;
         border-radius: 3px;
         padding: 4px 10px;
       }
     }
   }
+
   .subheading {
     margin-bottom: 30px;
     font-size: 16pt;
@@ -45,33 +47,37 @@
     width: 100%;
     text-align: center;
   }
+
   .accountCaption {
-    color: $color_background;
+    color: $color_splashText;
     max-width: 630px;
     text-align: center;
     width: 50%;
     animation: fadein 0.8s;
   }
+
   .secureConnection {
     margin-top: 10px;
-    color: $color_background;
+    color: $color_splashText;
     animation: fadein 0.8s;
     font-style: italic;
     font-size: 8pt;
   }
+
   hr {
     width: 100px;
     border: none;
     height: 2px;
-    background: $color_background;
+    background: $color_splashText;
     opacity: 0.4;
     animation: fadein 0.8s;
     animation: growin 0.2s;
   }
+
   .button {
     animation: fadein 0.8s;
-    border-color: $color_background;
-    color: $color_background;
+    border-color: $color_splashText;
+    color: $color_splashText;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
@@ -81,33 +87,38 @@
       margin-top: 30px;
     }
   }
+
   .button:hover {
-    background: $color_background;
+    background: $color_splashText;
     color: $color_accent;
   }
+
   .disclaimer {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    color: $color_background;
+    color: $color_splashText;
     font-size: 11px;
-    border: solid 1px $color_background;
+    border: solid 1px $color_splashText;
     border-radius: 4px;
     display: flex;
     flex-direction: row;
+
     * {
       box-sizing: content-box;
     }
+
     .disclaimerIcon {
       font-size: 12px;
       padding: 8px 8px;
-      background: $color_background;
+      background: $color_splashText;
       display: flex;
       flex: 1;
       align-items: center;
+
       > span {
-        color: $color_background;
-        background: $color_accent;
+        color: $color_splashText;
+        background: $color_splashText;
         border-radius: 50%;
         width: 26px;
         height: 26px;
@@ -117,6 +128,7 @@
         justify-content: center;
       }
     }
+
     .disclaimerText {
       margin-right: 10px;
       width: 320px;
@@ -129,14 +141,17 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
 }
+
 @keyframes growin {
   from {
     width: 0;
   }
+
   to {
     width: 100px;
   }

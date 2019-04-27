@@ -1,6 +1,7 @@
 // CORE:
 $color_background: #ffffff;
 $color_accent: #fe2851;
+$color_container: #f7f7f7;
 
 // BORDERS:
 $color_border: #eeeeee;
@@ -17,7 +18,8 @@ $color_textFaint: #aaaaaa;
 // COMPONENT COLOR MAPPINGS:
 
 // SPLASH PAGE:
-$color_splashBackground: #fb453f;
+$color_splashBackground: #fb453f linear-gradient(315deg, #cd3c5a, #fb453f);
+$color_splashText: #ffffff;
 
 // PLACEHOLDERS:
 $color_placeholder: #cccccc;
@@ -63,6 +65,14 @@ $color_scrollerBackground: $color_background;
 $color_scrollerThumb: lighten($color_accent, 40%);
 $color_scrollerThumbHover: lighten($color_accent, 25%);
 
+//Tracks
+$color_trackBackground: rgb(238, 238, 238);
+$color_trackBackgroundHover: $color_container;
+$color_trackAction: $color_accent;
+$color_trackIndexText: $color_accent;
+$color_trackPlayingBackground: rgba(250, 250, 250, 0.75);
+$color_trackPlayingBar: $color_accent;
+
 
 
 
@@ -70,7 +80,6 @@ $color_scrollerThumbHover: lighten($color_accent, 25%);
 // LEGACY:
 $container_background: #f7f7f7;
 
-$track_background_color: rgba(220, 220, 220, 0.5);
 $sidebar_color: #f9f9f9;
 
 $secondary_color: #aaaaaa;

@@ -42,7 +42,7 @@
       top: 1px;
       height: 1px;
       display: block;
-      background: $track_background_color;
+      background: $color_trackBackground;
     }
   }
 
@@ -58,7 +58,7 @@
   }
 
   &:hover .trackBacker:after {
-    background: $container_background;
+    background: $color_trackBackgroundHover;
   }
 
   &:first-child .trackBacker:before {
@@ -84,7 +84,7 @@
       width: 100%;
       overflow: hidden;
       white-space: nowrap;
-      color: $secondary_color;
+      color: $color_textFaint;
     }
 
     .trackTitle {
@@ -99,8 +99,8 @@
       }
 
       .explicit {
-        background: $secondary_color;
-        color: $color_background;
+        background: $color_explicitBackground;
+        color: $color_explicitText;
         display: flex;
         flex-shrink: 0;
         width: 12px;
@@ -118,11 +118,11 @@
   .trackRightSide {
     width: 60px;
     align-items: center;
-    color: $tertiary_color;
+    color: $color_textWeak;
 
     .trackActions {
       display: none;
-      color: $color_accent;
+      color: $color_trackAction;
       z-index: 100;
 
       > * {
