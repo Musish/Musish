@@ -32,6 +32,10 @@ export function artworkForMediaItem(item, size) {
 }
 
 export function getTime(ms) {
+  if (!ms || isNaN(ms)) {
+    // eslint-disable-next-line no-param-reassign
+    ms = 0;
+  }
   const s = 1000 * Math.round(ms / 1000);
   const d = new Date(s);
 
