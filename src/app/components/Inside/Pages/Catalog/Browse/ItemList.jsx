@@ -6,6 +6,7 @@ import classes from './BrowsePage.scss';
 import PlaylistItem from '../../../../Common/PlaylistItem/PlaylistItem';
 import AlbumItem from '../../../../Common/AlbumItem/AlbumItem';
 import CuratorItem from '../../../../Common/CuratorItem/CuratorItem';
+import DragScroll from '../../../../Common/DragScroll/DragScroll';
 
 class ItemList extends React.Component {
   constructor(props) {
@@ -66,7 +67,7 @@ class ItemList extends React.Component {
     return (
       <>
         <h3>{this.props.title}</h3>
-        <div className={classes.scrollWrapper}>
+        <DragScroll className={classes.scrollWrapper}>
           <div className={cx(classes.scrollGrid)} style={styles}>
             {list.map(item => {
               switch (type) {
@@ -82,7 +83,7 @@ class ItemList extends React.Component {
               }
             })}
           </div>
-        </div>
+        </DragScroll>
       </>
     );
   }
