@@ -128,72 +128,73 @@ class ForYouPage extends React.Component {
       return null; // Loading items
     }
 
-    return (
-      <>
-        {recommendations.map(recList => {
-          const { relationships } = recList;
+    function renderGroup(group) {
+      const { relationships } = group;
 
-          if (!relationships) {
-            return null;
-          }
+      if (!relationships) {
+        return null;
+      }
 
-          const items = relationships.contents
-            ? relationships.contents
-            : relationships.recommendations;
-          const isGroup = recList.attributes.isGroupRecommendation;
+      const items = relationships.contents ? relationships.contents : relationships.recommendations;
+      const isGroup = group.attributes.isGroupRecommendation;
+      const shouldRenderLegacyGroup = !!group.attributes.title;
 
-          return (
-            <React.Fragment key={recList.id}>
-              <h3>{recList.attributes.title.stringForDisplay}</h3>
-              <div className={cx(classes.scrollWrapper)}>
-                <div className={cx(classes.scrollWrapper, { [classes.groupedScroller]: isGroup })}>
-                  <div className={classes.scrollGrid}>
-                    {items.data.map((item, i) => {
-                      switch (item.type) {
-                        case 'playlists':
-                          return <PlaylistItem key={item.id} playlist={item} size={120} />;
-                        case 'albums':
-                          return <AlbumItem key={item.id} album={item} size={120} />;
-                        case 'personal-recommendation': {
-                          const recommendationName = item.attributes.reason.stringForDisplay;
-                          return (
-                            <div
-                              key={`${item.id}-${recommendationName}`}
-                              className={classes.recommendationGroup}
-                            >
-                              <span className={classes.personalRecommendationsTitle}>
-                                {recommendationName}
-                              </span>
-                              <div className={classes.personalRecommendationsGrid}>
-                                {item.relationships.contents.data.map(subItem => {
-                                  const subId = `${item.id}-${subItem.id}`;
-                                  switch (subItem.type) {
-                                    case 'playlists':
-                                      return (
-                                        <PlaylistItem key={subId} playlist={subItem} size={100} />
-                                      );
-                                    case 'albums':
-                                      return <AlbumItem key={subId} album={subItem} size={100} />;
-                                    default:
-                                      return null;
-                                  }
-                                })}
-                              </div>
-                            </div>
-                          );
-                        }
-                        default:
-                          return null;
-                      }
-                    })}
-                  </div>
-                </div>
+      if (isGroup && !shouldRenderLegacyGroup) {
+        return relationships.recommendations.data.map(nestedGroup => renderGroup(nestedGroup));
+      }
+
+      const id = group.attributes.title.stringForDisplay; // TODO: switch back to group.id?
+
+      return (
+        <React.Fragment key={id}>
+          <h3>{group.attributes.title.stringForDisplay}</h3>
+          <div className={cx(classes.scrollWrapper)}>
+            <div className={cx(classes.scrollWrapper, { [classes.groupedScroller]: isGroup })}>
+              <div className={classes.scrollGrid}>
+                {items.data.map(item => {
+                  switch (item.type) {
+                    case 'playlists':
+                      return <PlaylistItem key={item.id} playlist={item} size={120} />;
+                    case 'albums':
+                      return <AlbumItem key={item.id} album={item} size={120} />;
+                    case 'personal-recommendation': {
+                      const recommendationName = item.attributes.reason.stringForDisplay;
+                      return (
+                        <div
+                          key={`${item.id}-${recommendationName}`}
+                          className={classes.recommendationGroup}
+                        >
+                          <span className={classes.personalRecommendationsTitle}>
+                            {recommendationName}
+                          </span>
+                          <div className={classes.personalRecommendationsGrid}>
+                            {item.relationships.contents.data.map(subItem => {
+                              const subId = `${item.id}-${subItem.id}`;
+                              switch (subItem.type) {
+                                case 'playlists':
+                                  return <PlaylistItem key={subId} playlist={subItem} size={100} />;
+                                case 'albums':
+                                  return <AlbumItem key={subId} album={subItem} size={100} />;
+                                default:
+                                  return null;
+                              }
+                            })}
+                          </div>
+                        </div>
+                      );
+                    }
+                    default:
+                      return null;
+                  }
+                })}
               </div>
-            </React.Fragment>
-          );
-        })}
-      </>
-    );
+            </div>
+          </div>
+        </React.Fragment>
+      );
+    }
+
+    return recommendations.map(group => renderGroup(group));
   }
 
   render() {
