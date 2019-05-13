@@ -12,6 +12,7 @@ import PlaylistItem from '../../../../Common/PlaylistItem/PlaylistItem';
 class ArtistPage extends React.Component {
   constructor(props) {
     super(props);
+    this.ref = React.createRef();
 
     this.state = {
       artist: null,
@@ -80,6 +81,11 @@ class ArtistPage extends React.Component {
     }
 
     const { data } = await backend.get(`/genius/artist?artistId=${id}`);
+    if (!data) {
+      // Backend return null for artists without details
+      return;
+    }
+
     data.plainDescription = ArtistPage.flattenDesc(data.description.dom.children);
 
     this.setState({
@@ -101,11 +107,9 @@ class ArtistPage extends React.Component {
       attributes.target = '_blank';
     }
 
-    return React.createElement(
-      object.tag,
-      { ...attributes, ...props },
-      ArtistPage.flattenDesc(object.children)
-    );
+    // handle elements without children sunch as `<br>`
+    const children = object.children ? ArtistPage.flattenDesc(object.children) : null;
+    return React.createElement(object.tag, { ...attributes, ...props }, children);
   }
 
   componentDidMount() {
