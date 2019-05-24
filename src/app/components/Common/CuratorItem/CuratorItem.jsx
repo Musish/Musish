@@ -7,17 +7,11 @@ import classes from './CuratorItem.scss';
 import { artworkForMediaItem } from '../../../utils/Utils';
 
 class CuratorItem extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleOpen = this.handleOpen.bind(this);
-  }
-
-  handleOpen() {
+  handleOpen = () => {
     const id = this.props.id || this.props.curator.id;
 
     this.props.history.push(`/curator/${id}`);
-  }
+  };
 
   render() {
     const { curator, size } = this.props;

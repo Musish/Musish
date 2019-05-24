@@ -36,11 +36,13 @@ class Lyrics extends React.Component {
     this.state = {
       geniusSong: null,
     };
-
-    this.fetchGeniusSong = this.fetchGeniusSong.bind(this);
   }
 
-  async fetchGeniusSong() {
+  componentDidMount() {
+    this.fetchGeniusSong();
+  }
+
+  fetchGeniusSong = async () => {
     const { song } = this.props;
 
     const qsName = encodeURIComponent(song.attributes.name);
@@ -51,11 +53,7 @@ class Lyrics extends React.Component {
     this.setState({
       geniusSong: data || false,
     });
-  }
-
-  componentDidMount() {
-    this.fetchGeniusSong();
-  }
+  };
 
   render() {
     const { geniusSong } = this.state;

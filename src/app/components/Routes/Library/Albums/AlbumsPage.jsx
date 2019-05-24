@@ -16,18 +16,16 @@ export default class AlbumsPage extends React.Component {
     super(props);
 
     this.ref = React.createRef();
-
-    this.handleClose = this.handleClose.bind(this);
   }
+
+  handleClose = () => {
+    this.props.history.push('/me/albums');
+  };
 
   static async load(params) {
     const music = MusicKit.getInstance();
 
     return music.api.library.albums(null, params);
-  }
-
-  handleClose() {
-    this.props.history.push('/me/albums');
   }
 
   static renderItems({ items }) {

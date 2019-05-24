@@ -19,7 +19,17 @@ class ArtistPage extends React.Component {
     };
   }
 
-  async fetchArtist() {
+  componentDidMount() {
+    this.refreshData();
+  }
+
+  componentDidUpdate() {
+    if (this.state.artist && this.state.artist.id !== this.props.match.params.id) {
+      this.refreshData();
+    }
+  }
+
+  fetchArtist = async () => {
     const music = MusicKit.getInstance();
 
     const { id } = this.props.match.params;
@@ -35,9 +45,9 @@ class ArtistPage extends React.Component {
     this.setState({
       artist,
     });
-  }
+  };
 
-  async fetchAlbums() {
+  fetchAlbums = async () => {
     const music = MusicKit.getInstance();
 
     const { id } = this.props.match.params;
@@ -53,9 +63,9 @@ class ArtistPage extends React.Component {
     this.setState({
       albums,
     });
-  }
+  };
 
-  async fetchPlaylists() {
+  fetchPlaylists = async () => {
     const music = MusicKit.getInstance();
 
     const { id } = this.props.match.params;
@@ -69,9 +79,9 @@ class ArtistPage extends React.Component {
     this.setState({
       playlists,
     });
-  }
+  };
 
-  async fetchGeniusData() {
+  fetchGeniusData = async () => {
     const { id } = this.props.match.params;
 
     const isCatalog = /^\d+$/.test(id);
@@ -85,7 +95,7 @@ class ArtistPage extends React.Component {
     this.setState({
       geniusData: data,
     });
-  }
+  };
 
   static flattenDesc(object, props = {}) {
     if (typeof object === 'string') {
@@ -108,21 +118,12 @@ class ArtistPage extends React.Component {
     );
   }
 
-  componentDidMount() {
+  refreshData = () => {
     this.fetchArtist();
     this.fetchAlbums();
     this.fetchPlaylists();
     this.fetchGeniusData();
-  }
-
-  componentDidUpdate() {
-    if (this.state.artist && this.state.artist.id !== this.props.match.params.id) {
-      this.fetchArtist();
-      this.fetchAlbums();
-      this.fetchPlaylists();
-      this.fetchGeniusData();
-    }
-  }
+  };
 
   render() {
     const { artist, albums, playlists, geniusData } = this.state;

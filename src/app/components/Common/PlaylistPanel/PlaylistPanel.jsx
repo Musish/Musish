@@ -21,40 +21,32 @@ export default class PlaylistPanel extends React.Component {
 
     this.ref = React.createRef();
     this.store = {};
-
-    this.playTrack = this.playTrack.bind(this);
-    this.playPlaylist = this.playPlaylist.bind(this);
-    this.shufflePlayPlaylist = this.shufflePlayPlaylist.bind(this);
-    this.onSetItems = this.onSetItems.bind(this);
-    this.playlistLoader = this.playlistLoader.bind(this);
   }
 
   componentDidMount() {
     this.fetchPlaylist();
   }
 
-  async fetchPlaylist() {
+  fetchPlaylist = async () => {
     const playlist = await this.playlistLoader(this.getPlaylistId());
 
     this.setState({
       playlist,
     });
-  }
+  };
 
-  playlistLoader(...args) {
+  playlistLoader = (...args) => {
     const music = MusicKit.getInstance();
     if (this.getPlaylistId().startsWith('p.')) {
       return music.api.library.playlist(...args);
     }
 
     return music.api.playlist(...args);
-  }
+  };
 
-  getPlaylistId() {
-    return this.props.id || this.props.playlist.id;
-  }
+  getPlaylistId = () => this.props.id || this.props.playlist.id;
 
-  onSetItems({ items: tracks }) {
+  onSetItems = ({ items: tracks }) => {
     const playlistLength = tracks.reduce(
       (totalDuration, track) =>
         totalDuration + (track.attributes ? track.attributes.durationInMillis : 0),
@@ -65,19 +57,19 @@ export default class PlaylistPanel extends React.Component {
       runtime: humanifyMillis(playlistLength),
       tracks,
     });
-  }
+  };
 
-  playTrack({ index }) {
+  playTrack = ({ index }) => {
     MusicPlayerApi.playPlaylist(this.state.playlist, index);
-  }
+  };
 
-  async playPlaylist(index = 0) {
+  playPlaylist = async (index = 0) => {
     MusicPlayerApi.playPlaylist(this.state.playlist, index);
-  }
+  };
 
-  async shufflePlayPlaylist() {
+  shufflePlayPlaylist = async () => {
     MusicPlayerApi.shufflePlayPlaylist(this.state.playlist);
-  }
+  };
 
   render() {
     const { playlist, runtime, tracks } = this.state;

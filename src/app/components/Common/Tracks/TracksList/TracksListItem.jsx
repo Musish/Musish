@@ -13,17 +13,11 @@ import { isTrackPlaying } from '../../../../services/MusicPlayerApi';
 import translate from '../../../../utils/translations/Translations';
 
 class TracksListItem extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handleClick = this.handleClick.bind(this);
-  }
-
-  async handleClick() {
+  handleClick = async () => {
     const { track, tracks, index } = this.props;
 
     this.props.playTrack({ track, tracks, index });
-  }
+  };
 
   render() {
     const {

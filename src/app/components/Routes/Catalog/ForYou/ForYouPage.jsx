@@ -53,7 +53,7 @@ class ForYouPage extends React.Component {
     });
   }
 
-  renderRecentlyPlayed() {
+  renderRecentlyPlayed = () => {
     const { recentlyPlayed } = this.state;
 
     if (recentlyPlayed === false) {
@@ -83,9 +83,9 @@ class ForYouPage extends React.Component {
         </div>
       </>
     );
-  }
+  };
 
-  renderHeavyRotation() {
+  renderHeavyRotation = () => {
     const { heavyRotation } = this.state;
 
     if (heavyRotation === false) {
@@ -115,9 +115,9 @@ class ForYouPage extends React.Component {
         </div>
       </>
     );
-  }
+  };
 
-  renderRecommendations() {
+  renderRecommendations = () => {
     const { recommendations } = this.state;
 
     if (recommendations === false) {
@@ -195,7 +195,7 @@ class ForYouPage extends React.Component {
     }
 
     return recommendations.map(group => renderGroup(group));
-  }
+  };
 
   render() {
     const recentlyPlayed = this.renderRecentlyPlayed();

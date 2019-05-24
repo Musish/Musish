@@ -8,22 +8,15 @@ import classes from './SplashScreen.scss';
 import translate from '../../../utils/translations/Translations';
 
 class SplashScreen extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.loginNavigate = this.loginNavigate.bind(this);
-    this.browseNavigate = this.browseNavigate.bind(this);
-  }
-
-  loginNavigate() {
+  loginNavigate = () => {
     this.props.onClick();
     this.props.history.push('/');
-  }
+  };
 
-  browseNavigate() {
+  browseNavigate = () => {
     this.props.onBrowse();
     this.props.history.push('/browse');
-  }
+  };
 
   render() {
     return (

@@ -13,14 +13,6 @@ class PlayerTime extends React.Component {
       isScrubbing: false,
       scrubbingPosition: 0,
     };
-
-    this.onStartScrubbing = this.onStartScrubbing.bind(this);
-    this.onEndScrubbing = this.onEndScrubbing.bind(this);
-    this.onScrub = this.onScrub.bind(this);
-
-    this.getCurrentPlaybackDuration = this.getCurrentPlaybackDuration.bind(this);
-    this.getCurrentPlaybackTime = this.getCurrentPlaybackTime.bind(this);
-    this.getCurrentBufferedProgress = this.getCurrentBufferedProgress.bind(this);
   }
 
   static timeToPercent(time, duration) {
@@ -31,22 +23,22 @@ class PlayerTime extends React.Component {
     return Math.floor((time * 100) / duration);
   }
 
-  getCurrentPlaybackDuration() {
+  getCurrentPlaybackDuration = () => {
     const { player } = this.props.mk.instance;
     return getTime(player.currentPlaybackTimeRemaining * 1000);
-  }
+  };
 
-  getCurrentPlaybackTime() {
+  getCurrentPlaybackTime = () => {
     const { player } = this.props.mk.instance;
     return getTime(player.currentPlaybackTime * 1000);
-  }
+  };
 
-  getCurrentBufferedProgress() {
+  getCurrentBufferedProgress = () => {
     const { player } = this.props.mk.instance;
     return player.currentBufferedProgress;
-  }
+  };
 
-  getDuration() {
+  getDuration = () => {
     const {
       nowPlayingItem,
       mk: { instance },
@@ -57,69 +49,31 @@ class PlayerTime extends React.Component {
     }
 
     return instance.isAuthorized ? nowPlayingItem.playbackDuration / 1000 : 30;
-  }
+  };
 
-  renderProgress() {
-    const { mk } = this.props;
-    const { playbackTime } = mk;
-
-    const duration = this.getDuration();
-    const percent = playbackTime
-      ? PlayerTime.timeToPercent(playbackTime.currentPlaybackTime, duration)
-      : 0;
-    const bufferPercent = playbackTime ? this.getCurrentBufferedProgress() : 0;
-
-    return (
-      <input
-        className={styles['progress-bar']}
-        style={{
-          background: `linear-gradient(
-            to right,
-            #fe2851 0%,
-            #fe2851 ${percent}%,
-            #cccccc ${percent}%,
-            #cccccc ${bufferPercent}%,
-            #eeeeee ${bufferPercent}%,
-            #eeeeee 100%
-          ) no-repeat`,
-        }}
-        type={'range'}
-        value={this.getScrubberValue()}
-        onChange={this.onScrub}
-        onMouseDown={this.onStartScrubbing}
-        onTouchStart={this.onStartScrubbing}
-        onMouseUp={this.onEndScrubbing}
-        onTouchEnd={this.onEndScrubbing}
-        min={0}
-        max={duration}
-        step={1}
-      />
-    );
-  }
-
-  onScrub(e) {
+  onScrub = e => {
     this.setState({
       scrubbingPosition: e.target.value,
     });
-  }
+  };
 
-  onStartScrubbing(e) {
+  onStartScrubbing = e => {
     this.setState({
       isScrubbing: true,
       scrubbingPosition: e.target.value,
     });
-  }
+  };
 
-  async onEndScrubbing(e) {
+  onEndScrubbing = async e => {
     await seekToTime(e.target.value);
 
     this.setState({
       isScrubbing: false,
       scrubbingPosition: null,
     });
-  }
+  };
 
-  getScrubberValue() {
+  getScrubberValue = () => {
     const { isScrubbing, scrubbingPosition } = this.state;
 
     if (isScrubbing) {
@@ -135,7 +89,45 @@ class PlayerTime extends React.Component {
     }
 
     return 0;
-  }
+  };
+
+  renderProgress = () => {
+    const { mk } = this.props;
+    const { playbackTime } = mk;
+
+    const duration = this.getDuration();
+    const percent = playbackTime
+      ? PlayerTime.timeToPercent(playbackTime.currentPlaybackTime, duration)
+      : 0;
+    const bufferPercent = playbackTime ? this.getCurrentBufferedProgress() : 0;
+
+    return (
+      <input
+        className={styles['progress-bar']}
+        style={{
+          background: `linear-gradient(
+              to right,
+              #fe2851 0%,
+              #fe2851 ${percent}%,
+              #cccccc ${percent}%,
+              #cccccc ${bufferPercent}%,
+              #eeeeee ${bufferPercent}%,
+              #eeeeee 100%
+            ) no-repeat`,
+        }}
+        type={'range'}
+        value={this.getScrubberValue()}
+        onChange={this.onScrub}
+        onMouseDown={this.onStartScrubbing}
+        onTouchStart={this.onStartScrubbing}
+        onMouseUp={this.onEndScrubbing}
+        onTouchEnd={this.onEndScrubbing}
+        min={0}
+        max={duration}
+        step={1}
+      />
+    );
+  };
 
   render() {
     return (

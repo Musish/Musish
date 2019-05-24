@@ -17,21 +17,20 @@ class TopCharts extends React.Component {
     };
 
     this.ref = React.createRef();
-    this.getCharts = this.getCharts.bind(this);
   }
 
-  async getCharts() {
+  componentDidMount() {
+    this.getCharts();
+  }
+
+  getCharts = async () => {
     const music = MusicKit.getInstance();
     const charts = await music.api.charts(['songs', 'albums', 'playlists'], { limit: 36 });
 
     this.setState({
       charts,
     });
-  }
-
-  componentDidMount() {
-    this.getCharts();
-  }
+  };
 
   static playTrack({ tracks, index }) {
     MusicPlayerApi.playTrack(tracks, index);

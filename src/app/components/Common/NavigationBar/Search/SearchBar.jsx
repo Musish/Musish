@@ -25,11 +25,6 @@ class SearchBar extends React.Component {
       libraryData: null,
     };
 
-    this.renderType = this.renderType.bind(this);
-    this.renderResults = this.renderResults.bind(this);
-    this.handleShowResults = this.handleShowResults.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
-    this.handleClick = this.handleClick.bind(this);
     this.search = debounce(this.search, 400, { maxWait: 1000 }).bind(this);
 
     this.ref = React.createRef();
@@ -43,13 +38,13 @@ class SearchBar extends React.Component {
     document.removeEventListener('mousedown', this.handleClick);
   }
 
-  handleShowResults() {
+  handleShowResults = () => {
     this.setState({
       showResults: true,
     });
-  }
+  };
 
-  handleClick(event) {
+  handleClick = event => {
     if (this.ref.current.contains(event.target)) {
       return;
     }
@@ -61,9 +56,9 @@ class SearchBar extends React.Component {
     this.setState({
       showResults: false,
     });
-  }
+  };
 
-  async handleSearch({ target: { value: query } }) {
+  handleSearch = async ({ target: { value: query } }) => {
     this.setState({
       query,
     });
@@ -71,9 +66,9 @@ class SearchBar extends React.Component {
     const searchQuery = query.replace(' ', '+');
 
     await this.search(searchQuery);
-  }
+  };
 
-  async search(query) {
+  search = async query => {
     if (query.length === 0) {
       this.setState({
         catalogData: null,
@@ -94,9 +89,9 @@ class SearchBar extends React.Component {
     this.setState({
       loading: false,
     });
-  }
+  };
 
-  async searchCatalog(query) {
+  searchCatalog = async query => {
     const catalogData = await this.props.mk.instance.api.search(query, {
       types: ['albums', 'songs', 'playlists', 'artists'],
       limit: 3,
@@ -105,9 +100,9 @@ class SearchBar extends React.Component {
     this.setState({
       catalogData,
     });
-  }
+  };
 
-  async searchLibrary(query) {
+  searchLibrary = async query => {
     const libraryData = await this.props.mk.instance.api.library.search(query, {
       types: ['library-albums', 'library-songs', 'library-playlists', 'library-artists'],
       limit: 3,
@@ -116,9 +111,9 @@ class SearchBar extends React.Component {
     this.setState({
       libraryData,
     });
-  }
+  };
 
-  getItems(type) {
+  getItems = type => {
     const { catalogData, libraryData } = this.state;
 
     const libraryItems =
@@ -127,9 +122,9 @@ class SearchBar extends React.Component {
     const catalogItems = catalogData && catalogData[type] ? catalogData[type].data : [];
 
     return [...libraryItems, ...catalogItems];
-  }
+  };
 
-  renderType(label, type, rowRenderer) {
+  renderType = (label, type, rowRenderer) => {
     const songs = this.getItems(type);
 
     if (!songs || songs.length === 0) {
@@ -145,9 +140,9 @@ class SearchBar extends React.Component {
         {this.state.loading && <Loader />}
       </div>
     );
-  }
+  };
 
-  renderResults() {
+  renderResults = () => {
     const songs = this.renderType(translate.songs, 'songs', song => (
       <SongResultItem song={song} key={song.id} />
     ));
@@ -178,7 +173,7 @@ class SearchBar extends React.Component {
         {playlists}
       </>
     );
-  }
+  };
 
   render() {
     const { query, showResults } = this.state;

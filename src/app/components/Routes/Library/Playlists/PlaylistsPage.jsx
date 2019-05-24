@@ -14,8 +14,6 @@ export default class PlaylistsPage extends React.Component {
     super(props);
 
     this.ref = React.createRef();
-
-    this.handleClose = this.handleClose.bind(this);
   }
 
   static async load(params) {
@@ -24,9 +22,9 @@ export default class PlaylistsPage extends React.Component {
     return music.api.library.playlists(null, params);
   }
 
-  handleClose() {
+  handleClose = () => {
     this.props.history.push('/me/albums');
-  }
+  };
 
   static renderItems({ items }) {
     const playlists = items.map(playlist => (
