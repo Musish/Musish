@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import withContext from '../../../hoc/withContext';
-import PlaylistsContext from '../../Inside/Sidebar/PlaylistsContext';
+import PlaylistsContext from '../Sidebar/Menu/MenuItem/PlaylistsContext';
 import classes from './PlaylistSelector.scss';
 
 function PlaylistSelector(props) {

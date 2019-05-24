@@ -1,0 +1,36 @@
+@import '../../../assets/styles/settings/colors';
+
+.searchGrid {
+  display: flex;
+  flex-wrap: wrap;
+
+  > div {
+     margin: 15px 10px;
+  }
+}
+
+.searchArtistsGrid {
+  display: flex;
+  flex-wrap: wrap;
+
+  > * {
+    margin: 15px 10px;
+    width: 225px;
+  }
+}
+
+.searchError {
+  margin-top: 20px;
+  text-align: center;
+
+  .searchErrorTitle {
+    font-size: 4em;
+    display: block;
+  }
+
+  .searchErrorDetails {
+    font-size: 1.5em;
+    display: block;
+    color: $text_color_weak;
+  }
+}
