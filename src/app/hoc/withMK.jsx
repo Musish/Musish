@@ -6,10 +6,10 @@ export default function withMK(WrappedComponent, bindings = {}) {
     constructor(props) {
       super(props);
 
-      this.handleEvent = this.handleEvent.bind(this);
-
       this.state = {};
       this.bindingFunctions = {};
+
+      this.handleEvent = this.handleEvent.bind(this);
     }
 
     handleEvent(v, event) {
