@@ -25,9 +25,9 @@ export async function addSongsToPlaylist(playlistId, songs) {
       data: payload,
       headers: getHeaders(),
     });
-    Alert.success("Added to your playlist, it'll show up in a few seconds. Hold tight!");
+    Alert.success('Added to your playlist, it\'ll show up in a few seconds. Hold tight!');
   } catch (error) {
-    Alert.error("You're unable to add songs to this playlist.");
+    Alert.error('You\'re unable to add songs to this playlist.');
   }
 }
 
@@ -68,9 +68,9 @@ export async function addToLibrary(mediaType, media) {
       url: `${API_URL}/v1/me/library?ids[${mediaType}]=${media.map(m => m).join(',')}`,
       headers: getHeaders(),
     });
-    Alert.success("Added tracks to your library, they'll show up in a few seconds. Hold tight!");
+    Alert.success('Added tracks to your library, they\'ll show up in a few seconds. Hold tight!');
   } catch (error) {
-    Alert.error("We're unable to add these tracks to your library.");
+    Alert.error('We\'re unable to add these tracks to your library.');
   }
 }
 
@@ -95,12 +95,12 @@ export function infiniteLoadRelationships(
   return async ({ offset }, { page }) => {
     if (page === 0) {
       const playlist = await functionGenerator(id, { offset });
-      const data = playlist.relationships[key];
+      const nextData = playlist.relationships[key];
 
       // eslint-disable-next-line no-param-reassign
-      store.nextUrl = data.next;
+      store.nextUrl = nextData.next;
 
-      return dataModifier(data.data);
+      return dataModifier(nextData.data);
     }
 
     if (!store.nextUrl) {

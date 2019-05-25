@@ -22,10 +22,10 @@ class SplashScreen extends React.Component {
     return (
       <div className={classes.splashContainer}>
         <a
-          className="github-fork-ribbon"
-          href="https://github.com/Musish/Musish"
-          data-ribbon="Fork me on GitHub"
-          title="Fork me on GitHub"
+          className='github-fork-ribbon'
+          href='https://github.com/Musish/Musish'
+          data-ribbon='Fork me on GitHub'
+          title='Fork me on GitHub'
           target={'_blank'}
         >
           Fork me on GitHub
@@ -40,7 +40,7 @@ class SplashScreen extends React.Component {
         </div>
         <h5 className={classes.subheading}>
           {'Just like '}
-          <i className="fab fa-apple" />
+          <i className='fab fa-apple' />
           {' Music... ish.'}
         </h5>
         <hr />
@@ -61,7 +61,7 @@ class SplashScreen extends React.Component {
         <div className={classes.disclaimer}>
           <div className={classes.disclaimerIcon}>
             <span>
-              <i className="fas fa-info icon" />
+              <i className='fas fa-info icon' />
             </span>
           </div>
           <div className={classes.disclaimerText}>{translate.legalNotice}</div>

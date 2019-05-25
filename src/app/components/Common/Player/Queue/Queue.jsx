@@ -67,13 +67,13 @@ class Queue extends Component {
               <div className={cx(classes.header, 'handle')}>
                 <div className={classes.title}>
                   <span>
-                    <i className="fas fa-grip-vertical" />
+                    <i className='fas fa-grip-vertical' />
                     {` ${translate.upNext}`}
                   </span>
                 </div>
                 <div className={classes.icons} onClick={doHide}>
                   <span>
-                    <i className="fas fa-times" />
+                    <i className='fas fa-times' />
                   </span>
                 </div>
               </div>

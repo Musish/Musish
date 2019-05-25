@@ -5,7 +5,7 @@
   "license": "MIT",
   "husky": {
     "hooks": {
-      "pre-commit": "yarn eslint"
+      "pre-commit": "yarn tslint"
     }
   },
   "dependencies": {
@@ -13,20 +13,14 @@
     "@babel/polyfill": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
     "@sentry/browser": "^4.6.6",
-    "@symfony/webpack-encore": "^0.22.1",
+    "@symfony/webpack-encore": "^0.27.0",
+    "@types/prop-types": "^15.7.1",
+    "@types/react": "^16.8.18",
+    "@types/react-dom": "^16.8.4",
     "axios": "^0.18.0",
-    "babel-eslint": "^10.0.1",
     "classnames": "^2.2.6",
+    "concurrently": "^4.1.0",
     "dotenv-webpack": "^1.5.7",
-    "eslint": "^5.10.0",
-    "eslint-config-airbnb": "^17.1.0",
-    "eslint-config-prettier": "^3.3.0",
-    "eslint-config-react-app": "^3.0.5",
-    "eslint-plugin-flowtype": "2.50.3",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-prettier": "^3.0.0",
-    "eslint-plugin-react": "^7.11.1",
     "favicons-webpack-plugin": "^0.0.9",
     "hoist-non-react-statics": "^3.2.1",
     "html-loader": "^0.5.5",
@@ -38,7 +32,6 @@
     "mousetrap": "^1.6.2",
     "node-sass": "^4.10.0",
     "normalize.css": "^8.0.1",
-    "prettier": "^1.15.3",
     "prop-types": "^15.6.2",
     "qs": "^6.7.0",
     "react": "^16.8.3",
@@ -54,12 +47,18 @@
     "react-sortable-hoc": "^1.6.1",
     "react-virtualized": "^9.21.0",
     "sass-loader": "^7.1.0",
+    "ts-loader": "^6.0.1",
+    "tslint": "^5.16.0",
+    "typed-scss-modules": "^0.0.10",
+    "typescript": "^3.4.5",
     "vanilla-tilt": "^1.5.0",
     "whatwg-fetch": "^3.0.0"
   },
   "scripts": {
-    "start": "encore dev-server --hot",
-    "build": "encore production",
-    "eslint": "eslint \"src/**/*.{js,jsx}\" -c .eslintrc"
+    "server": "encore dev-server --hot",
+    "tsmp": "tsm \"src/app/**/*.scss\" --aliasPrefixes.~ node_modules/",
+    "start": "concurrently --kill-others \"yarn server\" \"yarn tsmp -w\"",
+    "build": "yarn tsmp && yarn encore production",
+    "tslint": "tslint -c tslint.json --project ."
   }
 }

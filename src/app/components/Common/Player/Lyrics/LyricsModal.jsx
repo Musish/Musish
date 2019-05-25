@@ -24,13 +24,13 @@ function LyricsModal({ opened, close }) {
         <div className={cx(queueClasses.header, 'handle')}>
           <div className={queueClasses.title}>
             <span>
-              <i className="fas fa-grip-vertical" />
+              <i className='fas fa-grip-vertical' />
               {` ${translate.lyrics}`}
             </span>
           </div>
           <div className={queueClasses.icons} onClick={close}>
             <span>
-              <i className="fas fa-times" />
+              <i className='fas fa-times' />
             </span>
           </div>
         </div>

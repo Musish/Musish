@@ -21,10 +21,10 @@ class Layout extends Component {
       <Fragment>
         <NavigationBar />
 
-        <div id="main-wrapper">
+        <div id='main-wrapper'>
           <Queue />
           <Sidebar />
-          <main id="main-content" className={this.props.className}>
+          <main id='main-content' className={this.props.className}>
             {this.props.children}
           </main>
         </div>

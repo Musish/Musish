@@ -194,7 +194,7 @@ class SearchBar extends React.Component {
             }}
           >
             <input
-              type="text"
+              type='text'
               placeholder={`${translate.searchMusic}`}
               value={query}
               onChange={this.handleSearch}

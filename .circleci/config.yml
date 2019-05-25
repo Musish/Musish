@@ -51,7 +51,7 @@ jobs:
           name: Deploy
           command: ./.circleci/deploy.sh
 
-  eslint:
+  lint:
     executor: musish-executor
     steps:
       - attach_workspace:
@@ -61,7 +61,7 @@ jobs:
           command: mkdir -p ~/reports
       - run:
           name: Run ESLint
-          command: yarn eslint --format junit --output-file ~/reports/eslint.xml
+          command: yarn tslint
       - store_test_results:
           path: ~/reports
       - store_artifacts:
@@ -78,7 +78,7 @@ workflows:
               ignore:
                 - gh-pages
                 - assets
-      - eslint:
+      - lint:
           requires:
             - setup
           filters:
@@ -88,7 +88,7 @@ workflows:
                 - assets
       - deploy:
           requires:
-            - eslint
+            - lint
           filters:
             branches:
               only:

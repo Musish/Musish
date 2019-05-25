@@ -105,7 +105,7 @@ class TracksListItem extends React.Component {
                 holdToDisplay={1}
                 render={() => <TrackContextMenu track={track} tracks={tracks} index={index} />}
               >
-                <i className="fas fa-ellipsis-h" />
+                <i className='fas fa-ellipsis-h' />
               </ContextMenuTrigger>
             </span>
           </span>

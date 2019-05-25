@@ -78,7 +78,7 @@ class Lyrics extends React.Component {
         <iframe
           title={translate.lyrics}
           srcDoc={geniusSong.embed_content + iframeCss}
-          frameBorder="0"
+          frameBorder='0'
           style={{ height: '100%', width: '100%' }}
           seamless
         />

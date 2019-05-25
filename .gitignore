@@ -74,3 +74,4 @@ node_modules/
 .env
 .serverless
 secrets.json
+*.scss.d.ts
