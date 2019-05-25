@@ -7,21 +7,14 @@ import withContext from '../../../../hoc/withContext';
 import translate from '../../../../utils/translations/Translations';
 
 class Authorize extends Component {
-  constructor(props) {
-    super(props);
-
-    this.logout = this.logout.bind(this);
-    this.login = this.login.bind(this);
-  }
-
-  async logout() {
+  logout = async () => {
     await this.props.mk.instance.unauthorize();
-  }
+  };
 
-  async login() {
+  login = async () => {
     await this.props.mk.instance.authorize();
     window.location.reload();
-  }
+  };
 
   render() {
     const button = this.props.authorized ? (

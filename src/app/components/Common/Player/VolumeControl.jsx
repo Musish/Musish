@@ -12,10 +12,6 @@ class VolumeControl extends React.Component {
     this.state = {
       volume: props.mk.instance.player.volume,
     };
-
-    this.getVolumeIconClasses = this.getVolumeIconClasses.bind(this);
-    this.handleVolumeBarChange = this.handleVolumeBarChange.bind(this);
-    this.toggleVolume = this.toggleVolume.bind(this);
   }
 
   componentDidMount() {
@@ -44,7 +40,7 @@ class VolumeControl extends React.Component {
     );
   }
 
-  getVolumeIconClasses() {
+  getVolumeIconClasses = () => {
     const { volume } = this.props.mk.instance.player;
 
     if (volume === 0) {
@@ -60,13 +56,13 @@ class VolumeControl extends React.Component {
     }
 
     return 'fas fa-volume-up';
-  }
+  };
 
-  handleVolumeBarChange(e) {
+  handleVolumeBarChange = e => {
     this.changeVolume(parseFloat(e.target.value));
-  }
+  };
 
-  changeVolume(volume, updateState = true) {
+  changeVolume = (volume, updateState = true) => {
     this.props.mk.instance.player.volume = volume;
 
     if (updateState) {
@@ -74,9 +70,9 @@ class VolumeControl extends React.Component {
         volume,
       });
     }
-  }
+  };
 
-  toggleVolume() {
+  toggleVolume = () => {
     const { player } = this.props.mk.instance;
     const previousVolume = this.state.volume;
     const isMuted = player.volume === 0;
@@ -88,7 +84,7 @@ class VolumeControl extends React.Component {
 
     const newVolume = isMuted ? previousVolume : 0;
     this.changeVolume(newVolume, false);
-  }
+  };
 
   render() {
     const { mk } = this.props;

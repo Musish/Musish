@@ -30,18 +30,6 @@ import { AuthorizeContext } from '../../Providers/AuthorizeProvider';
 import withContext from '../../../hoc/withContext';
 
 class Player extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.handlePrevious = this.handlePrevious.bind(this);
-    this.handleNext = this.handleNext.bind(this);
-
-    this.handleAddToLibrary = this.handleAddToLibrary.bind(this);
-    this.handleRepeat = this.handleRepeat.bind(this);
-    this.handleShuffle = this.handleShuffle.bind(this);
-    this.handleOpenAlbum = this.handleOpenAlbum.bind(this);
-  }
-
   componentDidMount() {
     // Disable default scroll behaviour on click
     Mousetrap.bind(
@@ -58,7 +46,7 @@ class Player extends React.Component {
     Mousetrap.bind('space', togglePlayback, 'keyup');
   }
 
-  handlePrevious() {
+  handlePrevious = () => {
     const { player } = this.props.mk.instance;
 
     if (player.currentPlaybackTime < 2) {
@@ -66,24 +54,18 @@ class Player extends React.Component {
     } else {
       player.seekToTime(0);
     }
-  }
+  };
 
-  handleNext() {
+  handleNext = () => {
     const { player } = this.props.mk.instance;
     player.skipToNextItem();
 
     if (player.repeatMode === 1) {
       player.seekToTime(0);
     }
-  }
+  };
 
-  // eslint-disable-next-line class-methods-use-this
-  handleAddToLibrary() {
-    // console.log('Add to library');
-    // this.props.mk.instance.addToLibrary();
-  }
-
-  handleRepeat() {
+  handleRepeat = () => {
     const { player } = this.props.mk.instance;
 
     if (player.repeatMode === RepeatModeNone) {
@@ -95,9 +77,9 @@ class Player extends React.Component {
     }
 
     this.forceUpdate();
-  }
+  };
 
-  async handleShuffle() {
+  handleShuffle = async () => {
     if (isShuffled()) {
       await unShuffle();
     } else {
@@ -105,16 +87,16 @@ class Player extends React.Component {
     }
 
     this.forceUpdate();
-  }
+  };
 
-  handleOpenAlbum(push) {
+  handleOpenAlbum = push => {
     const nowPlayingItem = this.props.mk.mediaItem && this.props.mk.mediaItem.item;
     const meta = nowPlayingItem.assets[0].metadata;
 
     const id = meta.playlistId;
 
     push(<AlbumPanel key={id} id={id} />);
-  }
+  };
 
   render() {
     const { mk } = this.props;

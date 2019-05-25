@@ -4,35 +4,27 @@ import PropTypes from 'prop-types';
 import InfiniteLoader from './InfiniteLoader';
 
 export default class InfiniteScroll extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.rowRenderer = this.rowRenderer.bind(this);
-    this.onScroll = this.onScroll.bind(this);
-  }
-
   componentDidMount() {
     this.forceUpdate();
   }
 
-  onScroll({ scrollTop }, onScroll) {
+  onScroll = ({ scrollTop }, onScroll) => {
     const { scrollHeight, clientHeight } = this.getElement();
 
     onScroll({ scrollTop, scrollHeight, clientHeight });
-  }
+  };
 
-  rowRenderer(args, { items }) {
-    return this.props.rowRenderer({
+  rowRenderer = (args, { items }) =>
+    this.props.rowRenderer({
       ...args,
       item: items[args.index],
     });
-  }
 
-  getElement() {
+  getElement = () => {
     const { scrollElement, scrollElementModifier } = this.props;
 
     return scrollElementModifier(scrollElement.current);
-  }
+  };
 
   render() {
     if (!this.getElement()) {

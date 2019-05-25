@@ -12,10 +12,6 @@ export default class InfiniteLoader extends React.Component {
       loading: false,
       end: false,
     };
-
-    this.loadMore = this.loadMore.bind(this);
-    this.onScroll = this.onScroll.bind(this);
-    this.onElementScroll = this.onElementScroll.bind(this);
   }
 
   componentDidMount() {
@@ -30,23 +26,36 @@ export default class InfiniteLoader extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    const { loading, end } = this.state;
+    const { scrollElement, initialBuffer, loadAll } = this.props;
+
+    const isNearishBottom =
+      scrollElement &&
+      scrollElement.current.scrollHeight - initialBuffer <= scrollElement.current.clientHeight;
+
+    if (!loading && !end && (isNearishBottom || loadAll)) {
+      this.loadMore();
+    }
+  }
+
   componentWillUnmount() {
     if (this.scrollElement) {
       this.scrollElement.removeEventListener('scroll', this.onElementScroll);
     }
   }
 
-  onElementScroll({ target: { scrollTop, scrollHeight, clientHeight } }) {
+  onElementScroll = ({ target: { scrollTop, scrollHeight, clientHeight } }) => {
     this.onScroll({ scrollTop, scrollHeight, clientHeight });
-  }
+  };
 
-  onScroll({ scrollTop, scrollHeight, clientHeight }) {
+  onScroll = ({ scrollTop, scrollHeight, clientHeight }) => {
     if (scrollTop >= scrollHeight - clientHeight * 3) {
       this.loadMore();
     }
-  }
+  };
 
-  async loadMore() {
+  loadMore = async () => {
     const { end, loading, page, items } = this.state;
 
     if (end || loading) {
@@ -78,26 +87,13 @@ export default class InfiniteLoader extends React.Component {
         loading: false,
       });
     }
-  }
+  };
 
-  setItems(state) {
+  setItems = state => {
     this.props.onSetItems(state);
 
     this.setState(state);
-  }
-
-  componentDidUpdate() {
-    const { loading, end } = this.state;
-    const { scrollElement, initialBuffer, loadAll } = this.props;
-
-    const isNearishBottom =
-      scrollElement &&
-      scrollElement.current.scrollHeight - initialBuffer <= scrollElement.current.clientHeight;
-
-    if (!loading && !end && (isNearishBottom || loadAll)) {
-      this.loadMore();
-    }
-  }
+  };
 
   render() {
     const { loading, items } = this.state;

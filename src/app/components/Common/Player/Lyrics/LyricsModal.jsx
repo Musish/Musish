@@ -11,7 +11,7 @@ import withMK from '../../../../hoc/withMK';
 import { getPlayingItem } from '../../../../services/MusicPlayerApi';
 import translate from '../../../../utils/translations/Translations';
 
-function LyricsModal({ opened, close, mk }) {
+function LyricsModal({ opened, close }) {
   if (!opened) {
     return null;
   }
@@ -43,7 +43,6 @@ function LyricsModal({ opened, close, mk }) {
 LyricsModal.propTypes = {
   opened: PropTypes.bool,
   close: PropTypes.func,
-  mk: PropTypes.any.isRequired,
 };
 
 LyricsModal.defaultProps = {

@@ -40,8 +40,6 @@ class App extends React.Component {
       lyricsModalOpen: false,
       playlists: [],
     };
-
-    this.popModal = this.popModal.bind(this);
   }
 
   componentDidMount() {
@@ -52,13 +50,13 @@ class App extends React.Component {
     }
   }
 
-  popModal() {
+  popModal = () => {
     this.setState(state => ({
       modalsContents: state.modalsContents.slice(1),
     }));
-  }
+  };
 
-  renderModal(modalState) {
+  renderModal = modalState => {
     const modal = this.state.modalsContents[0];
 
     return (
@@ -70,7 +68,7 @@ class App extends React.Component {
         style={modal.style}
       />
     );
-  }
+  };
 
   render() {
     const queueState = {

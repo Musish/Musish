@@ -18,6 +18,7 @@ function CrashPage() {
 class SentryBoundary extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = { error: null };
   }
 

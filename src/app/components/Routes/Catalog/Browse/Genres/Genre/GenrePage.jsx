@@ -21,15 +21,13 @@ class GenrePage extends React.Component {
 
     this.store = {};
     this.scrollRef = React.createRef();
-
-    this.curatorLoader = this.curatorLoader.bind(this);
   }
 
   componentDidMount() {
     this.fetchCurator();
   }
 
-  async fetchCurator() {
+  fetchCurator = async () => {
     const music = MusicKit.getInstance();
 
     const curator = await music.api.appleCurator(this.getCuratorId());
@@ -37,17 +35,13 @@ class GenrePage extends React.Component {
     this.setState({
       curator,
     });
-  }
+  };
 
-  getCuratorId() {
-    return this.state.curatorId;
-  }
+  getCuratorId = () => this.state.curatorId;
 
-  curatorLoader() {
-    return this.state.curator;
-  }
+  curatorLoader = () => this.state.curator;
 
-  renderHeader() {
+  renderHeader = () => {
     const { curator } = this.state;
 
     if (!curator) {
@@ -67,7 +61,7 @@ class GenrePage extends React.Component {
         </div>
       </div>
     );
-  }
+  };
 
   static renderContent(args, { items }) {
     return (

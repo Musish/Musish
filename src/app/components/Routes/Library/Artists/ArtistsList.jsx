@@ -12,10 +12,26 @@ class ArtistsList extends React.Component {
     this.ref = React.createRef();
   }
 
-  static async load(params) {
-    const music = MusicKit.getInstance();
+  render() {
+    return (
+      <aside className={classes.artistList} ref={this.ref}>
+        <ul>
+          <InfiniteScroll
+            scrollElement={this.ref}
+            rowHeight={60}
+            load={ArtistsList.load}
+            rowRenderer={ArtistsList.rowRenderer}
+            onSetItems={({ items }) => {
+              const { pathname } = this.props.location;
 
-    return music.api.library.artists(null, params);
+              if (pathname === `/me/artists` && items.length > 0) {
+                this.props.history.push(`/me/artists/${items[0].id}`);
+              }
+            }}
+          />
+        </ul>
+      </aside>
+    );
   }
 
   static rowRenderer({ item: artist, index, isScrolling, isVisible, key, style }) {
@@ -46,26 +62,10 @@ class ArtistsList extends React.Component {
     );
   }
 
-  render() {
-    return (
-      <aside className={classes.artistList} ref={this.ref}>
-        <ul>
-          <InfiniteScroll
-            scrollElement={this.ref}
-            rowHeight={60}
-            load={ArtistsList.load}
-            rowRenderer={ArtistsList.rowRenderer}
-            onSetItems={({ items }) => {
-              const { pathname } = this.props.location;
+  static async load(params) {
+    const music = MusicKit.getInstance();
 
-              if (pathname === `/me/artists` && items.length > 0) {
-                this.props.history.push(`/me/artists/${items[0].id}`);
-              }
-            }}
-          />
-        </ul>
-      </aside>
-    );
+    return music.api.library.artists(null, params);
   }
 }
 

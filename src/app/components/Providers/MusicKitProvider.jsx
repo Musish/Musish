@@ -10,8 +10,6 @@ export default class MusicKitProvider extends React.Component {
     this.state = {
       ready: false,
     };
-
-    this.setLanguage = this.setLanguage.bind(this);
   }
 
   componentDidMount() {
@@ -37,10 +35,10 @@ export default class MusicKitProvider extends React.Component {
     });
   }
 
-  setLanguage(countryCode) {
+  setLanguage = countryCode => {
     translate.setLanguage(countryCode);
     this.forceUpdate();
-  }
+  };
 
   render() {
     if (!this.state.ready) {

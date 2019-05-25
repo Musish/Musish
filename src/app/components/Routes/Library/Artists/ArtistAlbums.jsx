@@ -33,15 +33,15 @@ class ArtistAlbums extends React.Component {
     });
   }
 
-  renderArtists() {
+  renderArtists = () => {
     const { artist } = this.state;
 
     return artist.relationships.albums.data.map(album => (
       <AlbumPanel key={album.id} album={album} />
     ));
-  }
+  };
 
-  renderContent() {
+  renderContent = () => {
     const { artist } = this.state;
 
     if (!artist) {
@@ -54,10 +54,10 @@ class ArtistAlbums extends React.Component {
         {this.renderArtists()}
       </>
     );
-  }
+  };
 
   render() {
-    return <PageContent>{this.renderContent()}</PageContent>;
+    return <PageContent>{this.renderContent()}</PageContent>; // TODO: innerRef???
   }
 }
 

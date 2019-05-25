@@ -14,11 +14,17 @@ class ItemList extends React.Component {
     this.state = {
       list: null,
     };
-
-    this.fetchItems = this.fetchItems.bind(this);
   }
 
-  async fetchItems(ids) {
+  async componentDidMount() {
+    const { list, listIds } = this.props;
+
+    if (!list && listIds) {
+      this.fetchItems(this.props.listIds);
+    }
+  }
+
+  fetchItems = async ids => {
     const music = MusicKit.getInstance();
     let items;
 
@@ -42,14 +48,7 @@ class ItemList extends React.Component {
     this.setState({
       list: items,
     });
-  }
-
-  async componentDidMount() {
-    const { list, listIds } = this.props;
-    if (!list && listIds) {
-      this.fetchItems(this.props.listIds);
-    }
-  }
+  };
 
   render() {
     const list = this.props.list ? this.props.list : this.state.list;

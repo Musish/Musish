@@ -9,14 +9,7 @@ import QueueList from './QueueList';
 import translate from '../../../../utils/translations/Translations';
 
 class Queue extends Component {
-  constructor(props) {
-    super(props);
-
-    this.onSortEnd = this.onSortEnd.bind(this);
-    this.removeItem = this.removeItem.bind(this);
-  }
-
-  onSortEnd({ oldIndex, newIndex }) {
+  onSortEnd = ({ oldIndex, newIndex }) => {
     const {
       mk: {
         instance: { player },
@@ -37,13 +30,13 @@ class Queue extends Component {
 
       this.forceUpdate();
     }
-  }
+  };
 
   static shouldCancelStart(e) {
     return e.target.classList.contains(classes.notSortable);
   }
 
-  removeItem(index) {
+  removeItem = index => {
     const { queue } = this.props.mk.instance.player;
 
     // Update queue order
@@ -53,7 +46,7 @@ class Queue extends Component {
     queue._reindex();
 
     this.forceUpdate();
-  }
+  };
 
   render() {
     const {

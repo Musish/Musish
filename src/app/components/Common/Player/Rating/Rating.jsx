@@ -12,24 +12,21 @@ class Rating extends React.Component {
       rating: 0,
       loading: true,
     };
-
-    this.toggleRating = this.toggleRating.bind(this);
-    this.fetchRating = this.fetchRating.bind(this);
   }
 
   componentDidMount() {
     this.fetchRating();
   }
 
-  async fetchRating() {
+  fetchRating = async () => {
     const rating = await getRating('song', this.props.nowPlayingItem.id);
     this.setState({
       rating,
       loading: false,
     });
-  }
+  };
 
-  async toggleRating() {
+  toggleRating = async () => {
     this.setState({
       loading: true,
     });
@@ -38,13 +35,14 @@ class Rating extends React.Component {
 
     const newRating = currentRating === 1 ? -1 : currentRating + 1;
     const rating = await setRating('song', this.props.nowPlayingItem.id, newRating);
+
     this.setState({
       rating,
       loading: false,
     });
 
     return rating;
-  }
+  };
 
   render() {
     let heartClass = 'fas fa-heart';

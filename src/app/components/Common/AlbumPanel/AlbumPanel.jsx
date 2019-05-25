@@ -24,45 +24,34 @@ class AlbumPanel extends React.Component {
 
     this.ref = React.createRef();
     this.store = {};
-
-    this.playTrack = this.playTrack.bind(this);
-    this.playAlbum = this.playAlbum.bind(this);
-    this.shufflePlayAlbum = this.shufflePlayAlbum.bind(this);
-    this.onSetItems = this.onSetItems.bind(this);
-    this.albumLoader = this.albumLoader.bind(this);
-    this.fetchFullCatalogAlbum = this.fetchFullCatalogAlbum.bind(this);
   }
 
   componentDidMount() {
     this.fetchAlbum();
   }
 
-  async fetchAlbum() {
+  fetchAlbum = async () => {
     const album = await this.albumLoader(this.getAlbumId());
 
     this.setState({
       album,
     });
-  }
+  };
 
-  albumLoader(...args) {
+  albumLoader = (...args) => {
     const music = MusicKit.getInstance();
     if (!this.isCatalog()) {
       return music.api.library.album(...args);
     }
 
     return music.api.album(...args);
-  }
+  };
 
-  isCatalog() {
-    return !isNaN(this.getAlbumId());
-  }
+  isCatalog = () => !isNaN(this.getAlbumId());
 
-  getAlbumId() {
-    return this.props.id || this.props.album.id;
-  }
+  getAlbumId = () => this.props.id || this.props.album.id;
 
-  onSetItems({ items }) {
+  onSetItems = ({ items }) => {
     const albumLength = items.reduce(
       (totalDuration, track) =>
         totalDuration + (track.attributes ? track.attributes.durationInMillis : 0),
@@ -76,27 +65,27 @@ class AlbumPanel extends React.Component {
     this.setState({
       runtime: humanifyMillis(albumLength),
     });
-  }
+  };
 
-  playTrack({ index }) {
+  playTrack = ({ index }) => {
     MusicPlayerApi.playAlbum(this.state.album, index);
-  }
+  };
 
-  async playAlbum(index = 0) {
+  playAlbum = async (index = 0) => {
     MusicPlayerApi.playAlbum(this.state.album, index);
-  }
+  };
 
-  async shufflePlayAlbum() {
+  shufflePlayAlbum = async () => {
     MusicPlayerApi.shufflePlayAlbum(this.state.album);
-  }
+  };
 
-  async fetchFullCatalogAlbum() {
+  fetchFullCatalogAlbum = async () => {
     const { album } = this.state;
     const catalogAlbum = await MusicApi.fetchFullCatalogAlbumFromLibraryAlbum(album);
     this.setState({
       matchedCatalogAlbum: catalogAlbum,
     });
-  }
+  };
 
   render() {
     const { album, matchedCatalogAlbum, runtime } = this.state;

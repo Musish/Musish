@@ -1,7 +1,6 @@
 import React from 'react';
 import { withRouter, matchPath } from 'react-router-dom';
 import PropTypes from 'prop-types';
-
 import cx from 'classnames';
 
 import classes from './Tabs.scss';
@@ -9,6 +8,7 @@ import classes from './Tabs.scss';
 class Tabs extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       tabIndex: 0,
     };

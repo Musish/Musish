@@ -31,15 +31,13 @@ class SearchPage extends React.Component {
     };
 
     this.ref = React.createRef();
-    this.search = this.search.bind(this);
-    this.renderResults = this.renderResults.bind(this);
   }
 
   componentDidMount() {
     this.search();
   }
 
-  async search() {
+  search = async () => {
     const query = this.props.match.params.query.replace(' ', '+');
     if (query.length === 0) {
       this.setState({
@@ -66,9 +64,9 @@ class SearchPage extends React.Component {
     this.setState({
       loading: false,
     });
-  }
+  };
 
-  async searchCatalog(query) {
+  searchCatalog = async query => {
     const res = await this.props.mk.instance.api.search(query, {
       types: ['albums', 'songs', 'playlists', 'artists'],
       limit: 24,
@@ -83,9 +81,9 @@ class SearchPage extends React.Component {
         artists: res.artists ? res.artists.data : [],
       },
     });
-  }
+  };
 
-  async searchLibrary(query) {
+  searchLibrary = async query => {
     const res = await this.props.mk.instance.api.library.search(query, {
       types: ['library-albums', 'library-songs', 'library-playlists', 'library-artists'],
       limit: 24,
@@ -100,13 +98,9 @@ class SearchPage extends React.Component {
         artists: res['library-artists'] ? res['library-artists'].data : [],
       },
     });
-  }
+  };
 
-  static playTrack({ tracks, index }) {
-    MusicPlayerApi.playTrack(tracks, index);
-  }
-
-  renderSongs() {
+  renderSongs = () => {
     const { songs } = this.state.results;
 
     if (!songs || songs.length === 0) {
@@ -125,9 +119,9 @@ class SearchPage extends React.Component {
         />
       </>
     );
-  }
+  };
 
-  renderAlbums() {
+  renderAlbums = () => {
     const { albums } = this.state.results;
 
     if (!albums || albums.length === 0) {
@@ -144,9 +138,9 @@ class SearchPage extends React.Component {
         </div>
       </>
     );
-  }
+  };
 
-  renderPlaylists() {
+  renderPlaylists = () => {
     const { playlists } = this.state.results;
 
     if (!playlists || playlists.length === 0) {
@@ -163,9 +157,9 @@ class SearchPage extends React.Component {
         </div>
       </>
     );
-  }
+  };
 
-  renderArtists() {
+  renderArtists = () => {
     const { artists } = this.state.results;
 
     if (!artists || artists.length === 0) {
@@ -182,9 +176,9 @@ class SearchPage extends React.Component {
         </div>
       </>
     );
-  }
+  };
 
-  renderResults() {
+  renderResults = () => {
     const { loading } = this.state;
 
     const songs = this.renderSongs();
@@ -215,7 +209,7 @@ class SearchPage extends React.Component {
         )}
       </>
     );
-  }
+  };
 
   render() {
     const { isAuthorized } = this.props.mk.instance;
@@ -252,6 +246,10 @@ class SearchPage extends React.Component {
         </Tabs>
       </PageContent>
     );
+  }
+
+  static playTrack({ tracks, index }) {
+    MusicPlayerApi.playTrack(tracks, index);
   }
 }
 

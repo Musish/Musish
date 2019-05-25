@@ -15,12 +15,18 @@ class AuthorizeProvider extends React.Component {
       browsing: false,
       isAuthorized: props.mk.instance.isAuthorized,
     };
-
-    this.check = this.check.bind(this);
-    this.handleTokenCheck = this.handleTokenCheck.bind(this);
   }
 
-  check({ authorizationStatus }) {
+  componentDidMount() {
+    this.handleTokenCheck();
+
+    MusicKit.getInstance().addEventListener(
+      MusicKit.Events.authorizationStatusDidChange,
+      this.check
+    );
+  }
+
+  check = ({ authorizationStatus }) => {
     if (authorizationStatus === 0) {
       this.setState({
         isAuthorized: false,
@@ -32,10 +38,11 @@ class AuthorizeProvider extends React.Component {
         });
       });
     }
-  }
+  };
 
-  async handleTokenCheck() {
+  handleTokenCheck = async () => {
     const music = this.props.mk.instance;
+
     if (!this.state.isAuthorized) {
       this.setState({
         ready: true,
@@ -54,16 +61,7 @@ class AuthorizeProvider extends React.Component {
         ready: true,
       });
     });
-  }
-
-  componentDidMount() {
-    this.handleTokenCheck();
-
-    MusicKit.getInstance().addEventListener(
-      MusicKit.Events.authorizationStatusDidChange,
-      this.check
-    );
-  }
+  };
 
   render() {
     const { ready, isAuthorized, browsing } = this.state;

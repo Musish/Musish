@@ -19,7 +19,7 @@ class Genres extends Component {
     this.fetchGenres();
   }
 
-  async fetchGenres() {
+  fetchGenres = async () => {
     const music = MusicKit.getInstance();
 
     const genreCurators = await music.api.appleCurators(Object.values(genres));
@@ -33,7 +33,7 @@ class Genres extends Component {
     this.setState({
       genreCurators,
     });
-  }
+  };
 
   render() {
     const { genreCurators } = this.state;
