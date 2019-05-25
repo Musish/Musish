@@ -1,30 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import classes from './TracksList.scss';
 import InfiniteScroll from '../../InfiniteLoader/InfiniteScroll';
 import TrackListItem from './TracksListItem';
 
-class TracksList extends React.Component {
-  constructor(props) {
-    super(props);
+function TracksList(props) {
+  const [tracks, setTracks] = useState(null);
 
-    this.state = {
-      tracks: null,
-    };
+  function onSetItems(state) {
+    setTracks(state.items);
+    props.onSetItems(state);
   }
 
-  onSetItems = state => {
-    this.setState({
-      tracks: state.items,
-    });
-    this.props.onSetItems(state);
-  };
+  const { showArtist, showAlbum, scrollElement, load, scrollElementModifier } = props;
 
-  rowRenderer = ({ item: track, index, isScrolling, isVisible, key, style }) => {
-    const { tracks } = this.state;
-    const { showArtist, showAlbum, playTrack } = this.props;
-
+  // TODO: Fix below ESLint warnings...
+  function rowRenderer({ item: track, index, isScrolling, isVisible, key, style }) {
     return (
       <TrackListItem
         key={key}
@@ -34,35 +26,24 @@ class TracksList extends React.Component {
         showArtist={showArtist}
         showAlbum={showAlbum}
         style={style}
-        playTrack={playTrack}
+        playTrack={props.playTrack}
       />
     );
-  };
-
-  render() {
-    const {
-      showArtist,
-      showAlbum,
-      scrollElement,
-      load,
-      tracks,
-      scrollElementModifier,
-    } = this.props;
-
-    return (
-      <div className={classes.trackList}>
-        <InfiniteScroll
-          onSetItems={this.onSetItems}
-          scrollElement={scrollElement}
-          scrollElementModifier={scrollElementModifier}
-          load={load}
-          items={tracks}
-          rowHeight={showAlbum || showArtist ? 50 : 37}
-          rowRenderer={this.rowRenderer}
-        />
-      </div>
-    );
   }
+
+  return (
+    <div className={classes.trackList}>
+      <InfiniteScroll
+        onSetItems={onSetItems}
+        scrollElement={scrollElement}
+        scrollElementModifier={scrollElementModifier}
+        load={load}
+        items={props.tracks}
+        rowHeight={showAlbum || showArtist ? 50 : 37}
+        rowRenderer={rowRenderer}
+      />
+    </div>
+  );
 }
 
 TracksList.propTypes = {

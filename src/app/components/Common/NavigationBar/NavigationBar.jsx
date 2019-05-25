@@ -4,7 +4,7 @@ import cx from 'classnames';
 import PropTypes from 'prop-types';
 import classes from './NavigationBar.scss';
 import SearchBar from './Search/SearchBar';
-import Authorize from './Authorize/Authorize';
+import AuthorizationButton from './AuthorizationButton/AuthorizationButton';
 import Settings from './Settings/Settings';
 import { AuthorizeContext } from '../../Providers/AuthorizeProvider';
 import withContext from '../../../hoc/withContext';
@@ -21,7 +21,7 @@ function NavigationBar(props) {
       <div style={{ flex: 1 }} />
       <SearchBar />
       <Settings />
-      <Authorize />
+      <AuthorizationButton />
     </nav>
   );
 }
