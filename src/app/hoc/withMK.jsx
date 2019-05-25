@@ -6,16 +6,8 @@ export default function withMK(WrappedComponent, bindings = {}) {
     constructor(props) {
       super(props);
 
-      this.handleEvent = this.handleEvent.bind(this);
-
       this.state = {};
       this.bindingFunctions = {};
-    }
-
-    handleEvent(v, event) {
-      this.setState({
-        [v]: event,
-      });
     }
 
     async componentDidMount() {
@@ -33,6 +25,12 @@ export default function withMK(WrappedComponent, bindings = {}) {
         delete this.bindingFunctions[event];
       }
     }
+
+    handleEvent = (v, event) => {
+      this.setState({
+        [v]: event,
+      });
+    };
 
     render() {
       const mk = {

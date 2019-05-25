@@ -12,13 +12,7 @@ import ContextMenuTrigger from '../ContextMenu/ContextMenuTrigger';
 import AlbumContextMenu from '../ContextMenu/Types/Album/AlbumContextMenu';
 
 class AlbumItem extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleOpen = this.handleOpen.bind(this);
-  }
-
-  handleOpen(replace) {
+  handleOpen = replace => {
     const id = this.props.id || this.props.album.id;
 
     if (this.props.navigate) {
@@ -26,7 +20,7 @@ class AlbumItem extends Component {
     } else {
       replace(<AlbumPanel key={id} id={id} />);
     }
-  }
+  };
 
   render() {
     const { album, size, connectDragSource, isOver } = this.props;

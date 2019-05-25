@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+
 import withMK from '../../../../hoc/withMK';
 import classes from './TrackDecoration.scss';
 import { artworkForMediaItem } from '../../../../utils/Utils';

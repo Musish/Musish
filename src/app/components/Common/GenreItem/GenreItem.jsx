@@ -7,21 +7,16 @@ import classes from './GenreItem.scss';
 import { artworkForMediaItem } from '../../../utils/Utils';
 
 class GenreItem extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleOpen = this.handleOpen.bind(this);
-  }
-
-  handleOpen() {
+  handleOpen = () => {
     const id = this.props.id || this.props.curator.id;
 
     this.props.history.push(`/browse/genre/${id}`);
-  }
+  };
 
   render() {
     const { curator, size } = this.props;
     const artwork = artworkForMediaItem(curator, size);
+
     return (
       <div className={cx(classes.container)} style={{ width: size }}>
         <div onClick={() => this.handleOpen()}>

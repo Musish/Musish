@@ -13,13 +13,7 @@ import ContextMenuTrigger from '../ContextMenu/ContextMenuTrigger';
 import PlaylistContextMenu from '../ContextMenu/Types/Playlist/PlaylistContextMenu';
 
 class PlaylistItem extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleOpen = this.handleOpen.bind(this);
-  }
-
-  handleOpen(push) {
+  handleOpen = push => {
     const id = this.props.id || this.props.playlist.id;
     if (this.props.navigate) {
       this.props.history.push(`/playlists/${id}`);
@@ -27,7 +21,7 @@ class PlaylistItem extends Component {
     }
 
     push(<PlaylistPanel id={id} />);
-  }
+  };
 
   render() {
     const { playlist, size, connectDragSource, isOver } = this.props;

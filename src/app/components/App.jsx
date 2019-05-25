@@ -4,31 +4,31 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import Alert from 'react-s-alert';
 import Mousetrap from 'mousetrap';
-import MusicKitProvider from './MusicKitProvider';
-import MusicKitAuthorizeProvider from './MusicKitAuthorizeProvider';
-import AlbumsPage from './Inside/Pages/Library/Albums/AlbumsPage';
-import Layout from './Inside/Layout';
-import ArtistPage from './Inside/Pages/Catalog/Artist/ArtistPage';
-import ArtistsPage from './Inside/Pages/Library/Artists/ArtistsPage';
-import Playlist from './Inside/Pages/Library/Playlist/PlaylistPage';
-import SongsPage from './Inside/Pages/Library/Songs/SongsPage';
-import PlaylistsPage from './Inside/Pages/Library/Playlists/PlaylistsPage';
-import RecentlyAddedPage from './Inside/Pages/Library/RecentlyAdded/RecentlyAddedPage';
-import ForYouPage from './Inside/Pages/Catalog/ForYou/ForYouPage';
-import BrowsePage from './Inside/Pages/Catalog/Browse/BrowsePage';
-import GenrePage from './Inside/Pages/Catalog/Browse/Genres/Genre/GenrePage';
-import RadioPage from './Inside/Pages/Catalog/Radio/RadioPage';
-import QueueContext from './Inside/Player/Queue/QueueContext';
+import MusicKitProvider from './Providers/MusicKitProvider';
+import AuthorizeProvider from './Providers/AuthorizeProvider';
+import AlbumsPage from './Routes/Library/Albums/AlbumsPage';
+import Layout from './Layout';
+import ArtistPage from './Routes/Catalog/Artist/ArtistPage';
+import ArtistsPage from './Routes/Library/Artists/ArtistsPage';
+import Playlist from './Routes/Library/Playlist/PlaylistPage';
+import SongsPage from './Routes/Library/Songs/SongsPage';
+import PlaylistsPage from './Routes/Library/Playlists/PlaylistsPage';
+import RecentlyAddedPage from './Routes/Library/RecentlyAdded/RecentlyAddedPage';
+import ForYouPage from './Routes/Catalog/ForYou/ForYouPage';
+import BrowsePage from './Routes/Catalog/Browse/BrowsePage';
+import GenrePage from './Routes/Catalog/Browse/Genres/Genre/GenrePage';
+import RadioPage from './Routes/Catalog/Radio/RadioPage';
+import QueueContext from './Common/Player/Queue/QueueContext';
 import ModalContext from './Common/Modal/ModalContext';
 import Modal from './Common/Modal/Modal';
 import ConnectedMenu from './Common/ContextMenu/ContextMenu';
-import LyricsModalContext from './Inside/Player/Lyrics/LyricsModalContext';
-import LyricsModal from './Inside/Player/Lyrics/LyricsModal';
-import SearchPage from './Inside/Pages/Search/SearchPage';
-import GoogleAnalyticsProvider from './GoogleAnalyticsProvider';
-import PlaylistsContext from './Inside/Sidebar/PlaylistsContext';
-import SentryBoundary from './SentryBoundary';
-import LastfmProvider from './LastfmProvider';
+import LyricsModalContext from './Common/Player/Lyrics/LyricsModalContext';
+import LyricsModal from './Common/Player/Lyrics/LyricsModal';
+import SearchPage from './Routes/Search/SearchPage';
+import GoogleAnalyticsProvider from './Providers/GoogleAnalyticsProvider';
+import PlaylistsContext from './Common/Sidebar/Menu/MenuItem/PlaylistsContext';
+import SentryBoundary from './Providers/SentryBoundary';
+import LastfmProvider from './Providers/LastfmProvider';
 
 class App extends React.Component {
   constructor(props) {
@@ -40,8 +40,6 @@ class App extends React.Component {
       lyricsModalOpen: false,
       playlists: [],
     };
-
-    this.popModal = this.popModal.bind(this);
   }
 
   componentDidMount() {
@@ -52,13 +50,13 @@ class App extends React.Component {
     }
   }
 
-  popModal() {
+  popModal = () => {
     this.setState(state => ({
       modalsContents: state.modalsContents.slice(1),
     }));
-  }
+  };
 
-  renderModal(modalState) {
+  renderModal = modalState => {
     const modal = this.state.modalsContents[0];
 
     return (
@@ -70,7 +68,7 @@ class App extends React.Component {
         style={modal.style}
       />
     );
-  }
+  };
 
   render() {
     const queueState = {
@@ -115,7 +113,7 @@ class App extends React.Component {
         <MusicKitProvider>
           <Router>
             <GoogleAnalyticsProvider>
-              <MusicKitAuthorizeProvider>
+              <AuthorizeProvider>
                 <PlaylistsContext.Provider value={playlistsState}>
                   <QueueContext.Provider value={queueState}>
                     <ModalContext.Provider value={modalState}>
@@ -162,7 +160,7 @@ class App extends React.Component {
                     </ModalContext.Provider>
                   </QueueContext.Provider>
                 </PlaylistsContext.Provider>
-              </MusicKitAuthorizeProvider>
+              </AuthorizeProvider>
             </GoogleAnalyticsProvider>
           </Router>
         </MusicKitProvider>

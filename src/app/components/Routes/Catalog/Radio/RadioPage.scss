@@ -1,0 +1,29 @@
+@import '../../../../assets/styles/settings/colors';
+
+.radioContainer {
+  color: $accent_color;
+  text-align: center;
+  width: 100%;
+  margin-top: 60px;
+  opacity: 1;
+  animation: fadein 0.1s ease-in;
+
+  .comingSoonIcon {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+
+  .comingSoon {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  @keyframes fadein {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}

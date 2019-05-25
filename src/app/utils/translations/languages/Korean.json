@@ -1,0 +1,77 @@
+{
+  "musishDescription": "Musish의 놀라운 스트리밍 경험을 위해서는 Apple Music의 보관함이 필요합니다. 계정을 연결해주세요.",
+  "connect": "Apple Music에 연결하기",
+  "securityMessage": "{0} Secure authentication via Apple.com.",
+  "securityMessage": "{0} Apple.com을 통해 안전하게 인증합니다.",
+  "justBrowse": "그냥 둘러보기",
+  "legalNotice": "Musish는 Apple, Inc.과 아무런 관계가 없습니다. 우리의 서비스는 어떠한 계정이나 개인에 대한 정보도 접근하거나 수집, 저장하지 않습니다. 'Apple', 'Apple Music'과 Apple의 로고는 Apple, Inc.의 상표입니다.",
+
+  "appleMusic": "Apple Music",
+
+  "logout": "로그아웃",
+  "login": "로그인",
+  "searchMusic": "음악 검색",
+
+  "play": "재생",
+  "playNext": "바로 다음에 재생",
+  "playLater": "맨 나중에 재생",
+  "shuffle": "임의 재생",
+  "search": "검색",
+  "searchingFor": "{0} 검색 결과",
+
+  "openAlbum": "앨범 보기",
+  "openPlaylist": "플레이리스트 보기",
+  "addToPlaylist": "플레이리스트에 추가",
+  "addToLibrary": "보관함에 추가",
+
+  "playlistBy": "{0}의 플레이리스트",
+
+  "forYou": "For You",
+  "recentlyPlayed": "최근에 재생된 항목",
+  "heavyRotation": "무한반복",
+
+  "browse": "둘러보기",
+  "topCharts": "인기 차트",
+  "genres": "장르",
+  "topSongs": "인기 트랙",
+  "dailyTop100": "오늘의 TOP 100",
+  "topPlaylists": "인기 플레이리스트",
+  "topAlbums": "인기 앨범",
+
+  "radio": "라디오",
+  "radioMessage": "라디오 기능은 최대한 빨리 준비 중에 있습니다. 나중에 확인해주세요",
+
+  "myLibrary": "내 보관함",
+  "recentlyAdded": "최근에 추가된 항목",
+  "artists": "아티스트",
+  "albums": "앨범",
+  "song": "노래",
+  "songs": "노래",
+  "playlists": "플레이리스트",
+
+  "feedback": "Feedback",
+  "designCredits": "Musish팀의 {0}으로 디자인되었습니다.",
+
+  "lyrics": "가사",
+  "upNext": "발매 예정",
+
+  "showCompleteAlbum": "앨범 전체 보기",
+  "hour": "시",
+  "hours": "시",
+  "minute": "분",
+  "minutes": "분",
+
+  "noResultsFound": "앗, 검색결과가 없어요.",
+  "trackNotAvailable": "이용 불가능한 트랙",
+
+  "dataProvidedByGenius": "Genius가 제공한 데이터",
+  "inYourPersonalLibrary": "내 보관함에서 가져옴",
+  "unauthorisedLibrarySearch": "로그인이 필요합니다.",
+
+  "noLyricsAvailable": "가사를 찾을 수 없음",
+
+  "lfmConnect": "연결하기",
+  "lfmDisconnect": "연결 끊기",
+  "lfmConnectSuccess": "Last.fm이 연결되었습니다!",
+  "lfmConnectError": "Last.fm에 연결할 수 없음"
+}
