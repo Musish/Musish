@@ -18,7 +18,7 @@ const QueueItem = SortableElement(({ value, style, item, removeItemFunc }) => {
       <div>
         <span className={classes.albumArtwork}>
           <span className={classes.artworkWrapper}>
-            <img src={artworkForMediaItem(item, 30)} alt="" />
+            <img src={artworkForMediaItem(item, 30)} alt='' />
           </span>
         </span>
       </div>

@@ -14,7 +14,7 @@ export default function Settings() {
 
   return (
     <span className={classes.settingsWrapper}>
-      <i className="fas fa-cog" />
+      <i className='fas fa-cog' />
       <div className={classes.settingsControlWrapper}>
         <div className={classes.section}>
           <h5>Last.fm</h5>
@@ -31,11 +31,11 @@ export default function Settings() {
         <div className={classes.section}>
           <h5>Playback quality</h5>
           <span className={classes.radioWrapper}>
-            <label htmlFor="high-bitrate">
+            <label htmlFor='high-bitrate'>
               <input
-                id="high-bitrate"
-                type="radio"
-                name="bitrate"
+                id='high-bitrate'
+                type='radio'
+                name='bitrate'
                 value={MusicKit.PlaybackBitrate.HIGH}
                 checked={bitrate === MusicKit.PlaybackBitrate.HIGH}
                 onChange={() => {
@@ -47,11 +47,11 @@ export default function Settings() {
             </label>
           </span>
           <span className={classes.radioWrapper}>
-            <label htmlFor="standard-bitrate">
+            <label htmlFor='standard-bitrate'>
               <input
-                id="standard-bitrate"
-                type="radio"
-                name="bitrate"
+                id='standard-bitrate'
+                type='radio'
+                name='bitrate'
                 value={MusicKit.PlaybackBitrate.STANDARD}
                 checked={bitrate === MusicKit.PlaybackBitrate.STANDARD}
                 onChange={() => {

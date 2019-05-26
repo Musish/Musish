@@ -27,7 +27,7 @@ function TrackDecoration({ track, showAlbum, size = 40 }) {
         <span className={classes.albumArtwork}>
           {currentItem && playingAnimation}
           <span className={classes.artworkWrapper} style={{ width: size, height: size }}>
-            <img src={artworkForMediaItem(track, size)} alt="" />
+            <img src={artworkForMediaItem(track, size)} alt='' />
           </span>
         </span>
       ) : (
