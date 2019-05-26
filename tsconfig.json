@@ -9,7 +9,11 @@
     "jsx": "react",             // use typescript to transpile jsx to js
     "target": "es5",            // specify ECMAScript target version
     "lib": [ "dom", "es2015" ],
-    "allowJs": true
+    "allowJs": true,
+    "typeRoots": [
+      "node_modules/musickit-typescript",
+      "node_modules/@types"
+    ]
   },
   "include": [
     "./src/app/**/*"

@@ -1,16 +1,14 @@
-import React from 'react';
-
-import PropTypes from 'prop-types';
-import cx from 'classnames';
+import * as cx from 'classnames';
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
 import { DragSource } from 'react-dnd';
-import { getTime } from '../../../../utils/Utils';
-import classes from './TracksListItem.scss';
-import TrackDecoration from './TrackDecoration';
 import DragDropType from '../../../../utils/Constants/DragDropType';
+import translate from '../../../../utils/translations/Translations';
+import { getTime } from '../../../../utils/Utils';
 import ContextMenuTrigger from '../../ContextMenu/ContextMenuTrigger';
 import TrackContextMenu from '../../ContextMenu/Types/Track/TrackContextMenu';
-import { isTrackPlaying } from '../../../../services/MusicPlayerApi';
-import translate from '../../../../utils/translations/Translations';
+import TrackDecoration from './TrackDecoration';
+import * as classes from './TracksListItem.scss';
 
 function TracksListItem(props) {
   const {
@@ -19,7 +17,6 @@ function TracksListItem(props) {
     track,
     track: { attributes },
     connectDragSource,
-    isOver,
     tracks,
     index,
     className,
@@ -32,7 +29,7 @@ function TracksListItem(props) {
   if (!attributes) {
     return (
       <div className={cx(classes.track, classes.disabledTrack, className)} style={props.style}>
-        <div className={[classes.trackWrapper]}>
+        <div className={classes.trackWrapper}>
           <div className={classes.trackBacker} />
           <TrackDecoration track={track} showAlbum={showAlbum} />
           <div className={classes.trackInfo}>
@@ -55,13 +52,10 @@ function TracksListItem(props) {
     <div
       className={cx(
         {
-          [classes.indexedTrack]: !showAlbum,
-          [classes.playing]: isTrackPlaying(track),
-          [classes.droppable]: isOver,
           [classes.disabledTrack]: !track.attributes.playParams,
         },
         classes.track,
-        className
+        className,
       )}
       onClick={handleClick}
       style={props.style}
@@ -79,7 +73,7 @@ function TracksListItem(props) {
             {explicit}
           </span>
           {(showArtist || showAlbum) && (
-            <span className={classes.trackMetaInfo}>
+            <span>
               {showArtist && attributes.artistName}
               {showArtist && showAlbum && ' - '}
               {showAlbum && attributes.albumName}
@@ -90,7 +84,7 @@ function TracksListItem(props) {
           <span className={classes.trackDuration}>{duration}</span>
           <span
             className={classes.trackActions}
-            onClick={e => {
+            onClick={(e) => {
               e.stopPropagation();
               return false;
             }}
@@ -104,27 +98,25 @@ function TracksListItem(props) {
           </span>
         </span>
       </ContextMenuTrigger>
-    </div>
+    </div>,
   );
 }
 
 TracksListItem.propTypes = {
-  track: PropTypes.any.isRequired,
-  index: PropTypes.number.isRequired,
-  tracks: PropTypes.array.isRequired,
-  style: PropTypes.object,
-  showArtist: PropTypes.bool.isRequired,
-  showAlbum: PropTypes.bool.isRequired,
-  playTrack: PropTypes.func.isRequired,
   className: PropTypes.any,
   connectDragSource: PropTypes.func.isRequired,
-  isOver: PropTypes.bool,
+  index: PropTypes.number.isRequired,
+  playTrack: PropTypes.func.isRequired,
+  showAlbum: PropTypes.bool.isRequired,
+  showArtist: PropTypes.bool.isRequired,
+  style: PropTypes.object,
+  track: PropTypes.any.isRequired,
+  tracks: PropTypes.array.isRequired,
 };
 
 TracksListItem.defaultProps = {
-  style: {},
-  isOver: false,
   className: null,
+  style: {},
 };
 
 const dndSpec = {
