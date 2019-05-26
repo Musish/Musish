@@ -11,8 +11,6 @@ import {
   RepeatModeOne,
 } from '../../../utils/Utils';
 import withMK from '../../../hoc/withMK';
-import QueueContext from './Queue/QueueContext';
-import LyricsModalContext from './Lyrics/LyricsModalContext';
 import {
   isShuffled,
   pause,
@@ -23,11 +21,13 @@ import {
 } from '../../../services/MusicPlayerApi';
 import PlayerTime from './PlayerTime';
 import AlbumPanel from '../AlbumPanel/AlbumPanel';
-import ModalContext from '../Modal/ModalContext';
 import VolumeControl from './VolumeControl';
 import Rating from './Rating/Rating';
 import { AuthorizeContext } from '../../Providers/AuthorizeProvider';
 import withContext from '../../../hoc/withContext';
+import { withModal } from '../../Providers/ModalProvider';
+import { withLyricsModal } from '../../Providers/LyricsModalProvider';
+import { withQueueModal } from '../../Providers/QueueProvider';
 
 class Player extends React.Component {
   componentDidMount() {
@@ -99,7 +99,7 @@ class Player extends React.Component {
   };
 
   render() {
-    const { mk } = this.props;
+    const { mk, modal, lyricsModal, queueModal } = this.props;
     const nowPlayingItem = mk.mediaItem && mk.mediaItem.item;
 
     if (!nowPlayingItem) {
@@ -125,16 +125,12 @@ class Player extends React.Component {
     );
 
     const albumName = hasMeta ? (
-      <ModalContext.Consumer>
-        {({ replace }) => (
-          <span
-            className={cx(styles.albumName, styles.link)}
-            onClick={() => this.handleOpenAlbum(replace)}
-          >
-            {nowPlayingItem.attributes.albumName}
-          </span>
-        )}
-      </ModalContext.Consumer>
+      <span
+        className={cx(styles.albumName, styles.link)}
+        onClick={() => this.handleOpenAlbum(modal.replace)}
+      >
+        {nowPlayingItem.attributes.albumName}
+      </span>
     ) : (
       <span className={cx(styles.albumName)}>{nowPlayingItem.attributes.albumName}</span>
     );
@@ -194,27 +190,22 @@ class Player extends React.Component {
             <i className={'fas fa-random'} />
           </span>
 
-          <LyricsModalContext.Consumer>
-            {({ opened, open, close }) => (
-              <span
-                className={cx(styles.controls, { [styles.enabled]: opened })}
-                onClick={() => (opened ? close() : open(nowPlayingItem))}
-              >
-                <i className={'fas fa-align-left'} />
-              </span>
-            )}
-          </LyricsModalContext.Consumer>
+          <span
+            className={cx(styles.controls, { [styles.enabled]: lyricsModal.isOpen })}
+            onClick={() => (lyricsModal.isOpen
+              ? lyricsModal.close()
+              : lyricsModal.open(nowPlayingItem
+            ))}
+          >
+            <i className={'fas fa-align-left'} />
+          </span>
 
-          <QueueContext.Consumer>
-            {({ show, doShow, doHide }) => (
-              <span
-                className={cx(styles.controls, { [styles.enabled]: show })}
-                onClick={show ? doHide : doShow}
-              >
-                <i className={'fas fa-list-ol'} />
-              </span>
-            )}
-          </QueueContext.Consumer>
+          <span
+            className={cx(styles.controls, { [styles.enabled]: queueModal.isOpen })}
+            onClick={queueModal.isOpen ? queueModal.close : queueModal.open}
+          >
+            <i className={'fas fa-list-ol'} />
+          </span>
         </div>
       </div>
     );
@@ -231,6 +222,23 @@ const bindings = {
 Player.propTypes = {
   mk: PropTypes.any.isRequired,
   authorized: PropTypes.bool.isRequired,
+  modal: PropTypes.object,
+  lyricsModal: PropTypes.object,
+  queueModal: PropTypes.object,
 };
 
-export default withMK(withContext(Player, AuthorizeContext), bindings);
+Player.defaultProps = {
+  modal: null,
+  lyricsModal: null,
+};
+
+export default withMK(
+  withQueueModal(
+    withLyricsModal(
+      withModal(
+        withContext(Player, AuthorizeContext),
+      ),
+    ),
+  ),
+  bindings,
+);

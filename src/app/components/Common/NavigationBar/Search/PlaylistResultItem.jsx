@@ -4,13 +4,15 @@ import PropTypes from 'prop-types';
 import { DragSource } from 'react-dnd';
 import classes from './SearchBar.scss';
 import { artworkForMediaItem } from '../../../../utils/Utils';
-import ModalContext from '../../Modal/ModalContext';
 import PlaylistPanel from '../../PlaylistPanel/PlaylistPanel';
 import DragDropType from '../../../../utils/Constants/DragDropType';
 import ContextMenuTrigger from '../../ContextMenu/ContextMenuTrigger';
 import PlaylistContextMenu from '../../ContextMenu/Types/Playlist/PlaylistContextMenu';
+import { useModal } from '../../../Providers/ModalProvider';
 
-function PlaylistResultItem({ playlist, size, connectDragSource, isOver }) {
+function PlaylistResultItem({ playlist, size, connectDragSource }) {
+  const { push: pushModal } = useModal();
+
   const isCatalog = playlist.type === 'playlists';
 
   return connectDragSource(
@@ -20,29 +22,25 @@ function PlaylistResultItem({ playlist, size, connectDragSource, isOver }) {
         holdToDisplay={-1}
         render={() => <PlaylistContextMenu playlist={playlist} />}
       >
-        <ModalContext.Consumer>
-          {({ push }) => (
-            <div
-              className={cx(classes.result, classes.playlist)}
-              onClick={() => push(<PlaylistPanel playlist={playlist} />)}
-            >
-              <span className={classes.artwork}>
-                {isCatalog && (
-                  <div className={classes.catalogIndicator}>
-                    <i className={'fab fa-apple'} />
-                  </div>
-                )}
-                <img
-                  src={artworkForMediaItem(playlist, size)}
-                  alt={playlist.attributes.name}
-                  style={{ width: size, height: size }}
-                />
-              </span>
+        <div
+          className={cx(classes.result, classes.playlist)}
+          onClick={() => pushModal(<PlaylistPanel playlist={playlist} />)}
+        >
+          <span className={classes.artwork}>
+            {isCatalog && (
+              <div className={classes.catalogIndicator}>
+                <i className={'fab fa-apple'} />
+              </div>
+            )}
+            <img
+              src={artworkForMediaItem(playlist, size)}
+              alt={playlist.attributes.name}
+              style={{ width: size, height: size }}
+            />
+          </span>
 
-              <span className={classes.name}>{playlist.attributes.name}</span>
-            </div>
-          )}
-        </ModalContext.Consumer>
+          <span className={classes.name}>{playlist.attributes.name}</span>
+        </div>
       </ContextMenuTrigger>
     </div>
   );
@@ -52,11 +50,6 @@ PlaylistResultItem.propTypes = {
   playlist: PropTypes.any.isRequired,
   size: PropTypes.any.isRequired,
   connectDragSource: PropTypes.func.isRequired,
-  isOver: PropTypes.bool,
-};
-
-PlaylistResultItem.defaultProps = {
-  isOver: false,
 };
 
 const dndSpec = {

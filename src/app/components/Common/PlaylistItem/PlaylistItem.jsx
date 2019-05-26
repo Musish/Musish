@@ -8,11 +8,13 @@ import classes from './PlaylistItem.scss';
 import PlaylistPanel from '../PlaylistPanel/PlaylistPanel';
 import { artworkForMediaItem } from '../../../utils/Utils';
 import DragDropType from '../../../utils/Constants/DragDropType';
-import ModalContext from '../Modal/ModalContext';
 import ContextMenuTrigger from '../ContextMenu/ContextMenuTrigger';
 import PlaylistContextMenu from '../ContextMenu/Types/Playlist/PlaylistContextMenu';
+import { useModal } from '../../Providers/ModalProvider';
 
 function PlaylistItem(props) {
+  const { push: pushModal } = useModal();
+
   function handleOpen(push) {
     const id = props.id || props.playlist.id;
     if (props.navigate) {
@@ -28,32 +30,28 @@ function PlaylistItem(props) {
 
   return connectDragSource(
     <div className={cx(classes.container, { [classes.droppable]: isOver })} style={{ width: size }}>
-      <ModalContext.Consumer>
-        {({ push }) => (
-          <div onClick={() => handleOpen(push)}>
-            <ContextMenuTrigger
-              holdToDisplay={-1}
-              render={() => <PlaylistContextMenu playlist={playlist} />}
-            >
-              <div className={classes.imageContainer} style={{ width: size, height: size }}>
-                <img
-                  src={artwork}
-                  className={classes.image}
-                  style={{ width: size, height: size }}
-                  alt={playlist.attributes.name}
-                  title={playlist.attributes.name}
-                />
-              </div>
-
-              <div className={classes.descriptionContainer}>
-                <span className={classes.playlistName} style={{ width: size }}>
-                  {playlist.attributes.name}
-                </span>
-              </div>
-            </ContextMenuTrigger>
+      <div onClick={() => handleOpen(pushModal)}>
+        <ContextMenuTrigger
+          holdToDisplay={-1}
+          render={() => <PlaylistContextMenu playlist={playlist} />}
+        >
+          <div className={classes.imageContainer} style={{ width: size, height: size }}>
+            <img
+              src={artwork}
+              className={classes.image}
+              style={{ width: size, height: size }}
+              alt={playlist.attributes.name}
+              title={playlist.attributes.name}
+            />
           </div>
-        )}
-      </ModalContext.Consumer>
+
+          <div className={classes.descriptionContainer}>
+            <span className={classes.playlistName} style={{ width: size }}>
+              {playlist.attributes.name}
+            </span>
+          </div>
+        </ContextMenuTrigger>
+      </div>
     </div>
   );
 }

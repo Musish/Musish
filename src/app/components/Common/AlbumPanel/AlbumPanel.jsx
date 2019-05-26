@@ -9,8 +9,8 @@ import Loader from '../Loader/Loader';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
 import * as MusicApi from '../../../services/MusicApi';
 import withMK from '../../../hoc/withMK';
-import ModalContext from '../Modal/ModalContext';
 import translate from '../../../utils/translations/Translations';
+import { withModal } from '../../Providers/ModalProvider';
 
 class AlbumPanel extends React.Component {
   constructor(props) {
@@ -88,6 +88,7 @@ class AlbumPanel extends React.Component {
   };
 
   render() {
+    const { modal } = this.props;
     const { album, matchedCatalogAlbum, runtime } = this.state;
 
     if (!album) {
@@ -163,28 +164,24 @@ class AlbumPanel extends React.Component {
           />
 
           {matchedCatalogAlbum && (
-            <ModalContext.Consumer>
-              {({ push }) => (
-                <div className={classes.showCompleteContainer}>
-                  <Route path={'/me/albums'}>
-                    {({ match }) => (
-                      <span
-                        onClick={() => {
-                          if (match) {
-                            this.props.history.push('/me/albums/');
-                          }
-                          push(
-                            <AlbumPanel key={matchedCatalogAlbum.id} album={matchedCatalogAlbum} />
-                          );
-                        }}
-                      >
-                        {translate.showCompleteAlbum}
-                      </span>
-                    )}
-                  </Route>
-                </div>
-              )}
-            </ModalContext.Consumer>
+            <div className={classes.showCompleteContainer}>
+              <Route path={'/me/albums'}>
+                {({ match }) => (
+                  <span
+                    onClick={() => {
+                      if (match) {
+                        this.props.history.push('/me/albums/');
+                      }
+                      modal.push(
+                        <AlbumPanel key={matchedCatalogAlbum.id} album={matchedCatalogAlbum} />
+                      );
+                    }}
+                  >
+                    {translate.showCompleteAlbum}
+                  </span>
+                )}
+              </Route>
+            </div>
           )}
         </div>
       </div>
@@ -196,12 +193,14 @@ AlbumPanel.propTypes = {
   id: PropTypes.any,
   album: PropTypes.any,
   history: PropTypes.any,
+  modal: PropTypes.object,
 };
 
 AlbumPanel.defaultProps = {
   id: null,
   album: null,
   history: null,
+  modal: null,
 };
 
-export default withRouter(withMK(AlbumPanel));
+export default withRouter(withModal(withMK(AlbumPanel)));

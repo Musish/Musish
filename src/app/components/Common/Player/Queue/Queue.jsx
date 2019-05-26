@@ -4,9 +4,9 @@ import cx from 'classnames';
 import PropTypes from 'prop-types';
 import classes from './Queue.scss';
 import withMK from '../../../../hoc/withMK';
-import QueueContext from './QueueContext';
 import QueueList from './QueueList';
 import translate from '../../../../utils/translations/Translations';
+import { withQueueModal } from '../../../Providers/QueueProvider';
 
 class Queue extends Component {
   onSortEnd = ({ oldIndex, newIndex }) => {
@@ -57,48 +57,45 @@ class Queue extends Component {
           },
         },
       },
+      queueModal,
     } = this.props;
 
+    if (!queueModal.isOpen) {
+      return null;
+    }
+
     return (
-      <QueueContext.Consumer>
-        {({ doHide }) => (
-          <Draggable handle={'.handle'} defaultPosition={{ x: 0, y: 0 }} position={null}>
-            <div className={classes.modal} onClick={e => e.stopPropagation()}>
-              <div className={cx(classes.header, 'handle')}>
-                <div className={classes.title}>
-                  <span>
-                    <i className='fas fa-grip-vertical' />
-                    {` ${translate.upNext}`}
-                  </span>
-                </div>
-                <div className={classes.icons} onClick={doHide}>
-                  <span>
-                    <i className='fas fa-times' />
-                  </span>
-                </div>
-              </div>
-              <QueueList
-                items={items}
-                onSortEnd={this.onSortEnd}
-                shouldCancelStart={Queue.shouldCancelStart}
-                helperClass={classes.sortableHelper}
-                removeItemFunc={this.removeItem}
-              />
+      <Draggable handle={'.handle'} defaultPosition={{ x: 0, y: 0 }} position={null}>
+        <div className={classes.modal} onClick={e => e.stopPropagation()}>
+          <div className={cx(classes.header, 'handle')}>
+            <div className={classes.title}>
+              <span>
+                <i className='fas fa-grip-vertical' />
+                {` ${translate.upNext}`}
+              </span>
             </div>
-          </Draggable>
-        )}
-      </QueueContext.Consumer>
+            <div className={classes.icons} onClick={queueModal.close}>
+              <span>
+                <i className='fas fa-times' />
+              </span>
+            </div>
+          </div>
+          <QueueList
+            items={items}
+            onSortEnd={this.onSortEnd}
+            shouldCancelStart={Queue.shouldCancelStart}
+            helperClass={classes.sortableHelper}
+            removeItemFunc={this.removeItem}
+          />
+        </div>
+      </Draggable>
     );
   }
 }
 
 Queue.propTypes = {
   mk: PropTypes.any.isRequired,
+  queueModal: PropTypes.object.isRequired,
 };
 
-const queueBindings = {};
-const MKQueue = withMK(Queue, queueBindings);
-
-export default function QueueWrapper() {
-  return <QueueContext.Consumer>{({ show }) => show && <MKQueue />}</QueueContext.Consumer>;
-}
+export default withMK(withQueueModal(Queue));

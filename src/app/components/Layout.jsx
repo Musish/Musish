@@ -1,18 +1,17 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import NavigationBar from './Common/NavigationBar/NavigationBar';
 import Sidebar from './Common/Sidebar/Sidebar';
 import Queue from './Common/Player/Queue/Queue';
-import withContext from '../hoc/withContext';
-import ModalContext from './Common/Modal/ModalContext';
+import { withModal } from './Providers/ModalProvider';
+import { withRouter } from 'react-router-dom';
 
 class Layout extends Component {
   componentDidMount() {
-    const { history, flush } = this.props;
+    const { history, modal } = this.props;
 
     history.listen(() => {
-      flush();
+      modal.flush();
     });
   }
 
@@ -37,11 +36,11 @@ Layout.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
   className: PropTypes.string,
   history: PropTypes.any.isRequired,
-  flush: PropTypes.any.isRequired,
+  modal: PropTypes.object.isRequired,
 };
 
 Layout.defaultProps = {
   className: '',
 };
 
-export default withRouter(withContext(Layout, ModalContext));
+export default withRouter(withModal(Layout));

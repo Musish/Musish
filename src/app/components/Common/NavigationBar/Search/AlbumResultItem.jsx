@@ -5,13 +5,15 @@ import { DragSource } from 'react-dnd';
 import classes from './SearchBar.scss';
 import { artworkForMediaItem } from '../../../../utils/Utils';
 import AlbumPanel from '../../AlbumPanel/AlbumPanel';
-import ModalContext from '../../Modal/ModalContext';
 import DragDropType from '../../../../utils/Constants/DragDropType';
 import AlbumContextMenu from '../../ContextMenu/Types/Album/AlbumContextMenu';
 import ContextMenuTrigger from '../../ContextMenu/ContextMenuTrigger';
+import { useModal } from '../../../Providers/ModalProvider';
 
-function AlbumResultItem({ album, size, connectDragSource, isOver }) {
+function AlbumResultItem({ album, size, connectDragSource }) {
   const isCatalog = album.type === 'albums';
+
+  const { push: pushModal } = useModal();
 
   return connectDragSource(
     <div>
@@ -20,29 +22,25 @@ function AlbumResultItem({ album, size, connectDragSource, isOver }) {
         holdToDisplay={-1}
         render={() => <AlbumContextMenu album={album} />}
       >
-        <ModalContext.Consumer>
-          {({ push }) => (
-            <div
-              className={cx(classes.result, classes.album)}
-              onClick={() => push(<AlbumPanel key={album.id} album={album} />)}
-            >
-              <span className={classes.artwork}>
-                {isCatalog && (
-                  <div className={classes.catalogIndicator}>
-                    <i className={'fab fa-apple'} />
-                  </div>
-                )}
-                <img
-                  src={artworkForMediaItem(album, size)}
-                  alt={album.attributes.name}
-                  style={{ width: size, height: size }}
-                />
-              </span>
+        <div
+          className={cx(classes.result, classes.album)}
+          onClick={() => pushModal(<AlbumPanel key={album.id} album={album} />)}
+        >
+          <span className={classes.artwork}>
+            {isCatalog && (
+              <div className={classes.catalogIndicator}>
+                <i className={'fab fa-apple'} />
+              </div>
+            )}
+            <img
+              src={artworkForMediaItem(album, size)}
+              alt={album.attributes.name}
+              style={{ width: size, height: size }}
+            />
+          </span>
 
-              <span className={classes.name}>{album.attributes.name}</span>
-            </div>
-          )}
-        </ModalContext.Consumer>
+          <span className={classes.name}>{album.attributes.name}</span>
+        </div>
       </ContextMenuTrigger>
     </div>
   );
@@ -52,11 +50,6 @@ AlbumResultItem.propTypes = {
   album: PropTypes.any.isRequired,
   size: PropTypes.any.isRequired,
   connectDragSource: PropTypes.func.isRequired,
-  isOver: PropTypes.bool,
-};
-
-AlbumResultItem.defaultProps = {
-  isOver: false,
 };
 
 const dndSpec = {

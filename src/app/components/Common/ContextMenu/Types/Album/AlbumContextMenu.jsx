@@ -5,13 +5,15 @@ import { withRouter } from 'react-router-dom';
 import { artworkForMediaItem } from '../../../../../utils/Utils';
 import classes from './AlbumContextMenu.scss';
 import { playAlbum, playNext, playLater } from '../../../../../services/MusicPlayerApi';
-import ModalContext from '../../../Modal/ModalContext';
 import AlbumPanel from '../../../AlbumPanel/AlbumPanel';
 import { addAlbumToPlaylist, addToLibrary } from '../../../../../services/MusicApi';
 import PlaylistSelector from '../../../PlaylistSelector/PlaylistSelector';
 import translate from '../../../../../utils/translations/Translations';
+import { useModal } from '../../../../Providers/ModalProvider';
 
 function AlbumContextMenu({ album }) {
+  const { push: pushModal, pop: popModal } = useModal();
+
   const { attributes } = album;
   const artworkURL = artworkForMediaItem(album, 60);
   const inLibrary = attributes.playParams.isLibrary;
@@ -38,13 +40,9 @@ function AlbumContextMenu({ album }) {
 
       <MenuItem divider />
 
-      <ModalContext.Consumer>
-        {({ push }) => (
-          <MenuItem onClick={() => push(<AlbumPanel key={album.id} album={album} />)}>
-            {translate.openAlbum}
-          </MenuItem>
-        )}
-      </ModalContext.Consumer>
+      <MenuItem onClick={() => pushModal(<AlbumPanel key={album.id} album={album} />)}>
+        {translate.openAlbum}
+      </MenuItem>
 
       {!inLibrary && (
         <>
@@ -56,27 +54,23 @@ function AlbumContextMenu({ album }) {
         </>
       )}
 
-      <ModalContext.Consumer>
-        {({ push, pop }) => (
-          <MenuItem
-            onClick={() =>
-              push(
-                <PlaylistSelector
-                  onClick={async playlist => {
-                    await addAlbumToPlaylist(playlist.id, album.id);
-                    pop();
-                  }}
-                />,
-                {
-                  width: 'auto',
-                }
-              )
+      <MenuItem
+        onClick={() =>
+          pushModal(
+            <PlaylistSelector
+              onClick={async playlist => {
+                await addAlbumToPlaylist(playlist.id, album.id);
+                popModal();
+              }}
+            />,
+            {
+              width: 'auto',
             }
-          >
-            {translate.addToPlaylist}
-          </MenuItem>
-        )}
-      </ModalContext.Consumer>
+          )
+        }
+      >
+        {translate.addToPlaylist}
+      </MenuItem>
     </>
   );
 }
