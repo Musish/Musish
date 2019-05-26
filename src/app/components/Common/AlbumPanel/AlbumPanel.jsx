@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Route, withRouter } from 'react-router-dom';
 import classes from './AlbumPanel.scss';
-import { artworkForMediaItem, humanifyMillis, humanifyTrackNumbers, setPseudoRoute } from '../../../utils/Utils';
+import { artworkForMediaItem, humanifyMillis, humanifyTrackNumbers } from '../../../utils/Utils';
 import TracksList from '../Tracks/TracksList/TracksList';
 import Loader from '../Loader/Loader';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
@@ -11,21 +11,21 @@ import * as MusicApi from '../../../services/MusicApi';
 import withMK from '../../../hoc/withMK';
 import translate from '../../../utils/translations/Translations';
 import { withModal } from '../../Providers/ModalProvider';
+import withPseudoRoute from '../../../hoc/withPseudoRoute';
+import EAlbumPanel from './AlbumPanel';
 
 class AlbumPanel extends React.Component {
   constructor(props) {
     super(props);
 
+    this.albumId = this.props.id || this.props.album.id;
+    this.isCatalog = !isNaN(this.albumId);
+
     this.state = {
       album: null,
-      shouldMatchCatalogAlbum: !this.isCatalog(),
+      shouldMatchCatalogAlbum: !this.isCatalog,
       matchedCatalogAlbum: null,
     };
-
-    this.deepLink = `/album/${this.getAlbumId()}`;
-    if (isNaN(this.getAlbumId())) {
-      this.deepLink = '/me' + this.deepLink;
-    }
 
     this.ref = React.createRef();
     this.store = {};
@@ -33,20 +33,10 @@ class AlbumPanel extends React.Component {
 
   componentDidMount() {
     this.fetchAlbum();
-
-    if (this.props.pseudoRoute) {
-      setPseudoRoute(this.deepLink);
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.props.pseudoRoute && window.location.pathname === this.deepLink) {
-      setPseudoRoute(this.props.location.pathname);
-    }
   }
 
   fetchAlbum = async () => {
-    const album = await this.albumLoader(this.getAlbumId());
+    const album = await this.albumLoader(this.albumId);
 
     this.setState({
       album,
@@ -55,16 +45,12 @@ class AlbumPanel extends React.Component {
 
   albumLoader = (...args) => {
     const music = MusicKit.getInstance();
-    if (!this.isCatalog()) {
+    if (!this.isCatalog) {
       return music.api.library.album(...args);
     }
 
     return music.api.album(...args);
   };
-
-  isCatalog = () => !isNaN(this.getAlbumId());
-
-  getAlbumId = () => this.props.id || this.props.album.id;
 
   onSetItems = ({ items }) => {
     const albumLength = items.reduce(
@@ -169,7 +155,7 @@ class AlbumPanel extends React.Component {
             scrollElement={this.ref}
             scrollElementModifier={e => e && e.parentElement}
             load={MusicApi.infiniteLoadRelationships(
-              this.getAlbumId(),
+              this.albumId,
               this.albumLoader,
               'tracks',
               this.store
@@ -188,7 +174,7 @@ class AlbumPanel extends React.Component {
                         this.props.history.push('/me/albums/');
                       }
                       modal.push(
-                        <AlbumPanel key={matchedCatalogAlbum.id} album={matchedCatalogAlbum} pseudoRoute />
+                        <EAlbumPanel key={matchedCatalogAlbum.id} album={matchedCatalogAlbum} pseudoRoute />
                       );
                     }}
                   >
@@ -209,8 +195,6 @@ AlbumPanel.propTypes = {
   album: PropTypes.any,
   history: PropTypes.any,
   modal: PropTypes.object,
-  pseudoRoute: PropTypes.bool,
-  location: PropTypes.object.isRequired,
 };
 
 AlbumPanel.defaultProps = {
@@ -218,7 +202,15 @@ AlbumPanel.defaultProps = {
   album: null,
   history: null,
   modal: null,
-  pseudoRoute: false,
 };
 
-export default withRouter(withModal(withMK(AlbumPanel)));
+const pseudoRoute = ({ id, album }) => {
+  const albumId = id || album.id;
+  let route = `/album/${albumId}`;
+  if (isNaN(id)) {
+    route = '/me' + route;
+  }
+  return route;
+};
+
+export default withPseudoRoute(withRouter(withModal(withMK(AlbumPanel))), pseudoRoute);

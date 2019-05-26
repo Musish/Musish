@@ -8,7 +8,7 @@ import Loader from '../Loader/Loader';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
 import * as MusicApi from '../../../services/MusicApi';
 import translate from '../../../utils/translations/Translations';
-import { withRouter } from 'react-router-dom';
+import withPseudoRoute from '../../../hoc/withPseudoRoute';
 
 class PlaylistPanel extends React.Component {
   constructor(props) {
@@ -21,10 +21,6 @@ class PlaylistPanel extends React.Component {
     };
 
     this.playlistId = this.props.id || this.props.playlist.id;
-    this.deepLink = `/playlist/${this.playlistId}`;
-    if (this.playlistId.startsWith('p.')) {
-      this.deepLink = '/me' + this.deepLink;
-    }
 
     this.ref = React.createRef();
     this.store = {};
@@ -32,16 +28,6 @@ class PlaylistPanel extends React.Component {
 
   componentDidMount() {
     this.fetchPlaylist();
-
-    if (this.props.pseudoRoute) {
-      setPseudoRoute(this.deepLink);
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.props.pseudoRoute && window.location.pathname ===  this.deepLink) {
-      setPseudoRoute(this.props.location.pathname);
-    }
   }
 
   fetchPlaylist = async () => {
@@ -162,14 +148,20 @@ class PlaylistPanel extends React.Component {
 PlaylistPanel.propTypes = {
   playlist: PropTypes.any,
   id: PropTypes.any,
-  pseudoRoute: PropTypes.bool,
-  location: PropTypes.object.isRequired,
 };
 
 PlaylistPanel.defaultProps = {
   playlist: null,
   id: null,
-  pseudoRoute: false,
 };
 
-export default withRouter(PlaylistPanel);
+const pseudoRoute = ({ id, playlist }) => {
+  const playlistId = id || playlist.id;
+  let route = `/playlist/${playlistId}`;
+  if (id.startsWith('p.')) {
+    route = '/me' + route;
+  }
+  return route;
+};
+
+export default withPseudoRoute(PlaylistPanel, pseudoRoute);

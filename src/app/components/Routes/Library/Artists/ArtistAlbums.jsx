@@ -13,6 +13,8 @@ class ArtistAlbums extends React.Component {
     this.state = {
       artist: null,
     };
+
+    this.pageRef = React.createRef();
   }
 
   async componentDidMount() {
@@ -57,7 +59,7 @@ class ArtistAlbums extends React.Component {
   };
 
   render() {
-    return <PageContent>{this.renderContent()}</PageContent>; // TODO: innerRef???
+    return <PageContent innerRef={this.pageRef}>{this.renderContent()}</PageContent>;
   }
 }
 

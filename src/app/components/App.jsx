@@ -5,7 +5,7 @@ import { DragDropContext } from 'react-dnd';
 import Alert from 'react-s-alert';
 import MusicKitProvider from './Providers/MusicKitProvider';
 import AuthorizeProvider from './Providers/AuthorizeProvider';
-import AlbumsPage from './Routes/Catalog/Albums/AlbumsPage';
+import AlbumsPage from './Routes/Library/Albums/AlbumsPage';
 import Layout from './Layout';
 import ArtistPage from './Routes/Catalog/Artist/ArtistPage';
 import ArtistsPage from './Routes/Library/Artists/ArtistsPage';
