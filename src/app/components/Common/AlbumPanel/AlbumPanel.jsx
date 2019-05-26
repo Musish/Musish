@@ -22,12 +22,27 @@ class AlbumPanel extends React.Component {
       matchedCatalogAlbum: null,
     };
 
+    this.deepLink = `/album/${this.getAlbumId()}`;
+    if (isNaN(this.getAlbumId())) {
+      this.deepLink = '/me' + this.deepLink;
+    }
+
     this.ref = React.createRef();
     this.store = {};
   }
 
   componentDidMount() {
     this.fetchAlbum();
+
+    if (this.props.pseudoRoute) {
+      window.history.pushState('', '', this.deepLink);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.props.pseudoRoute && window.location.pathname ===  this.deepLink) {
+      window.history.pushState('', '', this.props.location.pathname);
+    }
   }
 
   fetchAlbum = async () => {
@@ -194,6 +209,8 @@ AlbumPanel.propTypes = {
   album: PropTypes.any,
   history: PropTypes.any,
   modal: PropTypes.object,
+  pseudoRoute: PropTypes.bool,
+  location: PropTypes.object.isRequired,
 };
 
 AlbumPanel.defaultProps = {
@@ -201,6 +218,7 @@ AlbumPanel.defaultProps = {
   album: null,
   history: null,
   modal: null,
+  pseudoRoute: false,
 };
 
 export default withRouter(withModal(withMK(AlbumPanel)));

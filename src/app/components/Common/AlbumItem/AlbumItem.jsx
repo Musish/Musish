@@ -20,7 +20,7 @@ function AlbumItem(props) {
     if (props.navigate) {
       props.history.push(`/me/albums/${id}`);
     } else {
-      replace(<AlbumPanel key={id} id={id} />);
+      replace(<AlbumPanel key={id} id={id} pseudoRoute />);
     }
   }
 

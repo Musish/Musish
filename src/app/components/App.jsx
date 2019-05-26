@@ -42,8 +42,8 @@ function App() {
           <GoogleAnalyticsProvider>
             <AuthorizeProvider>
               <PlaylistsProvider>
-                <QueueModalProvider>
-                  <ModalProvider>
+                <ModalProvider>
+                  <QueueModalProvider>
                     <LyricsModalProvider>
                       <LastfmProvider>
                         <Layout>
@@ -53,7 +53,7 @@ function App() {
                             <Route path={'/me/albums'} component={AlbumsPage} />
                             <Route path={'/me/playlists'} exact component={PlaylistsPage} />
                             <Route
-                              path={'/me/playlists/:id'}
+                              path={'/me/playlist/:id'}
                               exact
                               component={props => (
                                 <Playlist key={props.location.pathname} {...props} />
@@ -85,8 +85,8 @@ function App() {
                         <LyricsModal />
                       </LastfmProvider>
                     </LyricsModalProvider>
-                  </ModalProvider>
-                </QueueModalProvider>
+                  </QueueModalProvider>
+                </ModalProvider>
               </PlaylistsProvider>
             </AuthorizeProvider>
           </GoogleAnalyticsProvider>
