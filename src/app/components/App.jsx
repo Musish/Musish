@@ -18,17 +18,16 @@ import ForYouPage from './Routes/Catalog/ForYou/ForYouPage';
 import BrowsePage from './Routes/Catalog/Browse/BrowsePage';
 import GenrePage from './Routes/Catalog/Browse/Genres/Genre/GenrePage';
 import RadioPage from './Routes/Catalog/Radio/RadioPage';
-import QueueContext from './Common/Player/Queue/QueueContext';
-import ModalContext from './Common/Modal/ModalContext';
-import Modal from './Common/Modal/Modal';
 import ConnectedMenu from './Common/ContextMenu/ContextMenu';
-import LyricsModalContext from './Common/Player/Lyrics/LyricsModalContext';
 import LyricsModal from './Common/Player/Lyrics/LyricsModal';
 import SearchPage from './Routes/Search/SearchPage';
 import GoogleAnalyticsProvider from './Providers/GoogleAnalyticsProvider';
 import PlaylistsContext from './Common/Sidebar/Menu/MenuItem/PlaylistsContext';
 import SentryBoundary from './Providers/SentryBoundary';
 import LastfmProvider from './Providers/LastfmProvider';
+import ModalProvider, { ModalRenderer } from './Providers/ModalProvider';
+import LyricsModalProvider from './Providers/LyricsModalProvider';
+import QueueModalProvider from './Providers/QueueProvider';
 
 class App extends React.Component {
   constructor(props) {
@@ -36,8 +35,6 @@ class App extends React.Component {
 
     this.state = {
       showQueue: false,
-      modalsContents: [],
-      lyricsModalOpen: false,
       playlists: [],
     };
   }
@@ -50,55 +47,7 @@ class App extends React.Component {
     }
   }
 
-  popModal = () => {
-    this.setState(state => ({
-      modalsContents: state.modalsContents.slice(1),
-    }));
-  };
-
-  renderModal = modalState => {
-    const modal = this.state.modalsContents[0];
-
-    return (
-      <Modal
-        key={this.state.modalsContents.length}
-        open
-        handleClose={modalState.pop}
-        render={() => modal.content}
-        style={modal.style}
-      />
-    );
-  };
-
   render() {
-    const queueState = {
-      show: this.state.showQueue,
-      doShow: () => this.setState({ showQueue: true }),
-      doHide: () => this.setState({ showQueue: false }),
-    };
-
-    const modalState = {
-      push: (content, style = {}) =>
-        this.setState(state => ({
-          modalsContents: [{ content, style }, ...state.modalsContents],
-        })),
-      replace: (content, style = {}) =>
-        this.setState(state => ({
-          modalsContents: [...state.modalsContents.slice(0, -1), { content, style }],
-        })),
-      pop: this.popModal,
-      flush: () =>
-        this.setState({
-          modalsContents: [],
-        }),
-    };
-
-    const lyricsModalState = {
-      opened: this.state.lyricsModalOpen,
-      open: () => this.setState({ lyricsModalOpen: true }),
-      close: () => this.setState({ lyricsModalOpen: false }),
-    };
-
     const playlistsState = {
       playlists: this.state.playlists,
       setItems: items => {
@@ -115,9 +64,9 @@ class App extends React.Component {
             <GoogleAnalyticsProvider>
               <AuthorizeProvider>
                 <PlaylistsContext.Provider value={playlistsState}>
-                  <QueueContext.Provider value={queueState}>
-                    <ModalContext.Provider value={modalState}>
-                      <LyricsModalContext.Provider value={lyricsModalState}>
+                  <QueueModalProvider>
+                    <ModalProvider>
+                      <LyricsModalProvider>
                         <LastfmProvider>
                           <Layout>
                             <Switch>
@@ -150,15 +99,16 @@ class App extends React.Component {
                               />
                               <Redirect to={'/'} />
                             </Switch>
-                            {this.state.modalsContents.length > 0 && this.renderModal(modalState)}
+
+                            <ModalRenderer />
                           </Layout>
                           <ConnectedMenu />
                           <Alert stack offset={60} />
                           <LyricsModal />
                         </LastfmProvider>
-                      </LyricsModalContext.Provider>
-                    </ModalContext.Provider>
-                  </QueueContext.Provider>
+                      </LyricsModalProvider>
+                    </ModalProvider>
+                  </QueueModalProvider>
                 </PlaylistsContext.Provider>
               </AuthorizeProvider>
             </GoogleAnalyticsProvider>

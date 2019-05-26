@@ -5,13 +5,15 @@ import { withRouter } from 'react-router-dom';
 import { artworkForMediaItem } from '../../../../../utils/Utils';
 import classes from './PlaylistContextMenu.scss';
 import { playPlaylist, playNext, playLater } from '../../../../../services/MusicPlayerApi';
-import ModalContext from '../../../Modal/ModalContext';
 import PlaylistPanel from '../../../PlaylistPanel/PlaylistPanel';
 import { addPlaylistToPlaylist, addToLibrary } from '../../../../../services/MusicApi';
 import PlaylistSelector from '../../../PlaylistSelector/PlaylistSelector';
 import translate from '../../../../../utils/translations/Translations';
+import { useModal } from '../../../../Providers/ModalProvider';
 
 function PlaylistContextMenu({ playlist }) {
+  const { push: pushModal } = useModal();
+
   const { attributes } = playlist;
   const artworkURL = artworkForMediaItem(playlist, 60);
   const inLibrary = attributes.playParams.isLibrary;
@@ -38,13 +40,9 @@ function PlaylistContextMenu({ playlist }) {
 
       <MenuItem divider />
 
-      <ModalContext.Consumer>
-        {({ push }) => (
-          <MenuItem onClick={() => push(<PlaylistPanel playlist={playlist} />)}>
-            {translate.openPlaylist}
-          </MenuItem>
-        )}
-      </ModalContext.Consumer>
+      <MenuItem onClick={() => pushModal(<PlaylistPanel playlist={playlist} />)}>
+        {translate.openPlaylist}
+      </MenuItem>
 
       {!inLibrary && (
         <>
@@ -56,27 +54,23 @@ function PlaylistContextMenu({ playlist }) {
         </>
       )}
 
-      <ModalContext.Consumer>
-        {({ push, pop }) => (
-          <MenuItem
-            onClick={() =>
-              push(
-                <PlaylistSelector
-                  onClick={async targetPlaylist => {
-                    await addPlaylistToPlaylist(targetPlaylist.id, playlist.id);
-                    pop();
-                  }}
-                />,
-                {
-                  width: 'auto',
-                }
-              )
+      <MenuItem
+        onClick={() =>
+          pushModal(
+            <PlaylistSelector
+              onClick={async targetPlaylist => {
+                await addPlaylistToPlaylist(targetPlaylist.id, playlist.id);
+                pop();
+              }}
+            />,
+            {
+              width: 'auto',
             }
-          >
-            {translate.addToPlaylist}
-          </MenuItem>
-        )}
-      </ModalContext.Consumer>
+          )
+        }
+      >
+        {translate.addToPlaylist}
+      </MenuItem>
     </>
   );
 }
