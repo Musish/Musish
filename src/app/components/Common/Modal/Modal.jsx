@@ -1,36 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import classes from './Modal.scss';
 
-class Modal extends Component {
-  constructor(props) {
-    super(props);
+function Modal(props) {
+  const { style, width } = props;
+  const inlineStyles = {
+    width,
+    ...style,
+  };
 
-    this.state = {
-      open: this.props.open,
-    };
-  }
-
-  render() {
-    if (!this.state.open) {
-      return null;
-    }
-
-    const { style, width } = this.props;
-    const inlineStyles = {
-      width,
-      ...style,
-    };
-
-    return (
-      <div className={classes.container} onClick={this.props.handleClose}>
-        <div className={classes.modal} onClick={e => e.stopPropagation()} style={inlineStyles}>
-          {this.props.render()}
-        </div>
+  return (
+    <div className={classes.container} onClick={props.handleClose}>
+      <div className={classes.modal} onClick={e => e.stopPropagation()} style={inlineStyles}>
+        {props.render()}
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 Modal.propTypes = {
@@ -38,11 +24,9 @@ Modal.propTypes = {
   style: PropTypes.object,
   width: PropTypes.number,
   render: PropTypes.func.isRequired,
-  open: PropTypes.bool,
 };
 
 Modal.defaultProps = {
-  open: false,
   style: {},
   width: null,
 };

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
@@ -6,38 +6,37 @@ import cx from 'classnames';
 import classes from './CuratorItem.scss';
 import { artworkForMediaItem } from '../../../utils/Utils';
 
-class CuratorItem extends Component {
-  handleOpen = () => {
-    const id = this.props.id || this.props.curator.id;
+function CuratorItem(props) {
+  const { curator, size } = props;
+  const artwork = artworkForMediaItem(curator, size);
 
-    this.props.history.push(`/curator/${id}`);
-  };
+  function handleOpen() {
+    const id = props.id || props.curator.id;
 
-  render() {
-    const { curator, size } = this.props;
-    const artwork = artworkForMediaItem(curator, size);
-    return (
-      <div className={cx(classes.container)} style={{ width: size }}>
-        <div onClick={() => this.handleOpen()}>
-          <div className={classes.imageContainer} style={{ width: size, height: size }}>
-            <img
-              src={artwork}
-              className={classes.image}
-              style={{ width: size, height: size }}
-              alt={curator.attributes.name}
-              title={curator.attributes.name}
-            />
-          </div>
+    props.history.push(`/curator/${id}`);
+  }
 
-          <div className={classes.descriptionContainer}>
-            <span className={classes.curatorName} style={{ width: size }}>
-              {curator.attributes.name}
-            </span>
-          </div>
+  return (
+    <div className={cx(classes.container)} style={{ width: size }}>
+      <div onClick={handleOpen}>
+        <div className={classes.imageContainer} style={{ width: size, height: size }}>
+          <img
+            src={artwork}
+            className={classes.image}
+            style={{ width: size, height: size }}
+            alt={curator.attributes.name}
+            title={curator.attributes.name}
+          />
+        </div>
+
+        <div className={classes.descriptionContainer}>
+          <span className={classes.curatorName} style={{ width: size }}>
+            {curator.attributes.name}
+          </span>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 CuratorItem.propTypes = {
