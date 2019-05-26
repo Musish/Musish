@@ -24,7 +24,7 @@ function AlbumResultItem({ album, size, connectDragSource }) {
       >
         <div
           className={cx(classes.result, classes.album)}
-          onClick={() => pushModal(<AlbumPanel key={album.id} album={album} />)}
+          onClick={() => pushModal(<AlbumPanel key={album.id} album={album} pseudoRoute />)}
         >
           <span className={classes.artwork}>
             {isCatalog && (

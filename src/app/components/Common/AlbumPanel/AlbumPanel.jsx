@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Route, withRouter } from 'react-router-dom';
 import classes from './AlbumPanel.scss';
-import { artworkForMediaItem, humanifyMillis, humanifyTrackNumbers } from '../../../utils/Utils';
+import { artworkForMediaItem, humanifyMillis, humanifyTrackNumbers, setPseudoRoute } from '../../../utils/Utils';
 import TracksList from '../Tracks/TracksList/TracksList';
 import Loader from '../Loader/Loader';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
@@ -35,13 +35,13 @@ class AlbumPanel extends React.Component {
     this.fetchAlbum();
 
     if (this.props.pseudoRoute) {
-      window.history.pushState('', '', this.deepLink);
+      setPseudoRoute(this.deepLink);
     }
   }
 
   componentWillUnmount() {
-    if (this.props.pseudoRoute && window.location.pathname ===  this.deepLink) {
-      window.history.pushState('', '', this.props.location.pathname);
+    if (this.props.pseudoRoute && window.location.pathname === this.deepLink) {
+      setPseudoRoute(this.props.location.pathname);
     }
   }
 
@@ -188,7 +188,7 @@ class AlbumPanel extends React.Component {
                         this.props.history.push('/me/albums/');
                       }
                       modal.push(
-                        <AlbumPanel key={matchedCatalogAlbum.id} album={matchedCatalogAlbum} />
+                        <AlbumPanel key={matchedCatalogAlbum.id} album={matchedCatalogAlbum} pseudoRoute />
                       );
                     }}
                   >

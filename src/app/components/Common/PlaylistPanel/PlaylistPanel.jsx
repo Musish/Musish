@@ -2,7 +2,7 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import classes from './PlaylistPanel.scss';
-import { artworkForMediaItem, humanifyMillis, humanifyTrackNumbers } from '../../../utils/Utils';
+import { artworkForMediaItem, humanifyMillis, humanifyTrackNumbers, setPseudoRoute } from '../../../utils/Utils';
 import TracksList from '../Tracks/TracksList/TracksList';
 import Loader from '../Loader/Loader';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
@@ -34,13 +34,13 @@ class PlaylistPanel extends React.Component {
     this.fetchPlaylist();
 
     if (this.props.pseudoRoute) {
-      window.history.pushState('', '', this.deepLink);
+      setPseudoRoute(this.deepLink);
     }
   }
 
   componentWillUnmount() {
     if (this.props.pseudoRoute && window.location.pathname ===  this.deepLink) {
-      window.history.pushState('', '', this.props.location.pathname);
+      setPseudoRoute(this.props.location.pathname);
     }
   }
 

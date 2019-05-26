@@ -92,3 +92,7 @@ export const getRatingUrl = (type, id) => {
 
   return `${baseUrl}${choice[type]}/${id}`;
 };
+
+export function setPseudoRoute(route) {
+  window.history.pushState('', '', route);
+}
