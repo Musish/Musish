@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import withContext from '../../../hoc/withContext';
-import PlaylistsContext from '../Sidebar/Menu/MenuItem/PlaylistsContext';
 import classes from './PlaylistSelector.scss';
+import { usePlaylists } from '../../Providers/PlaylistsProvider';
 
-function PlaylistSelector(props) {
-  const { playlists, onClick } = props;
+function PlaylistSelector({ onClick }) {
+  const { playlists } = usePlaylists();
 
   return (
     <div>
@@ -19,7 +18,6 @@ function PlaylistSelector(props) {
 }
 
 PlaylistSelector.propTypes = {
-  playlists: PropTypes.array.isRequired,
   onClick: PropTypes.func,
 };
 
@@ -27,4 +25,4 @@ PlaylistSelector.defaultProps = {
   onClick: () => null,
 };
 
-export default withContext(PlaylistSelector, PlaylistsContext);
+export default PlaylistSelector;

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import Modal from '../Common/Modal/Modal';
+import Mousetrap from 'mousetrap';
 
 export const ModalContext = React.createContext({});
 
@@ -14,6 +15,8 @@ function ModalProvider({ children }) {
     pop: () => setModals(modals.slice(1)),
     flush: () => setModals([]),
   };
+
+  Mousetrap.bind('esc', state.pop, 'keyup');
 
   return (
     <ModalContext.Provider value={state}>

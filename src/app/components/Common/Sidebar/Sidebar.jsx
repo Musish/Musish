@@ -9,11 +9,13 @@ import SidebarMenu from './Menu/SidebarMenu';
 import SidebarLibraryMenu from './Menu/SidebarLibraryMenu';
 import { AuthorizeContext } from '../../Providers/AuthorizeProvider';
 import InfiniteLoader from '../InfiniteLoader/InfiniteLoader';
-import PlaylistsContext from './Menu/MenuItem/PlaylistsContext';
 import translate from '../../../utils/translations/Translations';
+import { usePlaylists } from '../../Providers/PlaylistsProvider';
 
 function Sidebar(props) {
   const { authorized } = props;
+
+  const playlistsData = usePlaylists();
 
   async function loadPlaylists(params) {
     const music = MusicKit.getInstance();
@@ -68,16 +70,12 @@ function Sidebar(props) {
           <div className={classes.menu}>
             <h3>{translate.playlists}</h3>
             <ul>
-              <PlaylistsContext.Consumer>
-                {({ setItems }) => (
-                  <InfiniteLoader
-                    load={loadPlaylists}
-                    render={renderPlaylists}
-                    loadAll
-                    onSetItems={({ items }) => setItems(items)}
-                  />
-                )}
-              </PlaylistsContext.Consumer>
+              <InfiniteLoader
+                load={loadPlaylists}
+                render={renderPlaylists}
+                loadAll
+                onSetItems={({ items }) => playlistsData.setItems(items)}
+              />
             </ul>
           </div>
         )}

@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import { LyricsModalContext } from './LyricsModalProvider';
 
-export const PlaylistsContext = React.createContext({ playlists: [] });
+export const PlaylistsContext = React.createContext({});
 
 function PlaylistsProvider({ children }) {
   const [playlists, setItems] = useState([]);
@@ -13,9 +12,9 @@ function PlaylistsProvider({ children }) {
   };
 
   return (
-    <LyricsModalContext.Provider value={state}>
+    <PlaylistsContext.Provider value={state}>
       {children}
-    </LyricsModalContext.Provider>
+    </PlaylistsContext.Provider>
   );
 }
 
