@@ -1,10 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
 
-import classes from './TracksGrid.scss';
 import TrackListItem from '../TracksList/TracksListItem';
+import * as classes from './TracksGrid.scss';
 
-function TracksGrid({ tracks, showArtist, showAlbum, playTrack }) {
+interface ITracksGridProps {
+  showArtist?: boolean;
+  showAlbum?: boolean;
+  tracks: any[];
+  playTrack: () => null;
+}
+
+const TracksGrid: React.FC<ITracksGridProps> = ({ tracks, showArtist = false, showAlbum = false, playTrack }) => {
   return (
     <div className={classes.scrollWrapper}>
       <div className={classes.trackGrid}>
@@ -23,19 +29,6 @@ function TracksGrid({ tracks, showArtist, showAlbum, playTrack }) {
       </div>
     </div>
   );
-}
-
-TracksGrid.propTypes = {
-  showArtist: PropTypes.bool,
-  showAlbum: PropTypes.bool,
-  tracks: PropTypes.array,
-  playTrack: PropTypes.func.isRequired,
-};
-
-TracksGrid.defaultProps = {
-  showArtist: false,
-  showAlbum: false,
-  tracks: null,
 };
 
 export default TracksGrid;
