@@ -820,6 +820,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-virtualized@^9.21.1":
+  version "9.21.1"
+  resolved "https://registry.yarnpkg.com/@types/react-virtualized/-/react-virtualized-9.21.1.tgz#c85770f5bb0ccaeb3496d97ff2a2d9028c8ed1fd"
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^16.8.18":
   version "16.8.18"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.8.18.tgz#fe66fb748b0b6ca9709d38b87b2d1356d960a511"

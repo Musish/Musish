@@ -84,7 +84,7 @@ function TracksListItem(props) {
           <span className={classes.trackDuration}>{duration}</span>
           <span
             className={classes.trackActions}
-            onClick={(e) => {
+            onClick={e => {
               e.stopPropagation();
               return false;
             }}
