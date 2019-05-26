@@ -22,7 +22,7 @@ function PlaylistItem(props) {
       return;
     }
 
-    push(<PlaylistPanel id={id} />);
+    push(<PlaylistPanel id={id} pseudoRoute />);
   }
 
   const { playlist, size, connectDragSource, isOver } = props;

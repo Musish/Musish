@@ -1,14 +1,14 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import PageContent from '../../../Common/PageContent/PageContent';
-import PageTitle from '../../../Common/PageTitle/PageTitle';
-import TracksList from '../../../Common/Tracks/TracksList/TracksList';
-import { artworkForMediaItem, humanifyMillis } from '../../../../utils/Utils';
+import PageContent from '../../Common/PageContent/PageContent';
+import PageTitle from '../../Common/PageTitle/PageTitle';
+import TracksList from '../../Common/Tracks/TracksList/TracksList';
+import { artworkForMediaItem, humanifyMillis } from '../../../utils/Utils';
 import classes from './PlaylistPage.scss';
-import * as MusicApi from '../../../../services/MusicApi';
-import * as MusicPlayerApi from '../../../../services/MusicPlayerApi';
-import translate from '../../../../utils/translations/Translations';
+import * as MusicApi from '../../../services/MusicApi';
+import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
+import translate from '../../../utils/translations/Translations';
 
 class PlaylistPage extends React.Component {
   constructor(props) {
@@ -129,7 +129,14 @@ class PlaylistPage extends React.Component {
   render() {
     return (
       <PageContent innerRef={this.scrollRef}>
-        <PageTitle context={`${translate.myLibrary}`} />
+        <PageTitle
+          title={null}
+          context={
+            this.getPlaylistId().startsWith('p.')
+              ? translate.myLibrary
+              : translate.appleMusic
+          }
+        />
         {this.renderHeader()}
         <TracksList
           load={MusicApi.infiniteLoadRelationships(

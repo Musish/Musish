@@ -9,7 +9,7 @@ import AlbumsPage from './Routes/Library/Albums/AlbumsPage';
 import Layout from './Layout';
 import ArtistPage from './Routes/Catalog/Artist/ArtistPage';
 import ArtistsPage from './Routes/Library/Artists/ArtistsPage';
-import Playlist from './Routes/Library/Playlist/PlaylistPage';
+import PlaylistPage from './Routes/Playlist/PlaylistPage';
 import SongsPage from './Routes/Library/Songs/SongsPage';
 import PlaylistsPage from './Routes/Library/Playlists/PlaylistsPage';
 import RecentlyAddedPage from './Routes/Library/RecentlyAdded/RecentlyAddedPage';
@@ -27,6 +27,7 @@ import ModalProvider, { ModalRenderer } from './Providers/ModalProvider';
 import LyricsModalProvider from './Providers/LyricsModalProvider';
 import QueueModalProvider from './Providers/QueueProvider';
 import PlaylistsProvider from './Providers/PlaylistsProvider';
+import AlbumPage from './Routes/Album/AlbumPage';
 
 function App() {
   useEffect(() => {
@@ -42,8 +43,8 @@ function App() {
           <GoogleAnalyticsProvider>
             <AuthorizeProvider>
               <PlaylistsProvider>
-                <QueueModalProvider>
-                  <ModalProvider>
+                <ModalProvider>
+                  <QueueModalProvider>
                     <LyricsModalProvider>
                       <LastfmProvider>
                         <Layout>
@@ -53,10 +54,31 @@ function App() {
                             <Route path={'/me/albums'} component={AlbumsPage} />
                             <Route path={'/me/playlists'} exact component={PlaylistsPage} />
                             <Route
-                              path={'/me/playlists/:id'}
+                              path={'/playlist/:id'}
                               exact
                               component={props => (
-                                <Playlist key={props.location.pathname} {...props} />
+                                <PlaylistPage key={props.location.pathname} {...props} />
+                              )}
+                            />
+                            <Route
+                              path={'/me/playlist/:id'}
+                              exact
+                              component={props => (
+                                <PlaylistPage key={props.location.pathname} {...props} />
+                              )}
+                            />
+                            <Route
+                              path={'/album/:id'}
+                              exact
+                              component={props => (
+                                <AlbumPage key={props.location.pathname} {...props} />
+                              )}
+                            />
+                            <Route
+                              path={'/me/album/:id'}
+                              exact
+                              component={props => (
+                                <AlbumPage key={props.location.pathname} {...props} />
                               )}
                             />
                             <Route path={'/me/artists'} exact component={ArtistsPage} />
@@ -85,8 +107,8 @@ function App() {
                         <LyricsModal />
                       </LastfmProvider>
                     </LyricsModalProvider>
-                  </ModalProvider>
-                </QueueModalProvider>
+                  </QueueModalProvider>
+                </ModalProvider>
               </PlaylistsProvider>
             </AuthorizeProvider>
           </GoogleAnalyticsProvider>

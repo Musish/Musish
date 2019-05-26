@@ -40,7 +40,7 @@ function AlbumContextMenu({ album }) {
 
       <MenuItem divider />
 
-      <MenuItem onClick={() => pushModal(<AlbumPanel key={album.id} album={album} />)}>
+      <MenuItem onClick={() => pushModal(<AlbumPanel key={album.id} album={album} pseudoRoute />)}>
         {translate.openAlbum}
       </MenuItem>
 

@@ -24,7 +24,7 @@ function PlaylistResultItem({ playlist, size, connectDragSource }) {
       >
         <div
           className={cx(classes.result, classes.playlist)}
-          onClick={() => pushModal(<PlaylistPanel playlist={playlist} />)}
+          onClick={() => pushModal(<PlaylistPanel playlist={playlist} pseudoRoute />)}
         >
           <span className={classes.artwork}>
             {isCatalog && (

@@ -17,6 +17,8 @@ class ArtistPage extends React.Component {
       artist: null,
       geniusData: null,
     };
+
+    this.pageRef = React.createRef();
   }
 
   componentDidMount() {
@@ -136,7 +138,7 @@ class ArtistPage extends React.Component {
     };
 
     return (
-      <PageContent innerRef={this.ref}>
+      <PageContent innerRef={this.pageRef}>
         {geniusData && (
           <div className={classes.artistHeader} style={headerStyles}>
             <a href={'https://genius.com/'} target={'_blank'}>
