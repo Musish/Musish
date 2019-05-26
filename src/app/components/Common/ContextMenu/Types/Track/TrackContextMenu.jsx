@@ -7,10 +7,12 @@ import classes from './TrackContextMenu.scss';
 import { playLater, playNext, playTrack } from '../../../../../services/MusicPlayerApi';
 import { addToLibrary, addSongsToPlaylist } from '../../../../../services/MusicApi';
 import PlaylistSelector from '../../../PlaylistSelector/PlaylistSelector';
-import ModalContext from '../../../Modal/ModalContext';
 import translate from '../../../../../utils/translations/Translations';
+import { useModal } from '../../../../Providers/ModalProvider';
 
 function TrackContextMenu({ track, tracks, index }) {
+  const { pushModal, popModal } = useModal();
+
   const { attributes } = track;
   const artworkURL = artworkForMediaItem(track, 60);
   const inLibrary = attributes.playParams.isLibrary;
@@ -46,27 +48,23 @@ function TrackContextMenu({ track, tracks, index }) {
         </>
       )}
 
-      <ModalContext.Consumer>
-        {({ push, pop }) => (
-          <MenuItem
-            onClick={() =>
-              push(
-                <PlaylistSelector
-                  onClick={async playlist => {
-                    await addSongsToPlaylist(playlist.id, [track]);
-                    pop();
-                  }}
-                />,
-                {
-                  width: 'auto',
-                }
-              )
+      <MenuItem
+        onClick={() =>
+          pushModal(
+            <PlaylistSelector
+              onClick={async playlist => {
+                await addSongsToPlaylist(playlist.id, [track]);
+                popModal();
+              }}
+            />,
+            {
+              width: 'auto',
             }
-          >
-            {translate.addToPlaylist}
-          </MenuItem>
-        )}
-      </ModalContext.Consumer>
+          )
+        }
+      >
+        {translate.addToPlaylist}
+      </MenuItem>
     </>
   );
 }
