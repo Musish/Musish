@@ -12,107 +12,100 @@ import TrackContextMenu from '../../ContextMenu/Types/Track/TrackContextMenu';
 import { isTrackPlaying } from '../../../../services/MusicPlayerApi';
 import translate from '../../../../utils/translations/Translations';
 
-class TracksListItem extends React.Component {
-  handleClick = async () => {
-    const { track, tracks, index } = this.props;
+function TracksListItem(props) {
+  const {
+    showArtist,
+    showAlbum,
+    track,
+    track: { attributes },
+    connectDragSource,
+    isOver,
+    tracks,
+    index,
+    className,
+  } = props;
 
-    this.props.playTrack({ track, tracks, index });
-  };
+  async function handleClick() {
+    props.playTrack({ track, tracks, index });
+  }
 
-  render() {
-    const {
-      showArtist,
-      showAlbum,
-      track,
-      connectDragSource,
-      isOver,
-      tracks,
-      index,
-      className,
-    } = this.props;
-    const { attributes } = track;
-
-    if (!attributes) {
-      return (
-        <div
-          className={cx(classes.track, classes.disabledTrack, className)}
-          style={this.props.style}
-        >
-          <div className={[classes.trackWrapper]}>
-            <div className={classes.trackBacker} />
-            <TrackDecoration track={track} showAlbum={showAlbum} />
-            <div className={classes.trackInfo}>
-              <span className={classes.trackTitle}>{translate.trackNotAvailable}</span>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    const explicit = attributes.contentRating === 'explicit' && (
-      <div className={classes.explicit}>
-        <span>E</span>
-      </div>
-    );
-
-    const duration = getTime(attributes.durationInMillis);
-
-    return connectDragSource(
-      <div
-        className={cx(
-          {
-            [classes.indexedTrack]: !showAlbum,
-            [classes.playing]: isTrackPlaying(track),
-            [classes.droppable]: isOver,
-            [classes.disabledTrack]: !track.attributes.playParams,
-          },
-          classes.track,
-          className
-        )}
-        onClick={this.handleClick}
-        style={this.props.style}
-      >
-        <ContextMenuTrigger
-          attributes={{ className: [classes.trackWrapper] }}
-          holdToDisplay={-1}
-          render={() => <TrackContextMenu track={track} tracks={tracks} index={index} />}
-        >
+  if (!attributes) {
+    return (
+      <div className={cx(classes.track, classes.disabledTrack, className)} style={props.style}>
+        <div className={[classes.trackWrapper]}>
           <div className={classes.trackBacker} />
           <TrackDecoration track={track} showAlbum={showAlbum} />
           <div className={classes.trackInfo}>
-            <span className={classes.trackTitle}>
-              <span className={classes.trackName}>{attributes.name}</span>
-              {explicit}
-            </span>
-            {(showArtist || showAlbum) && (
-              <span className={classes.trackMetaInfo}>
-                {showArtist && attributes.artistName}
-                {showArtist && showAlbum && ' - '}
-                {showAlbum && attributes.albumName}
-              </span>
-            )}
+            <span className={classes.trackTitle}>{translate.trackNotAvailable}</span>
           </div>
-          <span className={classes.trackRightSide}>
-            <span className={classes.trackDuration}>{duration}</span>
-            <span
-              className={classes.trackActions}
-              onClick={e => {
-                e.stopPropagation();
-                return false;
-              }}
-            >
-              <ContextMenuTrigger
-                holdToDisplay={1}
-                render={() => <TrackContextMenu track={track} tracks={tracks} index={index} />}
-              >
-                <i className='fas fa-ellipsis-h' />
-              </ContextMenuTrigger>
-            </span>
-          </span>
-        </ContextMenuTrigger>
+        </div>
       </div>
     );
   }
+
+  const explicit = attributes.contentRating === 'explicit' && (
+    <div className={classes.explicit}>
+      <span>E</span>
+    </div>
+  );
+
+  const duration = getTime(attributes.durationInMillis);
+
+  return connectDragSource(
+    <div
+      className={cx(
+        {
+          [classes.indexedTrack]: !showAlbum,
+          [classes.playing]: isTrackPlaying(track),
+          [classes.droppable]: isOver,
+          [classes.disabledTrack]: !track.attributes.playParams,
+        },
+        classes.track,
+        className
+      )}
+      onClick={handleClick}
+      style={props.style}
+    >
+      <ContextMenuTrigger
+        attributes={{ className: [classes.trackWrapper] }}
+        holdToDisplay={-1}
+        render={() => <TrackContextMenu track={track} tracks={tracks} index={index} />}
+      >
+        <div className={classes.trackBacker} />
+        <TrackDecoration track={track} showAlbum={showAlbum} />
+        <div className={classes.trackInfo}>
+          <span className={classes.trackTitle}>
+            <span className={classes.trackName}>{attributes.name}</span>
+            {explicit}
+          </span>
+          {(showArtist || showAlbum) && (
+            <span className={classes.trackMetaInfo}>
+              {showArtist && attributes.artistName}
+              {showArtist && showAlbum && ' - '}
+              {showAlbum && attributes.albumName}
+            </span>
+          )}
+        </div>
+        <span className={classes.trackRightSide}>
+          <span className={classes.trackDuration}>{duration}</span>
+          <span
+            className={classes.trackActions}
+            onClick={e => {
+              e.stopPropagation();
+              return false;
+            }}
+          >
+            <ContextMenuTrigger
+              holdToDisplay={1}
+              render={() => <TrackContextMenu track={track} tracks={tracks} index={index} />}
+            >
+              <i className='fas fa-ellipsis-h' />
+            </ContextMenuTrigger>
+          </span>
+        </span>
+      </ContextMenuTrigger>
+    </div>
+  );
 }
 
 TracksListItem.propTypes = {

@@ -1,21 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './Player.scss';
 import { getTime } from '../../../utils/Utils';
-import withMK from '../../../hoc/withMK';
 import { seekToTime } from '../../../services/MusicPlayerApi';
+import useMK from '../../../hooks/useMK';
 
-class PlayerTime extends React.Component {
-  constructor(props) {
-    super(props);
+function PlayerTime(props) {
+  const mk = useMK({
+    [MusicKit.Events.playbackTimeDidChange]: 'playbackTime',
+    [MusicKit.Events.mediaItemDidChange]: 'mediaItem',
+  });
 
-    this.state = {
-      isScrubbing: false,
-      scrubbingPosition: 0,
-    };
-  }
+  const [isScrubbing, setIsScrubbing] = useState(false);
+  const [scrubbingPosition, setScrubbingPosition] = useState(0);
 
-  static timeToPercent(time, duration) {
+  function timeToPercent(time, duration) {
     if (duration === 0) {
       return 0; // For some reason would call this
     }
@@ -23,83 +22,62 @@ class PlayerTime extends React.Component {
     return Math.floor((time * 100) / duration);
   }
 
-  getCurrentPlaybackDuration = () => {
-    const { player } = this.props.mk.instance;
-    return getTime(player.currentPlaybackTimeRemaining * 1000);
-  };
+  function getCurrentPlaybackDuration() {
+    return getTime(mk.instance.player.currentPlaybackTimeRemaining * 1000);
+  }
 
-  getCurrentPlaybackTime = () => {
-    const { player } = this.props.mk.instance;
-    return getTime(player.currentPlaybackTime * 1000);
-  };
+  function getCurrentPlaybackTime() {
+    return getTime(mk.instance.player.currentPlaybackTime * 1000);
+  }
 
-  getCurrentBufferedProgress = () => {
-    const { player } = this.props.mk.instance;
-    return player.currentBufferedProgress;
-  };
+  function getCurrentBufferedProgress() {
+    return mk.instance.player.currentBufferedProgress;
+  }
 
-  getDuration = () => {
-    const {
-      nowPlayingItem,
-      mk: { instance },
-    } = this.props;
+  function getDuration() {
+    const { nowPlayingItem } = props;
 
     if (!nowPlayingItem) {
       return 0;
     }
 
-    return instance.isAuthorized ? nowPlayingItem.playbackDuration / 1000 : 30;
-  };
+    return mk.instance.isAuthorized ? nowPlayingItem.playbackDuration / 1000 : 30;
+  }
 
-  onScrub = e => {
-    this.setState({
-      scrubbingPosition: e.target.value,
-    });
-  };
+  function onScrub(e) {
+    setScrubbingPosition(e.target.value);
+  }
 
-  onStartScrubbing = e => {
-    this.setState({
-      isScrubbing: true,
-      scrubbingPosition: e.target.value,
-    });
-  };
+  function onStartScrubbing(e) {
+    setIsScrubbing(true);
+    setScrubbingPosition(e.target.value);
+  }
 
-  onEndScrubbing = async e => {
+  async function onEndScrubbing(e) {
     await seekToTime(e.target.value);
 
-    this.setState({
-      isScrubbing: false,
-      scrubbingPosition: null,
-    });
-  };
+    setIsScrubbing(false);
+    setScrubbingPosition(null);
+  }
 
-  getScrubberValue = () => {
-    const { isScrubbing, scrubbingPosition } = this.state;
-
+  function getScrubberValue() {
     if (isScrubbing) {
       return scrubbingPosition;
     }
 
-    const {
-      mk: { playbackTime },
-    } = this.props;
-
-    if (playbackTime) {
-      return playbackTime.currentPlaybackTime;
+    if (mk.playbackTime) {
+      return mk.playbackTime.currentPlaybackTime;
     }
 
     return 0;
-  };
+  }
 
-  renderProgress = () => {
-    const { mk } = this.props;
+  function renderProgress() {
     const { playbackTime } = mk;
 
-    const duration = this.getDuration();
-    const percent = playbackTime
-      ? PlayerTime.timeToPercent(playbackTime.currentPlaybackTime, duration)
-      : 0;
-    const bufferPercent = playbackTime ? this.getCurrentBufferedProgress() : 0;
+    const duration = getDuration();
+    const percent = playbackTime ? timeToPercent(playbackTime.currentPlaybackTime, duration) : 0;
+    const bufferPercent = playbackTime ? getCurrentBufferedProgress() : 0;
 
     return (
       <input
@@ -116,38 +94,30 @@ class PlayerTime extends React.Component {
             ) no-repeat`,
         }}
         type={'range'}
-        value={this.getScrubberValue()}
-        onChange={this.onScrub}
-        onMouseDown={this.onStartScrubbing}
-        onTouchStart={this.onStartScrubbing}
-        onMouseUp={this.onEndScrubbing}
-        onTouchEnd={this.onEndScrubbing}
+        value={getScrubberValue()}
+        onChange={onScrub}
+        onMouseDown={onStartScrubbing}
+        onTouchStart={onStartScrubbing}
+        onMouseUp={onEndScrubbing}
+        onTouchEnd={onEndScrubbing}
         min={0}
         max={duration}
         step={1}
       />
     );
-  };
-
-  render() {
-    return (
-      <div className={styles.progressBarWrapper}>
-        <span className={styles.playbackTime}>{this.getCurrentPlaybackTime()}</span>
-        {this.renderProgress()}
-        <span className={styles.playbackDuration}>{this.getCurrentPlaybackDuration()}</span>
-      </div>
-    );
   }
+
+  return (
+    <div className={styles.progressBarWrapper}>
+      <span className={styles.playbackTime}>{getCurrentPlaybackTime()}</span>
+      {renderProgress()}
+      <span className={styles.playbackDuration}>{getCurrentPlaybackDuration()}</span>
+    </div>
+  );
 }
 
-const bindings = {
-  [MusicKit.Events.playbackTimeDidChange]: 'playbackTime',
-  [MusicKit.Events.mediaItemDidChange]: 'mediaItem',
-};
-
 PlayerTime.propTypes = {
-  mk: PropTypes.any.isRequired,
   nowPlayingItem: PropTypes.any.isRequired,
 };
 
-export default withMK(PlayerTime, bindings);
+export default PlayerTime;

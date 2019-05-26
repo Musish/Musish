@@ -12,14 +12,16 @@ import InfiniteLoader from '../InfiniteLoader/InfiniteLoader';
 import PlaylistsContext from './Menu/MenuItem/PlaylistsContext';
 import translate from '../../../utils/translations/Translations';
 
-class Sidebar extends React.Component {
-  static async loadPlaylists(params) {
+function Sidebar(props) {
+  const { authorized } = props;
+
+  async function loadPlaylists(params) {
     const music = MusicKit.getInstance();
 
     return music.api.library.playlists(null, params);
   }
 
-  static renderPlaylists(args, { items }) {
+  function renderPlaylists(args, { items }) {
     return items.map(playlist => (
       <PlaylistMenuItem
         playlist={playlist}
@@ -30,80 +32,73 @@ class Sidebar extends React.Component {
     ));
   }
 
-  render() {
-    const { authorized } = this.props;
+  const appleMusic = authorized ? (
+    <SidebarMenu
+      title={translate.appleMusic}
+      items={[
+        { to: '/', label: translate.forYou },
+        { to: '/browse', label: translate.browse, exact: false },
+        { to: '/radio', label: translate.radio },
+      ]}
+    />
+  ) : (
+    <SidebarMenu
+      title={translate.appleMusic}
+      items={[{ to: '/browse', label: translate.browse }, { to: '/radio', label: translate.radio }]}
+    />
+  );
 
-    const appleMusic = authorized ? (
-      <SidebarMenu
-        title={translate.appleMusic}
-        items={[
-          { to: '/', label: translate.forYou },
-          { to: '/browse', label: translate.browse, exact: false },
-          { to: '/radio', label: translate.radio },
-        ]}
-      />
-    ) : (
-      <SidebarMenu
-        title={translate.appleMusic}
-        items={[
-          { to: '/browse', label: translate.browse },
-          { to: '/radio', label: translate.radio },
-        ]}
-      />
-    );
-
-    return (
-      <aside className={classes.sidebar}>
-        <div className={classes.menus}>
-          {appleMusic}
-          {authorized && (
-            <SidebarLibraryMenu
-              title={translate.myLibrary}
-              items={[
-                { to: '/me/added', label: translate.recentlyAdded, exact: false },
-                { to: '/me/artists', label: translate.artists, exact: false },
-                { to: '/me/albums', label: translate.albums, exact: false },
-                { to: '/me/songs', label: translate.songs },
-                { to: '/me/playlists', label: translate.playlists },
-              ]}
-            />
-          )}
-          {authorized && (
-            <div className={classes.menu}>
-              <h3>{translate.playlists}</h3>
-              <ul>
-                <PlaylistsContext.Consumer>
-                  {({ setItems }) => (
-                    <InfiniteLoader
-                      load={Sidebar.loadPlaylists}
-                      render={Sidebar.renderPlaylists}
-                      loadAll
-                      onSetItems={({ items }) => setItems(items)}
-                    />
-                  )}
-                </PlaylistsContext.Consumer>
-              </ul>
-            </div>
-          )}
-          <div className={classes.footer}>
-            <span>
-              <a href={'https://github.com/Musish/Musish/issues/new/choose'} target={'_blank'}>
-                {translate.feedback}
-              </a>
-              {' & '}
-              <a href={'https://github.com/Musish/Musish'} target={'_blank'}>
-                GitHub
-              </a>
-            </span>
-            <span className={classes.footnote}>
-              {translate.formatString(translate.designCredits, <i className={'fa fa-heart'} />)}
-            </span>
+  return (
+    <aside className={classes.sidebar}>
+      <div className={classes.menus}>
+        {appleMusic}
+        {authorized && (
+          <SidebarLibraryMenu
+            title={translate.myLibrary}
+            items={[
+              { to: '/me/added', label: translate.recentlyAdded, exact: false },
+              { to: '/me/artists', label: translate.artists, exact: false },
+              { to: '/me/albums', label: translate.albums, exact: false },
+              { to: '/me/songs', label: translate.songs },
+              { to: '/me/playlists', label: translate.playlists },
+            ]}
+          />
+        )}
+        {authorized && (
+          <div className={classes.menu}>
+            <h3>{translate.playlists}</h3>
+            <ul>
+              <PlaylistsContext.Consumer>
+                {({ setItems }) => (
+                  <InfiniteLoader
+                    load={loadPlaylists}
+                    render={renderPlaylists}
+                    loadAll
+                    onSetItems={({ items }) => setItems(items)}
+                  />
+                )}
+              </PlaylistsContext.Consumer>
+            </ul>
           </div>
+        )}
+        <div className={classes.footer}>
+          <span>
+            <a href={'https://github.com/Musish/Musish/issues/new/choose'} target={'_blank'}>
+              {translate.feedback}
+            </a>
+            {' & '}
+            <a href={'https://github.com/Musish/Musish'} target={'_blank'}>
+              GitHub
+            </a>
+          </span>
+          <span className={classes.footnote}>
+            {translate.formatString(translate.designCredits, <i className={'fa fa-heart'} />)}
+          </span>
         </div>
-        <Player />
-      </aside>
-    );
-  }
+      </div>
+      <Player />
+    </aside>
+  );
 }
 
 Sidebar.propTypes = {
