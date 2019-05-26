@@ -95,7 +95,7 @@ class Player extends React.Component {
 
     const id = meta.playlistId;
 
-    push(<AlbumPanel key={id} id={id} />);
+    push(<AlbumPanel key={id} id={id} pseudoRoute />);
   };
 
   render() {

@@ -11,14 +11,19 @@ import * as MusicApi from '../../../services/MusicApi';
 import withMK from '../../../hoc/withMK';
 import translate from '../../../utils/translations/Translations';
 import { withModal } from '../../Providers/ModalProvider';
+import withPseudoRoute from '../../../hoc/withPseudoRoute';
+import EAlbumPanel from './AlbumPanel';
 
 class AlbumPanel extends React.Component {
   constructor(props) {
     super(props);
 
+    this.albumId = this.props.id || this.props.album.id;
+    this.isCatalog = !isNaN(this.albumId);
+
     this.state = {
       album: null,
-      shouldMatchCatalogAlbum: !this.isCatalog(),
+      shouldMatchCatalogAlbum: !this.isCatalog,
       matchedCatalogAlbum: null,
     };
 
@@ -31,7 +36,7 @@ class AlbumPanel extends React.Component {
   }
 
   fetchAlbum = async () => {
-    const album = await this.albumLoader(this.getAlbumId());
+    const album = await this.albumLoader(this.albumId);
 
     this.setState({
       album,
@@ -40,16 +45,12 @@ class AlbumPanel extends React.Component {
 
   albumLoader = (...args) => {
     const music = MusicKit.getInstance();
-    if (!this.isCatalog()) {
+    if (!this.isCatalog) {
       return music.api.library.album(...args);
     }
 
     return music.api.album(...args);
   };
-
-  isCatalog = () => !isNaN(this.getAlbumId());
-
-  getAlbumId = () => this.props.id || this.props.album.id;
 
   onSetItems = ({ items }) => {
     const albumLength = items.reduce(
@@ -154,7 +155,7 @@ class AlbumPanel extends React.Component {
             scrollElement={this.ref}
             scrollElementModifier={e => e && e.parentElement}
             load={MusicApi.infiniteLoadRelationships(
-              this.getAlbumId(),
+              this.albumId,
               this.albumLoader,
               'tracks',
               this.store
@@ -173,7 +174,7 @@ class AlbumPanel extends React.Component {
                         this.props.history.push('/me/albums/');
                       }
                       modal.push(
-                        <AlbumPanel key={matchedCatalogAlbum.id} album={matchedCatalogAlbum} />
+                        <EAlbumPanel key={matchedCatalogAlbum.id} album={matchedCatalogAlbum} pseudoRoute />
                       );
                     }}
                   >
@@ -203,4 +204,13 @@ AlbumPanel.defaultProps = {
   modal: null,
 };
 
-export default withRouter(withModal(withMK(AlbumPanel)));
+const pseudoRoute = ({ id, album }) => {
+  const albumId = id || album.id;
+  let route = `/album/${albumId}`;
+  if (isNaN(id)) {
+    route = '/me' + route;
+  }
+  return route;
+};
+
+export default withPseudoRoute(withRouter(withModal(withMK(AlbumPanel))), pseudoRoute);

@@ -40,7 +40,7 @@ function PlaylistContextMenu({ playlist }) {
 
       <MenuItem divider />
 
-      <MenuItem onClick={() => pushModal(<PlaylistPanel playlist={playlist} />)}>
+      <MenuItem onClick={() => pushModal(<PlaylistPanel playlist={playlist} pseudoRoute />)}>
         {translate.openPlaylist}
       </MenuItem>
 

@@ -30,7 +30,7 @@ export default class AlbumsPage extends React.Component {
 
   static renderItems({ items }) {
     const albums = items.map(album => (
-      <AlbumItem key={album.id} album={album} size={150} navigate />
+      <AlbumItem key={album.id} album={album} size={150} />
     ));
 
     return <div className={classes.albumsGrid}>{albums}</div>;

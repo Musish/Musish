@@ -2,14 +2,15 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 import classes from './PlaylistPanel.scss';
-import { artworkForMediaItem, humanifyMillis, humanifyTrackNumbers } from '../../../utils/Utils';
+import { artworkForMediaItem, humanifyMillis, humanifyTrackNumbers, setPseudoRoute } from '../../../utils/Utils';
 import TracksList from '../Tracks/TracksList/TracksList';
 import Loader from '../Loader/Loader';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
 import * as MusicApi from '../../../services/MusicApi';
 import translate from '../../../utils/translations/Translations';
+import withPseudoRoute from '../../../hoc/withPseudoRoute';
 
-export default class PlaylistPanel extends React.Component {
+class PlaylistPanel extends React.Component {
   constructor(props) {
     super(props);
 
@@ -18,6 +19,8 @@ export default class PlaylistPanel extends React.Component {
       runtime: 0,
       tracks: [],
     };
+
+    this.playlistId = this.props.id || this.props.playlist.id;
 
     this.ref = React.createRef();
     this.store = {};
@@ -28,7 +31,7 @@ export default class PlaylistPanel extends React.Component {
   }
 
   fetchPlaylist = async () => {
-    const playlist = await this.playlistLoader(this.getPlaylistId());
+    const playlist = await this.playlistLoader(this.playlistId);
 
     this.setState({
       playlist,
@@ -37,14 +40,12 @@ export default class PlaylistPanel extends React.Component {
 
   playlistLoader = (...args) => {
     const music = MusicKit.getInstance();
-    if (this.getPlaylistId().startsWith('p.')) {
+    if (this.playlistId.startsWith('p.')) {
       return music.api.library.playlist(...args);
     }
 
     return music.api.playlist(...args);
   };
-
-  getPlaylistId = () => this.props.id || this.props.playlist.id;
 
   onSetItems = ({ items: tracks }) => {
     const playlistLength = tracks.reduce(
@@ -127,7 +128,7 @@ export default class PlaylistPanel extends React.Component {
             scrollElement={this.ref}
             scrollElementModifier={e => e && e.parentElement}
             load={MusicApi.infiniteLoadRelationships(
-              this.getPlaylistId(),
+              this.playlistId,
               this.playlistLoader,
               'tracks',
               this.store
@@ -153,3 +154,14 @@ PlaylistPanel.defaultProps = {
   playlist: null,
   id: null,
 };
+
+const pseudoRoute = ({ id, playlist }) => {
+  const playlistId = id || playlist.id;
+  let route = `/playlist/${playlistId}`;
+  if (id.startsWith('p.')) {
+    route = '/me' + route;
+  }
+  return route;
+};
+
+export default withPseudoRoute(PlaylistPanel, pseudoRoute);
