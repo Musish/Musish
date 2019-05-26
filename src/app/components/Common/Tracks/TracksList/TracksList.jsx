@@ -13,10 +13,11 @@ function TracksList(props) {
     props.onSetItems(state);
   }
 
-  const { showArtist, showAlbum, scrollElement, load, scrollElementModifier } = props;
+  const { showArtist, showAlbum, scrollElement, load, scrollElementModifier, playTrack } = props;
 
-  // TODO: Fix below ESLint warnings...
-  function rowRenderer({ item: track, index, isScrolling, isVisible, key, style }) {
+  function rowRenderer(rowProps) {
+    const { item: track, index, key, style } = rowProps;
+
     return (
       <TrackListItem
         key={key}
@@ -26,7 +27,7 @@ function TracksList(props) {
         showArtist={showArtist}
         showAlbum={showAlbum}
         style={style}
-        playTrack={props.playTrack}
+        playTrack={playTrack}
       />
     );
   }
