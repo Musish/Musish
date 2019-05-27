@@ -1,5 +1,6 @@
-import { RefObject, useState } from 'react';
+import { Ref, RefObject, useState } from 'react';
 import * as React from 'react';
+import { List, WindowScroller } from 'react-virtualized';
 import { InfiniteLoaderItem, InfiniteLoaderLoad, InfiniteLoaderOnSetItems } from '../../InfiniteLoader/InfiniteLoader';
 import InfiniteScroll from '../../InfiniteLoader/InfiniteScroll';
 import * as classes from './TracksList.scss';
@@ -14,6 +15,8 @@ interface ITracksListProps {
   tracks?: InfiniteLoaderItem[];
   onSetItems?: InfiniteLoaderOnSetItems;
   playTrack: any;
+  wsRef: Ref<WindowScroller>;
+  listRef: Ref<List>;
 }
 
 const defaultProps: Partial<ITracksListProps> = {
@@ -32,6 +35,8 @@ const TracksList: React.FC<ITracksListProps> = ({
    tracks: initialTracks,
    onSetItems,
    playTrack,
+   wsRef = React.createRef<WindowScroller>(),
+   listRef = React.createRef<List>(),
 }) => {
   const [tracks, setTracks] = useState(null);
 
@@ -53,6 +58,8 @@ const TracksList: React.FC<ITracksListProps> = ({
         showAlbum={showAlbum}
         style={style}
         playTrack={playTrack}
+        wsRef={wsRef}
+        listRef={listRef}
       />
     );
   }
@@ -67,6 +74,8 @@ const TracksList: React.FC<ITracksListProps> = ({
         items={initialTracks}
         rowHeight={showAlbum || showArtist ? 50 : 37}
         rowRenderer={rowRenderer}
+        wsRef={wsRef}
+        listRef={listRef}
       />
     </div>
   );

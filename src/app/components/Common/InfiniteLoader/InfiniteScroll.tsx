@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { RefObject } from 'react';
+import { Ref } from 'react';
 import { AutoSizer, List, ListRowProps, WindowScroller } from 'react-virtualized';
 import InfiniteLoader, { InfiniteLoaderItem, InfiniteLoaderLoad, InfiniteLoaderOnSetItems } from './InfiniteLoader';
 
@@ -16,6 +17,8 @@ interface IInfiniteScrollProps {
   rowHeight: number;
   scrollElement: RefObject<HTMLBaseElement>;
   scrollElementModifier?: ((e: HTMLBaseElement | null) => HTMLBaseElement | null);
+  wsRef: Ref<WindowScroller>;
+  listRef: Ref<List>;
 }
 
 export default class InfiniteScroll extends React.Component<IInfiniteScrollProps> {
@@ -61,12 +64,13 @@ export default class InfiniteScroll extends React.Component<IInfiniteScrollProps
       return null;
     }
 
-    const { listClassName, items, rowHeight, load, onSetItems } = this.props;
+    const { listClassName, items, rowHeight, load, onSetItems, wsRef, listRef } = this.props;
 
     const wsRenderer = (onScroll, state) => (
       <WindowScroller
         scrollElement={element}
         onScroll={args => this.onScroll(args, onScroll)}
+        ref={wsRef}
       >
         {({ height, isScrolling, onChildScroll, scrollTop }) => (
           <AutoSizer disableHeight>
@@ -83,6 +87,7 @@ export default class InfiniteScroll extends React.Component<IInfiniteScrollProps
                 rowRenderer={args => this.rowRenderer(args, state)}
                 scrollTop={scrollTop}
                 width={width}
+                ref={listRef}
               />
             )}
           </AutoSizer>
