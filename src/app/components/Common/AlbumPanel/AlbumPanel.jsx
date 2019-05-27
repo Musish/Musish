@@ -30,7 +30,9 @@ class AlbumPanel extends React.Component {
       showFullDescription: false,
     };
 
-    this.ref = React.createRef();
+    this.panelRef = React.createRef();
+    this.tracksListWsRef = React.createRef();
+    this.tracksListListRef = React.createRef();
     this.store = {};
   }
 
@@ -126,7 +128,7 @@ class AlbumPanel extends React.Component {
     );
 
     return (
-      <div className={cx(classes.panel, this.props.className)} ref={this.ref}>
+      <div className={cx(classes.panel, this.props.className)} ref={this.panelRef}>
         <div className={classes.aside}>
           <div className={classes.artworkWrapper}>
             <img src={artworkURL} alt={album.attributes.name} />
@@ -156,23 +158,28 @@ class AlbumPanel extends React.Component {
 
           {album.attributes.editorialNotes && album.attributes.editorialNotes.standard && (
             <div className={classes.description} onClick={this.toggleFullDescription}>
-              {showFullDescription ? (
-                <span
-                  dangerouslySetInnerHTML={{ __html: album.attributes.editorialNotes.standard }} // eslint-disable-line react/no-danger
-                />
-              ) : (
                 <HTMLEllipsis
                   unsafeHTML={album.attributes.editorialNotes.standard}
-                  maxLine='3'
+                  maxLine={showFullDescription ? Number.MAX_SAFE_INTEGER : 3}
                   ellipsisHTML='<i class="read-more">... read more</i>'
                   basedOn='words'
+                  onReflow={() => {
+                    const tracksListWs = this.tracksListWsRef.current;
+                    if (tracksListWs) {
+                      tracksListWs.updatePosition();
+                    }
+
+                    const tracksListList = this.tracksListListRef.current;
+                    if (tracksListList) {
+                      tracksListList.forceUpdateGrid();
+                    }
+                  }}
                 />
-              )}
             </div>
           )}
 
           <TracksList
-            scrollElement={this.ref}
+            scrollElement={this.panelRef}
             scrollElementModifier={e => e && e.parentElement}
             load={MusicApi.infiniteLoadRelationships(
               this.albumId,
@@ -182,6 +189,8 @@ class AlbumPanel extends React.Component {
             )}
             onSetItems={this.onSetItems}
             playTrack={this.playTrack}
+            wsRef={this.tracksListWsRef}
+            listRef={this.tracksListListRef}
           />
 
           {matchedCatalogAlbum && (
