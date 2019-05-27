@@ -1,7 +1,9 @@
 import React from 'react';
 
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import { Link, Route, withRouter } from 'react-router-dom';
+import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
 import classes from './AlbumPanel.scss';
 import { artworkForMediaItem, humanifyMillis, humanifyTrackNumbers } from '../../../utils/Utils';
 import TracksList from '../Tracks/TracksList/TracksList';
@@ -25,6 +27,7 @@ class AlbumPanel extends React.Component {
       album: null,
       shouldMatchCatalogAlbum: !this.isCatalog,
       matchedCatalogAlbum: null,
+      showFullDescription: false,
     };
 
     this.ref = React.createRef();
@@ -88,9 +91,17 @@ class AlbumPanel extends React.Component {
     });
   };
 
+  toggleFullDescription = () => {
+    const { showFullDescription } = this.state;
+
+    this.setState({
+      showFullDescription: !showFullDescription,
+    });
+  };
+
   render() {
     const { modal } = this.props;
-    const { album, matchedCatalogAlbum, runtime } = this.state;
+    const { album, matchedCatalogAlbum, runtime, showFullDescription } = this.state;
 
     if (!album) {
       return <Loader />;
@@ -115,7 +126,7 @@ class AlbumPanel extends React.Component {
     );
 
     return (
-      <div className={classes.panel} ref={this.ref}>
+      <div className={cx(classes.panel, this.props.className)} ref={this.ref}>
         <div className={classes.aside}>
           <div className={classes.artworkWrapper}>
             <img src={artworkURL} alt={album.attributes.name} />
@@ -144,10 +155,19 @@ class AlbumPanel extends React.Component {
           <span className={classes.subtitle}>{artistName}</span>
 
           {album.attributes.editorialNotes && album.attributes.editorialNotes.standard && (
-            <div className={classes.description}>
-              <span
-                dangerouslySetInnerHTML={{ __html: album.attributes.editorialNotes.standard }} // eslint-disable-line react/no-danger
-              />
+            <div className={classes.description} onClick={this.toggleFullDescription}>
+              {showFullDescription ? (
+                <span
+                  dangerouslySetInnerHTML={{ __html: album.attributes.editorialNotes.standard }} // eslint-disable-line react/no-danger
+                />
+              ) : (
+                <HTMLEllipsis
+                  unsafeHTML={album.attributes.editorialNotes.standard}
+                  maxLine='3'
+                  ellipsisHTML='<i class="read-more">... read more</i>'
+                  basedOn='words'
+                />
+              )}
             </div>
           )}
 
@@ -195,6 +215,7 @@ AlbumPanel.propTypes = {
   album: PropTypes.any,
   history: PropTypes.any,
   modal: PropTypes.object,
+  className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 AlbumPanel.defaultProps = {
@@ -202,6 +223,7 @@ AlbumPanel.defaultProps = {
   album: null,
   history: null,
   modal: null,
+  className: null,
 };
 
 const pseudoRoute = ({ id, album }) => {
