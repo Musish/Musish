@@ -5,6 +5,7 @@ import Loader from '../../../Common/Loader/Loader';
 import PageTitle from '../../../Common/PageTitle/PageTitle';
 import PageContent from '../../../Common/PageContent/PageContent';
 import translate from '../../../../utils/translations/Translations';
+import classes from './ArtistAlbums.scss';
 
 class ArtistAlbums extends React.Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class ArtistAlbums extends React.Component {
     const { artist } = this.state;
 
     return artist.relationships.albums.data.map(album => (
-      <AlbumPanel key={album.id} album={album} />
+      <AlbumPanel key={album.id} album={album} className={classes.panel} />
     ));
   };
 

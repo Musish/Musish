@@ -1,14 +1,15 @@
 import React from 'react';
-
 import PropTypes from 'prop-types';
-import classes from './PlaylistPanel.scss';
-import { artworkForMediaItem, humanifyMillis, humanifyTrackNumbers, setPseudoRoute } from '../../../utils/Utils';
+import cx from 'classnames';
+
+import { artworkForMediaItem, humanifyMillis, humanifyTrackNumbers } from '../../../utils/Utils';
 import TracksList from '../Tracks/TracksList/TracksList';
 import Loader from '../Loader/Loader';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
 import * as MusicApi from '../../../services/MusicApi';
 import translate from '../../../utils/translations/Translations';
 import withPseudoRoute from '../../../hoc/withPseudoRoute';
+import classes from './PlaylistPanel.scss';
 
 class PlaylistPanel extends React.Component {
   constructor(props) {
@@ -83,7 +84,7 @@ class PlaylistPanel extends React.Component {
     const trackCount = playlist.attributes.trackCount || tracks.length;
 
     return (
-      <div className={classes.panel} ref={this.ref}>
+      <div className={cx(classes.panel, this.props.className)} ref={this.ref}>
         <div className={classes.header}>
           <div className={classes.headerMain}>
             <div className={classes.artworkWrapper}>
@@ -148,11 +149,13 @@ class PlaylistPanel extends React.Component {
 PlaylistPanel.propTypes = {
   playlist: PropTypes.any,
   id: PropTypes.any,
+  className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
 };
 
 PlaylistPanel.defaultProps = {
   playlist: null,
   id: null,
+  className: null,
 };
 
 const pseudoRoute = ({ id, playlist }) => {

@@ -43,6 +43,7 @@
     "react-dnd-html5-backend": "^7.0.2",
     "react-dom": "^16.6.3",
     "react-draggable": "^3.0.5",
+    "react-lines-ellipsis": "^0.14.1",
     "react-localization": "^1.0.13",
     "react-router-dom": "^4.3.1",
     "react-s-alert": "^1.4.1",
