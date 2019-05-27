@@ -5,7 +5,6 @@ import PageContent from '../../Common/PageContent/PageContent';
 import PageTitle from '../../Common/PageTitle/PageTitle';
 import translate from '../../../utils/translations/Translations';
 import PlaylistPanel from '../../Common/PlaylistPanel/PlaylistPanel';
-import classes from './PlaylistPage.scss';
 
 function PlaylistPage(props) {
   const scrollRef = React.createRef();
@@ -23,7 +22,7 @@ function PlaylistPage(props) {
         }
       />
 
-      <PlaylistPanel id={playlistId} className={classes.playlistPanel} />
+      <PlaylistPanel id={playlistId} />
     </PageContent>
   );
 }
