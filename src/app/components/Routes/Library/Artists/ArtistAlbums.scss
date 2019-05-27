@@ -1,0 +1,5 @@
+.panel {
+  &:not(:first-child) {
+    margin-top: 30px;
+  }
+}

@@ -5700,6 +5700,10 @@ react-lifecycles-compat@^3.0.2, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
+react-lines-ellipsis@^0.14.1:
+  version "0.14.1"
+  resolved "https://registry.yarnpkg.com/react-lines-ellipsis/-/react-lines-ellipsis-0.14.1.tgz#dbc045b9c3bd0c46d2c1dee893d46e9260d53969"
+
 react-localization@^1.0.13:
   version "1.0.13"
   resolved "https://registry.yarnpkg.com/react-localization/-/react-localization-1.0.13.tgz#7a1da114c61c8b4814fed2abc699b45ad6bb32b8"

@@ -4,10 +4,6 @@
   display: flex;
   flex-direction: row;
 
-  &:not(:first-child) {
-    margin-top: 30px;
-  }
-
   .playActions {
     display: flex;
     justify-content: space-between;
@@ -108,6 +104,14 @@
     .description {
       display: block;
       margin-bottom: 10px;
+      line-height: 1.3em;
+      cursor: pointer;
+
+      :global {
+        .read-more {
+          color: $text_color_weak;
+        }
+      }
     }
   }
 

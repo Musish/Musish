@@ -5,6 +5,7 @@ import PageContent from '../../Common/PageContent/PageContent';
 import PageTitle from '../../Common/PageTitle/PageTitle';
 import translate from '../../../utils/translations/Translations';
 import AlbumPanel from '../../Common/AlbumPanel/AlbumPanel';
+import classes from './AlbumPage.scss';
 
 function AlbumPage(props) {
   const scrollRef = React.createRef();
@@ -22,7 +23,7 @@ function AlbumPage(props) {
         }
       />
 
-      <AlbumPanel id={albumId} />
+      <AlbumPanel id={albumId} className={classes.albumPanel} />
     </PageContent>
   );
 }
