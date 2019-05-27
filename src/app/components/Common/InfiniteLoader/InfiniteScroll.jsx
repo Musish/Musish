@@ -31,26 +31,30 @@ export default class InfiniteScroll extends React.Component {
       return null;
     }
 
+    const { wsRef, listRef, listClassName, rowHeight, items, load, onSetItems } = this.props;
+
     const wsRenderer = (onScroll, state) => (
       <WindowScroller
         scrollElement={this.getElement()}
         onScroll={args => this.onScroll(args, onScroll)}
+        ref={wsRef}
       >
         {({ height, isScrolling, onChildScroll, scrollTop }) => (
           <AutoSizer disableHeight>
             {({ width }) => (
               <List
                 autoHeight
-                className={this.props.listClassName}
+                className={listClassName}
                 height={height || 0}
                 isScrolling={isScrolling}
                 onScroll={onChildScroll}
                 overscanRowCount={2}
                 rowCount={state.items.length}
-                rowHeight={this.props.rowHeight}
+                rowHeight={rowHeight}
                 rowRenderer={args => this.rowRenderer(args, state)}
                 scrollTop={scrollTop}
                 width={width}
+                ref={listRef}
               />
             )}
           </AutoSizer>
@@ -58,14 +62,14 @@ export default class InfiniteScroll extends React.Component {
       </WindowScroller>
     );
 
-    if (this.props.items) {
-      return wsRenderer(() => null, { items: this.props.items, page: 0, end: true });
+    if (items) {
+      return wsRenderer(() => null, { items: items, page: 0, end: true });
     }
 
     return (
       <InfiniteLoader
-        load={this.props.load}
-        onSetItems={this.props.onSetItems}
+        load={load}
+        onSetItems={onSetItems}
         render={({ onScroll }, state) => wsRenderer(onScroll, state)}
       />
     );
@@ -81,6 +85,14 @@ InfiniteScroll.propTypes = {
   rowHeight: PropTypes.number.isRequired,
   scrollElement: PropTypes.shape({ current: PropTypes.instanceOf(Element) }).isRequired,
   scrollElementModifier: PropTypes.func,
+  wsRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(WindowScroller) })
+  ]),
+  listRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(List) })
+  ]),
 };
 
 InfiniteScroll.defaultProps = {
@@ -88,4 +100,6 @@ InfiniteScroll.defaultProps = {
   items: null,
   onSetItems: state => null,
   scrollElementModifier: e => e,
+  wsRef: React.createRef(),
+  listRef: React.createRef(),
 };
