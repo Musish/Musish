@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js tslint
+  /usr/local/bin/node /usr/local/Cellar/yarn/1.5.1_1/libexec/bin/yarn.js start
 
 PATH: 
-  /Users/brychan/Developer/applemusish/AppleMusish/node_modules/.bin:/Users/brychan/Developer/applemusish/node_modules/.bin:/Users/brychan/Developer/node_modules/.bin:/Users/brychan/node_modules/.bin:/Users/node_modules/.bin:/node_modules/.bin:/usr/local/bin:/Applications/Xcode.app/Contents/Developer/usr/libexec/git-core:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin
 
 Yarn version: 
   1.5.1
@@ -7608,9 +7608,9 @@ Lockfile:
 
 Trace: 
   Error: Command failed.
-  Exit code: 2
+  Exit code: 1
   Command: sh
-  Arguments: -c tslint -c tslint.json --project .
+  Arguments: -c concurrently --kill-others "yarn server" "yarn tsmp -w"
   Directory: /Users/brychan/Developer/applemusish/AppleMusish
   Output:
   
