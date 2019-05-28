@@ -10,7 +10,7 @@ export default function TrackDecoration({
   showAlbum,
   size = 40,
 }: {
-  track: any;
+  track: MusicKit.MediaItem;
   showAlbum: boolean;
   size?: number;
 }) {

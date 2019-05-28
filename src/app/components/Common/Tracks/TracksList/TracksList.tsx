@@ -10,27 +10,27 @@ import InfiniteScroll, { IInfiniteScrollListRowProps } from '../../InfiniteLoade
 import * as classes from './TracksList.scss';
 import TrackListItem from './TracksListItem';
 
-interface ITracksListProps<I> {
+interface ITracksListProps {
   showArtist?: boolean;
   showAlbum?: boolean;
   scrollElement: RefObject<HTMLBaseElement>;
   scrollElementModifier?: (e: HTMLBaseElement | null) => HTMLBaseElement | null;
-  load: InfiniteLoaderLoad<I>;
-  tracks?: I[];
-  onSetItems?: InfiniteLoaderOnSetItems<I>;
+  load: InfiniteLoaderLoad<MusicKit.MediaItem>;
+  tracks?: MusicKit.MediaItem[];
+  onSetItems?: InfiniteLoaderOnSetItems<MusicKit.MediaItem>;
   playTrack: any;
   wsRef: Ref<WindowScroller>;
   listRef: Ref<List>;
 }
 
-const defaultProps: Partial<ITracksListProps<any>> = {
+const defaultProps: Partial<ITracksListProps> = {
   showArtist: false,
   showAlbum: false,
   onSetItems: () => null,
   scrollElementModifier: (e: HTMLBaseElement | null) => e,
 };
 
-function TracksList<I extends MusicKit.MediaItem>({
+function TracksList({
   showArtist,
   showAlbum,
   scrollElement,
@@ -41,15 +41,15 @@ function TracksList<I extends MusicKit.MediaItem>({
   playTrack,
   wsRef = React.createRef<WindowScroller>(),
   listRef = React.createRef<List>(),
-}: ITracksListProps<I>) {
-  const [tracks, setTracks] = useState<I[] | null>(null);
+}: ITracksListProps) {
+  const [tracks, setTracks] = useState<MusicKit.MediaItem[] | null>(null);
 
-  function localOnSetItems(state: IInfiniteLoaderState<I>) {
+  function localOnSetItems(state: IInfiniteLoaderState<MusicKit.MediaItem>) {
     setTracks(state.items);
     onSetItems!(state);
   }
 
-  function rowRenderer(rowProps: IInfiniteScrollListRowProps<I>) {
+  function rowRenderer(rowProps: IInfiniteScrollListRowProps<MusicKit.MediaItem>) {
     const { item: track, index, key, style } = rowProps;
 
     return (
@@ -70,7 +70,7 @@ function TracksList<I extends MusicKit.MediaItem>({
 
   return (
     <div className={classes.trackList}>
-      <InfiniteScroll<I>
+      <InfiniteScroll<MusicKit.MediaItem>
         onSetItems={localOnSetItems}
         scrollElement={scrollElement}
         scrollElementModifier={scrollElementModifier}
