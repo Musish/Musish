@@ -132,7 +132,7 @@ export default DragSource(
   (connect, monitor) => {
     return {
       connectDragSource: connect.dragSource(),
-      isDragging: monitor.isDragging!(),
+      isDragging: monitor.isDragging(),
     };
   },
 )(TracksListItem);
