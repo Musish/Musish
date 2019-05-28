@@ -11,7 +11,7 @@ class AuthorizeProvider extends React.Component {
   constructor(props) {
     super(props);
 
-    const allowDirectBrowse = /^\/(?!me).*$/i.test(props.location.pathname);
+    const allowDirectBrowse = /^\/(?!(me|$)).*$/i.test(props.location.pathname);
 
     this.state = {
       ready: false,
