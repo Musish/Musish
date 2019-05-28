@@ -1,35 +1,47 @@
 import * as React from 'react';
 import { RefObject } from 'react';
+import { ReactNode } from 'react';
 import Loader from '../Loader/Loader';
 
-export declare type InfiniteLoaderItem = any;
-
-export declare type InfiniteLoaderLoad = (
+export declare type InfiniteLoaderLoad<I> = (
   { limit, offset }: { limit: number, offset: number },
   { page }: { page: number },
-) => Promise<InfiniteLoaderItem[]>;
-export declare type InfiniteLoaderRender = ({ onScroll }: { onScroll: any }, state: IInfiniteLoaderState) => void;
-export declare type InfiniteLoaderOnSetItems = (state: IInfiniteLoaderState) => void;
+) => Promise<I[]>;
+export declare interface IInfiniteLoaderOnScrollArgs {
+  scrollTop: number;
+  scrollHeight: number;
+  clientHeight: number;
+}
+export declare type InfiniteLoaderOnScroll = ({
+  scrollTop,
+  scrollHeight,
+  clientHeight,
+}: IInfiniteLoaderOnScrollArgs) => void;
+export declare type InfiniteLoaderRender<I> = (
+  onScroll: InfiniteLoaderOnScroll,
+  state: IInfiniteLoaderState<I>,
+) => ReactNode;
+export declare type InfiniteLoaderOnSetItems<I> = (state: IInfiniteLoaderState<I>) => void;
 
-interface IInfiniteLoaderState {
-  items: null | InfiniteLoaderItem[];
+export interface IInfiniteLoaderState<I> {
+  items: null | I[];
   page: number;
   loading: boolean;
   end: boolean;
 }
 
-interface IInfiniteLoaderProps {
-  load: InfiniteLoaderLoad;
-  render: InfiniteLoaderRender;
-  onSetItems?: InfiniteLoaderOnSetItems;
+interface IInfiniteLoaderProps<I> {
+  load: InfiniteLoaderLoad<I>;
+  render: InfiniteLoaderRender<I>;
+  onSetItems?: InfiniteLoaderOnSetItems<I>;
   scrollElement?: RefObject<HTMLBaseElement>;
   limit?: number;
   initialBuffer?: number;
   loadAll?: boolean;
 }
 
-export default class InfiniteLoader extends React.Component<IInfiniteLoaderProps, IInfiniteLoaderState> {
-  private static defaultProps = {
+export default class InfiniteLoader<I> extends React.Component<IInfiniteLoaderProps<I>, IInfiniteLoaderState<I>> {
+  public static defaultProps = {
     onSetItems: () => null,
     limit: 100,
     initialBuffer: 300,
@@ -37,7 +49,7 @@ export default class InfiniteLoader extends React.Component<IInfiniteLoaderProps
   };
   private scrollElement?: HTMLBaseElement;
 
-  constructor(props) {
+  constructor(props: IInfiniteLoaderProps<I>) {
     super(props);
 
     this.state = {
@@ -84,7 +96,9 @@ export default class InfiniteLoader extends React.Component<IInfiniteLoaderProps
     this.onScroll({ scrollTop, scrollHeight, clientHeight });
   }
 
-  public onScroll = ({ scrollTop, scrollHeight, clientHeight }) => {
+  public onScroll  = (
+    { scrollTop, scrollHeight, clientHeight }: { scrollTop: number, scrollHeight: number, clientHeight: number },
+  ) => {
     if (scrollTop >= scrollHeight - clientHeight * 3) {
       this.loadMore();
     }
@@ -125,7 +139,7 @@ export default class InfiniteLoader extends React.Component<IInfiniteLoaderProps
     }
   }
 
-  public setItems = (state: IInfiniteLoaderState) => {
+  public setItems = (state: IInfiniteLoaderState<I>) => {
     this.props.onSetItems!(state);
 
     this.setState(state);
@@ -141,7 +155,7 @@ export default class InfiniteLoader extends React.Component<IInfiniteLoaderProps
 
     return (
       <>
-        {render({ onScroll: this.onScroll }, this.state)}
+        {render(this.onScroll, this.state)}
         {loading && <Loader/>}
       </>
     );

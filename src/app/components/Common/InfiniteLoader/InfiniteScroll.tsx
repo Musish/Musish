@@ -1,18 +1,23 @@
 import * as React from 'react';
 import { RefObject } from 'react';
 import { Ref } from 'react';
+import { ReactNode } from 'react';
 import { AutoSizer, List, ListRowProps, WindowScroller } from 'react-virtualized';
-import InfiniteLoader, { InfiniteLoaderItem, InfiniteLoaderLoad, InfiniteLoaderOnSetItems } from './InfiniteLoader';
+import InfiniteLoader, {
+  IInfiniteLoaderState,
+  InfiniteLoaderLoad, InfiniteLoaderOnScroll,
+  InfiniteLoaderOnSetItems,
+} from './InfiniteLoader';
 
-interface IInfiniteScrollListRowProps extends ListRowProps {
-  item: (props: ListRowProps) => React.ReactNode;
+export interface IInfiniteScrollListRowProps<I> extends ListRowProps {
+  item: I;
 }
 
-interface IInfiniteScrollProps {
-  load: InfiniteLoaderLoad;
-  items?: InfiniteLoaderItem[];
-  rowRenderer: (props: IInfiniteScrollListRowProps) => React.ReactNode;
-  onSetItems?: InfiniteLoaderOnSetItems;
+interface IInfiniteScrollProps<I> {
+  load: InfiniteLoaderLoad<I>;
+  items?: I[];
+  rowRenderer: (props: IInfiniteScrollListRowProps<I>) => React.ReactNode;
+  onSetItems?: InfiniteLoaderOnSetItems<I>;
   listClassName?: string;
   rowHeight: number;
   scrollElement: RefObject<HTMLBaseElement>;
@@ -21,23 +26,23 @@ interface IInfiniteScrollProps {
   listRef: Ref<List>;
 }
 
-export default class InfiniteScroll extends React.Component<IInfiniteScrollProps> {
+export default class InfiniteScroll<I> extends React.Component<IInfiniteScrollProps<I>> {
   public static defaultProps = {
     listClassName: '',
     items: null,
     onSetItems: () => null,
-    scrollElementModifier: e => e,
+    scrollElementModifier: (e: HTMLBaseElement | null) => e,
   };
 
   public componentDidMount() {
     this.forceUpdate();
   }
 
-  public onScroll = ({ scrollTop }, onScroll) => {
+  public onScroll = ({ scrollTop }: { scrollLeft: number; scrollTop: number }, onScroll: InfiniteLoaderOnScroll) => {
     const element = this.getElement();
 
     if (!element) {
-      return;
+      return undefined;
     }
 
     const { scrollHeight, clientHeight } = element;
@@ -45,10 +50,10 @@ export default class InfiniteScroll extends React.Component<IInfiniteScrollProps
     onScroll({ scrollTop, scrollHeight, clientHeight });
   }
 
-  public rowRenderer = (args: ListRowProps, { items }: {items: InfiniteLoaderItem[]}) =>
+  public rowRenderer = (props: ListRowProps, { items }: IInfiniteLoaderState<I>) =>
     this.props.rowRenderer({
-      ...args,
-      item: items[args.index],
+      ...props,
+      item: items![props.index] as I,
     })
 
   public getElement = (): HTMLBaseElement | null => {
@@ -66,7 +71,7 @@ export default class InfiniteScroll extends React.Component<IInfiniteScrollProps
 
     const { listClassName, items, rowHeight, load, onSetItems, wsRef, listRef } = this.props;
 
-    const wsRenderer = (onScroll, state) => (
+    const wsRenderer = (onScroll: InfiniteLoaderOnScroll, state: IInfiniteLoaderState<I>): ReactNode => (
       <WindowScroller
         scrollElement={element}
         onScroll={args => this.onScroll(args, onScroll)}
@@ -82,7 +87,7 @@ export default class InfiniteScroll extends React.Component<IInfiniteScrollProps
                 isScrolling={isScrolling}
                 onScroll={onChildScroll}
                 overscanRowCount={2}
-                rowCount={state.items.length}
+                rowCount={state.items ? state.items.length : 0}
                 rowHeight={rowHeight}
                 rowRenderer={args => this.rowRenderer(args, state)}
                 scrollTop={scrollTop}
@@ -96,14 +101,14 @@ export default class InfiniteScroll extends React.Component<IInfiniteScrollProps
     );
 
     if (items) {
-      return wsRenderer(() => null, { items, page: 0, end: true });
+      return wsRenderer(() => null, { items, page: 0, end: true, loading: false });
     }
 
     return (
       <InfiniteLoader
         load={load}
         onSetItems={onSetItems}
-        render={({ onScroll }, state) => wsRenderer(onScroll, state)}
+        render={(onScroll, state) => wsRenderer(onScroll, state)}
       />
     );
   }
