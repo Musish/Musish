@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 
-type MKEventNames = keyof typeof MusicKit.Events;
-
-type BindingsType = { [s in MKEventNames]?: string };
+interface IBindingsType {
+  [s: string]: string;
+}
 
 type MKEvent = any;
 
-export default function useMK<B extends BindingsType>(bindings: B = {} as B) {
+export default function useMK<B extends IBindingsType>(bindings: B = {} as B) {
   type BindingsEvent = { [s in keyof B]: Event };
   type BindingsList = keyof B;
 

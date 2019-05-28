@@ -11,7 +11,7 @@ import useMK from '../../../../hooks/useMK';
 
 function LyricsModal() {
   useMK({
-    [MusicKit.Events.mediaItemDidChange]: 'mediaItem',
+    mediaItem: MusicKit.Events.mediaItemDidChange,
   });
 
   const lyricsContext = useLyricsModal();

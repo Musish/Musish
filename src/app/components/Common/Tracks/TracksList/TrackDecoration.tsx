@@ -16,8 +16,8 @@ export default function TrackDecoration({
 }) {
   const isCurrent = isCurrentTrack(track);
   useMK({
-    [MusicKit.Events.mediaItemDidChange]: 'mediaItem',
-    [MusicKit.Events.playbackStateDidChange]: 'playbackState',
+    mediaItem: MusicKit.Events.mediaItemDidChange,
+    playbackState: MusicKit.Events.playbackStateDidChange,
   });
 
   const playingAnimation = (

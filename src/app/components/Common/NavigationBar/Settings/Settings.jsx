@@ -8,7 +8,7 @@ export default function Settings() {
   const { login, reset, connected } = useContext(LastfmContext);
 
   const mk = useMK({
-    [MusicKit.Events.playbackBitrateDidChange]: 'playbackBitrate',
+    playbackBitrate: MusicKit.Events.playbackBitrateDidChange,
   });
   const [bitrate, setBitrate] = useState(mk.instance.bitrate);
 
