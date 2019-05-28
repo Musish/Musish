@@ -13,10 +13,10 @@ export default function useMK<B extends BindingsType>(bindings: B = {} as B) {
   const [events, setEvents] = useState<BindingsEvent>({} as BindingsEvent);
 
   function handleEventChange(key: string, e: MKEvent) {
-    setEvents({
-      ...events,
+    setEvents(previousEvents => ({
+      ...previousEvents,
       [key]: e,
-    });
+    }));
   }
 
   useEffect(() => {
