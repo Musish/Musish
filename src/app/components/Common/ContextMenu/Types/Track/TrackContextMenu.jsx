@@ -59,7 +59,7 @@ function TrackContextMenu({ track, tracks, index }) {
             />,
             {
               width: 'auto',
-            }
+            },
           )
         }
       >

@@ -31,16 +31,16 @@ const defaultProps: Partial<ITracksListProps<any>> = {
 };
 
 function TracksList<I extends MusicKit.MediaItem>({
-   showArtist,
-   showAlbum,
-   scrollElement,
-   scrollElementModifier,
-   load,
-   tracks: initialTracks,
-   onSetItems,
-   playTrack,
-   wsRef = React.createRef<WindowScroller>(),
-   listRef = React.createRef<List>(),
+  showArtist,
+  showAlbum,
+  scrollElement,
+  scrollElementModifier,
+  load,
+  tracks: initialTracks,
+  onSetItems,
+  playTrack,
+  wsRef = React.createRef<WindowScroller>(),
+  listRef = React.createRef<List>(),
 }: ITracksListProps<I>) {
   const [tracks, setTracks] = useState<I[] | null>(null);
 

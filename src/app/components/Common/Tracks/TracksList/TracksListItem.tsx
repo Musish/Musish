@@ -13,7 +13,7 @@ interface ITracksListItemProps<I> {
   className: string;
   connectDragSource: ConnectDragSource;
   index: number;
-  playTrack: ({track, tracks, index}: {track: I, tracks: I[], index: number}) => null;
+  playTrack: ({ track, tracks, index }: { track: I; tracks: I[]; index: number }) => null;
   showAlbum: boolean;
   showArtist: boolean;
   style: object;
@@ -129,14 +129,10 @@ export default DragSource(
       };
     },
   },
-  (
-    connect,
-    monitor,
-  ) => {
+  (connect, monitor) => {
     return {
       connectDragSource: connect.dragSource(),
       isDragging: monitor.isDragging!(),
     };
   },
-)
-(TracksListItem);
+)(TracksListItem);

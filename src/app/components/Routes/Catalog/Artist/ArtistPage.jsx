@@ -116,7 +116,7 @@ class ArtistPage extends React.Component {
     return React.createElement(
       object.tag,
       { ...attributes, ...props },
-      ArtistPage.flattenDesc(object.children)
+      ArtistPage.flattenDesc(object.children),
     );
   }
 

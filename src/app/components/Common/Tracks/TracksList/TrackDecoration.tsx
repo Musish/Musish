@@ -5,9 +5,15 @@ import { isCurrentTrack, isTrackPlaying } from '../../../../services/MusicPlayer
 import { artworkForMediaItem } from '../../../../utils/Utils';
 import * as classes from './TrackDecoration.scss';
 
-export default function TrackDecoration(
-  { track, showAlbum, size = 40 }: { track: any, showAlbum: boolean, size?: number },
-) {
+export default function TrackDecoration({
+  track,
+  showAlbum,
+  size = 40,
+}: {
+  track: any;
+  showAlbum: boolean;
+  size?: number;
+}) {
   const isCurrent = isCurrentTrack(track);
   useMK({
     [MusicKit.Events.mediaItemDidChange]: 'mediaItem',
@@ -17,10 +23,10 @@ export default function TrackDecoration(
   const playingAnimation = (
     <div className={cx(classes.playingAnimation, { [classes.animated]: isTrackPlaying(track) })}>
       <div>
-        <span/>
-        <span/>
-        <span/>
-        <span/>
+        <span />
+        <span />
+        <span />
+        <span />
       </div>
     </div>
   );
@@ -31,7 +37,7 @@ export default function TrackDecoration(
         <span className={classes.albumArtwork}>
           {isCurrent && playingAnimation}
           <span className={classes.artworkWrapper} style={{ width: size, height: size }}>
-            <img src={artworkForMediaItem(track, size)} alt=''/>
+            <img src={artworkForMediaItem(track, size)} alt='' />
           </span>
         </span>
       ) : (

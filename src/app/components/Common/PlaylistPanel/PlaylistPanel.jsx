@@ -52,7 +52,7 @@ class PlaylistPanel extends React.Component {
     const playlistLength = tracks.reduce(
       (totalDuration, track) =>
         totalDuration + (track.attributes ? track.attributes.durationInMillis : 0),
-      0
+      0,
     );
 
     this.setState({
@@ -132,7 +132,7 @@ class PlaylistPanel extends React.Component {
               this.playlistId,
               this.playlistLoader,
               'tracks',
-              this.store
+              this.store,
             )}
             album={false}
             showArtist

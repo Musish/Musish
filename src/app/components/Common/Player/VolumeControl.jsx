@@ -24,7 +24,7 @@ class VolumeControl extends React.Component {
         const newVolume = player.volume < 0.9 ? player.volume + 0.1 : 1;
         this.changeVolume(newVolume);
       },
-      'keydown'
+      'keydown',
     );
 
     // Volume controls (VOLUME DOWN)
@@ -36,7 +36,7 @@ class VolumeControl extends React.Component {
         const newVolume = player.volume > 0.1 ? player.volume - 0.1 : 0;
         this.changeVolume(newVolume);
       },
-      'keydown'
+      'keydown',
     );
   }
 

@@ -5,7 +5,8 @@ import { ReactNode } from 'react';
 import { AutoSizer, List, ListRowProps, WindowScroller } from 'react-virtualized';
 import InfiniteLoader, {
   IInfiniteLoaderState,
-  InfiniteLoaderLoad, InfiniteLoaderOnScroll,
+  InfiniteLoaderLoad,
+  InfiniteLoaderOnScroll,
   InfiniteLoaderOnSetItems,
 } from './InfiniteLoader';
 
@@ -21,7 +22,7 @@ interface IInfiniteScrollProps<I> {
   listClassName?: string;
   rowHeight: number;
   scrollElement: RefObject<HTMLBaseElement>;
-  scrollElementModifier?: ((e: HTMLBaseElement | null) => HTMLBaseElement | null);
+  scrollElementModifier?: (e: HTMLBaseElement | null) => HTMLBaseElement | null;
   wsRef: Ref<WindowScroller>;
   listRef: Ref<List>;
 }
@@ -38,7 +39,10 @@ export default class InfiniteScroll<I> extends React.Component<IInfiniteScrollPr
     this.forceUpdate();
   }
 
-  public onScroll = ({ scrollTop }: { scrollLeft: number; scrollTop: number }, onScroll: InfiniteLoaderOnScroll) => {
+  public onScroll = (
+    { scrollTop }: { scrollLeft: number; scrollTop: number },
+    onScroll: InfiniteLoaderOnScroll,
+  ) => {
     const element = this.getElement();
 
     if (!element) {
@@ -48,19 +52,19 @@ export default class InfiniteScroll<I> extends React.Component<IInfiniteScrollPr
     const { scrollHeight, clientHeight } = element;
 
     onScroll({ scrollTop, scrollHeight, clientHeight });
-  }
+  };
 
   public rowRenderer = (props: ListRowProps, { items }: IInfiniteLoaderState<I>) =>
     this.props.rowRenderer({
       ...props,
       item: items![props.index] as I,
-    })
+    });
 
   public getElement = (): HTMLBaseElement | null => {
     const { scrollElement, scrollElementModifier } = this.props;
 
     return scrollElementModifier!(scrollElement.current);
-  }
+  };
 
   public render() {
     const element = this.getElement();
@@ -71,7 +75,10 @@ export default class InfiniteScroll<I> extends React.Component<IInfiniteScrollPr
 
     const { listClassName, items, rowHeight, load, onSetItems, wsRef, listRef } = this.props;
 
-    const wsRenderer = (onScroll: InfiniteLoaderOnScroll, state: IInfiniteLoaderState<I>): ReactNode => (
+    const wsRenderer = (
+      onScroll: InfiniteLoaderOnScroll,
+      state: IInfiniteLoaderState<I>,
+    ): ReactNode => (
       <WindowScroller
         scrollElement={element}
         onScroll={args => this.onScroll(args, onScroll)}

@@ -36,10 +36,7 @@ function AlbumItem(props) {
   return connectDragSource(
     <div className={cx(classes.container, { [classes.droppable]: isOver })} style={{ width: size }}>
       <div onClick={() => handleOpen(pushModal)}>
-        <ContextMenuTrigger
-          holdToDisplay={-1}
-          render={() => <AlbumContextMenu album={album} />}
-        >
+        <ContextMenuTrigger holdToDisplay={-1} render={() => <AlbumContextMenu album={album} />}>
           <div className={classes.imageContainer} style={{ width: size, height: size }}>
             <img
               src={artwork}
@@ -61,7 +58,7 @@ function AlbumItem(props) {
           </div>
         </ContextMenuTrigger>
       </div>
-    </div>
+    </div>,
   );
 }
 

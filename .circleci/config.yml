@@ -60,7 +60,10 @@ jobs:
           name: Make Reports folder
           command: mkdir -p ~/reports
       - run:
-          name: Run ESLint
+          name: Check TSLint config compatible with Prettier
+          command: yarn tslint-check
+      - run:
+          name: Run TSLint
           command: yarn tslint
       - store_test_results:
           path: ~/reports

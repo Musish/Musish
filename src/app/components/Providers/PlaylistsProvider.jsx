@@ -11,11 +11,7 @@ function PlaylistsProvider({ children }) {
     setItems,
   };
 
-  return (
-    <PlaylistsContext.Provider value={state}>
-      {children}
-    </PlaylistsContext.Provider>
-  );
+  return <PlaylistsContext.Provider value={state}>{children}</PlaylistsContext.Provider>;
 }
 
 PlaylistsProvider.propTypes = {

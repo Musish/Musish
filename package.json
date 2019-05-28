@@ -5,7 +5,7 @@
   "license": "MIT",
   "husky": {
     "hooks": {
-      "pre-commit": "yarn tslint"
+      "pre-commit": "yarn tslint:check"
     }
   },
   "dependencies": {
@@ -52,6 +52,7 @@
     "sass-loader": "^7.1.0",
     "ts-loader": "^6.0.1",
     "tslint": "^5.16.0",
+    "tslint-plugin-prettier": "^2.0.1",
     "typed-scss-modules": "^0.0.10",
     "typescript": "^3.4.5",
     "vanilla-tilt": "^1.5.0",
@@ -62,9 +63,15 @@
     "tsmp": "tsm \"src/app/**/*.scss\" --aliasPrefixes.~ node_modules/",
     "start": "concurrently --kill-others \"yarn server\" \"yarn tsmp -w\"",
     "build": "yarn tsmp && yarn encore production",
-    "tslint": "tslint -c tslint.json --project ."
+    "tslint": "tslint -c tslint.json --project .",
+    "tslint:fix": "yarn tslint --fix",
+    "tslint:check": "yarn tslint -c",
+    "tslint:check-config": "tslint-config-prettier-check ./tslint.json"
   },
   "devDependencies": {
-    "musickit-typescript": "^1.2.4"
+    "musickit-typescript": "^1.2.4",
+    "prettier": "^1.17.1",
+    "prettier-tslint": "^0.4.2",
+    "tslint-config-prettier": "^1.18.0"
   }
 }

@@ -42,7 +42,7 @@ function AlbumResultItem({ album, size, connectDragSource }) {
           <span className={classes.name}>{album.attributes.name}</span>
         </div>
       </ContextMenuTrigger>
-    </div>
+    </div>,
   );
 }
 

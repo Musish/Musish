@@ -16,11 +16,7 @@ function AlbumPage(props) {
     <PageContent innerRef={scrollRef}>
       <PageTitle
         title={null}
-        context={
-          isNaN(albumId)
-            ? translate.myLibrary
-            : translate.appleMusic
-        }
+        context={isNaN(albumId) ? translate.myLibrary : translate.appleMusic}
       />
 
       <AlbumPanel id={albumId} className={classes.albumPanel} />

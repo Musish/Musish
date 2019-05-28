@@ -51,7 +51,7 @@ function SongResultItem({ song, connectDragSource, isOver }) {
           </div>
         </div>
       </ContextMenuTrigger>
-    </div>
+    </div>,
   );
 }
 

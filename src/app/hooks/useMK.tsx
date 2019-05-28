@@ -2,14 +2,12 @@ import { useEffect, useState } from 'react';
 
 type MKEventNames = keyof typeof MusicKit.Events;
 
-type BindingsType = {
-  [s in MKEventNames]?: string;
-};
+type BindingsType = { [s in MKEventNames]?: string };
 
 type MKEvent = any;
 
 export default function useMK<B extends BindingsType>(bindings: B = {} as B) {
-  type BindingsEvent = {[s in keyof B]: Event};
+  type BindingsEvent = { [s in keyof B]: Event };
   type BindingsList = keyof B;
 
   const [events, setEvents] = useState<BindingsEvent>({} as BindingsEvent);
@@ -22,7 +20,7 @@ export default function useMK<B extends BindingsType>(bindings: B = {} as B) {
   }
 
   useEffect(() => {
-    const bindingFunctions: {[s in BindingsList]?: MKEvent} = {};
+    const bindingFunctions: { [s in BindingsList]?: MKEvent } = {};
 
     for (const [eventName, key] of Object.entries(bindings)) {
       const handler = (e: MKEvent) => handleEventChange(key!, e);

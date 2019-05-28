@@ -4,7 +4,7 @@ import { ReactNode } from 'react';
 import Loader from '../Loader/Loader';
 
 export declare type InfiniteLoaderLoad<I> = (
-  { limit, offset }: { limit: number, offset: number },
+  { limit, offset }: { limit: number; offset: number },
   { page }: { page: number },
 ) => Promise<I[]>;
 export declare interface IInfiniteLoaderOnScrollArgs {
@@ -40,7 +40,10 @@ interface IInfiniteLoaderProps<I> {
   loadAll?: boolean;
 }
 
-export default class InfiniteLoader<I> extends React.Component<IInfiniteLoaderProps<I>, IInfiniteLoaderState<I>> {
+export default class InfiniteLoader<I> extends React.Component<
+  IInfiniteLoaderProps<I>,
+  IInfiniteLoaderState<I>
+> {
   public static defaultProps = {
     onSetItems: () => null,
     limit: 100,
@@ -77,7 +80,8 @@ export default class InfiniteLoader<I> extends React.Component<IInfiniteLoaderPr
     const { initialBuffer, loadAll } = this.props;
 
     const isNearishBottom =
-      this.scrollElement && this.scrollElement.scrollHeight - initialBuffer! <= this.scrollElement.clientHeight;
+      this.scrollElement &&
+      this.scrollElement.scrollHeight - initialBuffer! <= this.scrollElement.clientHeight;
 
     if (!loading && !end && (isNearishBottom || loadAll)) {
       this.loadMore();
@@ -94,15 +98,21 @@ export default class InfiniteLoader<I> extends React.Component<IInfiniteLoaderPr
     const { scrollTop, scrollHeight, clientHeight } = event.target as HTMLBaseElement;
 
     this.onScroll({ scrollTop, scrollHeight, clientHeight });
-  }
+  };
 
-  public onScroll  = (
-    { scrollTop, scrollHeight, clientHeight }: { scrollTop: number, scrollHeight: number, clientHeight: number },
-  ) => {
+  public onScroll = ({
+    scrollTop,
+    scrollHeight,
+    clientHeight,
+  }: {
+    scrollTop: number;
+    scrollHeight: number;
+    clientHeight: number;
+  }) => {
     if (scrollTop >= scrollHeight - clientHeight * 3) {
       this.loadMore();
     }
-  }
+  };
 
   public loadMore = async () => {
     const { end, loading, page, items } = this.state;
@@ -137,26 +147,26 @@ export default class InfiniteLoader<I> extends React.Component<IInfiniteLoaderPr
         loading: false,
       });
     }
-  }
+  };
 
   public setItems = (state: IInfiniteLoaderState<I>) => {
     this.props.onSetItems!(state);
 
     this.setState(state);
-  }
+  };
 
   public render() {
     const { loading, items } = this.state;
     const { render } = this.props;
 
     if (!items) {
-      return <Loader/>;
+      return <Loader />;
     }
 
     return (
       <>
         {render(this.onScroll, this.state)}
-        {loading && <Loader/>}
+        {loading && <Loader />}
       </>
     );
   }

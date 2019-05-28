@@ -10,7 +10,12 @@ interface ITracksGridProps {
   playTrack: () => null;
 }
 
-const TracksGrid: React.FC<ITracksGridProps> = ({ tracks, showArtist = false, showAlbum = false, playTrack }) => {
+const TracksGrid: React.FC<ITracksGridProps> = ({
+  tracks,
+  showArtist = false,
+  showAlbum = false,
+  playTrack,
+}) => {
   return (
     <div className={classes.scrollWrapper}>
       <div className={classes.trackGrid}>
