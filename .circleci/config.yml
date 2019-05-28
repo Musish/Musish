@@ -61,10 +61,10 @@ jobs:
           command: mkdir -p ~/reports
       - run:
           name: Check TSLint config compatible with Prettier
-          command: yarn tslint-check
+          command: yarn tslint:check-config
       - run:
           name: Run TSLint
-          command: yarn tslint --formatters-dir node_modules/tslint-junit-formatter/formatters --format junit -o reports/tslint.xml
+          command: yarn tslint --formatters-dir node_modules/tslint-junit-formatter/formatters --format junit -o ~/reports/tslint.xml
       - store_test_results:
           path: ~/reports
       - store_artifacts:
