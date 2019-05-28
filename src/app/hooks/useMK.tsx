@@ -32,11 +32,11 @@ export default function useMK<B extends BindingsType>(bindings: B = {} as B) {
     return () => {
       for (const [eventName, func] of Object.entries<MKEvent>(bindingFunctions)) {
         // @ts-ignore
-        MusicKit.getInstance().removeEventListener(eventName, func as MKEvent);
+        MusicKit.getInstance().removeEventListener(eventName, func);
         delete bindingFunctions[eventName as BindingsList];
       }
     };
-  });
+  }, []);
 
   return {
     instance: MusicKit.getInstance(),
