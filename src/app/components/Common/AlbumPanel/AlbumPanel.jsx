@@ -242,7 +242,7 @@ AlbumPanel.defaultProps = {
 const pseudoRoute = ({ id, album }) => {
   const albumId = id || album.id;
   let route = `/album/${albumId}`;
-  if (isNaN(id)) {
+  if (isNaN(albumId)) {
     route = '/me' + route;
   }
   return route;

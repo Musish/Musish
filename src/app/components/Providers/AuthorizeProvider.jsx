@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import SplashScreen from '../Routes/SplashScreen/SplashScreen';
 import TokenLoader from '../Routes/LoginLoader/LoginLoader';
 import withMK from '../../hoc/withMK';
+import { withRouter } from 'react-router-dom';
 
 export const AuthorizeContext = React.createContext({ authorized: false });
 
@@ -10,9 +11,11 @@ class AuthorizeProvider extends React.Component {
   constructor(props) {
     super(props);
 
+    const allowDirectBrowse = /^\/(?!(me|$)).*$/i.test(props.location.pathname);
+
     this.state = {
       ready: false,
-      browsing: false,
+      browsing: allowDirectBrowse,
       isAuthorized: props.mk.instance.isAuthorized,
     };
   }
@@ -90,6 +93,7 @@ class AuthorizeProvider extends React.Component {
 AuthorizeProvider.propTypes = {
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
   mk: PropTypes.any.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
-export default withMK(AuthorizeProvider);
+export default withRouter(withMK(AuthorizeProvider));
