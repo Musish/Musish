@@ -72,6 +72,7 @@
     "musickit-typescript": "^1.2.4",
     "prettier": "^1.17.1",
     "prettier-tslint": "^0.4.2",
-    "tslint-config-prettier": "^1.18.0"
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-junit-formatter": "^5.1.0"
   }
 }
