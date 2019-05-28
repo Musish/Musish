@@ -6,14 +6,8 @@ import withMK from '../../../../hoc/withMK';
 import classes from './TrackDecoration.scss';
 import { artworkForMediaItem } from '../../../../utils/Utils';
 import { isCurrentTrack, isTrackPlaying } from '../../../../services/MusicPlayerApi';
-import useMK from '../../../../hooks/useMK';
 
 function TrackDecoration({ track, showAlbum, size = 40 }) {
-  useMK({
-    [MusicKit.Events.mediaItemDidChange]: 'mediaItem',
-    [MusicKit.Events.playbackStateDidChange]: 'playbackState',
-  });
-
   const currentItem = isCurrentTrack(track);
 
   const playingAnimation = (
@@ -54,5 +48,8 @@ TrackDecoration.propTypes = {
 TrackDecoration.defaultProps = {
   size: 40,
 };
-
-export default TrackDecoration;
+const bindings = {
+  [MusicKit.Events.mediaItemDidChange]: 'mediaItem',
+  [MusicKit.Events.playbackStateDidChange]: 'playbackState',
+};
+export default withMK(TrackDecoration, bindings);
