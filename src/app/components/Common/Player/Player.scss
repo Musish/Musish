@@ -19,7 +19,7 @@
       }
     }
 
-    > div.track {
+    > .track {
       flex: 1;
       padding-left: 10px;
 
@@ -55,7 +55,8 @@
         width: 160px;
         display: block;
         font-size: 18px;
-        margin-bottom: 6px;
+        margin-top: 2px;
+        margin-bottom: 3px;
       }
     }
   }
@@ -166,7 +167,7 @@
           font-weight: 500;
           font-size: 12px;
           line-height: 12px;
-          background: $background_color;
+          background: $container_background;
           border-radius: 2px;
           text-align: center;
         }
