@@ -4,9 +4,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as Sentry from '@sentry/browser';
 import App from './components/App';
+import 'normalize.css/normalize.css';
 import './assets/styles/common.scss';
-
-import '../../node_modules/normalize.css/normalize.css';
 
 if (process.env.SENTRY_DSN) {
   Sentry.init({

@@ -75,3 +75,5 @@ node_modules/
 .serverless
 secrets.json
 *.scss.d.ts
+
+yarn-error.log
