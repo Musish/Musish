@@ -14,11 +14,12 @@ export default function TrackDecoration({
   showAlbum: boolean;
   size?: number;
 }) {
-  const isCurrent = isCurrentTrack(track);
   useMK({
     mediaItem: MusicKit.Events.mediaItemDidChange,
     playbackState: MusicKit.Events.playbackStateDidChange,
   });
+
+  const isCurrent = isCurrentTrack(track);
 
   const playingAnimation = (
     <div className={cx(classes.playingAnimation, { [classes.animated]: isTrackPlaying(track) })}>

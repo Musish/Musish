@@ -9,24 +9,32 @@ import TrackContextMenu from '../../ContextMenu/Types/Track/TrackContextMenu';
 import TrackDecoration from './TrackDecoration';
 import * as classes from './TracksListItem.scss';
 
-interface ITracksListItemProps<I> {
+interface ITracksListItemProps {
   className: string;
   connectDragSource: ConnectDragSource;
   index: number;
-  playTrack: ({ track, tracks, index }: { track: I; tracks: I[]; index: number }) => null;
+  playTrack: ({
+    track,
+    tracks,
+    index,
+  }: {
+    track: MusicKit.MediaItem;
+    tracks: MusicKit.MediaItem[];
+    index: number;
+  }) => null;
   showAlbum: boolean;
   showArtist: boolean;
   style: object;
-  track: I;
-  tracks: I[];
+  track: MusicKit.MediaItem;
+  tracks: MusicKit.MediaItem[];
 }
 
-const defaultProps: Partial<ITracksListItemProps<any>> = {
+const defaultProps: Partial<ITracksListItemProps> = {
   className: '',
   style: {},
 };
 
-function TracksListItem<I extends MusicKit.MediaItem>(props: ITracksListItemProps<I>) {
+function TracksListItem(props: ITracksListItemProps) {
   const {
     showArtist,
     showAlbum,
@@ -123,7 +131,7 @@ TracksListItem.defaultProps = defaultProps;
 export default DragSource(
   DragDropType.SONG,
   {
-    beginDrag(props: ITracksListItemProps<any>) {
+    beginDrag(props: ITracksListItemProps) {
       return {
         track: props.track,
       };
