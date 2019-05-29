@@ -7,7 +7,7 @@ interface IBindingsType {
 type MKEvent = any;
 
 export default function useMK<B extends IBindingsType>(bindings: B = {} as B) {
-  type BindingsEvent = { [s in keyof B]: Event };
+  type BindingsEvent = { [s in keyof B]: MKEvent };
   type BindingsList = keyof B;
 
   const [events, setEvents] = useState<BindingsEvent>({} as BindingsEvent);
@@ -22,8 +22,9 @@ export default function useMK<B extends IBindingsType>(bindings: B = {} as B) {
   useEffect(() => {
     const bindingFunctions: { [s in BindingsList]?: MKEvent } = {};
 
-    for (const [eventName, key] of Object.entries(bindings)) {
+    for (const [key, eventName] of Object.entries(bindings)) {
       const handler = (e: MKEvent) => handleEventChange(key!, e);
+
       bindingFunctions[eventName as BindingsList] = handler;
       // @ts-ignore
       MusicKit.getInstance().addEventListener(eventName, handler);
