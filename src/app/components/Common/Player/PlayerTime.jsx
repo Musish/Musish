@@ -7,8 +7,8 @@ import useMK from '../../../hooks/useMK';
 
 function PlayerTime(props) {
   const mk = useMK({
-    [MusicKit.Events.playbackTimeDidChange]: 'playbackTime',
-    [MusicKit.Events.mediaItemDidChange]: 'mediaItem',
+    playbackTime: MusicKit.Events.playbackTimeDidChange,
+    mediaItem: MusicKit.Events.mediaItemDidChange,
   });
 
   const [isScrubbing, setIsScrubbing] = useState(false);

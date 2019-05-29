@@ -11,18 +11,14 @@ function ModalProvider({ children }) {
   const state = {
     queue: modals,
     push: (content, style = {}) => setModals([{ content, style }, ...modals]),
-    replace: (content, style = {}) => setModals( [...modals.slice(0, -1), { content, style }]),
+    replace: (content, style = {}) => setModals([...modals.slice(0, -1), { content, style }]),
     pop: () => setModals(modals.slice(1)),
     flush: () => setModals([]),
   };
 
   Mousetrap.bind('esc', state.pop, 'keyup');
 
-  return (
-    <ModalContext.Provider value={state}>
-      {children}
-    </ModalContext.Provider>
-  );
+  return <ModalContext.Provider value={state}>{children}</ModalContext.Provider>;
 }
 
 ModalProvider.propTypes = {
@@ -38,7 +34,7 @@ export default ModalProvider;
 export function withModal(Component) {
   return props => (
     <ModalContext.Consumer>
-      {context => <Component {...props} modal={{...context}} />}
+      {context => <Component {...props} modal={{ ...context }} />}
     </ModalContext.Consumer>
   );
 }

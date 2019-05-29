@@ -37,7 +37,7 @@ class Player extends React.Component {
       e => {
         e.preventDefault();
       },
-      'keydown'
+      'keydown',
     );
 
     // Playback controls
@@ -192,10 +192,9 @@ class Player extends React.Component {
 
           <span
             className={cx(styles.controls, { [styles.enabled]: lyricsModal.isOpen })}
-            onClick={() => (lyricsModal.isOpen
-              ? lyricsModal.close()
-              : lyricsModal.open(nowPlayingItem
-            ))}
+            onClick={() =>
+              lyricsModal.isOpen ? lyricsModal.close() : lyricsModal.open(nowPlayingItem)
+            }
           >
             <i className={'fas fa-align-left'} />
           </span>
@@ -233,12 +232,6 @@ Player.defaultProps = {
 };
 
 export default withMK(
-  withQueueModal(
-    withLyricsModal(
-      withModal(
-        withContext(Player, AuthorizeContext),
-      ),
-    ),
-  ),
+  withQueueModal(withLyricsModal(withModal(withContext(Player, AuthorizeContext)))),
   bindings,
 );

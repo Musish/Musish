@@ -42,7 +42,7 @@ function PlaylistResultItem({ playlist, size, connectDragSource }) {
           <span className={classes.name}>{playlist.attributes.name}</span>
         </div>
       </ContextMenuTrigger>
-    </div>
+    </div>,
   );
 }
 

@@ -25,9 +25,9 @@ export async function addSongsToPlaylist(playlistId, songs) {
       data: payload,
       headers: getHeaders(),
     });
-    Alert.success('Added to your playlist, it\'ll show up in a few seconds. Hold tight!');
+    Alert.success("Added to your playlist, it'll show up in a few seconds. Hold tight!");
   } catch (error) {
-    Alert.error('You\'re unable to add songs to this playlist.');
+    Alert.error("You're unable to add songs to this playlist.");
   }
 }
 
@@ -68,9 +68,9 @@ export async function addToLibrary(mediaType, media) {
       url: `${API_URL}/v1/me/library?ids[${mediaType}]=${media.map(m => m).join(',')}`,
       headers: getHeaders(),
     });
-    Alert.success('Added tracks to your library, they\'ll show up in a few seconds. Hold tight!');
+    Alert.success("Added tracks to your library, they'll show up in a few seconds. Hold tight!");
   } catch (error) {
-    Alert.error('We\'re unable to add these tracks to your library.');
+    Alert.error("We're unable to add these tracks to your library.");
   }
 }
 
@@ -90,7 +90,7 @@ export function infiniteLoadRelationships(
   functionGenerator,
   key,
   store,
-  dataModifier = d => d
+  dataModifier = d => d,
 ) {
   return async ({ offset }, { page }) => {
     if (page === 0) {
@@ -124,7 +124,7 @@ export async function fetchFullCatalogAlbumFromLibraryAlbum(album) {
   const mk = MusicKit.getInstance();
 
   const firstSong = album.relationships.tracks.data.find(
-    t => t.attributes && t.attributes.playParams && t.attributes.playParams.catalogId
+    t => t.attributes && t.attributes.playParams && t.attributes.playParams.catalogId,
   );
 
   if (!firstSong) {

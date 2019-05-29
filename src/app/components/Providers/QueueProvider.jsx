@@ -12,11 +12,7 @@ function QueueModalProvider({ children }) {
     close: () => setIsOpen(false),
   };
 
-  return (
-    <QueueModalContext.Provider value={state}>
-      {children}
-    </QueueModalContext.Provider>
-  );
+  return <QueueModalContext.Provider value={state}>{children}</QueueModalContext.Provider>;
 }
 
 QueueModalProvider.propTypes = {
@@ -32,7 +28,7 @@ export default QueueModalProvider;
 export function withQueueModal(Component) {
   return props => (
     <QueueModalContext.Consumer>
-      {context => <Component {...props} queueModal={{...context}} />}
+      {context => <Component {...props} queueModal={{ ...context }} />}
     </QueueModalContext.Consumer>
   );
 }

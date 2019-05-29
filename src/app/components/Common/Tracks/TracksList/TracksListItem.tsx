@@ -1,28 +1,42 @@
-import React from 'react';
-
-import PropTypes from 'prop-types';
-import cx from 'classnames';
-import { DragSource } from 'react-dnd';
-import { getTime } from '../../../../utils/Utils';
-import classes from './TracksListItem.scss';
-import TrackDecoration from './TrackDecoration';
+import * as cx from 'classnames';
+import * as React from 'react';
+import { ConnectDragSource, DragSource } from 'react-dnd';
 import DragDropType from '../../../../utils/Constants/DragDropType';
+import translate from '../../../../utils/translations/Translations';
+import { getTime } from '../../../../utils/Utils';
 import ContextMenuTrigger from '../../ContextMenu/ContextMenuTrigger';
 import TrackContextMenu from '../../ContextMenu/Types/Track/TrackContextMenu';
-import { isTrackPlaying } from '../../../../services/MusicPlayerApi';
-import translate from '../../../../utils/translations/Translations';
+import TrackDecoration from './TrackDecoration';
+import * as classes from './TracksListItem.scss';
 
-function TracksListItem(props) {
+interface ITracksListItemProps<I> {
+  className: string;
+  connectDragSource: ConnectDragSource;
+  index: number;
+  playTrack: ({ track, tracks, index }: { track: I; tracks: I[]; index: number }) => null;
+  showAlbum: boolean;
+  showArtist: boolean;
+  style: object;
+  track: I;
+  tracks: I[];
+}
+
+const defaultProps: Partial<ITracksListItemProps<any>> = {
+  className: '',
+  style: {},
+};
+
+function TracksListItem<I extends MusicKit.MediaItem>(props: ITracksListItemProps<I>) {
   const {
     showArtist,
     showAlbum,
     track,
     track: { attributes },
     connectDragSource,
-    isOver,
     tracks,
     index,
     className,
+    style,
   } = props;
 
   async function handleClick() {
@@ -31,8 +45,8 @@ function TracksListItem(props) {
 
   if (!attributes) {
     return (
-      <div className={cx(classes.track, classes.disabledTrack, className)} style={props.style}>
-        <div className={[classes.trackWrapper]}>
+      <div className={cx(classes.track, classes.disabledTrack, className)} style={style}>
+        <div className={classes.trackWrapper}>
           <div className={classes.trackBacker} />
           <TrackDecoration track={track} showAlbum={showAlbum} />
           <div className={classes.trackInfo}>
@@ -55,16 +69,13 @@ function TracksListItem(props) {
     <div
       className={cx(
         {
-          [classes.indexedTrack]: !showAlbum,
-          [classes.playing]: isTrackPlaying(track),
-          [classes.droppable]: isOver,
-          [classes.disabledTrack]: !track.attributes.playParams,
+          [classes.disabledTrack]: !attributes.playParams,
         },
         classes.track,
-        className
+        className,
       )}
       onClick={handleClick}
-      style={props.style}
+      style={style}
     >
       <ContextMenuTrigger
         attributes={{ className: [classes.trackWrapper] }}
@@ -79,7 +90,7 @@ function TracksListItem(props) {
             {explicit}
           </span>
           {(showArtist || showAlbum) && (
-            <span className={classes.trackMetaInfo}>
+            <span>
               {showArtist && attributes.artistName}
               {showArtist && showAlbum && ' - '}
               {showAlbum && attributes.albumName}
@@ -104,42 +115,24 @@ function TracksListItem(props) {
           </span>
         </span>
       </ContextMenuTrigger>
-    </div>
+    </div>,
   );
 }
+TracksListItem.defaultProps = defaultProps;
 
-TracksListItem.propTypes = {
-  track: PropTypes.any.isRequired,
-  index: PropTypes.number.isRequired,
-  tracks: PropTypes.array.isRequired,
-  style: PropTypes.object,
-  showArtist: PropTypes.bool.isRequired,
-  showAlbum: PropTypes.bool.isRequired,
-  playTrack: PropTypes.func.isRequired,
-  className: PropTypes.any,
-  connectDragSource: PropTypes.func.isRequired,
-  isOver: PropTypes.bool,
-};
-
-TracksListItem.defaultProps = {
-  style: {},
-  isOver: false,
-  className: null,
-};
-
-const dndSpec = {
-  beginDrag(props) {
+export default DragSource(
+  DragDropType.SONG,
+  {
+    beginDrag(props: ITracksListItemProps<any>) {
+      return {
+        track: props.track,
+      };
+    },
+  },
+  (connect, monitor) => {
     return {
-      track: props.track,
+      connectDragSource: connect.dragSource(),
+      isDragging: monitor.isDragging(),
     };
   },
-};
-
-function dndCollect(connect, monitor) {
-  return {
-    connectDragSource: connect.dragSource(),
-    isDragging: monitor.isDragging(),
-  };
-}
-
-export default DragSource(DragDropType.SONG, dndSpec, dndCollect)(TracksListItem);
+)(TracksListItem);

@@ -1,4 +1,3 @@
-/* eslint-disable */
 /* tslint:disable */
 
 const webpack = require('webpack');

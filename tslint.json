@@ -1,20 +1,17 @@
 {
   "defaultSeverity": "error",
   "extends": [
-    "tslint:recommended"
+    "tslint:recommended",
+    "tslint-config-prettier"
   ],
-  "jsRules": {
-    "quotemark": [true, "single"],
-    "object-literal-sort-keys": false,
-    "semicolon": [true, "always", "ignore-bound-class-methods"],
-    "trailing-comma": false,
-    "max-line-length": false,
-    "no-trailing-whitespace": false
-  },
+  "rulesDirectory": [
+    "tslint-plugin-prettier"
+  ],
+  "jsRules": true,
   "rules": {
-    "quotemark": [true, "single"]
+    "prettier": [true, ".prettierrc"],
+    "object-literal-sort-keys": false
   },
-  "rulesDirectory": [],
   "linterOptions": {
     "exclude": [
       "node_modules/**"

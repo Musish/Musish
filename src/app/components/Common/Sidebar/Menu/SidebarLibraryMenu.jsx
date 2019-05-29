@@ -15,7 +15,7 @@ function SidebarLibraryMenu(props) {
       className={cx(
         classes.menu,
         { [classes.dndSeeking]: activeDndItem },
-        { [classes.dndHovered]: isDndOver }
+        { [classes.dndHovered]: isDndOver },
       )}
     >
       <h3>{title}</h3>
@@ -24,7 +24,7 @@ function SidebarLibraryMenu(props) {
           <MenuItem {...item} key={item.to} />
         ))}
       </ul>
-    </div>
+    </div>,
   );
 }
 
@@ -67,5 +67,5 @@ const dndSpec = {
 export default DropTarget(
   [DragDropType.SONG, DragDropType.ALBUM, DragDropType.PLAYLIST],
   dndSpec,
-  collect
+  collect,
 )(SidebarLibraryMenu);

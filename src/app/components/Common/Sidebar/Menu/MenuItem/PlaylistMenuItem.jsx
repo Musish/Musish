@@ -20,14 +20,14 @@ function PlaylistMenuItem(props) {
             className={cx(
               { [classes.active]: !!match },
               { [classes.dndSeeking]: activeDndItem },
-              { [classes.dndHovered]: isDndOver }
+              { [classes.dndHovered]: isDndOver },
             )}
           >
             {playlist.attributes.name}
           </Link>
         )}
       </Route>
-    </li>
+    </li>,
   );
 }
 
@@ -69,6 +69,6 @@ const dndSpec = {
 
 export default withRouter(
   DropTarget([DragDropType.SONG, DragDropType.ALBUM, DragDropType.PLAYLIST], dndSpec, collect)(
-    PlaylistMenuItem
-  )
+    PlaylistMenuItem,
+  ),
 );

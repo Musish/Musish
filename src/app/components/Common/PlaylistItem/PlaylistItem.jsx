@@ -52,7 +52,7 @@ function PlaylistItem(props) {
           </div>
         </ContextMenuTrigger>
       </div>
-    </div>
+    </div>,
   );
 }
 

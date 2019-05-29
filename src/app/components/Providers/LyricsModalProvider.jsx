@@ -12,11 +12,7 @@ function LyricsModalProvider({ children }) {
     close: () => setIsOpen(false),
   };
 
-  return (
-    <LyricsModalContext.Provider value={state}>
-      {children}
-    </LyricsModalContext.Provider>
-  );
+  return <LyricsModalContext.Provider value={state}>{children}</LyricsModalContext.Provider>;
 }
 
 LyricsModalProvider.propTypes = {
@@ -32,7 +28,7 @@ export default LyricsModalProvider;
 export function withLyricsModal(Component) {
   return props => (
     <LyricsModalContext.Consumer>
-      {context => <Component {...props} lyricsModal={{...context}} />}
+      {context => <Component {...props} lyricsModal={{ ...context }} />}
     </LyricsModalContext.Consumer>
   );
 }

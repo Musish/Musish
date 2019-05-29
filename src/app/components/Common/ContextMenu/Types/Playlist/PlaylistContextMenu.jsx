@@ -65,7 +65,7 @@ function PlaylistContextMenu({ playlist }) {
             />,
             {
               width: 'auto',
-            }
+            },
           )
         }
       >

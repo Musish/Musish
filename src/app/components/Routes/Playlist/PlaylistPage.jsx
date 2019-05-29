@@ -15,11 +15,7 @@ function PlaylistPage(props) {
     <PageContent innerRef={scrollRef}>
       <PageTitle
         title={null}
-        context={
-          isNaN(playlistId)
-            ? translate.myLibrary
-            : translate.appleMusic
-        }
+        context={isNaN(playlistId) ? translate.myLibrary : translate.appleMusic}
       />
 
       <PlaylistPanel id={playlistId} />

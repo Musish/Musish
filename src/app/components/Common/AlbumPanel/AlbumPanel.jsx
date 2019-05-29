@@ -61,7 +61,7 @@ class AlbumPanel extends React.Component {
     const albumLength = items.reduce(
       (totalDuration, track) =>
         totalDuration + (track.attributes ? track.attributes.durationInMillis : 0),
-      0
+      0,
     );
 
     if (this.state.shouldMatchCatalogAlbum) {
@@ -158,23 +158,23 @@ class AlbumPanel extends React.Component {
 
           {album.attributes.editorialNotes && album.attributes.editorialNotes.standard && (
             <div className={classes.description} onClick={this.toggleFullDescription}>
-                <HTMLEllipsis
-                  unsafeHTML={album.attributes.editorialNotes.standard}
-                  maxLine={showFullDescription ? Number.MAX_SAFE_INTEGER : 3}
-                  ellipsisHTML='<i class="read-more">... read more</i>'
-                  basedOn='words'
-                  onReflow={() => {
-                    const tracksListWs = this.tracksListWsRef.current;
-                    if (tracksListWs) {
-                      tracksListWs.updatePosition();
-                    }
+              <HTMLEllipsis
+                unsafeHTML={album.attributes.editorialNotes.standard}
+                maxLine={showFullDescription ? Number.MAX_SAFE_INTEGER : 3}
+                ellipsisHTML='<i class="read-more">... read more</i>'
+                basedOn='words'
+                onReflow={() => {
+                  const tracksListWs = this.tracksListWsRef.current;
+                  if (tracksListWs) {
+                    tracksListWs.updatePosition();
+                  }
 
-                    const tracksListList = this.tracksListListRef.current;
-                    if (tracksListList) {
-                      tracksListList.forceUpdateGrid();
-                    }
-                  }}
-                />
+                  const tracksListList = this.tracksListListRef.current;
+                  if (tracksListList) {
+                    tracksListList.forceUpdateGrid();
+                  }
+                }}
+              />
             </div>
           )}
 
@@ -185,7 +185,7 @@ class AlbumPanel extends React.Component {
               this.albumId,
               this.albumLoader,
               'tracks',
-              this.store
+              this.store,
             )}
             onSetItems={this.onSetItems}
             playTrack={this.playTrack}
@@ -203,7 +203,11 @@ class AlbumPanel extends React.Component {
                         this.props.history.push('/me/albums/');
                       }
                       modal.push(
-                        <EAlbumPanel key={matchedCatalogAlbum.id} album={matchedCatalogAlbum} pseudoRoute />
+                        <EAlbumPanel
+                          key={matchedCatalogAlbum.id}
+                          album={matchedCatalogAlbum}
+                          pseudoRoute
+                        />,
                       );
                     }}
                   >

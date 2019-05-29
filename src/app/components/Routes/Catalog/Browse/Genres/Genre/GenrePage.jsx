@@ -76,7 +76,7 @@ class GenrePage extends React.Component {
   static fetchPlaylists(playlists) {
     return Promise.all(
       // eslint-disable-next-line no-return-await
-      playlists.map(async playlist => await MusicKit.getInstance().api.playlist(playlist.id))
+      playlists.map(async playlist => await MusicKit.getInstance().api.playlist(playlist.id)),
     );
   }
 
@@ -101,7 +101,7 @@ class GenrePage extends React.Component {
             this.curatorLoader,
             'playlists',
             this.store,
-            GenrePage.fetchPlaylists
+            GenrePage.fetchPlaylists,
           )}
           render={GenrePage.renderContent}
           limit={10}

@@ -25,7 +25,7 @@ class AuthorizeProvider extends React.Component {
 
     MusicKit.getInstance().addEventListener(
       MusicKit.Events.authorizationStatusDidChange,
-      this.check
+      this.check,
     );
   }
 

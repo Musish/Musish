@@ -65,7 +65,7 @@ function AlbumContextMenu({ album }) {
             />,
             {
               width: 'auto',
-            }
+            },
           )
         }
       >

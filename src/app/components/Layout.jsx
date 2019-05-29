@@ -17,7 +17,7 @@ class Layout extends Component {
 
   render() {
     return (
-      <Fragment>
+      <>
         <NavigationBar />
 
         <div id='main-wrapper'>
@@ -27,7 +27,7 @@ class Layout extends Component {
             {this.props.children}
           </main>
         </div>
-      </Fragment>
+      </>
     );
   }
 }
