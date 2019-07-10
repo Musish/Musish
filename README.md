@@ -44,7 +44,7 @@ yarn
 ```
 
 ##### 4. Launch Musish:
-Start webpack dev server on port 8080:
+Start webpack dev server on port `8080`:
 ```
 yarn start
 ```
