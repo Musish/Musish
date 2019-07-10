@@ -67,5 +67,10 @@
     "inYourPersonalLibrary": "В вашу личную медиатеку",
     "unauthorisedLibrarySearch": "Вы должны войти, чтобы просматривать вашу медиатеку.",
   
-    "noLyricsAvailable": "Текст недоступен "
+    "noLyricsAvailable": "Текст недоступен ",
+
+    "lfmConnect": "Подключить",
+    "lfmDisconnect": "Отключить",
+    "lfmConnectSuccess": "Last.fm успешно подключен!",
+    "lfmConnectError": "Не удалось подключиться к Last.fm"
   }
