@@ -9,7 +9,7 @@ Contains some serverless functions deployed with AWS Lambda to speed up certain 
 
 [![CircleCI](https://img.shields.io/circleci/project/github/Musish/Musish/master.svg)](https://circleci.com/gh/Musish/Musish) ![Dependencies](https://img.shields.io/david/musish/musish.svg) [![OpenCollective](https://opencollective.com/musish/backers/badge.svg)](https://opencollective.com/musish)
 
-![](https://i.imgur.com/TFJyZnu.png)
+![Musish Browse Page](https://i.imgur.com/TFJyZnu.png)
 
 ## Looks neat, how can I contribute?
 
