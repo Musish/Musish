@@ -18,6 +18,7 @@ The Musish project welcomes contributions of all sorts; PRs, issues, feedback, c
 Please do remember to read our contributing guidelines before making a pull request.
 
 We also welcome financial contributions in full transparency on our [open collective](https://opencollective.com/musish), and we are extremely thankful for all those who have contributed already:
+
 [![Backers on Open Collective](https://opencollective.com/musish/tiers/backer.svg?avatarHeight=36&width=600)](https://opencollective.com/Musish)
 
 A massive thank you also to our code contributors, who you can see [here](https://github.com/Musish/Musish/graphs/contributors)
