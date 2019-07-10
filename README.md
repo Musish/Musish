@@ -7,15 +7,20 @@ The unofficial open source Apple Music webapp.
 Built with React and Apple's MusicKit JS while utilising the official Apple Music API.
 Contains some serverless functions deployed with AWS Lambda to speed up certain functionalities. (Found in [backend](https://github.com/Musish/Musish/tree/master/src/backend)).
 
-[![CircleCI](https://img.shields.io/circleci/project/github/Musish/Musish/master.svg)](https://circleci.com/gh/Musish/Musish) ![Dependencies](https://img.shields.io/david/musish/musish.svg)
+[![CircleCI](https://img.shields.io/circleci/project/github/Musish/Musish/master.svg)](https://circleci.com/gh/Musish/Musish) ![Dependencies](https://img.shields.io/david/musish/musish.svg) [![OpenCollective](https://opencollective.com/musish/backers/badge.svg)](https://opencollective.com/musish)
 
 ![](https://i.imgur.com/TFJyZnu.png)
 
 ## Looks neat, how can I contribute?
 
-The Musish project welcomes contributions of all sorts; PRs, issues, feedback, comments, or even just sharing the project would all be infinitely useful to us!
+The Musish project welcomes contributions of all sorts; PRs, issues, feedback, comments, donations, or even just sharing the project would all be infinitely useful to us!
 
 Please do remember to read our contributing guidelines before making a pull request.
+
+We also welcome financial contributions in full transparency on our [open collective](https://opencollective.com/musish), and we are extremely thankful for all those who have contributed already:
+[![Backers on Open Collective](https://opencollective.com/musish/tiers/backer.svg?avatarHeight=36&width=600)](https://opencollective.com/Musish)
+
+A massive thank you also to our code contributors, who you can see [here](https://github.com/Musish/Musish/graphs/contributors)
 
 ## Self hosting
 
