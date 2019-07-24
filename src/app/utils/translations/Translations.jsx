@@ -21,7 +21,7 @@ const localization = new LocalizedStrings({
   ru: russian,
   br: Brazilian,
   kr: korean,
-  hu: hungarian
+  hu: hungarian,
 });
 
 // This sets the defualt storefront language.
