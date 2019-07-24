@@ -8,6 +8,7 @@ import turkish from './languages/Turkish';
 import russian from './languages/Russian';
 import Brazilian from './languages/BrazilianPortuguese';
 import korean from './languages/Korean';
+import hungarian from './languages/Hungarian';
 
 const localization = new LocalizedStrings({
   en: english,
@@ -20,6 +21,7 @@ const localization = new LocalizedStrings({
   ru: russian,
   br: Brazilian,
   kr: korean,
+  hu: hungarian
 });
 
 // This sets the defualt storefront language.
