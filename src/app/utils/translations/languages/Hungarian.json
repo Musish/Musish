@@ -1,0 +1,77 @@
+{
+    "musishDescription": "A Musish az Apple Music könyvtáradat használja. Kérlek, adj nekünk engedélyt hogy hozzáférhessünk.",
+    "connect": "Csatlakoztatás az Apple Music-hoz",
+    "securityMessage": "{0} Biztonságos azonosítás az Apple.com-on keresztül",
+    "justBrowse": "Vagy csak böngéssz",
+    "legalNotice": "Az Apple, Inc. nem a Musish partnere. A Musish nem fér hozzá, gyűjt be vagy tárol semmilyen személyes információt. Az 'Apple', az 'Apple Music' és az Apple logo az Apple, Inc. kizárólagos védjegyei.",
+  
+    "appleMusic": "Apple Music",
+  
+    "logout": "Kijelentkezés",
+    "login": "Bejelentkezés",
+    "searchMusic": "Keresés",
+  
+    "play": "Lejátszás",
+    "playNext": "Lejátszás következőként",
+    "playLater": "Lejátszás később",
+    "shuffle": "Keverés",
+    "search": "Keresés",
+    "searchingFor": "Keresés erre: {0}",
+  
+    "openAlbum": "Album megnyitása",
+    "openPlaylist": "Lejátszási lista megnyitása",
+    "addToPlaylist": "Lejátszási listához adás",
+    "addToLibrary": "Hozzáadás a könyvtárhoz",
+  
+    "playlistBy": "{0} lejátszási listája",
+  
+    "forYou": "Önnek",
+    "recentlyPlayed": "Nemrég játszott",
+    "heavyRotation": "Mostanában játszott",
+  
+    "browse": "Böngészés",
+    "topCharts": "Toplisták",
+    "genres": "Műfajok",
+    "topSongs": "Top számok",
+    "dailyTop100": "Napi top 100",
+    "topPlaylists": "Top lejátszási listák",
+    "topAlbums": "Top albumok",
+  
+    "radio": "Rádió",
+    "radioMessage": "Keményen dolgozunk azon a Musish-ban is működjenek a rádiók. Kérjük, nézz vissza később.",
+  
+    "myLibrary": "Könyvtár",
+    "recentlyAdded": "Nemrég hozzáadott",
+    "artists": "Előadók",
+    "albums": "Albumok",
+    "song": "Dal",
+    "songs": "Dalok",
+    "playlists": "Lejátszási listák",
+  
+    "feedback": "Visszajelzés",
+    "designCredits": "Hatalmas szívvel {0} a Musish csapatától.",
+  
+    "lyrics": "Dalszöveg",
+    "upNext": "Következők",
+  
+    "showCompleteAlbum": "Teljes album mutatása",
+    "hour": "óra",
+    "hours": "óra",
+    "minute": "perc",
+    "minutes": "perc",
+  
+    "noResultsFound": "Nincs találat.",
+    "trackNotAvailable": "Zene nem elérhető",
+  
+    "dataProvidedByGenius": "Az adatokat a Genius biztosítja",
+    "inYourPersonalLibrary": "A személyes könyvtáradban",
+    "unauthorisedLibrarySearch": "Be kell jelentkezned hogy kereshess a könyvtáradban.",
+  
+    "noLyricsAvailable": "Szöveg nem elérhető ",
+  
+    "lfmConnect": "Csatlakozás",
+    "lfmDisconnect": "Kapcsolat bontása",
+    "lfmConnectSuccess": "Sikeresen csatlakoztál a Last.fm-hez!",
+    "lfmConnectError": "Nem tudtunk csatlakozni a Last.fm-hez"
+  }
+  
