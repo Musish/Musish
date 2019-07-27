@@ -70,6 +70,28 @@
 
   "noLyricsAvailable": "Pas de paroles disponibles",
 
+  "playerBackward": "Précédent",
+  "playerPause": "Pause",
+  "playerPlay": "Play",
+  "playerForward": "Suivant",
+  "playerVolume": "Volume",
+  "playerAddToFavorite": "Ajouter aux favoris",
+  "playerRemoveDislike": "Retirer l'aversion",
+  "playerDislike": "N'aime pas",
+  "playerShuffle": "Aléatoire",
+  "playerUnshuffle": "Ordre original",
+  "playerShowLyrics": "Afficher les paroles",
+  "playerCloseLyrics": "Fermer les paroles",
+  "playerShowQueue": "Afficher la file d'attente",
+  "playerHideQueue": "Fermer la file d'attente",
+  "playerToggleRepeatFrom0": "Répéter la piste",
+  "playerToggleRepeatFrom1": "Répéter toutes les pistes",
+  "playerToggleRepeatFrom2": "Désactiver la répétition",
+
+  "removeFromQueue": "Supprimer de la file d'attente",
+
+  "noLyricsAvailable": "Pas de paroles disponibles",
+
   "lfmConnect": "Connecter",
   "lfmDisconnect": "Déconnecter",
   "lfmConnectSuccess": "Last.fm est maintenant connecté",

@@ -67,5 +67,25 @@
   "inYourPersonalLibrary": "Kişisel kütüphanenizde",
   "unauthorisedLibrarySearch": "Kütüphanenizde arama yapabilmek için giriş yapmalısınız.",
 
-  "noLyricsAvailable": "Alt yazı bulunamadı"
+  "noLyricsAvailable": "Alt yazı bulunamadı",
+
+  "playerBackward": "Previous",
+  "playerPause": "Pause",
+  "playerPlay": "Play",
+  "playerForward": "Next",
+  "playerVolume": "Volume",
+  "playerAddToFavorite": "Add to favorites",
+  "playerRemoveDislike": "Remove dislike",
+  "playerDislike": "Dislike",
+  "playerShuffle": "Shuffle",
+  "playerUnshuffle": "Unshuffle",
+  "playerShowLyrics": "Show lyrics",
+  "playerCloseLyrics": "Close lyrics",
+  "playerShowQueue": "Show queue",
+  "playerHideQueue": "Hide queue",
+  "playerToggleRepeatFrom0": "Repeat track",
+  "playerToggleRepeatFrom1": "Repeat all tracks",
+  "playerToggleRepeatFrom2": "Disable repeat",
+
+  "removeFromQueue": "Remove from queue"
 }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { getRating, setRating } from '../../../../services/MusicApi';
 import styles from '../Player.scss';
+import translate from '../../../../utils/translations/Translations';
 
 class Rating extends React.Component {
   constructor(props) {
@@ -46,14 +47,19 @@ class Rating extends React.Component {
 
   render() {
     let heartClass = 'fas fa-heart';
+    let title = translate.playerAddToFavorite;
     if (this.state.rating === -1) {
       heartClass = 'fas fa-heart-broken';
+      title = translate.playerRemoveDislike;
+    } else if (this.state.rating === 1) {
+      title = translate.playerDislike;
     }
 
     return (
       <span
         className={cx(styles.controls, { [styles.enabled]: this.state.rating !== 0 })}
         onClick={!this.state.loading ? this.toggleRating : undefined}
+        title={title}
       >
         <i className={heartClass} />
       </span>

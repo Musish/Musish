@@ -64,5 +64,25 @@
   "inYourPersonalLibrary": "In your personal library",
   "unauthorisedLibrarySearch": "You must login to search your library.",
 
-  "noLyricsAvailable": "No lyrics available "
+  "noLyricsAvailable": "No lyrics available ",
+
+  "playerBackward": "Previous",
+  "playerPause": "Pause",
+  "playerPlay": "Play",
+  "playerForward": "Next",
+  "playerVolume": "Volume",
+  "playerAddToFavorite": "Add to favorites",
+  "playerRemoveDislike": "Remove dislike",
+  "playerDislike": "Dislike",
+  "playerShuffle": "Shuffle",
+  "playerUnshuffle": "Unshuffle",
+  "playerShowLyrics": "Show lyrics",
+  "playerCloseLyrics": "Close lyrics",
+  "playerShowQueue": "Show queue",
+  "playerHideQueue": "Hide queue",
+  "playerToggleRepeatFrom0": "Repeat track",
+  "playerToggleRepeatFrom1": "Repeat all tracks",
+  "playerToggleRepeatFrom2": "Disable repeat",
+
+  "removeFromQueue": "Remove from queue"
 }

@@ -3,6 +3,7 @@ import { SortableElement } from 'react-sortable-hoc';
 import cx from 'classnames';
 import classes from './Queue.scss';
 import { artworkForMediaItem } from '../../../../utils/Utils';
+import translate from '../../../../utils/translations/Translations';
 
 export const QueueItemState = {
   Played: 0,
@@ -36,6 +37,7 @@ const QueueItem = SortableElement(({ value, style, item, removeItemFunc }) => {
             <i
               className={cx('fas fa-times', classes.notSortable)}
               onClick={() => removeItemFunc(item.queuePosition)}
+              title={translate.removeFromQueue}
             />
           )}
         </span>
