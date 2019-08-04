@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Loader.scss';
 
-export default function Loader() {
+const Loader: React.FC<{}> = () => {
   return (
     <div className={classes.container}>
       <div className={classes.loadingAnimation}>
@@ -15,4 +15,6 @@ export default function Loader() {
       </div>
     </div>
   );
-}
+};
+
+export default Loader;
