@@ -1,12 +1,19 @@
-import React from 'react';
 import cx from 'classnames';
-import PropTypes from 'prop-types';
 import Mousetrap from 'mousetrap';
+import React, { SyntheticEvent } from 'react';
 import withMK from '../../../hoc/withMK';
 import styles from './Player.scss';
 
-class VolumeControl extends React.Component {
-  constructor(props) {
+interface IVolumeControlProps {
+  mk: IMusishMK;
+}
+
+interface IVolumeControlState {
+  volume: any;
+}
+
+class VolumeControl extends React.Component<IVolumeControlProps, IVolumeControlState> {
+  constructor(props: IVolumeControlProps) {
     super(props);
 
     this.state = {
@@ -14,7 +21,7 @@ class VolumeControl extends React.Component {
     };
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     // Volume controls (VOLUME UP)
     Mousetrap.bind(
       'up',
@@ -40,7 +47,7 @@ class VolumeControl extends React.Component {
     );
   }
 
-  getVolumeIconClasses = () => {
+  public getVolumeIconClasses = () => {
     const { volume } = this.props.mk.instance.player;
 
     if (volume === 0) {
@@ -58,11 +65,11 @@ class VolumeControl extends React.Component {
     return 'fas fa-volume-up';
   };
 
-  handleVolumeBarChange = e => {
-    this.changeVolume(parseFloat(e.target.value));
+  public handleVolumeBarChange = (e: SyntheticEvent<HTMLInputElement>) => {
+    this.changeVolume(parseFloat((e.target as HTMLInputElement).value));
   };
 
-  changeVolume = (volume, updateState = true) => {
+  public changeVolume = (volume: any, updateState = true) => {
     this.props.mk.instance.player.volume = volume;
 
     if (updateState) {
@@ -72,7 +79,7 @@ class VolumeControl extends React.Component {
     }
   };
 
-  toggleVolume = () => {
+  public toggleVolume = () => {
     const { player } = this.props.mk.instance;
     const previousVolume = this.state.volume;
     const isMuted = player.volume === 0;
@@ -86,7 +93,7 @@ class VolumeControl extends React.Component {
     this.changeVolume(newVolume, false);
   };
 
-  render() {
+  public render() {
     const { mk } = this.props;
 
     return (
@@ -95,7 +102,7 @@ class VolumeControl extends React.Component {
         <div className={styles.volumeControlContainer}>
           <div className={styles.volumeBarWrapper}>
             <input
-              className={cx(styles['progress-bar'], styles.volumeBar)}
+              className={cx(styles.progressBar, styles.volumeBar)}
               style={{
                 background: `linear-gradient(
               to right,
@@ -122,10 +129,6 @@ class VolumeControl extends React.Component {
 
 const bindings = {
   [MusicKit.Events.playbackVolumeDidChange]: 'playbackVolume',
-};
-
-VolumeControl.propTypes = {
-  mk: PropTypes.any.isRequired,
 };
 
 export default withMK(VolumeControl, bindings);
