@@ -86,7 +86,7 @@ function TracksListItem(props: ITracksListItemProps) {
       style={style}
     >
       <ContextMenuTrigger
-        attributes={{ className: [classes.trackWrapper] }}
+        attributes={{ className: classes.trackWrapper }}
         holdToDisplay={-1}
         render={() => <TrackContextMenu track={track} tracks={tracks} index={index} />}
       >

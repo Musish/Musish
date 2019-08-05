@@ -1,27 +1,28 @@
-import React from 'react';
 import cx from 'classnames';
-import PropTypes from 'prop-types';
-import { DragSource } from 'react-dnd';
-import classes from './SearchBar.scss';
-import { artworkForMediaItem } from '../../../../utils/Utils';
-import AlbumPanel from '../../AlbumPanel/AlbumPanel';
+import React from 'react';
+import { ConnectDragSource, DragSource, DragSourceConnector, DragSourceMonitor } from 'react-dnd';
 import DragDropType from '../../../../utils/Constants/DragDropType';
-import AlbumContextMenu from '../../ContextMenu/Types/Album/AlbumContextMenu';
-import ContextMenuTrigger from '../../ContextMenu/ContextMenuTrigger';
+import { artworkForMediaItem } from '../../../../utils/Utils';
 import { useModal } from '../../../Providers/ModalProvider';
+import AlbumPanel from '../../AlbumPanel/AlbumPanel';
+import ContextMenuTrigger from '../../ContextMenu/ContextMenuTrigger';
+import AlbumContextMenu from '../../ContextMenu/Types/Album/AlbumContextMenu';
+import classes from './SearchBar.scss';
 
-function AlbumResultItem({ album, size, connectDragSource }) {
+interface IAlbumResultItemProps {
+  album: any;
+  size: number;
+  connectDragSource: ConnectDragSource;
+}
+
+const AlbumResultItem: React.FC<IAlbumResultItemProps> = ({ album, size, connectDragSource }) => {
   const isCatalog = album.type === 'albums';
 
   const { push: pushModal } = useModal();
 
   return connectDragSource(
     <div>
-      <ContextMenuTrigger
-        attributes={{ className: [classes.trackWrapper] }}
-        holdToDisplay={-1}
-        render={() => <AlbumContextMenu album={album} />}
-      >
+      <ContextMenuTrigger holdToDisplay={-1} render={() => <AlbumContextMenu album={album} />}>
         <div
           className={cx(classes.result, classes.album)}
           onClick={() => pushModal(<AlbumPanel key={album.id} album={album} pseudoRoute />)}
@@ -39,28 +40,22 @@ function AlbumResultItem({ album, size, connectDragSource }) {
             />
           </span>
 
-          <span className={classes.name}>{album.attributes.name}</span>
+          <span>{album.attributes.name}</span>
         </div>
       </ContextMenuTrigger>
     </div>,
   );
-}
-
-AlbumResultItem.propTypes = {
-  album: PropTypes.any.isRequired,
-  size: PropTypes.any.isRequired,
-  connectDragSource: PropTypes.func.isRequired,
 };
 
 const dndSpec = {
-  beginDrag(props) {
+  beginDrag(props: IAlbumResultItemProps) {
     return {
-      album: props.id || props.album.id,
+      album: props.album.id,
     };
   },
 };
 
-function dndCollect(connect, monitor) {
+function dndCollect(connect: DragSourceConnector, monitor: DragSourceMonitor) {
   return {
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging(),
