@@ -1,29 +1,33 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import classes from '../BrowsePage.scss';
-import browseData from '../browse';
-import Loader from '../../../../Common/Loader/Loader';
-import ItemList from '../ItemList';
 import * as MusicPlayerApi from '../../../../../services/MusicPlayerApi';
-import TracksGrid from '../../../../Common/Tracks/TracksGrid/TracksGrid';
 import translate from '../../../../../utils/translations/Translations';
+import Loader from '../../../../Common/Loader/Loader';
+import TracksGrid from '../../../../Common/Tracks/TracksGrid/TracksGrid';
+import browseData from '../browse.json';
+import ItemList from '../ItemList';
 
-class TopCharts extends React.Component {
-  constructor(props) {
+interface ITopChartsState {
+  charts: any;
+}
+
+class TopCharts extends React.Component<{}, ITopChartsState> {
+  public static playTrack({ tracks, index }: { tracks: MusicKit.MediaItem[]; index: number }) {
+    MusicPlayerApi.playTrack(tracks, index);
+  }
+
+  constructor(props: {}) {
     super(props);
 
     this.state = {
       charts: null,
     };
-
-    this.ref = React.createRef();
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.getCharts();
   }
 
-  getCharts = async () => {
+  public getCharts = async () => {
     const music = MusicKit.getInstance();
     const charts = await music.api.charts(['songs', 'albums', 'playlists'], { limit: 36 });
 
@@ -32,17 +36,13 @@ class TopCharts extends React.Component {
     });
   };
 
-  static playTrack({ tracks, index }) {
-    MusicPlayerApi.playTrack(tracks, index);
-  }
-
-  render() {
+  public render() {
     const { charts } = this.state;
 
     return (
       <>
         <h3>{translate.topSongs}</h3>
-        <div className={classes.chartingSongs}>
+        <div>
           {charts ? (
             <TracksGrid
               tracks={charts.songs[0].data}
@@ -65,13 +65,13 @@ class TopCharts extends React.Component {
 
         <ItemList
           title={translate.topPlaylists}
-          list={charts ? charts.playlists[0].data : null}
+          items={charts ? charts.playlists[0].data : null}
           type={'playlist'}
         />
 
         <ItemList
           title={translate.topAlbums}
-          list={charts ? charts.albums[0].data : null}
+          items={charts ? charts.albums[0].data : null}
           type={'album'}
           size={120}
           rows={3}
@@ -81,4 +81,4 @@ class TopCharts extends React.Component {
   }
 }
 
-export default withRouter(TopCharts);
+export default TopCharts;

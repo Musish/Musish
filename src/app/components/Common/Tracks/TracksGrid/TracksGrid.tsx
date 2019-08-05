@@ -7,7 +7,15 @@ interface ITracksGridProps {
   showArtist?: boolean;
   showAlbum?: boolean;
   tracks: any[];
-  playTrack: () => null;
+  playTrack: ({
+    track,
+    tracks,
+    index,
+  }: {
+    track: MusicKit.MediaItem;
+    tracks: MusicKit.MediaItem[];
+    index: number;
+  }) => void;
 }
 
 const TracksGrid: React.FC<ITracksGridProps> = ({
