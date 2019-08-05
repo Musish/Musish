@@ -1,15 +1,18 @@
+import cx from 'classnames';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import cx from 'classnames';
-import PropTypes from 'prop-types';
+import withContext from '../../../hoc/withContext';
+import { AuthorizeContext } from '../../Providers/AuthorizeProvider';
+import AuthorizationButton from './AuthorizationButton/AuthorizationButton';
 import classes from './NavigationBar.scss';
 import SearchBar from './Search/SearchBar';
-import AuthorizationButton from './AuthorizationButton/AuthorizationButton';
 import Settings from './Settings/Settings';
-import { AuthorizeContext } from '../../Providers/AuthorizeProvider';
-import withContext from '../../../hoc/withContext';
 
-function NavigationBar(props) {
+interface INavigationBarProps {
+  authorized: boolean;
+}
+
+const NavigationBar: React.FC<INavigationBarProps> = props => {
   return (
     <nav className={classes.navigationBar}>
       <h1 className={classes.brand}>
@@ -24,10 +27,6 @@ function NavigationBar(props) {
       <AuthorizationButton />
     </nav>
   );
-}
-
-NavigationBar.propTypes = {
-  authorized: PropTypes.bool.isRequired,
 };
 
 export default withContext(NavigationBar, AuthorizeContext);
