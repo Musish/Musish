@@ -1,18 +1,20 @@
 import React from 'react';
 import { MenuItem } from 'react-contextmenu';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
-import { artworkForMediaItem } from '../../../../../utils/Utils';
-import classes from './PlaylistContextMenu.scss';
-import { playPlaylist, playNext, playLater } from '../../../../../services/MusicPlayerApi';
-import PlaylistPanel from '../../../PlaylistPanel/PlaylistPanel';
 import { addPlaylistToPlaylist, addToLibrary } from '../../../../../services/MusicApi';
-import PlaylistSelector from '../../../PlaylistSelector/PlaylistSelector';
+import { playLater, playNext, playPlaylist } from '../../../../../services/MusicPlayerApi';
 import translate from '../../../../../utils/translations/Translations';
+import { artworkForMediaItem } from '../../../../../utils/Utils';
 import { useModal } from '../../../../Providers/ModalProvider';
+import PlaylistPanel from '../../../PlaylistPanel/PlaylistPanel';
+import PlaylistSelector from '../../../PlaylistSelector/PlaylistSelector';
+import classes from './PlaylistContextMenu.scss';
 
-function PlaylistContextMenu({ playlist }) {
-  const { push: pushModal } = useModal();
+interface IPlaylistContextMenuProps {
+  playlist: any;
+}
+
+const PlaylistContextMenu: React.FC<IPlaylistContextMenuProps> = ({ playlist }) => {
+  const { push: pushModal, pop: popModal } = useModal();
 
   const { attributes } = playlist;
   const artworkURL = artworkForMediaItem(playlist, 60);
@@ -60,7 +62,7 @@ function PlaylistContextMenu({ playlist }) {
             <PlaylistSelector
               onClick={async targetPlaylist => {
                 await addPlaylistToPlaylist(targetPlaylist.id, playlist.id);
-                pop();
+                popModal();
               }}
             />,
             {
@@ -73,10 +75,6 @@ function PlaylistContextMenu({ playlist }) {
       </MenuItem>
     </>
   );
-}
-
-PlaylistContextMenu.propTypes = {
-  playlist: PropTypes.object.isRequired,
 };
 
-export default withRouter(PlaylistContextMenu);
+export default PlaylistContextMenu;
