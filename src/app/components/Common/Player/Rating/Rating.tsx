@@ -1,11 +1,19 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import cx from 'classnames';
+import React from 'react';
 import { getRating, setRating } from '../../../../services/MusicApi';
 import styles from '../Player.scss';
 
-class Rating extends React.Component {
-  constructor(props) {
+interface IRatingProps {
+  nowPlayingItem: MusicKit.MediaItem;
+}
+
+interface IRatingState {
+  rating: number;
+  loading: boolean;
+}
+
+class Rating extends React.Component<IRatingProps, IRatingState> {
+  constructor(props: IRatingProps) {
     super(props);
 
     this.state = {
@@ -14,11 +22,11 @@ class Rating extends React.Component {
     };
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.fetchRating();
   }
 
-  fetchRating = async () => {
+  public fetchRating = async () => {
     const rating = await getRating('song', this.props.nowPlayingItem.id);
     this.setState({
       rating,
@@ -26,7 +34,7 @@ class Rating extends React.Component {
     });
   };
 
-  toggleRating = async () => {
+  public toggleRating = async () => {
     this.setState({
       loading: true,
     });
@@ -44,7 +52,7 @@ class Rating extends React.Component {
     return rating;
   };
 
-  render() {
+  public render() {
     let heartClass = 'fas fa-heart';
     if (this.state.rating === -1) {
       heartClass = 'fas fa-heart-broken';
@@ -60,9 +68,5 @@ class Rating extends React.Component {
     );
   }
 }
-
-Rating.propTypes = {
-  nowPlayingItem: PropTypes.any.isRequired,
-};
 
 export default Rating;
