@@ -57,7 +57,7 @@ class TopCharts extends React.Component {
 
         <ItemList
           title={translate.dailyTop100}
-          listIds={Object.values(browseData.top100).slice(0, 24)}
+          itemIds={Object.values(browseData.top100).slice(0, 24)}
           type={'playlist'}
           size={120}
           rows={1}
