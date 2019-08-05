@@ -1,26 +1,34 @@
-import React from 'react';
-
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
-import { DragSource } from 'react-dnd';
 import cx from 'classnames';
-import classes from './AlbumItem.scss';
-import AlbumPanel from '../AlbumPanel/AlbumPanel';
+import React from 'react';
+import { ConnectDragSource, DragSource, DragSourceConnector, DragSourceMonitor } from 'react-dnd';
+import { RouteComponentProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import DragDropType from '../../../utils/Constants/DragDropType';
+import { useModal } from '../../Providers/ModalProvider';
+import AlbumPanel from '../AlbumPanel/AlbumPanel';
 import ContextMenuTrigger from '../ContextMenu/ContextMenuTrigger';
 import AlbumContextMenu from '../ContextMenu/Types/Album/AlbumContextMenu';
-import { useModal } from '../../Providers/ModalProvider';
+import classes from './AlbumItem.scss';
 
-function AlbumItem(props) {
+interface IAlbumItemProps extends RouteComponentProps {
+  navigate?: boolean;
+  album?: any;
+  id?: any;
+  size: number;
+  connectDragSource: ConnectDragSource;
+  isOver?: boolean;
+}
+
+const AlbumItem: React.FC<IAlbumItemProps> = (props: IAlbumItemProps) => {
   const { push: pushModal } = useModal();
 
-  function handleOpen(replace) {
+  function handleOpen() {
     const id = props.id || props.album.id;
 
     if (props.navigate) {
       props.history.push(`/me/album/${id}`);
     } else {
-      replace(<AlbumPanel key={id} id={id} pseudoRoute />);
+      pushModal(<AlbumPanel key={id} id={id} pseudoRoute />);
     }
   }
 
@@ -35,7 +43,7 @@ function AlbumItem(props) {
 
   return connectDragSource(
     <div className={cx(classes.container, { [classes.droppable]: isOver })} style={{ width: size }}>
-      <div onClick={() => handleOpen(pushModal)}>
+      <div onClick={handleOpen}>
         <ContextMenuTrigger holdToDisplay={-1} render={() => <AlbumContextMenu album={album} />}>
           <div className={classes.imageContainer} style={{ width: size, height: size }}>
             <img
@@ -60,16 +68,6 @@ function AlbumItem(props) {
       </div>
     </div>,
   );
-}
-
-AlbumItem.propTypes = {
-  navigate: PropTypes.bool,
-  history: PropTypes.any.isRequired,
-  album: PropTypes.any,
-  id: PropTypes.any,
-  size: PropTypes.number.isRequired,
-  connectDragSource: PropTypes.func.isRequired,
-  isOver: PropTypes.bool,
 };
 
 AlbumItem.defaultProps = {
@@ -80,14 +78,14 @@ AlbumItem.defaultProps = {
 };
 
 const dndSpec = {
-  beginDrag(props) {
+  beginDrag(props: IAlbumItemProps) {
     return {
       album: props.id || props.album.id,
     };
   },
 };
 
-function dndCollect(connect, monitor) {
+function dndCollect(connect: DragSourceConnector, monitor: DragSourceMonitor) {
   return {
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging(),
