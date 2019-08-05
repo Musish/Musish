@@ -1,17 +1,19 @@
 import React from 'react';
 import { MenuItem } from 'react-contextmenu';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
-import { artworkForMediaItem } from '../../../../../utils/Utils';
-import classes from './AlbumContextMenu.scss';
-import { playAlbum, playNext, playLater } from '../../../../../services/MusicPlayerApi';
-import AlbumPanel from '../../../AlbumPanel/AlbumPanel';
 import { addAlbumToPlaylist, addToLibrary } from '../../../../../services/MusicApi';
-import PlaylistSelector from '../../../PlaylistSelector/PlaylistSelector';
+import { playAlbum, playLater, playNext } from '../../../../../services/MusicPlayerApi';
 import translate from '../../../../../utils/translations/Translations';
+import { artworkForMediaItem } from '../../../../../utils/Utils';
 import { useModal } from '../../../../Providers/ModalProvider';
+import AlbumPanel from '../../../AlbumPanel/AlbumPanel';
+import PlaylistSelector from '../../../PlaylistSelector/PlaylistSelector';
+import classes from './AlbumContextMenu.scss';
 
-function AlbumContextMenu({ album }) {
+interface IAlbumContextMenuProps {
+  album: MusicKit.MediaItem;
+}
+
+const AlbumContextMenu: React.FC<IAlbumContextMenuProps> = ({ album }) => {
   const { push: pushModal, pop: popModal } = useModal();
 
   const { attributes } = album;
@@ -73,10 +75,6 @@ function AlbumContextMenu({ album }) {
       </MenuItem>
     </>
   );
-}
-
-AlbumContextMenu.propTypes = {
-  album: PropTypes.object.isRequired,
 };
 
-export default withRouter(AlbumContextMenu);
+export default AlbumContextMenu;
