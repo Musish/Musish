@@ -1,17 +1,18 @@
 import React from 'react';
-
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import classes from './ArtistItem.scss';
 
-function ArtistItem(props) {
-  const { artist, size } = props;
+interface IArtistItemProps {
+  artist: any;
+  size: number;
+}
 
+const ArtistItem: React.FC<IArtistItemProps> = ({ artist, size }: IArtistItemProps) => {
   const link = isNaN(artist.id) ? `/me/artists/${artist.id}` : `/artist/${artist.id}`;
   const initials = artist.attributes.name
     .split(' ')
-    .map(n => n.substring(0, 1))
-    .filter(c => !/[^a-zA-Z0-9]/.test(c))
+    .map((n: string) => n.substring(0, 1))
+    .filter((c: string) => !/[^a-zA-Z0-9]/.test(c))
     .slice(0, 2);
 
   return (
@@ -28,15 +29,6 @@ function ArtistItem(props) {
       </div>
     </Link>
   );
-}
-
-ArtistItem.propTypes = {
-  artist: PropTypes.any,
-  size: PropTypes.number.isRequired,
-};
-
-ArtistItem.defaultProps = {
-  artist: null,
 };
 
 export default ArtistItem;
