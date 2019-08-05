@@ -1,16 +1,25 @@
-import React from 'react';
 import cx from 'classnames';
-import PropTypes from 'prop-types';
-import { DragSource } from 'react-dnd';
-import classes from './SearchBar.scss';
-import { artworkForMediaItem } from '../../../../utils/Utils';
-import PlaylistPanel from '../../PlaylistPanel/PlaylistPanel';
+import React from 'react';
+import { ConnectDragSource, DragSource, DragSourceConnector, DragSourceMonitor } from 'react-dnd';
 import DragDropType from '../../../../utils/Constants/DragDropType';
+import { artworkForMediaItem } from '../../../../utils/Utils';
+import { useModal } from '../../../Providers/ModalProvider';
 import ContextMenuTrigger from '../../ContextMenu/ContextMenuTrigger';
 import PlaylistContextMenu from '../../ContextMenu/Types/Playlist/PlaylistContextMenu';
-import { useModal } from '../../../Providers/ModalProvider';
+import PlaylistPanel from '../../PlaylistPanel/PlaylistPanel';
+import classes from './SearchBar.scss';
 
-function PlaylistResultItem({ playlist, size, connectDragSource }) {
+interface IPlaylistResultItemProps {
+  playlist: any;
+  size: number;
+  connectDragSource: ConnectDragSource;
+}
+
+const PlaylistResultItem: React.FC<IPlaylistResultItemProps> = ({
+  playlist,
+  size,
+  connectDragSource,
+}) => {
   const { push: pushModal } = useModal();
 
   const isCatalog = playlist.type === 'playlists';
@@ -18,7 +27,6 @@ function PlaylistResultItem({ playlist, size, connectDragSource }) {
   return connectDragSource(
     <div>
       <ContextMenuTrigger
-        attributes={{ className: [classes.trackWrapper] }}
         holdToDisplay={-1}
         render={() => <PlaylistContextMenu playlist={playlist} />}
       >
@@ -39,28 +47,22 @@ function PlaylistResultItem({ playlist, size, connectDragSource }) {
             />
           </span>
 
-          <span className={classes.name}>{playlist.attributes.name}</span>
+          <span>{playlist.attributes.name}</span>
         </div>
       </ContextMenuTrigger>
     </div>,
   );
-}
-
-PlaylistResultItem.propTypes = {
-  playlist: PropTypes.any.isRequired,
-  size: PropTypes.any.isRequired,
-  connectDragSource: PropTypes.func.isRequired,
 };
 
 const dndSpec = {
-  beginDrag(props) {
+  beginDrag(props: IPlaylistResultItemProps) {
     return {
-      playlist: props.id || props.playlist.id,
+      playlist: props.playlist.id,
     };
   },
 };
 
-function dndCollect(connect, monitor) {
+function dndCollect(connect: DragSourceConnector, monitor: DragSourceMonitor) {
   return {
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging(),

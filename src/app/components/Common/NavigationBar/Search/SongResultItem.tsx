@@ -1,16 +1,20 @@
-import React from 'react';
 import cx from 'classnames';
-import PropTypes from 'prop-types';
-import { DragSource } from 'react-dnd';
-import classes from './SearchBar.scss';
+import React from 'react';
+import { ConnectDragSource, DragSource, DragSourceConnector, DragSourceMonitor } from 'react-dnd';
 import useMK from '../../../../hooks/useMK';
-import { createMediaItem } from '../../../../utils/Utils';
-import TrackDecoration from '../../Tracks/TracksList/TrackDecoration';
 import DragDropType from '../../../../utils/Constants/DragDropType';
-import TrackContextMenu from '../../ContextMenu/Types/Track/TrackContextMenu';
+import { createMediaItem } from '../../../../utils/Utils';
 import ContextMenuTrigger from '../../ContextMenu/ContextMenuTrigger';
+import TrackContextMenu from '../../ContextMenu/Types/Track/TrackContextMenu';
+import TrackDecoration from '../../Tracks/TracksList/TrackDecoration';
+import classes from './SearchBar.scss';
 
-function SongResultItem({ song, connectDragSource, isOver }) {
+interface ISongResultItemProps {
+  song: MusicKit.MediaItem;
+  connectDragSource: ConnectDragSource;
+}
+
+const SongResultItem: React.FC<ISongResultItemProps> = ({ song, connectDragSource }) => {
   const mk = useMK();
 
   const play = async () => {
@@ -27,15 +31,10 @@ function SongResultItem({ song, connectDragSource, isOver }) {
   return connectDragSource(
     <div>
       <ContextMenuTrigger
-        attributes={{ className: [classes.trackWrapper] }}
         holdToDisplay={-1}
         render={() => <TrackContextMenu track={song} tracks={[song]} index={0} />}
       >
-        <div
-          className={cx(classes.result, classes.song, { [classes.droppable]: isOver })}
-          key={song.id}
-          onClick={play}
-        >
+        <div className={cx(classes.result, classes.song)} key={song.id} onClick={play}>
           <div className={classes.artwork}>
             {isCatalog && (
               <div className={classes.catalogIndicator}>
@@ -46,34 +45,24 @@ function SongResultItem({ song, connectDragSource, isOver }) {
           </div>
 
           <div className={classes.detailsContainer}>
-            <span className={classes.name}>{song.attributes.name}</span>
+            <span>{song.attributes.name}</span>
             <span className={classes.infos}>{`${artistName} - ${albumName}`}</span>
           </div>
         </div>
       </ContextMenuTrigger>
     </div>,
   );
-}
-
-SongResultItem.propTypes = {
-  song: PropTypes.any.isRequired,
-  connectDragSource: PropTypes.func.isRequired,
-  isOver: PropTypes.bool,
-};
-
-SongResultItem.defaultProps = {
-  isOver: false,
 };
 
 const dndSpec = {
-  beginDrag(props) {
+  beginDrag(props: ISongResultItemProps) {
     return {
-      track: props.track,
+      track: props.song,
     };
   },
 };
 
-function dndCollect(connect, monitor) {
+function dndCollect(connect: DragSourceConnector, monitor: DragSourceMonitor) {
   return {
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging(),
