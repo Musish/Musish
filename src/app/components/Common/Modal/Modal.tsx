@@ -1,10 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { CSSProperties, ReactNode } from 'react';
 
 import classes from './Modal.scss';
 
-function Modal(props) {
-  const { style, width } = props;
+interface IModalProps {
+  handleClose: () => void;
+  style?: CSSProperties;
+  width?: number;
+  render: () => ReactNode;
+}
+
+function Modal(props: IModalProps) {
+  const { style = {}, width } = props;
   const inlineStyles = {
     width,
     ...style,
@@ -18,17 +24,5 @@ function Modal(props) {
     </div>
   );
 }
-
-Modal.propTypes = {
-  handleClose: PropTypes.func.isRequired,
-  style: PropTypes.object,
-  width: PropTypes.number,
-  render: PropTypes.func.isRequired,
-};
-
-Modal.defaultProps = {
-  style: {},
-  width: null,
-};
 
 export default Modal;

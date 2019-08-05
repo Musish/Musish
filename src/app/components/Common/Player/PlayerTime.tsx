@@ -1,20 +1,23 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import styles from './Player.scss';
-import { getTime } from '../../../utils/Utils';
-import { seekToTime } from '../../../services/MusicPlayerApi';
 import useMK from '../../../hooks/useMK';
+import { seekToTime } from '../../../services/MusicPlayerApi';
+import { getTime } from '../../../utils/Utils';
+import styles from './Player.scss';
 
-function PlayerTime(props) {
+interface IPlayerTimeProps {
+  nowPlayingItem: any;
+}
+
+function PlayerTime(props: IPlayerTimeProps) {
   const mk = useMK({
     playbackTime: MusicKit.Events.playbackTimeDidChange,
     mediaItem: MusicKit.Events.mediaItemDidChange,
   });
 
   const [isScrubbing, setIsScrubbing] = useState(false);
-  const [scrubbingPosition, setScrubbingPosition] = useState(0);
+  const [scrubbingPosition, setScrubbingPosition] = useState<number | null>(0);
 
-  function timeToPercent(time, duration) {
+  function timeToPercent(time: number, duration: number) {
     if (duration === 0) {
       return 0; // For some reason would call this
     }
@@ -31,7 +34,8 @@ function PlayerTime(props) {
   }
 
   function getCurrentBufferedProgress() {
-    return mk.instance.player.currentBufferedProgress;
+    // Missing property currentBufferedProgress
+    return (mk.instance.player as any).currentBufferedProgress;
   }
 
   function getDuration() {
@@ -44,17 +48,21 @@ function PlayerTime(props) {
     return mk.instance.isAuthorized ? nowPlayingItem.playbackDuration / 1000 : 30;
   }
 
-  function onScrub(e) {
-    setScrubbingPosition(e.target.value);
+  function getPositionValue(e: React.SyntheticEvent<HTMLInputElement>) {
+    return ((e.target as HTMLInputElement).value as unknown) as number;
   }
 
-  function onStartScrubbing(e) {
+  function onScrub(e: React.SyntheticEvent<HTMLInputElement>) {
+    setScrubbingPosition(getPositionValue(e));
+  }
+
+  function onStartScrubbing(e: React.SyntheticEvent<HTMLInputElement>) {
     setIsScrubbing(true);
-    setScrubbingPosition(e.target.value);
+    setScrubbingPosition(getPositionValue(e));
   }
 
-  async function onEndScrubbing(e) {
-    await seekToTime(e.target.value);
+  async function onEndScrubbing(e: React.SyntheticEvent<HTMLInputElement>) {
+    await seekToTime(getPositionValue(e));
 
     setIsScrubbing(false);
     setScrubbingPosition(null);
@@ -81,7 +89,7 @@ function PlayerTime(props) {
 
     return (
       <input
-        className={styles['progress-bar']}
+        className={styles.progressBar}
         style={{
           background: `linear-gradient(
               to right,
@@ -115,9 +123,5 @@ function PlayerTime(props) {
     </div>
   );
 }
-
-PlayerTime.propTypes = {
-  nowPlayingItem: PropTypes.any.isRequired,
-};
 
 export default PlayerTime;

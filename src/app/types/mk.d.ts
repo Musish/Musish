@@ -11,5 +11,5 @@ declare interface IMusishMK<E extends IBindingsType = {}> {
   // @ts-ignore
   instance: MusicKitInstance;
   // [N in keyof E]: E[N]; // This is what we want, but TS doesn't allow it...
-  [s: string]: string;
+  [s: string]: any;
 }

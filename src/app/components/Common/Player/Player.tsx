@@ -1,36 +1,43 @@
-import React from 'react';
 import cx from 'classnames';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import Mousetrap from 'mousetrap';
-import styles from './Player.scss';
+import React, { CSSProperties, ReactNode } from 'react';
+import { Link } from 'react-router-dom';
+import withContext from '../../../hoc/withContext';
+import withMK from '../../../hoc/withMK';
+import {
+  isShuffled,
+  pause,
+  play,
+  shuffle,
+  togglePlayback,
+  unShuffle,
+} from '../../../services/MusicPlayerApi';
 import {
   artworkForMediaItem,
   RepeatModeAll,
   RepeatModeNone,
   RepeatModeOne,
 } from '../../../utils/Utils';
-import withMK from '../../../hoc/withMK';
-import {
-  isShuffled,
-  pause,
-  play,
-  togglePlayback,
-  shuffle,
-  unShuffle,
-} from '../../../services/MusicPlayerApi';
-import PlayerTime from './PlayerTime';
-import AlbumPanel from '../AlbumPanel/AlbumPanel';
-import VolumeControl from './VolumeControl';
-import Rating from './Rating/Rating';
 import { AuthorizeContext } from '../../Providers/AuthorizeProvider';
-import withContext from '../../../hoc/withContext';
-import { withModal } from '../../Providers/ModalProvider';
 import { withLyricsModal } from '../../Providers/LyricsModalProvider';
+import { IModalProviderValue, withModal } from '../../Providers/ModalProvider';
 import { withQueueModal } from '../../Providers/QueueProvider';
+import AlbumPanel from '../AlbumPanel/AlbumPanel';
+import styles from './Player.scss';
+import PlayerTime from './PlayerTime';
+import Rating from './Rating/Rating';
+import VolumeControl from './VolumeControl';
 
-class Player extends React.Component {
-  componentDidMount() {
+interface IPlayerProps {
+  mk: IMusishMK;
+  authorized: boolean;
+  modal: IModalProviderValue;
+  lyricsModal?: any;
+  queueModal?: any;
+}
+
+class Player extends React.Component<IPlayerProps> {
+  public componentDidMount() {
     // Disable default scroll behaviour on click
     Mousetrap.bind(
       ['space', 'left', 'right'],
@@ -46,7 +53,7 @@ class Player extends React.Component {
     Mousetrap.bind('space', togglePlayback, 'keyup');
   }
 
-  handlePrevious = () => {
+  public handlePrevious = () => {
     const { player } = this.props.mk.instance;
 
     if (player.currentPlaybackTime < 2) {
@@ -56,7 +63,7 @@ class Player extends React.Component {
     }
   };
 
-  handleNext = () => {
+  public handleNext = () => {
     const { player } = this.props.mk.instance;
     player.skipToNextItem();
 
@@ -65,7 +72,7 @@ class Player extends React.Component {
     }
   };
 
-  handleRepeat = () => {
+  public handleRepeat = () => {
     const { player } = this.props.mk.instance;
 
     if (player.repeatMode === RepeatModeNone) {
@@ -79,7 +86,7 @@ class Player extends React.Component {
     this.forceUpdate();
   };
 
-  handleShuffle = async () => {
+  public handleShuffle = async () => {
     if (isShuffled()) {
       await unShuffle();
     } else {
@@ -89,7 +96,7 @@ class Player extends React.Component {
     this.forceUpdate();
   };
 
-  handleOpenAlbum = push => {
+  public handleOpenAlbum = (push: (content: ReactNode, style?: CSSProperties) => void) => {
     const nowPlayingItem = this.props.mk.mediaItem && this.props.mk.mediaItem.item;
     const meta = nowPlayingItem.assets[0].metadata;
 
@@ -98,7 +105,7 @@ class Player extends React.Component {
     push(<AlbumPanel key={id} id={id} pseudoRoute />);
   };
 
-  render() {
+  public render() {
     const { mk, modal, lyricsModal, queueModal } = this.props;
     const nowPlayingItem = mk.mediaItem && mk.mediaItem.item;
 
@@ -137,7 +144,7 @@ class Player extends React.Component {
 
     return (
       <div className={styles.player}>
-        <div className={styles['main-info']}>
+        <div className={styles.mainInfo}>
           <div className={styles.picture}>
             <img src={artworkURL} className={styles.image} alt={'album artwork'} />
           </div>
@@ -216,19 +223,6 @@ const bindings = {
   [MusicKit.Events.queueItemsDidChange]: 'queueItems',
   [MusicKit.Events.queuePositionDidChange]: 'queuePosition',
   [MusicKit.Events.playbackStateDidChange]: 'playbackState',
-};
-
-Player.propTypes = {
-  mk: PropTypes.any.isRequired,
-  authorized: PropTypes.bool.isRequired,
-  modal: PropTypes.object,
-  lyricsModal: PropTypes.object,
-  queueModal: PropTypes.object,
-};
-
-Player.defaultProps = {
-  modal: null,
-  lyricsModal: null,
 };
 
 export default withMK(
