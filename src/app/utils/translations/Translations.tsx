@@ -1,4 +1,4 @@
-import LocalizedStrings from 'react-localization';
+import LocalizedStrings, { LocalizedStringsMethods } from 'react-localization';
 
 import Brazilian from './languages/BrazilianPortuguese.json';
 import english from './languages/English.json';
@@ -28,6 +28,6 @@ const localization = new LocalizedStrings({
 // This sets the default storefront language.
 localization.setLanguage('en');
 
-type SupportedKeys = { [s in keyof typeof english]: string };
+type SupportedKeys = { [s in keyof typeof english]: string } & LocalizedStringsMethods;
 
 export default localization as SupportedKeys;

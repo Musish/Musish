@@ -1,24 +1,27 @@
-import React from 'react';
-
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import cx from 'classnames';
-
-import classes from './SplashScreen.scss';
+import React from 'react';
+import { RouteComponentProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import translate from '../../../utils/translations/Translations';
+import classes from './SplashScreen.scss';
 
-class SplashScreen extends React.Component {
-  loginNavigate = () => {
+interface ISplashScreenProps extends RouteComponentProps {
+  onClick: () => void;
+  onBrowse: () => void;
+}
+
+class SplashScreen extends React.Component<ISplashScreenProps> {
+  public loginNavigate = () => {
     this.props.onClick();
     this.props.history.push('/');
   };
 
-  browseNavigate = () => {
+  public browseNavigate = () => {
     this.props.onBrowse();
     this.props.history.push('/browse');
   };
 
-  render() {
+  public render() {
     return (
       <div className={classes.splashContainer}>
         <a
@@ -70,11 +73,5 @@ class SplashScreen extends React.Component {
     );
   }
 }
-
-SplashScreen.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  onBrowse: PropTypes.func.isRequired,
-  history: PropTypes.any.isRequired,
-};
 
 export default withRouter(SplashScreen);
