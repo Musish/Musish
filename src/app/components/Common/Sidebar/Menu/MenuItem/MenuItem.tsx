@@ -1,11 +1,14 @@
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import classes from '../../Sidebar.scss';
 
-export default function MenuItem(props) {
-  const { to, label, exact } = props;
+interface IMenuItemProps {
+  to: string;
+  label: string;
+  exact?: boolean;
+}
 
+const MenuItem: React.FC<IMenuItemProps> = ({ to, label, exact = true }: IMenuItemProps) => {
   return (
     <li>
       <Route path={to} exact={exact}>
@@ -17,14 +20,6 @@ export default function MenuItem(props) {
       </Route>
     </li>
   );
-}
-
-MenuItem.propTypes = {
-  to: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  exact: PropTypes.bool,
 };
 
-MenuItem.defaultProps = {
-  exact: true,
-};
+export default MenuItem;

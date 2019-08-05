@@ -1,14 +1,25 @@
-import React from 'react';
-import { Link, Route, withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { DropTarget } from 'react-dnd';
 import cx from 'classnames';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { ConnectDropTarget, DropTarget, DropTargetConnector, DropTargetMonitor } from 'react-dnd';
+import { Link, Route, withRouter } from 'react-router-dom';
+import * as MusicApi from '../../../../../services/MusicApi';
 import DragDropType from '../../../../../utils/Constants/DragDropType';
 import classes from '../../Sidebar.scss';
-import * as MusicApi from '../../../../../services/MusicApi';
 
-function PlaylistMenuItem(props) {
-  const { playlist, connectDropTarget, isDndOver, activeDndItem } = props;
+interface IPlaylistMenuItemProps {
+  playlist: any;
+  connectDropTarget: ConnectDropTarget;
+  isDndOver: boolean;
+  activeDndItem: string | symbol | null;
+}
+
+const PlaylistMenuItem: React.FC<IPlaylistMenuItemProps> = ({
+  playlist,
+  connectDropTarget,
+  isDndOver,
+  activeDndItem,
+}: IPlaylistMenuItemProps) => {
   const to = `/me/playlist/${playlist.id}`;
 
   return connectDropTarget(
@@ -29,13 +40,13 @@ function PlaylistMenuItem(props) {
       </Route>
     </li>,
   );
-}
+};
 
 PlaylistMenuItem.propTypes = {
   playlist: PropTypes.object.isRequired,
 };
 
-function collect(connect, monitor) {
+function collect(connect: DropTargetConnector, monitor: DropTargetMonitor) {
   return {
     connectDropTarget: connect.dropTarget(),
     isDndOver: monitor.isOver(),
@@ -47,7 +58,7 @@ const dndSpec = {
   canDrop() {
     return true;
   },
-  drop(props, monitor) {
+  drop(props: IPlaylistMenuItemProps, monitor: DropTargetMonitor) {
     const { playlist } = props;
     const item = monitor.getItem();
 
@@ -60,8 +71,6 @@ const dndSpec = {
         break;
       case DragDropType.PLAYLIST:
         MusicApi.addPlaylistToPlaylist(playlist.id, item.playlist);
-        break;
-      default:
         break;
     }
   },

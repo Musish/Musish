@@ -161,7 +161,7 @@ PlaylistPanel.defaultProps = {
 const pseudoRoute = ({ id, playlist }) => {
   const playlistId = id || playlist.id;
   let route = `/playlist/${playlistId}`;
-  if (id.startsWith('p.')) {
+  if (playlistId.startsWith('p.')) {
     route = '/me' + route;
   }
   return route;
