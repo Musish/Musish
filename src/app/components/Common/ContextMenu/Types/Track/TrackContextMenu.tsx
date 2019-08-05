@@ -1,21 +1,25 @@
 import React from 'react';
 import { MenuItem } from 'react-contextmenu';
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
-import { artworkForMediaItem } from '../../../../../utils/Utils';
-import classes from './TrackContextMenu.scss';
+import { addSongsToPlaylist, addToLibrary } from '../../../../../services/MusicApi';
 import { playLater, playNext, playTrack } from '../../../../../services/MusicPlayerApi';
-import { addToLibrary, addSongsToPlaylist } from '../../../../../services/MusicApi';
-import PlaylistSelector from '../../../PlaylistSelector/PlaylistSelector';
 import translate from '../../../../../utils/translations/Translations';
+import { artworkForMediaItem } from '../../../../../utils/Utils';
 import { useModal } from '../../../../Providers/ModalProvider';
+import PlaylistSelector from '../../../PlaylistSelector/PlaylistSelector';
+import classes from './TrackContextMenu.scss';
 
-function TrackContextMenu({ track, tracks, index }) {
-  const { pushModal, popModal } = useModal();
+interface ITrackContextMenuProps {
+  track: MusicKit.MediaItem;
+  tracks: MusicKit.MediaItem[];
+  index: number;
+}
+
+const TrackContextMenu: React.FC<ITrackContextMenuProps> = ({ track, tracks, index }) => {
+  const { push: pushModal, pop: popModal } = useModal();
 
   const { attributes } = track;
   const artworkURL = artworkForMediaItem(track, 60);
-  const inLibrary = attributes.playParams.isLibrary;
+  const inLibrary = attributes.playParams && attributes.playParams.isLibrary;
 
   return (
     <>
@@ -67,12 +71,6 @@ function TrackContextMenu({ track, tracks, index }) {
       </MenuItem>
     </>
   );
-}
-
-TrackContextMenu.propTypes = {
-  index: PropTypes.number.isRequired,
-  track: PropTypes.any.isRequired,
-  tracks: PropTypes.array.isRequired,
 };
 
-export default withRouter(TrackContextMenu);
+export default TrackContextMenu;
