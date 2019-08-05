@@ -15,6 +15,7 @@
     "noImplicitThis": false,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
+    "resolveJsonModule": true,
     "typeRoots": [
       "node_modules/musickit-typescript",
       "node_modules/@types",
