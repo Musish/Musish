@@ -1,23 +1,54 @@
-import React from 'react';
-
-import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { Link, Route, withRouter } from 'react-router-dom';
+import React, { RefObject } from 'react';
 import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
-import classes from './AlbumPanel.scss';
-import { artworkForMediaItem, humanifyMillis, humanifyTrackNumbers } from '../../../utils/Utils';
-import TracksList from '../Tracks/TracksList/TracksList';
-import Loader from '../Loader/Loader';
-import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
-import * as MusicApi from '../../../services/MusicApi';
+import { RouteComponentProps } from 'react-router';
+import { Link, Route, withRouter } from 'react-router-dom';
+import { List, WindowScroller } from 'react-virtualized';
 import withMK from '../../../hoc/withMK';
-import translate from '../../../utils/translations/Translations';
-import { withModal } from '../../Providers/ModalProvider';
 import withPseudoRoute from '../../../hoc/withPseudoRoute';
+import * as MusicApi from '../../../services/MusicApi';
+import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
+import translate from '../../../utils/translations/Translations';
+import { artworkForMediaItem, humanifyMillis, humanifyTrackNumbers } from '../../../utils/Utils';
+import { IModalProviderValue, withModal } from '../../Providers/ModalProvider';
+import Loader from '../Loader/Loader';
+import TracksList from '../Tracks/TracksList/TracksList';
 import EAlbumPanel from './AlbumPanel';
+import classes from './AlbumPanel.scss';
+import QueryParameters = MusicKit.QueryParameters;
 
-class AlbumPanel extends React.Component {
-  constructor(props) {
+interface IAlbumPanelProps extends RouteComponentProps {
+  id: any;
+  album: MusicKit.Resource;
+  className: string | { [s: string]: boolean };
+  modal: IModalProviderValue;
+}
+
+interface IAlbumPanelState {
+  album: MusicKit.Resource | null;
+  shouldMatchCatalogAlbum: boolean;
+  matchedCatalogAlbum: MusicKit.Resource | null;
+  showFullDescription: boolean;
+  runtime: string;
+}
+
+class AlbumPanel extends React.Component<IAlbumPanelProps, IAlbumPanelState> {
+  public static defaultProps = {
+    id: null,
+    album: null,
+    history: null,
+    modal: null,
+    className: null,
+  };
+
+  private readonly albumId: any;
+  private readonly isCatalog: boolean;
+  private readonly panelRef: RefObject<HTMLDivElement>;
+  private readonly tracksListWsRef: RefObject<WindowScroller>;
+  private readonly tracksListListRef: RefObject<List>;
+  private readonly store: {};
+
+  constructor(props: IAlbumPanelProps) {
     super(props);
 
     this.albumId = this.props.id || this.props.album.id;
@@ -28,6 +59,7 @@ class AlbumPanel extends React.Component {
       shouldMatchCatalogAlbum: !this.isCatalog,
       matchedCatalogAlbum: null,
       showFullDescription: false,
+      runtime: '',
     };
 
     this.panelRef = React.createRef();
@@ -36,11 +68,11 @@ class AlbumPanel extends React.Component {
     this.store = {};
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.fetchAlbum();
   }
 
-  fetchAlbum = async () => {
+  public fetchAlbum = async () => {
     const album = await this.albumLoader(this.albumId);
 
     this.setState({
@@ -48,21 +80,23 @@ class AlbumPanel extends React.Component {
     });
   };
 
-  albumLoader = (...args) => {
+  public albumLoader = (id: string, parameters?: QueryParameters) => {
     const music = MusicKit.getInstance();
     if (!this.isCatalog) {
-      return music.api.library.album(...args);
+      return music.api.library.album(id, parameters);
     }
 
-    return music.api.album(...args);
+    return music.api.album(id, parameters);
   };
 
-  onSetItems = ({ items }) => {
-    const albumLength = items.reduce(
-      (totalDuration, track) =>
-        totalDuration + (track.attributes ? track.attributes.durationInMillis : 0),
-      0,
-    );
+  public onSetItems = ({ items }: { items: MusicKit.MediaItem[] | null }) => {
+    const albumLength = items
+      ? items.reduce(
+          (totalDuration, track) =>
+            totalDuration + (track.attributes ? track.attributes.durationInMillis : 0),
+          0,
+        )
+      : 0;
 
     if (this.state.shouldMatchCatalogAlbum) {
       this.fetchFullCatalogAlbum();
@@ -73,19 +107,19 @@ class AlbumPanel extends React.Component {
     });
   };
 
-  playTrack = ({ index }) => {
-    MusicPlayerApi.playAlbum(this.state.album, index);
+  public playTrack = async ({ index }: { index: number }) => {
+    await MusicPlayerApi.playAlbum(this.state.album, index);
   };
 
-  playAlbum = async (index = 0) => {
-    MusicPlayerApi.playAlbum(this.state.album, index);
+  public playAlbum = async () => {
+    await MusicPlayerApi.playAlbum(this.state.album, 0);
   };
 
-  shufflePlayAlbum = async () => {
-    MusicPlayerApi.shufflePlayAlbum(this.state.album);
+  public shufflePlayAlbum = async () => {
+    await MusicPlayerApi.shufflePlayAlbum(this.state.album);
   };
 
-  fetchFullCatalogAlbum = async () => {
+  public fetchFullCatalogAlbum = async () => {
     const { album } = this.state;
     const catalogAlbum = await MusicApi.fetchFullCatalogAlbumFromLibraryAlbum(album);
     this.setState({
@@ -93,7 +127,7 @@ class AlbumPanel extends React.Component {
     });
   };
 
-  toggleFullDescription = () => {
+  public toggleFullDescription = () => {
     const { showFullDescription } = this.state;
 
     this.setState({
@@ -101,7 +135,7 @@ class AlbumPanel extends React.Component {
     });
   };
 
-  render() {
+  public render() {
     const { modal } = this.props;
     const { album, matchedCatalogAlbum, runtime, showFullDescription } = this.state;
 
@@ -150,7 +184,7 @@ class AlbumPanel extends React.Component {
 
         <div className={classes.main}>
           <span className={classes.title}>
-            <span className={classes.name}>{album.attributes.name}</span>
+            <span>{album.attributes.name}</span>
             {explicit}
           </span>
 
@@ -223,23 +257,7 @@ class AlbumPanel extends React.Component {
   }
 }
 
-AlbumPanel.propTypes = {
-  id: PropTypes.any,
-  album: PropTypes.any,
-  history: PropTypes.any,
-  modal: PropTypes.object,
-  className: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-};
-
-AlbumPanel.defaultProps = {
-  id: null,
-  album: null,
-  history: null,
-  modal: null,
-  className: null,
-};
-
-const pseudoRoute = ({ id, album }) => {
+const pseudoRoute = ({ id, album }: { id: any; album: MusicKit.MediaItem }) => {
   const albumId = id || album.id;
   let route = `/album/${albumId}`;
   if (isNaN(albumId)) {

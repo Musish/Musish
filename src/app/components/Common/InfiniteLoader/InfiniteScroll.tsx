@@ -21,8 +21,8 @@ interface IInfiniteScrollProps<I> {
   onSetItems?: InfiniteLoaderOnSetItems<I>;
   listClassName?: string;
   rowHeight: number;
-  scrollElement: RefObject<HTMLBaseElement>;
-  scrollElementModifier?: (e: HTMLBaseElement | null) => HTMLBaseElement | null;
+  scrollElement: RefObject<HTMLElement>;
+  scrollElementModifier?: (e: HTMLElement | null) => HTMLElement | null;
   wsRef: Ref<WindowScroller>;
   listRef: Ref<List>;
 }
@@ -32,7 +32,7 @@ export default class InfiniteScroll<I> extends React.Component<IInfiniteScrollPr
     listClassName: '',
     items: null,
     onSetItems: () => null,
-    scrollElementModifier: (e: HTMLBaseElement | null) => e,
+    scrollElementModifier: (e: HTMLElement | null) => e,
   };
 
   public componentDidMount() {
@@ -60,7 +60,7 @@ export default class InfiniteScroll<I> extends React.Component<IInfiniteScrollPr
       item: items![props.index] as I,
     });
 
-  public getElement = (): HTMLBaseElement | null => {
+  public getElement = (): HTMLElement | null => {
     const { scrollElement, scrollElementModifier } = this.props;
 
     return scrollElementModifier!(scrollElement.current);

@@ -34,7 +34,7 @@ interface IInfiniteLoaderProps<I> {
   load: InfiniteLoaderLoad<I>;
   render: InfiniteLoaderRender<I>;
   onSetItems?: InfiniteLoaderOnSetItems<I>;
-  scrollElement?: RefObject<HTMLBaseElement>;
+  scrollElement?: RefObject<HTMLElement>;
   limit?: number;
   initialBuffer?: number;
   loadAll?: boolean;
@@ -50,7 +50,7 @@ export default class InfiniteLoader<I> extends React.Component<
     initialBuffer: 300,
     loadAll: false,
   };
-  private scrollElement?: HTMLBaseElement;
+  private scrollElement?: HTMLElement;
 
   constructor(props: IInfiniteLoaderProps<I>) {
     super(props);
@@ -95,7 +95,7 @@ export default class InfiniteLoader<I> extends React.Component<
   }
 
   public onElementScroll = (event: Event) => {
-    const { scrollTop, scrollHeight, clientHeight } = event.target as HTMLBaseElement;
+    const { scrollTop, scrollHeight, clientHeight } = event.target as HTMLElement;
 
     this.onScroll({ scrollTop, scrollHeight, clientHeight });
   };

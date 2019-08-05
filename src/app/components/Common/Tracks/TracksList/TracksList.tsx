@@ -13,8 +13,8 @@ import TrackListItem from './TracksListItem';
 interface ITracksListProps {
   showArtist?: boolean;
   showAlbum?: boolean;
-  scrollElement: RefObject<HTMLBaseElement>;
-  scrollElementModifier?: (e: HTMLBaseElement | null) => HTMLBaseElement | null;
+  scrollElement: RefObject<HTMLElement>;
+  scrollElementModifier?: (e: HTMLElement | null) => HTMLElement | null;
   load: InfiniteLoaderLoad<MusicKit.MediaItem>;
   tracks?: MusicKit.MediaItem[];
   onSetItems?: InfiniteLoaderOnSetItems<MusicKit.MediaItem>;
@@ -27,7 +27,7 @@ const defaultProps: Partial<ITracksListProps> = {
   showArtist: false,
   showAlbum: false,
   onSetItems: () => null,
-  scrollElementModifier: (e: HTMLBaseElement | null) => e,
+  scrollElementModifier: (e: HTMLElement | null) => e,
 };
 
 function TracksList({
