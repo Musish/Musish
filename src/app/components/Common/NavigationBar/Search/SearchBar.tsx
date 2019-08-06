@@ -1,21 +1,36 @@
-import React from 'react';
 import cx from 'classnames';
-import PropTypes from 'prop-types';
 import debounce from 'lodash/debounce';
+import React, { ChangeEvent, ReactNode } from 'react';
+import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
-import classes from './SearchBar.scss';
-import withMK from '../../../../hoc/withMK';
 import withContext from '../../../../hoc/withContext';
+import withMK from '../../../../hoc/withMK';
+import translate from '../../../../utils/translations/Translations';
+import { AuthorizeContext } from '../../../Providers/AuthorizeProvider';
 import Loader from '../../Loader/Loader';
-import SongResultItem from './SongResultItem';
 import AlbumResultItem from './AlbumResultItem';
 import ArtistResultItem from './ArtistResultItem';
 import PlaylistResultItem from './PlaylistResultItem';
-import { AuthorizeContext } from '../../../Providers/AuthorizeProvider';
-import translate from '../../../../utils/translations/Translations';
+import classes from './SearchBar.scss';
+import SongResultItem from './SongResultItem';
 
-class SearchBar extends React.Component {
-  constructor(props) {
+interface ISearchBarProps extends RouteComponentProps {
+  mk: IMusishMK;
+  authorized: boolean;
+}
+
+interface ISearchBarState {
+  showResults: boolean;
+  query: string;
+  catalogData: any;
+  libraryData: any;
+  loading: boolean;
+}
+
+class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
+  private readonly ref = React.createRef<HTMLDivElement>();
+
+  constructor(props: ISearchBarProps) {
     super(props);
 
     this.state = {
@@ -23,33 +38,34 @@ class SearchBar extends React.Component {
       query: '',
       catalogData: null,
       libraryData: null,
+      loading: false,
     };
 
     this.search = debounce(this.search, 400, { maxWait: 1000 }).bind(this);
-
-    this.ref = React.createRef();
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     document.addEventListener('mousedown', this.handleClick);
   }
 
-  componentWillUnmount() {
+  public componentWillUnmount() {
     document.removeEventListener('mousedown', this.handleClick);
   }
 
-  handleShowResults = () => {
+  public handleShowResults = () => {
     this.setState({
       showResults: true,
     });
   };
 
-  handleClick = event => {
-    if (this.ref.current.contains(event.target)) {
+  public handleClick = (event: MouseEvent) => {
+    // Is inside search bar
+    if (this.ref.current!.contains(event.target as HTMLElement)) {
       return;
     }
 
-    if (event.target.closest('.react-contextmenu')) {
+    // Is context menu
+    if ((event.target as HTMLElement).closest('.react-contextmenu')) {
       return;
     }
 
@@ -58,7 +74,7 @@ class SearchBar extends React.Component {
     });
   };
 
-  handleSearch = async ({ target: { value: query } }) => {
+  public handleSearch = async ({ target: { value: query } }: ChangeEvent<HTMLInputElement>) => {
     this.setState({
       query,
     });
@@ -68,7 +84,7 @@ class SearchBar extends React.Component {
     await this.search(searchQuery);
   };
 
-  search = async query => {
+  public search = async (query: string) => {
     if (query.length === 0) {
       this.setState({
         catalogData: null,
@@ -91,7 +107,7 @@ class SearchBar extends React.Component {
     });
   };
 
-  searchCatalog = async query => {
+  public searchCatalog = async (query: string) => {
     const catalogData = await this.props.mk.instance.api.search(query, {
       types: ['albums', 'songs', 'playlists', 'artists'],
       limit: 3,
@@ -102,7 +118,7 @@ class SearchBar extends React.Component {
     });
   };
 
-  searchLibrary = async query => {
+  public searchLibrary = async (query: string) => {
     const libraryData = await this.props.mk.instance.api.library.search(query, {
       types: ['library-albums', 'library-songs', 'library-playlists', 'library-artists'],
       limit: 3,
@@ -113,7 +129,7 @@ class SearchBar extends React.Component {
     });
   };
 
-  getItems = type => {
+  public getItems = (type: string) => {
     const { catalogData, libraryData } = this.state;
 
     const libraryItems =
@@ -124,7 +140,11 @@ class SearchBar extends React.Component {
     return [...libraryItems, ...catalogItems];
   };
 
-  renderType = (label, type, rowRenderer) => {
+  public renderType = (
+    label: string,
+    type: string,
+    rowRenderer: (song: MusicKit.MediaItem, i: number) => ReactNode,
+  ) => {
     const songs = this.getItems(type);
 
     if (!songs || songs.length === 0) {
@@ -142,7 +162,7 @@ class SearchBar extends React.Component {
     );
   };
 
-  renderResults = () => {
+  public renderResults = () => {
     const songs = this.renderType(translate.songs, 'songs', song => (
       <SongResultItem song={song} key={song.id} />
     ));
@@ -175,7 +195,7 @@ class SearchBar extends React.Component {
     );
   };
 
-  render() {
+  public render() {
     const { query, showResults } = this.state;
     const { location } = this.props;
     const slugs = location.pathname.split('/');
@@ -213,12 +233,5 @@ class SearchBar extends React.Component {
     );
   }
 }
-
-SearchBar.propTypes = {
-  mk: PropTypes.any.isRequired,
-  authorized: PropTypes.bool.isRequired,
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-};
 
 export default withRouter(withMK(withContext(SearchBar, AuthorizeContext)));
