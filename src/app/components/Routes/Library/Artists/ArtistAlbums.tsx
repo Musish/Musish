@@ -1,24 +1,31 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import translate from '../../../../utils/translations/Translations';
 import AlbumPanel from '../../../Common/AlbumPanel/AlbumPanel';
 import Loader from '../../../Common/Loader/Loader';
-import PageTitle from '../../../Common/PageTitle/PageTitle';
 import PageContent from '../../../Common/PageContent/PageContent';
-import translate from '../../../../utils/translations/Translations';
+import PageTitle from '../../../Common/PageTitle/PageTitle';
 import classes from './ArtistAlbums.scss';
 
-class ArtistAlbums extends React.Component {
-  constructor(props) {
+interface IArtistAlbumsProps {
+  id: string;
+}
+
+interface IArtistAlbumsState {
+  artist: any;
+}
+
+class ArtistAlbums extends React.Component<IArtistAlbumsProps, IArtistAlbumsState> {
+  private readonly pageRef = React.createRef();
+
+  constructor(props: IArtistAlbumsProps) {
     super(props);
 
     this.state = {
       artist: null,
     };
-
-    this.pageRef = React.createRef();
   }
 
-  async componentDidMount() {
+  public async componentDidMount() {
     const music = MusicKit.getInstance();
 
     const { id } = this.props;
@@ -36,15 +43,15 @@ class ArtistAlbums extends React.Component {
     });
   }
 
-  renderArtists = () => {
+  public renderArtists = () => {
     const { artist } = this.state;
 
-    return artist.relationships.albums.data.map(album => (
+    return artist.relationships.albums.data.map((album: any) => (
       <AlbumPanel key={album.id} album={album} className={classes.panel} />
     ));
   };
 
-  renderContent = () => {
+  public renderContent = () => {
     const { artist } = this.state;
 
     if (!artist) {
@@ -59,13 +66,9 @@ class ArtistAlbums extends React.Component {
     );
   };
 
-  render() {
+  public render() {
     return <PageContent innerRef={this.pageRef}>{this.renderContent()}</PageContent>;
   }
 }
-
-ArtistAlbums.propTypes = {
-  id: PropTypes.string.isRequired,
-};
 
 export default ArtistAlbums;
