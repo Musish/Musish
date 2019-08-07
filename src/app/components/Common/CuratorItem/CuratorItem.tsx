@@ -1,19 +1,28 @@
-import React from 'react';
-
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import cx from 'classnames';
-import classes from './CuratorItem.scss';
+import React from 'react';
+import { RouteComponentProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { artworkForMediaItem } from '../../../utils/Utils';
+import classes from './CuratorItem.scss';
 
-function CuratorItem(props) {
-  const { curator, size } = props;
+interface ICuratorItemProps extends RouteComponentProps {
+  curator?: any;
+  id?: string;
+  size: number;
+}
+
+const CuratorItem: React.FC<ICuratorItemProps> = ({
+  size,
+  history,
+  curator,
+  id,
+}: ICuratorItemProps) => {
   const artwork = artworkForMediaItem(curator, size);
 
   function handleOpen() {
-    const id = props.id || props.curator.id;
+    const curatorId = id || curator.id;
 
-    props.history.push(`/curator/${id}`);
+    history.push(`/curator/${curatorId}`);
   }
 
   return (
@@ -37,18 +46,6 @@ function CuratorItem(props) {
       </div>
     </div>
   );
-}
-
-CuratorItem.propTypes = {
-  history: PropTypes.any.isRequired,
-  curator: PropTypes.any,
-  id: PropTypes.any,
-  size: PropTypes.number.isRequired,
-};
-
-CuratorItem.defaultProps = {
-  curator: null,
-  id: null,
 };
 
 export default withRouter(CuratorItem);
