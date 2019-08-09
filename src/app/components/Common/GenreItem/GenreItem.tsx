@@ -1,19 +1,23 @@
-import React from 'react';
-
-import PropTypes from 'prop-types';
-import { withRouter } from 'react-router-dom';
 import cx from 'classnames';
-import classes from './GenreItem.scss';
+import React from 'react';
+import { RouteComponentProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { artworkForMediaItem } from '../../../utils/Utils';
+import classes from './GenreItem.scss';
 
-function GenreItem(props) {
+interface IGenreItemProps extends RouteComponentProps {
+  curator?: any;
+  id?: string;
+  size: number;
+}
+
+const GenreItem: React.FC<IGenreItemProps> = ({ curator, history, id, size }) => {
   function handleOpen() {
-    const id = props.id || props.curator.id;
+    const curatorId = id || curator.id;
 
-    props.history.push(`/browse/genre/${id}`);
+    history.push(`/browse/genre/${curatorId}`);
   }
 
-  const { curator, size } = props;
   const artwork = artworkForMediaItem(curator, size);
 
   return (
@@ -30,25 +34,11 @@ function GenreItem(props) {
         </div>
 
         <div className={classes.descriptionContainer}>
-          <span className={classes.curatorName} style={{ width: size }}>
-            {curator.attributes.name}
-          </span>
+          <span style={{ width: size }}>{curator.attributes.name}</span>
         </div>
       </div>
     </div>
   );
-}
-
-GenreItem.propTypes = {
-  history: PropTypes.any.isRequired,
-  curator: PropTypes.any,
-  id: PropTypes.any,
-  size: PropTypes.number.isRequired,
-};
-
-GenreItem.defaultProps = {
-  curator: null,
-  id: null,
 };
 
 export default withRouter(GenreItem);
