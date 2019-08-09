@@ -1,36 +1,53 @@
-import React from 'react';
-
-import PropTypes from 'prop-types';
-import { DragSource } from 'react-dnd';
-import { withRouter } from 'react-router-dom';
 import cx from 'classnames';
-import classes from './PlaylistItem.scss';
-import PlaylistPanel from '../PlaylistPanel/PlaylistPanel';
-import { artworkForMediaItem } from '../../../utils/Utils';
+import React from 'react';
+import { ConnectDragSource, DragSource, DragSourceConnector, DragSourceMonitor } from 'react-dnd';
+import { RouteComponentProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import DragDropType from '../../../utils/Constants/DragDropType';
+import { artworkForMediaItem } from '../../../utils/Utils';
+import { useModal } from '../../Providers/ModalProvider';
 import ContextMenuTrigger from '../ContextMenu/ContextMenuTrigger';
 import PlaylistContextMenu from '../ContextMenu/Types/Playlist/PlaylistContextMenu';
-import { useModal } from '../../Providers/ModalProvider';
+import PlaylistPanel from '../PlaylistPanel/PlaylistPanel';
+import classes from './PlaylistItem.scss';
 
-function PlaylistItem(props) {
+interface IPlaylistItemProps extends RouteComponentProps {
+  navigate?: boolean;
+  history: any;
+  playlist?: any;
+  id?: any;
+  size: number;
+  connectDragSource: ConnectDragSource;
+  isOver?: boolean;
+}
+
+const PlaylistItem: React.FC<IPlaylistItemProps> = ({
+  connectDragSource,
+  history,
+  id,
+  isOver = false,
+  navigate = false,
+  playlist,
+  size,
+}) => {
   const { push: pushModal } = useModal();
 
-  function handleOpen(push) {
-    const id = props.id || props.playlist.id;
-    if (props.navigate) {
-      props.history.push(`/playlists/${id}`);
+  function handleOpen() {
+    if (navigate) {
+      const playlistId = id || playlist.id;
+
+      history.push(`/playlists/${playlistId}`);
       return;
     }
 
-    push(<PlaylistPanel id={id} pseudoRoute />);
+    pushModal(<PlaylistPanel id={id} pseudoRoute />);
   }
 
-  const { playlist, size, connectDragSource, isOver } = props;
   const artwork = artworkForMediaItem(playlist, size);
 
   return connectDragSource(
     <div className={cx(classes.container, { [classes.droppable]: isOver })} style={{ width: size }}>
-      <div onClick={() => handleOpen(pushModal)}>
+      <div onClick={handleOpen}>
         <ContextMenuTrigger
           holdToDisplay={-1}
           render={() => <PlaylistContextMenu playlist={playlist} />}
@@ -54,34 +71,17 @@ function PlaylistItem(props) {
       </div>
     </div>,
   );
-}
-
-PlaylistItem.propTypes = {
-  navigate: PropTypes.bool,
-  history: PropTypes.any.isRequired,
-  playlist: PropTypes.any,
-  id: PropTypes.any,
-  size: PropTypes.number.isRequired,
-  connectDragSource: PropTypes.func.isRequired,
-  isOver: PropTypes.bool,
-};
-
-PlaylistItem.defaultProps = {
-  navigate: false,
-  playlist: null,
-  id: null,
-  isOver: false,
 };
 
 const dndSpec = {
-  beginDrag(props) {
+  beginDrag(props: IPlaylistItemProps) {
     return {
       playlist: props.id || props.playlist.id,
     };
   },
 };
 
-function dndCollect(connect, monitor) {
+function dndCollect(connect: DragSourceConnector, monitor: DragSourceMonitor) {
   return {
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging(),
