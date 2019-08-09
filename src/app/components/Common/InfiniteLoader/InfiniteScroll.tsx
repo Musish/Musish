@@ -23,8 +23,8 @@ interface IInfiniteScrollProps<I> {
   rowHeight: number;
   scrollElement: RefObject<HTMLElement>;
   scrollElementModifier?: (e: HTMLElement | null) => HTMLElement | null;
-  wsRef: Ref<WindowScroller>;
-  listRef: Ref<List>;
+  wsRef?: Ref<WindowScroller>;
+  listRef?: Ref<List>;
 }
 
 export default class InfiniteScroll<I> extends React.Component<IInfiniteScrollProps<I>> {
