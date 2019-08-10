@@ -1,38 +1,48 @@
-import React from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
+import React from 'react';
+import { Omit } from 'react-dnd';
 
-export default function withMK(WrappedComponent, bindings = {}) {
-  class Enhance extends React.Component {
-    constructor(props) {
+export default function withMK<P extends IMKProps>(
+  WrappedComponent: React.ComponentType<P>,
+  bindings: { [k: string]: any } = {},
+): React.ComponentClass<Omit<P, keyof IMKProps>> {
+  interface IEnhanceProps {
+    [k: string]: any;
+  }
+  class Enhance extends React.Component<P, IEnhanceProps> {
+    private readonly bindingFunctions: { [k: string]: () => any } = {};
+
+    constructor(props: P) {
       super(props);
 
       this.state = {};
-      this.bindingFunctions = {};
     }
 
-    async componentDidMount() {
+    public async componentDidMount() {
       for (const event of Object.keys(bindings)) {
         const state = bindings[event];
-        const handler = e => this.handleEvent(state, e);
+        const handler = (e: any) => this.handleEvent(state, e);
+        // @ts-ignore
         this.bindingFunctions[event] = handler;
+        // @ts-ignore
         MusicKit.getInstance().addEventListener(event, handler);
       }
     }
 
-    componentWillUnmount() {
+    public componentWillUnmount() {
       for (const event of Object.keys(bindings)) {
         MusicKit.getInstance().removeEventListener(event, this.bindingFunctions[event]);
         delete this.bindingFunctions[event];
       }
     }
 
-    handleEvent = (v, event) => {
+    public handleEvent = (v: string, event: any) => {
       this.setState({
         [v]: event,
       });
     };
 
-    render() {
+    public render() {
       const mk = {
         instance: MusicKit.getInstance(),
         ...this.state,

@@ -6,11 +6,12 @@ import translate from '../../../../utils/translations/Translations';
 import { getTime } from '../../../../utils/Utils';
 import ContextMenuTrigger from '../../ContextMenu/ContextMenuTrigger';
 import TrackContextMenu from '../../ContextMenu/Types/Track/TrackContextMenu';
+import Loader from '../../Loader/Loader';
 import TrackDecoration from './TrackDecoration';
 import * as classes from './TracksListItem.scss';
 
 interface ITracksListItemProps {
-  className: string;
+  className?: string;
   connectDragSource: ConnectDragSource;
   index: number;
   playTrack: ({
@@ -21,18 +22,13 @@ interface ITracksListItemProps {
     track: MusicKit.MediaItem;
     tracks: MusicKit.MediaItem[];
     index: number;
-  }) => null;
-  showAlbum: boolean;
-  showArtist: boolean;
-  style: object;
+  }) => void;
+  showAlbum?: boolean;
+  showArtist?: boolean;
+  style?: object;
   track: MusicKit.MediaItem;
-  tracks: MusicKit.MediaItem[];
+  tracks: MusicKit.MediaItem[] | null;
 }
-
-const defaultProps: Partial<ITracksListItemProps> = {
-  className: '',
-  style: {},
-};
 
 function TracksListItem(props: ITracksListItemProps) {
   const {
@@ -43,12 +39,12 @@ function TracksListItem(props: ITracksListItemProps) {
     connectDragSource,
     tracks,
     index,
-    className,
-    style,
+    className = '',
+    style = {},
   } = props;
 
-  async function handleClick() {
-    props.playTrack({ track, tracks, index });
+  if (!tracks) {
+    return <Loader />;
   }
 
   if (!attributes) {
@@ -72,6 +68,10 @@ function TracksListItem(props: ITracksListItemProps) {
   );
 
   const duration = getTime(attributes.durationInMillis);
+
+  const handleClick = async () => {
+    props.playTrack({ track, tracks, index });
+  };
 
   return connectDragSource(
     <div
@@ -126,7 +126,6 @@ function TracksListItem(props: ITracksListItemProps) {
     </div>,
   );
 }
-TracksListItem.defaultProps = defaultProps;
 
 export default DragSource(
   DragDropType.SONG,

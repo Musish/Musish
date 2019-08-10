@@ -1,19 +1,20 @@
 import React from 'react';
+import { SortableContainer, SortableContainerProps } from 'react-sortable-hoc';
 import { List } from 'react-virtualized';
-import PropTypes from 'prop-types';
-import { SortableContainer } from 'react-sortable-hoc';
-import classes from './Queue.scss';
 import withMK from '../../../../hoc/withMK';
+import classes from './Queue.scss';
 import QueueItem, { QueueItemState } from './QueueItem';
 
-class QueueList extends React.Component {
-  constructor(props) {
-    super(props);
+interface IQueueListProps extends SortableContainerProps, IMKProps {
+  removeItemFunc: (queuePosition: number) => void;
+}
 
-    this.state = QueueList.getDerivedStateFromProps(this.props, {});
-  }
+interface IQueueListState {
+  filteredItems: MusicKit.QueueItem[];
+}
 
-  static queueState(index, position) {
+class QueueList extends React.Component<IQueueListProps, IQueueListState> {
+  public static queueState(index: number, position: number) {
     if (index < position) {
       return QueueItemState.Played;
     }
@@ -25,9 +26,9 @@ class QueueList extends React.Component {
     return QueueItemState.Queued;
   }
 
-  static getDerivedStateFromProps(props) {
+  public static getDerivedStateFromProps(props: IQueueListProps) {
     const { queue } = props.mk.instance.player;
-    const filteredItems = queue.items
+    const filteredItems = (queue.items as MusicKit.QueueItem[])
       .map((item, index) => {
         // eslint-disable-next-line no-param-reassign
         item.queueState = QueueList.queueState(index, queue.position);
@@ -42,8 +43,13 @@ class QueueList extends React.Component {
       filteredItems,
     };
   }
+  constructor(props: IQueueListProps) {
+    super(props);
 
-  render() {
+    this.state = QueueList.getDerivedStateFromProps(this.props);
+  }
+
+  public render() {
     const { filteredItems: items } = this.state;
     const { removeItemFunc } = this.props;
 
@@ -57,7 +63,6 @@ class QueueList extends React.Component {
             <QueueItem
               {...args}
               item={item}
-              queueIndex={index}
               removeItemFunc={removeItemFunc}
               disabled={index === 0}
             />
@@ -66,7 +71,7 @@ class QueueList extends React.Component {
         rowCount={items.length}
         width={320}
         height={355}
-        className={classes.QueueList}
+        className={classes.queueList}
       />
     );
   }
@@ -78,9 +83,4 @@ const bindings = {
   [MusicKit.Events.queuePositionDidChange]: 'queuePosition',
 };
 
-QueueList.propTypes = {
-  mk: PropTypes.any.isRequired,
-  removeItemFunc: PropTypes.func.isRequired,
-};
-
-export default withMK(SortableContainer(QueueList, { withRef: true }), bindings);
+export default withMK(SortableContainer<IQueueListProps>(QueueList, { withRef: true }), bindings);

@@ -14,10 +14,7 @@ import PlaylistResultItem from './PlaylistResultItem';
 import classes from './SearchBar.scss';
 import SongResultItem from './SongResultItem';
 
-interface ISearchBarProps extends RouteComponentProps {
-  mk: IMusishMK;
-  authorized: boolean;
-}
+type ISearchBarProps = RouteComponentProps & IMKProps;
 
 interface ISearchBarState {
   showResults: boolean;
@@ -96,7 +93,7 @@ class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
     this.setState({
       loading: true,
     });
-    if (this.props.authorized) {
+    if (this.props.mk.instance.isAuthorized) {
       await Promise.all([this.searchCatalog(query), this.searchLibrary(query)]);
     } else {
       await this.searchCatalog(query);

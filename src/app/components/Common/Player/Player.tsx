@@ -28,8 +28,7 @@ import PlayerTime from './PlayerTime';
 import Rating from './Rating/Rating';
 import VolumeControl from './VolumeControl';
 
-interface IPlayerProps {
-  mk: IMusishMK;
+interface IPlayerProps extends IMKProps {
   authorized: boolean;
   modal: IModalProviderValue;
   lyricsModal?: any;

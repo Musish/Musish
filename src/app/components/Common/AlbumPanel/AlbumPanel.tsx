@@ -4,7 +4,6 @@ import HTMLEllipsis from 'react-lines-ellipsis/lib/html';
 import { RouteComponentProps } from 'react-router';
 import { Link, Route, withRouter } from 'react-router-dom';
 import { List, WindowScroller } from 'react-virtualized';
-import withMK from '../../../hoc/withMK';
 import withPseudoRoute from '../../../hoc/withPseudoRoute';
 import * as MusicApi from '../../../services/MusicApi';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
@@ -266,4 +265,4 @@ const pseudoRoute = ({ id, album }: { id: any; album: MusicKit.MediaItem }) => {
   return route;
 };
 
-export default withPseudoRoute(withRouter(withModal(withMK(AlbumPanel))), pseudoRoute);
+export default withPseudoRoute(withRouter(withModal(AlbumPanel)), pseudoRoute);

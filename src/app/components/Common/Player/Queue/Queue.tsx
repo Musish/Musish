@@ -1,15 +1,20 @@
-import React, { Component } from 'react';
-import Draggable from 'react-draggable';
 import cx from 'classnames';
-import PropTypes from 'prop-types';
-import classes from './Queue.scss';
+import React from 'react';
+import Draggable from 'react-draggable';
 import withMK from '../../../../hoc/withMK';
-import QueueList from './QueueList';
 import translate from '../../../../utils/translations/Translations';
-import { withQueueModal } from '../../../Providers/QueueProvider';
+import { IQueueModalProps, withQueueModal } from '../../../Providers/QueueProvider';
+import classes from './Queue.scss';
+import QueueList from './QueueList';
 
-class Queue extends Component {
-  onSortEnd = ({ oldIndex, newIndex }) => {
+type IQueueProps = IQueueModalProps & IMKProps;
+
+class Queue extends React.Component<IQueueProps> {
+  public static shouldCancelStart(e: React.MouseEvent<any, MouseEvent>) {
+    return (e.target as Element).classList.contains(classes.notSortable);
+  }
+
+  public onSortEnd = ({ oldIndex, newIndex }: { oldIndex: any; newIndex: any }) => {
     const {
       mk: {
         instance: { player },
@@ -25,47 +30,34 @@ class Queue extends Component {
       // Update queue order
       items.splice(newNewIndex, 0, items.splice(newOldIndex, 1)[0]);
 
-      // eslint-disable-next-line no-underscore-dangle
+      // @ts-ignore
       player.queue._reindex();
 
       this.forceUpdate();
     }
   };
 
-  static shouldCancelStart(e) {
-    return e.target.classList.contains(classes.notSortable);
-  }
-
-  removeItem = index => {
+  public removeItem = (index: any) => {
     const { queue } = this.props.mk.instance.player;
 
     // Update queue order
     queue.items.splice(index, 1);
 
-    // eslint-disable-next-line no-underscore-dangle
+    // @ts-ignore
     queue._reindex();
 
     this.forceUpdate();
   };
 
-  render() {
-    const {
-      mk: {
-        instance: {
-          player: {
-            queue: { items },
-          },
-        },
-      },
-      queueModal,
-    } = this.props;
+  public render() {
+    const { queueModal } = this.props;
 
     if (!queueModal.isOpen) {
       return null;
     }
 
     return (
-      <Draggable handle={'.handle'} defaultPosition={{ x: 0, y: 0 }} position={null}>
+      <Draggable handle={'.handle'} defaultPosition={{ x: 0, y: 0 }}>
         <div className={classes.modal} onClick={e => e.stopPropagation()}>
           <div className={cx(classes.header, 'handle')}>
             <div className={classes.title}>
@@ -81,7 +73,6 @@ class Queue extends Component {
             </div>
           </div>
           <QueueList
-            items={items}
             onSortEnd={this.onSortEnd}
             shouldCancelStart={Queue.shouldCancelStart}
             helperClass={classes.sortableHelper}
@@ -92,10 +83,5 @@ class Queue extends Component {
     );
   }
 }
-
-Queue.propTypes = {
-  mk: PropTypes.any.isRequired,
-  queueModal: PropTypes.object.isRequired,
-};
 
 export default withMK(withQueueModal(Queue));

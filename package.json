@@ -15,6 +15,7 @@
     "@sentry/browser": "^4.6.6",
     "@symfony/webpack-encore": "^0.27.0",
     "@types/classnames": "^2.2.7",
+    "@types/hoist-non-react-statics": "^3.3.1",
     "@types/lodash": "^4.14.136",
     "@types/mousetrap": "^1.6.3",
     "@types/prop-types": "^15.7.1",

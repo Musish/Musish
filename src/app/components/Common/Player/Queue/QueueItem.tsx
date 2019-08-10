@@ -1,8 +1,8 @@
-import React from 'react';
-import { SortableElement } from 'react-sortable-hoc';
 import cx from 'classnames';
-import classes from './Queue.scss';
+import React, { CSSProperties } from 'react';
+import { SortableElement, SortableElementProps } from 'react-sortable-hoc';
 import { artworkForMediaItem } from '../../../../utils/Utils';
+import classes from './Queue.scss';
 
 export const QueueItemState = {
   Played: 0,
@@ -10,11 +10,17 @@ export const QueueItemState = {
   Queued: 2,
 };
 
-const QueueItem = SortableElement(({ value, style, item, removeItemFunc }) => {
-  const stateClass = item.queueState === QueueItemState.Playing ? classes.playing : classes.queued;
+interface IQueueItemProps extends SortableElementProps {
+  removeItemFunc: (queuPosition: number) => void;
+  style?: CSSProperties | null;
+  item: MusicKit.QueueItem;
+}
+
+const QueueItem = ({ style, item, removeItemFunc }: IQueueItemProps) => {
+  const stateClass = item.queueState === QueueItemState.Playing ? classes.playing : '';
 
   return (
-    <div className={cx(classes.queueItem, stateClass)} style={style}>
+    <div className={cx(classes.queueItem, stateClass)} style={style || {}}>
       <div>
         <span className={classes.albumArtwork}>
           <span className={classes.artworkWrapper}>
@@ -42,6 +48,6 @@ const QueueItem = SortableElement(({ value, style, item, removeItemFunc }) => {
       </div>
     </div>
   );
-});
+};
 
-export default QueueItem;
+export default SortableElement(QueueItem);

@@ -1,8 +1,7 @@
 import cx from 'classnames';
-import PropTypes from 'prop-types';
 import React from 'react';
 import { ConnectDropTarget, DropTarget, DropTargetConnector, DropTargetMonitor } from 'react-dnd';
-import { Link, Route, withRouter } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import * as MusicApi from '../../../../../services/MusicApi';
 import DragDropType from '../../../../../utils/Constants/DragDropType';
 import classes from '../../Sidebar.scss';
@@ -42,10 +41,6 @@ const PlaylistMenuItem: React.FC<IPlaylistMenuItemProps> = ({
   );
 };
 
-PlaylistMenuItem.propTypes = {
-  playlist: PropTypes.object.isRequired,
-};
-
 function collect(connect: DropTargetConnector, monitor: DropTargetMonitor) {
   return {
     connectDropTarget: connect.dropTarget(),
@@ -76,8 +71,8 @@ const dndSpec = {
   },
 };
 
-export default withRouter(
-  DropTarget([DragDropType.SONG, DragDropType.ALBUM, DragDropType.PLAYLIST], dndSpec, collect)(
-    PlaylistMenuItem,
-  ),
-);
+export default DropTarget(
+  [DragDropType.SONG, DragDropType.ALBUM, DragDropType.PLAYLIST],
+  dndSpec,
+  collect,
+)(PlaylistMenuItem);

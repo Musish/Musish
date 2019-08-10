@@ -4,9 +4,7 @@ import React, { SyntheticEvent } from 'react';
 import withMK from '../../../hoc/withMK';
 import styles from './Player.scss';
 
-interface IVolumeControlProps {
-  mk: IMusishMK;
-}
+type IVolumeControlProps = IMKProps;
 
 interface IVolumeControlState {
   volume: any;

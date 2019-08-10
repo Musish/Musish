@@ -23,21 +23,14 @@ interface ITracksListProps {
   listRef: Ref<List>;
 }
 
-const defaultProps: Partial<ITracksListProps> = {
-  showArtist: false,
-  showAlbum: false,
-  onSetItems: () => null,
-  scrollElementModifier: (e: HTMLElement | null) => e,
-};
-
 function TracksList({
-  showArtist,
-  showAlbum,
+  showArtist = false,
+  showAlbum = false,
   scrollElement,
-  scrollElementModifier,
+  scrollElementModifier = (e: HTMLElement | null) => e,
   load,
   tracks: initialTracks,
-  onSetItems,
+  onSetItems = () => null,
   playTrack,
   wsRef = React.createRef<WindowScroller>(),
   listRef = React.createRef<List>(),
@@ -62,8 +55,6 @@ function TracksList({
         showAlbum={showAlbum}
         style={style}
         playTrack={playTrack}
-        wsRef={wsRef}
-        listRef={listRef}
       />
     );
   }
@@ -84,7 +75,5 @@ function TracksList({
     </div>
   );
 }
-
-TracksList.defaultProps = defaultProps;
 
 export default TracksList;
