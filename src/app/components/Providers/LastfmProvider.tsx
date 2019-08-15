@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import axios, { AxiosRequestConfig } from 'axios';
 import md5 from 'js-md5';
-import axios from 'axios';
 import qs from 'qs';
+import React, { ReactNode, useEffect, useState } from 'react';
 import Alert from 'react-s-alert';
 import withMK from '../../hoc/withMK';
 import translate from '../../utils/translations/Translations';
@@ -10,17 +9,33 @@ import translate from '../../utils/translations/Translations';
 const apikey = process.env.LASTFM_API_KEY;
 const secret = process.env.LASTFM_SECRET;
 
-function getSK() {
-  return localStorage.getItem('lastfm_sk');
+const SK_STORAGE_KEY = 'lastfm_sk';
+
+interface ILastfmProviderProps extends IMKProps {
+  children: ReactNode;
 }
 
-export const LastfmContext = React.createContext({ connected: !!getSK() });
+export interface ILastfmProviderValue {
+  login: () => void;
+  reset: () => void;
+  connected: boolean;
+}
 
-function LastfmProvider({ children, mk }) {
-  const [connected, setConnected] = useState(!!getSK());
+function getSK() {
+  return localStorage.getItem(SK_STORAGE_KEY);
+}
 
-  async function request(isWrite, method, callParams = {}, sk = true) {
-    const params = {
+export const LastfmContext = React.createContext<ILastfmProviderValue>({
+  connected: !!getSK(),
+  login: () => undefined,
+  reset: () => undefined,
+});
+
+const LastfmProvider: React.FC<ILastfmProviderProps> = ({ children, mk }: ILastfmProviderProps) => {
+  const [connected, setConnected] = useState(() => !!getSK());
+
+  async function request(isWrite: boolean, method: string, callParams = {}, sk = true) {
+    const params: any = {
       ...callParams,
       method,
       api_key: apikey,
@@ -33,7 +48,7 @@ function LastfmProvider({ children, mk }) {
     params.api_sig = sign(params);
     params.format = 'json';
 
-    const config = {
+    const config: AxiosRequestConfig = {
       url: 'https://ws.audioscrobbler.com/2.0/',
     };
 
@@ -50,7 +65,7 @@ function LastfmProvider({ children, mk }) {
     return data;
   }
 
-  async function scrobble(item) {
+  async function scrobble(item: MusicKit.MediaItem) {
     const params = {
       'artist[0]': item.artistName,
       'track[0]': item.title,
@@ -77,7 +92,7 @@ function LastfmProvider({ children, mk }) {
     }
   }
 
-  function sign(params) {
+  function sign(params: any) {
     const str = Object.keys(params)
       .sort()
       .reduce((result, key) => `${result}${key}${params[key]}`, '');
@@ -94,14 +109,14 @@ function LastfmProvider({ children, mk }) {
     window.location.href = `http://www.last.fm/api/auth/?api_key=${apikey}&cb=${cb}`;
   }
 
-  async function fetchSK(token) {
+  async function fetchSK(token: string) {
     const params = {
       token,
     };
 
     const data = await request(true, 'auth.getSession', params, false);
 
-    localStorage.setItem('lastfm_sk', data.session.key);
+    localStorage.setItem(SK_STORAGE_KEY, data.session.key);
 
     setConnected(true);
   }
@@ -109,7 +124,7 @@ function LastfmProvider({ children, mk }) {
   function reset() {
     setConnected(false);
 
-    localStorage.removeItem('lastfm_sk');
+    localStorage.removeItem(SK_STORAGE_KEY);
   }
 
   async function fetchToken() {
@@ -153,18 +168,13 @@ function LastfmProvider({ children, mk }) {
     }
   }, [mk.mediaItem]);
 
-  const state = {
+  const state: ILastfmProviderValue = {
     login,
     reset,
     connected,
   };
 
   return <LastfmContext.Provider value={state}>{children}</LastfmContext.Provider>;
-}
-
-LastfmProvider.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-  mk: PropTypes.any.isRequired,
 };
 
 const bindings = {
