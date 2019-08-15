@@ -1,8 +1,8 @@
 import React from 'react';
-import classes from './RadioPage.scss';
 import translate from '../../../../utils/translations/Translations';
+import classes from './RadioPage.scss';
 
-export default function RadioPage() {
+const RadioPage: React.FC<{}> = () => {
   return (
     <div className={classes.radioContainer}>
       <div className={classes.comingSoonIcon}>
@@ -11,4 +11,6 @@ export default function RadioPage() {
       <span className={classes.comingSoon}>{translate.radioMessage}</span>
     </div>
   );
-}
+};
+
+export default RadioPage;

@@ -30,7 +30,7 @@ class PageContent extends React.Component<IPageContentProps, IPageContentState> 
   }
 
   public render() {
-    const { innerRef, children} = this.props;
+    const { innerRef, children } = this.props;
     const { mounted } = this.state;
 
     return (
