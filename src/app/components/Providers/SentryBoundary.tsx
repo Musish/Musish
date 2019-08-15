@@ -1,6 +1,5 @@
-import React from 'react';
 import * as Sentry from '@sentry/browser';
-import PropTypes from 'prop-types';
+import React, { ReactNode } from 'react';
 
 function CrashPage() {
   return (
@@ -15,14 +14,18 @@ function CrashPage() {
   );
 }
 
-class SentryBoundary extends React.Component {
-  constructor(props) {
+interface ISentryBoundaryProps {
+  children: ReactNode;
+}
+
+class SentryBoundary extends React.Component<ISentryBoundaryProps, { error: any }> {
+  constructor(props: ISentryBoundaryProps) {
     super(props);
 
     this.state = { error: null };
   }
 
-  componentDidCatch(error, errorInfo) {
+  public componentDidCatch(error: any, errorInfo: any) {
     this.setState({ error });
     Sentry.withScope(scope => {
       Object.keys(errorInfo).forEach(key => {
@@ -32,7 +35,7 @@ class SentryBoundary extends React.Component {
     });
   }
 
-  render() {
+  public render() {
     if (this.state.error) {
       return <CrashPage />;
     }
@@ -40,9 +43,5 @@ class SentryBoundary extends React.Component {
     return this.props.children;
   }
 }
-
-SentryBoundary.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-};
 
 export default SentryBoundary;
