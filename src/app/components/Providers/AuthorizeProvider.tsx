@@ -1,14 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import SplashScreen from '../Routes/SplashScreen/SplashScreen';
-import TokenLoader from '../Routes/LoginLoader/LoginLoader';
-import withMK from '../../hoc/withMK';
+import React, { ReactNode } from 'react';
+import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import withMK from '../../hoc/withMK';
+import TokenLoader from '../Routes/LoginLoader/LoginLoader';
+import SplashScreen from '../Routes/SplashScreen/SplashScreen';
 
 export const AuthorizeContext = React.createContext({ authorized: false });
 
-class AuthorizeProvider extends React.Component {
-  constructor(props) {
+interface IAuthorizeProviderProps extends IMKProps, RouteComponentProps {
+  children: ReactNode;
+}
+
+interface IAuthorizeProviderState {
+  ready: boolean;
+  browsing: boolean;
+  isAuthorized: boolean;
+}
+
+class AuthorizeProvider extends React.Component<IAuthorizeProviderProps, IAuthorizeProviderState> {
+  constructor(props: IAuthorizeProviderProps) {
     super(props);
 
     const allowDirectBrowse = /^\/(?!(me|$)).*$/i.test(props.location.pathname);
@@ -20,16 +30,14 @@ class AuthorizeProvider extends React.Component {
     };
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.handleTokenCheck();
 
-    MusicKit.getInstance().addEventListener(
-      MusicKit.Events.authorizationStatusDidChange,
-      this.check,
-    );
+    const handler = this.check as () => void; // Required type casting to satisfy the event listener type
+    MusicKit.getInstance().addEventListener(MusicKit.Events.authorizationStatusDidChange, handler);
   }
 
-  check = ({ authorizationStatus }) => {
+  public check = ({ authorizationStatus }: { authorizationStatus: number }) => {
     if (authorizationStatus === 0) {
       this.setState({
         isAuthorized: false,
@@ -43,7 +51,7 @@ class AuthorizeProvider extends React.Component {
     }
   };
 
-  handleTokenCheck = async () => {
+  public handleTokenCheck = async () => {
     const music = this.props.mk.instance;
 
     if (!this.state.isAuthorized) {
@@ -54,6 +62,8 @@ class AuthorizeProvider extends React.Component {
     }
 
     try {
+      // ¯\_(ツ)_/¯ I have no clue why this works like that but it works soooo...
+      // @ts-ignore: expect (ids: string[] | null, parameters?: QueryParameters)
       await music.api.library.songs({ limit: 0 });
     } catch (e) {
       await music.unauthorize();
@@ -66,7 +76,7 @@ class AuthorizeProvider extends React.Component {
     });
   };
 
-  render() {
+  public render() {
     const { ready, isAuthorized, browsing } = this.state;
 
     if (!ready) {
@@ -89,11 +99,5 @@ class AuthorizeProvider extends React.Component {
     );
   }
 }
-
-AuthorizeProvider.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-  mk: PropTypes.any.isRequired,
-  location: PropTypes.object.isRequired,
-};
 
 export default withRouter(withMK(AuthorizeProvider));
