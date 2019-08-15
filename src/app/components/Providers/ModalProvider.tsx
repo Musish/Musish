@@ -10,7 +10,7 @@ export const ModalContext = React.createContext<IModalProviderValue>({
   flush: () => undefined,
 });
 
-interface IModalProps {
+export interface IModalProps {
   modal: IModalProviderValue;
 }
 
