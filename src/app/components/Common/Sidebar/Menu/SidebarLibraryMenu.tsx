@@ -1,13 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { DropTarget } from 'react-dnd';
 import cx from 'classnames';
-import MenuItem from './MenuItem/MenuItem';
-import DragDropType from '../../../../utils/Constants/DragDropType';
+import React from 'react';
+import { ConnectDropTarget, DropTarget, DropTargetConnector, DropTargetMonitor } from 'react-dnd';
 import { addToLibrary } from '../../../../services/MusicApi';
+import DragDropType from '../../../../utils/Constants/DragDropType';
 import classes from '../Sidebar.scss';
+import MenuItem, { IMenuItemProps } from './MenuItem/MenuItem';
 
-function SidebarLibraryMenu(props) {
+interface ISidebarLibraryMenuProps {
+  title: string;
+  items: IMenuItemProps[];
+  connectDropTarget: ConnectDropTarget;
+  isDndOver: boolean;
+  activeDndItem: string | symbol | null;
+}
+
+const SidebarLibraryMenu: React.FC<ISidebarLibraryMenuProps> = props => {
   const { title, items, connectDropTarget, isDndOver, activeDndItem } = props;
 
   return connectDropTarget(
@@ -26,14 +33,9 @@ function SidebarLibraryMenu(props) {
       </ul>
     </div>,
   );
-}
-
-SidebarLibraryMenu.propTypes = {
-  title: PropTypes.string.isRequired,
-  items: PropTypes.array.isRequired,
 };
 
-function collect(connect, monitor) {
+function collect(connect: DropTargetConnector, monitor: DropTargetMonitor) {
   return {
     connectDropTarget: connect.dropTarget(),
     isDndOver: monitor.isOver(),
@@ -45,7 +47,7 @@ const dndSpec = {
   canDrop() {
     return true;
   },
-  drop(props, monitor) {
+  drop(_: ISidebarLibraryMenuProps, monitor: DropTargetMonitor) {
     const item = monitor.getItem();
 
     switch (monitor.getItemType()) {

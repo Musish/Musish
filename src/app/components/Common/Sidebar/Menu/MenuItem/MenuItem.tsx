@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Route } from 'react-router-dom';
 import classes from '../../Sidebar.scss';
 
-interface IMenuItemProps {
+export interface IMenuItemProps {
   to: string;
   label: string;
   exact?: boolean;

@@ -1,9 +1,13 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import classes from '../Sidebar.scss';
-import MenuItem from './MenuItem/MenuItem';
+import MenuItem, { IMenuItemProps } from './MenuItem/MenuItem';
 
-function SidebarMenu(props) {
+interface ISidebarMenuProps {
+  title: string;
+  items: IMenuItemProps[];
+}
+
+const SidebarMenu: React.FC<ISidebarMenuProps> = props => {
   const { title, items } = props;
 
   return (
@@ -16,11 +20,6 @@ function SidebarMenu(props) {
       </ul>
     </div>
   );
-}
-
-SidebarMenu.propTypes = {
-  title: PropTypes.string.isRequired,
-  items: PropTypes.array.isRequired,
 };
 
 export default SidebarMenu;
