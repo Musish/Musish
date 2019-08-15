@@ -1,9 +1,14 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import classes from './PlaylistSelector.scss';
 import { usePlaylists } from '../../Providers/PlaylistsProvider';
+import classes from './PlaylistSelector.scss';
 
-function PlaylistSelector({ onClick }) {
+interface IPlaylistSelectorProps {
+  onClick?: (playlist: any) => void;
+}
+
+const PlaylistSelector: React.FC<IPlaylistSelectorProps> = ({
+  onClick = () => undefined,
+}: IPlaylistSelectorProps) => {
   const { playlists } = usePlaylists();
 
   return (
@@ -15,14 +20,6 @@ function PlaylistSelector({ onClick }) {
       ))}
     </div>
   );
-}
-
-PlaylistSelector.propTypes = {
-  onClick: PropTypes.func,
-};
-
-PlaylistSelector.defaultProps = {
-  onClick: () => null,
 };
 
 export default PlaylistSelector;
