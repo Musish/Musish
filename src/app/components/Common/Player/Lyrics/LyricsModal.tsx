@@ -1,13 +1,13 @@
 import cx from 'classnames';
 import React from 'react';
 import Draggable from 'react-draggable';
-import queueClasses from '../Queue/Queue.scss';
-import classes from './LyricsModal.scss';
-import Lyrics from './Lyrics';
+import useMK from '../../../../hooks/useMK';
 import { getPlayingItem } from '../../../../services/MusicPlayerApi';
 import translate from '../../../../utils/translations/Translations';
 import { useLyricsModal } from '../../../Providers/LyricsModalProvider';
-import useMK from '../../../../hooks/useMK';
+import queueClasses from '../Queue/Queue.scss';
+import Lyrics from './Lyrics';
+import classes from './LyricsModal.scss';
 
 function LyricsModal() {
   useMK({
@@ -23,7 +23,7 @@ function LyricsModal() {
   const nowPlaying = getPlayingItem();
 
   return (
-    <Draggable handle={queueClasses.header} defaultPosition={{ x: 0, y: 0 }} position={null}>
+    <Draggable handle={queueClasses.header} defaultPosition={{ x: 0, y: 0 }}>
       <div className={cx(queueClasses.modal, classes.modal)} onClick={e => e.stopPropagation()}>
         <div className={cx(queueClasses.header)}>
           <div className={queueClasses.title}>
