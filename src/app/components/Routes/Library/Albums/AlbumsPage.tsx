@@ -1,44 +1,52 @@
 import React from 'react';
+import { RouteComponentProps } from 'react-router';
 import { Route } from 'react-router-dom';
-import PropTypes from 'prop-types';
-
-import AlbumItem from '../../../Common/AlbumItem/AlbumItem';
-import classes from './AlbumsPage.scss';
-import PageTitle from '../../../Common/PageTitle/PageTitle';
-import PageContent from '../../../Common/PageContent/PageContent';
-import InfiniteLoader from '../../../Common/InfiniteLoader/InfiniteLoader';
-import Modal from '../../../Common/Modal/Modal';
-import AlbumPanel from '../../../Common/AlbumPanel/AlbumPanel';
+import { withRouter } from 'react-router-dom';
 import translate from '../../../../utils/translations/Translations';
+import AlbumItem from '../../../Common/AlbumItem/AlbumItem';
+import AlbumPanel from '../../../Common/AlbumPanel/AlbumPanel';
+import InfiniteLoader, {
+  IInfiniteLoaderState,
+  InfiniteLoaderOnScroll,
+} from '../../../Common/InfiniteLoader/InfiniteLoader';
+import Modal from '../../../Common/Modal/Modal';
+import PageContent from '../../../Common/PageContent/PageContent';
+import PageTitle from '../../../Common/PageTitle/PageTitle';
+import classes from './AlbumsPage.scss';
 
-export default class AlbumsPage extends React.Component {
-  constructor(props) {
-    super(props);
+type IAlbumsPageProps = RouteComponentProps;
 
-    this.ref = React.createRef();
-  }
-
-  handleClose = () => {
-    this.props.history.push('/me/albums');
-  };
-
-  static async load(params) {
+class AlbumsPage extends React.Component<IAlbumsPageProps> {
+  public static async load(params: MusicKit.QueryParameters) {
     const music = MusicKit.getInstance();
 
     return music.api.library.albums(null, params);
   }
 
-  static renderItems({ items }) {
+  public static renderItems({ items }: IInfiniteLoaderState<MusicKit.Resource>) {
+    if (!items) {
+      return null;
+    }
+
     const albums = items.map(album => <AlbumItem key={album.id} album={album} size={150} />);
 
     return <div className={classes.albumsGrid}>{albums}</div>;
   }
 
-  static renderContent({ onScroll }, state) {
+  public static renderContent(
+    _: InfiniteLoaderOnScroll,
+    state: IInfiniteLoaderState<MusicKit.Resource>,
+  ) {
     return AlbumsPage.renderItems(state);
   }
 
-  render() {
+  public readonly ref = React.createRef<HTMLDivElement>();
+
+  public handleClose = () => {
+    this.props.history.push('/me/albums');
+  };
+
+  public render() {
     return (
       <>
         <Route
@@ -66,6 +74,4 @@ export default class AlbumsPage extends React.Component {
   }
 }
 
-AlbumsPage.propTypes = {
-  history: PropTypes.any.isRequired,
-};
+export default withRouter(AlbumsPage);
