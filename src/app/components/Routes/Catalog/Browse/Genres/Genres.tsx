@@ -1,13 +1,20 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
-import { genres } from '../browse';
-import classes from '../../../Search/SearchPage.scss';
-import Loader from '../../../../Common/Loader/Loader';
-import GenreItem from '../../../../Common/GenreItem/GenreItem';
 import translate from '../../../../../utils/translations/Translations';
+import GenreItem from '../../../../Common/GenreItem/GenreItem';
+import Loader from '../../../../Common/Loader/Loader';
+import classes from '../../../Search/SearchPage.scss';
+import { genres } from '../browse.json';
 
-class Genres extends Component {
-  constructor(props) {
+type IGenresProps = RouteComponentProps;
+
+interface IGenresState {
+  genreCurators: any | null;
+}
+
+class Genres extends React.Component<IGenresProps, IGenresState> {
+  constructor(props: IGenresProps) {
     super(props);
 
     this.state = {
@@ -15,14 +22,14 @@ class Genres extends Component {
     };
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.fetchGenres();
   }
 
-  fetchGenres = async () => {
+  public fetchGenres = async () => {
     const music = MusicKit.getInstance();
 
-    const genreCurators = await music.api.appleCurators(Object.values(genres));
+    const genreCurators = await music.api.appleCurators(Object.values(genres) as any[]);
 
     genreCurators.map(genre => {
       const updatedGenre = genre;
@@ -35,12 +42,12 @@ class Genres extends Component {
     });
   };
 
-  render() {
+  public render() {
     const { genreCurators } = this.state;
 
     return genreCurators ? (
       <div className={classes.searchGrid}>
-        {genreCurators.map(genre => (
+        {genreCurators.map((genre: any) => (
           <GenreItem key={genre.id} curator={genre} size={120} />
         ))}
       </div>
