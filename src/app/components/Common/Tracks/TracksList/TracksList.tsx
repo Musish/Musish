@@ -8,7 +8,7 @@ import {
 } from '../../InfiniteLoader/InfiniteLoader';
 import InfiniteScroll, { IInfiniteScrollListRowProps } from '../../InfiniteLoader/InfiniteScroll';
 import * as classes from './TracksList.scss';
-import TrackListItem from './TracksListItem';
+import TrackListItem, { IPlayTrackParams } from './TracksListItem';
 
 interface ITracksListProps {
   showArtist?: boolean;
@@ -18,9 +18,9 @@ interface ITracksListProps {
   load: InfiniteLoaderLoad<MusicKit.MediaItem>;
   tracks?: MusicKit.MediaItem[];
   onSetItems?: InfiniteLoaderOnSetItems<MusicKit.MediaItem>;
-  playTrack: any;
-  wsRef: Ref<WindowScroller>;
-  listRef: Ref<List>;
+  playTrack: ({ track, tracks, index }: IPlayTrackParams) => void;
+  wsRef?: Ref<WindowScroller>;
+  listRef?: Ref<List>;
 }
 
 function TracksList({

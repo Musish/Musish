@@ -14,20 +14,18 @@ interface ITracksListItemProps {
   className?: string;
   connectDragSource: ConnectDragSource;
   index: number;
-  playTrack: ({
-    track,
-    tracks,
-    index,
-  }: {
-    track: MusicKit.MediaItem;
-    tracks: MusicKit.MediaItem[];
-    index: number;
-  }) => void;
+  playTrack: ({ track, tracks, index }: IPlayTrackParams) => void;
   showAlbum?: boolean;
   showArtist?: boolean;
   style?: object;
   track: MusicKit.MediaItem;
   tracks: MusicKit.MediaItem[] | null;
+}
+
+export interface IPlayTrackParams {
+  track: MusicKit.MediaItem;
+  tracks: MusicKit.MediaItem[];
+  index: number;
 }
 
 function TracksListItem(props: ITracksListItemProps) {
