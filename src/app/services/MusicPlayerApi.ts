@@ -1,15 +1,15 @@
 import _shuffle from 'lodash/shuffle';
 import { createMediaItem } from '../utils/Utils';
 
-let originalQueue = null;
+let originalQueue: MusicKit.MediaItem[] | null = null;
 
-export async function playTrack(tracks, index) {
+export async function playTrack(tracks: MusicKit.MediaItem[], index: number) {
   const music = MusicKit.getInstance();
   await setQueueItems(tracks, index);
   await music.player.play();
 }
 
-export async function playAlbum(album, index) {
+export async function playAlbum(album: MusicKit.Resource, index: number) {
   const music = MusicKit.getInstance();
 
   let albumData = album;
@@ -24,14 +24,14 @@ export async function playAlbum(album, index) {
   await music.player.play();
 }
 
-export async function shufflePlayAlbum(album) {
+export async function shufflePlayAlbum(album: MusicKit.Resource) {
   const music = MusicKit.getInstance();
   const queue = _shuffle(album.relationships.tracks.data);
   await setQueueItems(queue, 0, album);
   await music.player.play();
 }
 
-export async function playPlaylist(playlist, index) {
+export async function playPlaylist(playlist: MusicKit.Resource, index: number) {
   const music = MusicKit.getInstance();
   let playlistData = playlist;
   if (!playlistData.relationships || !playlistData.relationships.tracks) {
@@ -43,28 +43,28 @@ export async function playPlaylist(playlist, index) {
   await music.player.play();
 }
 
-export async function shufflePlayPlaylist(playlist) {
+export async function shufflePlayPlaylist(playlist: MusicKit.Resource) {
   const music = MusicKit.getInstance();
   const queue = _shuffle(playlist.relationships.tracks.data);
   await setQueueItems(queue, 0, playlist);
   await music.player.play();
 }
 
-export async function playNext(item) {
+export async function playNext(item: MusicKit.MediaItem) {
   let items;
   const music = MusicKit.getInstance();
   if (item.type === 'songs' || item.type === 'library-songs') {
     items = [item];
   } else if (item.type === 'albums' || item.type === 'library-albums') {
-    let albumData = item;
+    let albumData = item as any;
     if (!albumData.relationships || !albumData.relationships.tracks) {
-      albumData = isNaN(item.id)
+      albumData = isNaN((item.id as unknown) as number)
         ? await music.api.library.album(item.id)
         : await music.api.album(item.id);
     }
     items = albumData.relationships.tracks.data;
   } else if (item.type === 'playlists' || item.type === 'library-playlists') {
-    let playlistData = item;
+    let playlistData = item as any;
     if (!playlistData.relationships || !playlistData.relationships.tracks) {
       playlistData = item.id.startsWith('p.')
         ? await music.api.library.playlist(item.id)
@@ -77,21 +77,21 @@ export async function playNext(item) {
   await prependQueueItems(items);
 }
 
-export async function playLater(item) {
+export async function playLater(item: MusicKit.MediaItem) {
   let items;
   const music = MusicKit.getInstance();
   if (item.type === 'songs' || item.type === 'library-songs') {
     items = [item];
   } else if (item.type === 'albums' || item.type === 'library-albums') {
-    let albumData = item;
+    let albumData = item as any;
     if (!albumData.relationships || !albumData.relationships.tracks) {
-      albumData = isNaN(item.id)
+      albumData = isNaN((item.id as unknown) as number)
         ? await music.api.library.album(item.id)
         : await music.api.album(item.id);
     }
     items = albumData.relationships.tracks.data;
   } else if (item.type === 'playlists' || item.type === 'library-playlists') {
-    let playlistData = item;
+    let playlistData = item as any;
     if (!playlistData.relationships || !playlistData.relationships.tracks) {
       playlistData = item.id.startsWith('p.')
         ? await music.api.library.playlist(item.id)
@@ -119,7 +119,7 @@ export async function togglePlayback() {
   }
 }
 
-export async function seekToTime(time) {
+export async function seekToTime(time: number) {
   await MusicKit.getInstance().player.seekToTime(time);
 }
 
@@ -148,9 +148,14 @@ export async function shuffle() {
 
 export async function unShuffle() {
   if (isShuffled()) {
-    const newQueue = originalQueue;
+    let newQueue = originalQueue;
 
     originalQueue = null;
+
+    if (newQueue === null) {
+      newQueue = [];
+    }
+
     await setQueueItems(newQueue);
   }
 
@@ -170,27 +175,29 @@ export function getQueueItems() {
   return MusicKit.getInstance().player.queue.items;
 }
 
-export async function setQueueItems(items, index, container = null) {
+export async function setQueueItems(items: MusicKit.MediaItem[], index = 0, container: any = null) {
   const startPosition = !isNaN(index) ? index : MusicKit.getInstance().player.queue.position;
 
   await MusicKit.getInstance().setQueue({
+    // @ts-ignore
     items: items.map(item => createMediaItem(item, container)),
   });
 
   await MusicKit.getInstance().player.changeToMediaAtIndex(startPosition);
 }
 
-export async function prependQueueItems(items, container = null) {
+export async function prependQueueItems(items: MusicKit.MediaItem[], container = null) {
   const s = { items: items.map(item => createMediaItem(item, container)) };
   await MusicKit.getInstance().player.queue.prepend(s);
 }
 
-export async function appendQueueItems(items, container = null) {
+export async function appendQueueItems(items: MusicKit.MediaItem[], container = null) {
   const s = { items: items.map(item => createMediaItem(item, container)) };
+  // @ts-ignore
   await MusicKit.getInstance().player.queue.append(s);
 }
 
-function isSame(a, b) {
+function isSame(a: any, b: any) {
   return (
     a &&
     b &&
@@ -200,7 +207,7 @@ function isSame(a, b) {
   );
 }
 
-export function isCurrentTrack(track) {
+export function isCurrentTrack(track: MusicKit.MediaItem) {
   const playing = getPlayingItem();
 
   if (!playing) {
@@ -214,6 +221,6 @@ export function isPlaying() {
   return MusicKit.getInstance().player.isPlaying;
 }
 
-export function isTrackPlaying(track) {
+export function isTrackPlaying(track: MusicKit.MediaItem) {
   return MusicKit.getInstance().player.isPlaying && isCurrentTrack(track);
 }

@@ -105,20 +105,20 @@ class AlbumPanel extends React.Component<IAlbumPanelProps, IAlbumPanelState> {
   };
 
   public playTrack = async ({ index }: { index: number }) => {
-    await MusicPlayerApi.playAlbum(this.state.album, index);
+    await MusicPlayerApi.playAlbum(this.state.album!, index);
   };
 
   public playAlbum = async () => {
-    await MusicPlayerApi.playAlbum(this.state.album, 0);
+    await MusicPlayerApi.playAlbum(this.state.album!, 0);
   };
 
   public shufflePlayAlbum = async () => {
-    await MusicPlayerApi.shufflePlayAlbum(this.state.album);
+    await MusicPlayerApi.shufflePlayAlbum(this.state.album!);
   };
 
   public fetchFullCatalogAlbum = async () => {
     const { album } = this.state;
-    const catalogAlbum = await MusicApi.fetchFullCatalogAlbumFromLibraryAlbum(album);
+    const catalogAlbum = await MusicApi.fetchFullCatalogAlbumFromLibraryAlbum(album!);
     this.setState({
       matchedCatalogAlbum: catalogAlbum,
     });
@@ -140,7 +140,7 @@ class AlbumPanel extends React.Component<IAlbumPanelProps, IAlbumPanelState> {
       return <Loader />;
     }
 
-    const artworkURL = artworkForMediaItem(album, 220);
+    const artworkURL = artworkForMediaItem(album as MusicKit.MediaItem, 220);
 
     const explicit = album.attributes.contentRating === 'explicit' && (
       <div className={classes.explicit}>

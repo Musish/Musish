@@ -20,6 +20,7 @@ const SongResultItem: React.FC<ISongResultItemProps> = ({ song, connectDragSourc
   const play = async () => {
     const music = mk.instance;
     await music.setQueue({
+      // @ts-ignore it works ¯\_(ツ)_/¯
       items: [createMediaItem(song)],
     });
     await music.player.play();

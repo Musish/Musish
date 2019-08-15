@@ -24,7 +24,7 @@ const QueueItem = ({ style, item, removeItemFunc }: IQueueItemProps) => {
       <div>
         <span className={classes.albumArtwork}>
           <span className={classes.artworkWrapper}>
-            <img src={artworkForMediaItem(item, 30)} alt='' />
+            <img src={artworkForMediaItem(item as MusicKit.MediaItem, 30)} alt='' />
           </span>
         </span>
       </div>

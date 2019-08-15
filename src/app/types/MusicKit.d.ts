@@ -132,6 +132,7 @@ declare namespace MusicKit {
     public bitrate: number;
   }
 
+  // tslint:disable-next-line:max-classes-per-file
   export class Library {
     public collection(id: string, a: any, parameters: QueryParameters)
   }

@@ -1,8 +1,9 @@
 import axios from 'axios';
 import Alert from 'react-s-alert';
 import { API_URL, getRatingUrl } from '../utils/Utils';
+import QueryParameters = MusicKit.QueryParameters;
 
-export function getNextSongs(path) {
+export function getNextSongs(path: string) {
   return axios({
     method: 'get',
     url: `${API_URL}${path}`,
@@ -10,7 +11,7 @@ export function getNextSongs(path) {
   });
 }
 
-export async function addSongsToPlaylist(playlistId, songs) {
+export async function addSongsToPlaylist(playlistId: any, songs: MusicKit.MediaItem[]) {
   const payload = {
     data: songs.map(song => ({
       id: song.id,
@@ -31,14 +32,14 @@ export async function addSongsToPlaylist(playlistId, songs) {
   }
 }
 
-export async function addAlbumToPlaylist(playlistId, albumId) {
+export async function addAlbumToPlaylist(playlistId: any, albumId: any) {
   const music = MusicKit.getInstance();
 
   const album = await (isNaN(albumId)
     ? music.api.library.album(albumId)
     : music.api.album(albumId));
 
-  const tracks = album.relationships.tracks.data.map(track => ({
+  const tracks = album.relationships.tracks.data.map((track: MusicKit.MediaItem) => ({
     id: track.id,
     type: 'song',
   }));
@@ -46,14 +47,14 @@ export async function addAlbumToPlaylist(playlistId, albumId) {
   await addSongsToPlaylist(playlistId, tracks);
 }
 
-export async function addPlaylistToPlaylist(playlistId, sourcePlaylistId) {
+export async function addPlaylistToPlaylist(playlistId: any, sourcePlaylistId: any) {
   const music = MusicKit.getInstance();
 
   const playlist = await (sourcePlaylistId.startsWith('p.')
     ? music.api.library.playlist(sourcePlaylistId)
     : music.api.playlist(sourcePlaylistId));
 
-  const tracks = playlist.relationships.tracks.data.map(track => ({
+  const tracks = playlist.relationships.tracks.data.map((track: MusicKit.MediaItem) => ({
     id: track.id,
     type: 'song',
   }));
@@ -61,11 +62,11 @@ export async function addPlaylistToPlaylist(playlistId, sourcePlaylistId) {
   await addSongsToPlaylist(playlistId, tracks);
 }
 
-export async function addToLibrary(mediaType, media) {
+export async function addToLibrary(mediaType: string, mediaIds: string[]) {
   try {
     await axios({
       method: 'post',
-      url: `${API_URL}/v1/me/library?ids[${mediaType}]=${media.map(m => m).join(',')}`,
+      url: `${API_URL}/v1/me/library?ids[${mediaType}]=${mediaIds.map(m => m).join(',')}`,
       headers: getHeaders(),
     });
     Alert.success("Added tracks to your library, they'll show up in a few seconds. Hold tight!");
@@ -85,17 +86,17 @@ export function getHeaders() {
   };
 }
 
-export function infiniteLoadRelationships(
-  id,
-  functionGenerator,
-  key,
-  store,
-  dataModifier = d => d,
+export function infiniteLoadRelationships<I>(
+  id: any,
+  functionGenerator: (id: string, parameters?: QueryParameters) => Promise<I>,
+  key: string,
+  store: any,
+  dataModifier = (d: any) => d,
 ) {
-  return async ({ offset }, { page }) => {
+  return async ({ offset }: { limit: number; offset: number }, { page }: { page: number }) => {
     if (page === 0) {
       const playlist = await functionGenerator(id, { offset });
-      const nextData = playlist.relationships[key];
+      const nextData = (playlist as any).relationships[key];
 
       // eslint-disable-next-line no-param-reassign
       store.nextUrl = nextData.next;
@@ -109,7 +110,6 @@ export function infiniteLoadRelationships(
 
     const { data } = await getNextSongs(store.nextUrl);
 
-    // eslint-disable-next-line no-param-reassign
     store.nextUrl = data.next;
 
     return dataModifier(data.data);
@@ -120,11 +120,12 @@ export function infiniteLoadRelationships(
 // at Apple who designed the frameworks and APIs meaning we had to do this a bad person? Definitely.
 // https://www.google.com/#q=Nearby+shops+selling+eye+wash
 // https://www.google.com/images?q=cute+animals
-export async function fetchFullCatalogAlbumFromLibraryAlbum(album) {
+export async function fetchFullCatalogAlbumFromLibraryAlbum(album: MusicKit.Resource) {
   const mk = MusicKit.getInstance();
 
   const firstSong = album.relationships.tracks.data.find(
-    t => t.attributes && t.attributes.playParams && t.attributes.playParams.catalogId,
+    (t: MusicKit.MediaItem) =>
+      t.attributes && t.attributes.playParams && t.attributes.playParams.catalogId,
   );
 
   if (!firstSong) {
@@ -135,7 +136,6 @@ export async function fetchFullCatalogAlbumFromLibraryAlbum(album) {
   const firstCatalogSong = await mk.api.song(firstSongId);
 
   for (const a of firstCatalogSong.relationships.albums.data) {
-    // eslint-disable-next-line no-await-in-loop
     const catalogAlbum = await mk.api.album(a.id);
     if (
       catalogAlbum.attributes.artistName === album.attributes.artistName &&
@@ -147,7 +147,7 @@ export async function fetchFullCatalogAlbumFromLibraryAlbum(album) {
   return null;
 }
 
-export async function getRating(type, id) {
+export async function getRating(type: string, id: any) {
   const url = getRatingUrl(type, id);
 
   if (!url) {
@@ -167,7 +167,7 @@ export async function getRating(type, id) {
   }
 }
 
-export async function setRating(type, id, rating) {
+export async function setRating(type: string, id: any, rating: number) {
   const url = getRatingUrl(type, id);
 
   if (!url) {

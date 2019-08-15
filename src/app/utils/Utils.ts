@@ -1,6 +1,6 @@
 import translate from './translations/Translations';
 
-export function createMediaItem(song, container = null) {
+export function createMediaItem(song: MusicKit.MediaItem, container: any = null) {
   if (container) {
     const containerName =
       container.type === 'albums' || container.type === 'library-albums' ? 'albums' : 'playlists';
@@ -23,7 +23,7 @@ export function createMediaItem(song, container = null) {
   };
 }
 
-export function artworkForMediaItem(item, size) {
+export function artworkForMediaItem(item: MusicKit.MediaItem, size: number) {
   if (!item.attributes || !item.attributes.artwork) {
     return `https://is1-ssl.mzstatic.com/image/thumb/Features127/v4/75/f9/6f/75f96fa5-99ca-0854-3aae-8f76f5cb7fb5/source/${size}x${size}bb.jpeg`;
   }
@@ -31,9 +31,8 @@ export function artworkForMediaItem(item, size) {
   return MusicKit.formatArtworkURL(item.attributes.artwork, size, size);
 }
 
-export function getTime(ms) {
+export function getTime(ms: number) {
   if (!ms || isNaN(ms)) {
-    // eslint-disable-next-line no-param-reassign
     ms = 0;
   }
   const s = 1000 * Math.round(ms / 1000);
@@ -42,7 +41,7 @@ export function getTime(ms) {
   return `${d.getUTCMinutes()}:${String(`0${d.getUTCSeconds()}`).slice(-2)}`;
 }
 
-export function humanifyMillis(duration) {
+export function humanifyMillis(duration: number) {
   const musickitDuration = MusicKit.formattedMilliseconds(duration);
 
   const hourFormatted = musickitDuration.hours === 1 ? translate.hour : translate.hours;
@@ -55,7 +54,7 @@ export function humanifyMillis(duration) {
   return `${hours}${comma}${minutes}`;
 }
 
-export function humanifyTrackNumbers(trackNumber) {
+export function humanifyTrackNumbers(trackNumber: number) {
   const songs = trackNumber === 1 ? translate.song : translate.songs;
 
   return `${trackNumber} ${songs}`;
@@ -70,7 +69,7 @@ export const ShuffleModeSongs = 1;
 
 export const API_URL = 'https://api.music.apple.com';
 
-export const getRatingUrl = (type, id) => {
+export const getRatingUrl = (type: string, id: any) => {
   const baseUrl = `${API_URL}/v1/me/ratings/`;
   const endpoints = {
     library: {
@@ -85,7 +84,7 @@ export const getRatingUrl = (type, id) => {
     },
   };
 
-  const choice = isNaN(id) ? endpoints.library : endpoints.catalog;
+  const choice: any = isNaN(id) ? endpoints.library : endpoints.catalog;
   if (!(type in choice)) {
     return false;
   }
@@ -93,6 +92,6 @@ export const getRatingUrl = (type, id) => {
   return `${baseUrl}${choice[type]}/${id}`;
 };
 
-export function setPseudoRoute(route) {
+export function setPseudoRoute(route: string) {
   window.history.pushState('', '', route);
 }
