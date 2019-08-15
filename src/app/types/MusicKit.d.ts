@@ -123,4 +123,10 @@ declare namespace MusicKit {
 // tslint:disable-next-line:no-namespace
 declare namespace MusicKit {
   export type QueueItem = IAnonymousObject;
+
+  export class MusicKitInstance {
+    public storekit: {
+      storefrontCountryCode: string;
+    };
+  }
 }

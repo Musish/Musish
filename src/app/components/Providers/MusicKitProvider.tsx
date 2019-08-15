@@ -1,10 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import Loader from '../Common/Loader/Loader';
+import React, { ReactNode } from 'react';
 import translate from '../../utils/translations/Translations';
+import Loader from '../Common/Loader/Loader';
 
-export default class MusicKitProvider extends React.Component {
-  constructor(props) {
+interface IMusicKitProviderProps {
+  children: ReactNode;
+}
+
+interface IMusicKitProviderState {
+  ready: boolean;
+}
+
+export default class MusicKitProvider extends React.Component<
+  IMusicKitProviderProps,
+  IMusicKitProviderState
+> {
+  constructor(props: IMusicKitProviderProps) {
     super(props);
 
     this.state = {
@@ -12,7 +22,7 @@ export default class MusicKitProvider extends React.Component {
     };
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     MusicKit.configure({
       developerToken: process.env.APPLE_TOKEN,
       app: {
@@ -26,21 +36,26 @@ export default class MusicKitProvider extends React.Component {
 
     this.setLanguage(MusicKit.getInstance().storekit.storefrontCountryCode);
 
-    MusicKit.getInstance().addEventListener('storefrontCountryCodeDidChange', e => {
+    const handler = (e: any) => {
       this.setLanguage(e.storefrontCountryCode);
-    });
+    };
+
+    MusicKit.getInstance().addEventListener(
+      'storefrontCountryCodeDidChange',
+      handler as () => void,
+    );
 
     this.setState({
       ready: true,
     });
   }
 
-  setLanguage = countryCode => {
+  public setLanguage = (countryCode: string) => {
     translate.setLanguage(countryCode);
     this.forceUpdate();
   };
 
-  render() {
+  public render() {
     if (!this.state.ready) {
       return <Loader />;
     }
@@ -48,7 +63,3 @@ export default class MusicKitProvider extends React.Component {
     return this.props.children;
   }
 }
-
-MusicKitProvider.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
-};
