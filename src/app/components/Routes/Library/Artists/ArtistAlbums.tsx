@@ -15,7 +15,7 @@ interface IArtistAlbumsState {
 }
 
 class ArtistAlbums extends React.Component<IArtistAlbumsProps, IArtistAlbumsState> {
-  private readonly pageRef = React.createRef();
+  private readonly pageRef = React.createRef<HTMLDivElement>();
 
   constructor(props: IArtistAlbumsProps) {
     super(props);

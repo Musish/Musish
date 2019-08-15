@@ -17,7 +17,7 @@ function playTrack({ tracks, index }: IPlayTrackParams) {
 }
 
 const SongsPage: React.FC = () => {
-  const scrollRef = useRef<HTMLElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   return (
     <PageContent innerRef={scrollRef}>
