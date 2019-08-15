@@ -1,7 +1,13 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 
-function Tab({ children }: { children: ReactNode }) {
-  return children;
+export interface ITabProps {
+  children: ReactNode;
+  name: string;
+  route: string;
 }
+
+const Tab: React.FC<ITabProps> = ({ children }: ITabProps) => {
+  return <>{children}</>;
+};
 
 export default Tab;

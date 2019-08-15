@@ -2,6 +2,7 @@ import cx from 'classnames';
 import React, { ReactNode, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { matchPath, withRouter } from 'react-router-dom';
+import { ITabProps } from './Tab';
 import classes from './Tabs.scss';
 
 interface ITabsProps extends RouteComponentProps {
@@ -25,7 +26,7 @@ const Tabs: React.FC<ITabsProps> = ({ children, location, history }) => {
     <>
       <div className={classes.choices}>
         {tabs.map((tab, index) => {
-          const { name: tabName, route: tabRoute } = (tab! as any).props;
+          const { name: tabName, route: tabRoute } = (tab! as any).props as ITabProps;
           return (
             <div
               key={tabRoute || tabName}
