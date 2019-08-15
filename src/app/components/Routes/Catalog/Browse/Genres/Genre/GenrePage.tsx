@@ -1,33 +1,66 @@
 import React from 'react';
+import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import * as MusicApi from '../../../../../../services/MusicApi';
+import { artworkForMediaItem } from '../../../../../../utils/Utils';
+import InfiniteLoader, {
+  IInfiniteLoaderState,
+  InfiniteLoaderOnScroll,
+} from '../../../../../Common/InfiniteLoader/InfiniteLoader';
+import Loader from '../../../../../Common/Loader/Loader';
 import PageContent from '../../../../../Common/PageContent/PageContent';
 import PageTitle from '../../../../../Common/PageTitle/PageTitle';
-import Loader from '../../../../../Common/Loader/Loader';
-import classes from './GenrePage.scss';
-import { artworkForMediaItem } from '../../../../../../utils/Utils';
 import PlaylistItem from '../../../../../Common/PlaylistItem/PlaylistItem';
-import InfiniteLoader from '../../../../../Common/InfiniteLoader/InfiniteLoader';
-import * as MusicApi from '../../../../../../services/MusicApi';
+import classes from './GenrePage.scss';
 
-class GenrePage extends React.Component {
-  constructor(props) {
+type IGenrePageProps = RouteComponentProps<{ id: string }>;
+
+interface IGenrePageState {
+  curatorId: any;
+  curator: any;
+}
+
+class GenrePage extends React.Component<IGenrePageProps, IGenrePageState> {
+  public static renderContent(
+    _: InfiniteLoaderOnScroll,
+    { items }: IInfiniteLoaderState<MusicKit.Resource>,
+  ) {
+    if (!items) {
+      return null;
+    }
+
+    return (
+      <div className={classes.playlistGrid}>
+        {items.map((playlist: MusicKit.Resource) => (
+          <PlaylistItem key={playlist.id} playlist={playlist} size={160} />
+        ))}
+      </div>
+    );
+  }
+
+  public static fetchPlaylists(playlists: MusicKit.Resource[]) {
+    return Promise.all(
+      playlists.map(async playlist => await MusicKit.getInstance().api.playlist(playlist.id)),
+    );
+  }
+
+  private readonly store = {};
+  private readonly scrollRef = React.createRef<HTMLDivElement>();
+
+  constructor(props: IGenrePageProps) {
     super(props);
 
     this.state = {
       curatorId: this.props.match.params.id,
       curator: null,
     };
-
-    this.store = {};
-    this.scrollRef = React.createRef();
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     this.fetchCurator();
   }
 
-  fetchCurator = async () => {
+  public fetchCurator = async () => {
     const music = MusicKit.getInstance();
 
     const curator = await music.api.appleCurator(this.getCuratorId());
@@ -37,11 +70,11 @@ class GenrePage extends React.Component {
     });
   };
 
-  getCuratorId = () => this.state.curatorId;
+  public getCuratorId = () => this.state.curatorId;
 
-  curatorLoader = () => this.state.curator;
+  public curatorLoader = () => this.state.curator;
 
-  renderHeader = () => {
+  public renderHeader = () => {
     const { curator } = this.state;
 
     if (!curator) {
@@ -63,24 +96,7 @@ class GenrePage extends React.Component {
     );
   };
 
-  static renderContent(args, { items }) {
-    return (
-      <div className={classes.playlistGrid}>
-        {items.map(playlist => (
-          <PlaylistItem key={playlist.id} playlist={playlist} size={160} />
-        ))}
-      </div>
-    );
-  }
-
-  static fetchPlaylists(playlists) {
-    return Promise.all(
-      // eslint-disable-next-line no-return-await
-      playlists.map(async playlist => await MusicKit.getInstance().api.playlist(playlist.id)),
-    );
-  }
-
-  render() {
+  public render() {
     const { curator } = this.state;
 
     if (!curator) {
@@ -110,15 +126,5 @@ class GenrePage extends React.Component {
     );
   }
 }
-
-GenrePage.propTypes = {
-  id: PropTypes.any,
-  match: PropTypes.object,
-};
-
-GenrePage.defaultProps = {
-  id: null,
-  match: null,
-};
 
 export default withRouter(GenrePage);
