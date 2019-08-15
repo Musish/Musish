@@ -7,7 +7,7 @@ import PageTitle from '../../../Common/PageTitle/PageTitle';
 import classes from './ArtistAlbums.scss';
 
 interface IArtistAlbumsProps {
-  id: string;
+  id: any;
 }
 
 interface IArtistAlbumsState {
