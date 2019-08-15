@@ -30,10 +30,12 @@ function QueueModalProvider({ children }: { children: ReactNode }) {
 
 export default QueueModalProvider;
 
-export function withQueueModal<P extends IQueueModalProps>(Component: React.ComponentType<P>) {
-  return (props: P) => (
+export function withQueueModal<T extends IQueueModalProps>(
+  Component: React.ComponentType<T>,
+): React.ComponentType<Subtract<T, IQueueModalProps>> {
+  return (props: Subtract<T, IQueueModalProps>) => (
     <QueueModalContext.Consumer>
-      {context => <Component {...props} queueModal={{ ...context }} />}
+      {context => <Component {...props as T} queueModal={{ ...context }} />}
     </QueueModalContext.Consumer>
   );
 }

@@ -2,7 +2,17 @@ import Mousetrap from 'mousetrap';
 import React, { CSSProperties, ReactNode, useContext, useState } from 'react';
 import Modal from '../Common/Modal/Modal';
 
-export const ModalContext = React.createContext({});
+export const ModalContext = React.createContext<IModalProviderValue>({
+  queue: [],
+  push: () => undefined,
+  replace: () => undefined,
+  pop: () => undefined,
+  flush: () => undefined,
+});
+
+interface IModalProps {
+  modal: IModalProviderValue;
+}
 
 interface IModal {
   content: ReactNode;
@@ -35,10 +45,12 @@ function ModalProvider({ children = null }: { children: ReactNode }) {
 
 export default ModalProvider;
 
-export function withModal(Component: any) {
-  return (props: {}) => (
+export function withModal<T extends IModalProps>(
+  Component: React.ComponentType<T>,
+): React.ComponentType<Subtract<T, IModalProps>> {
+  return (props: Subtract<T, IModalProps>) => (
     <ModalContext.Consumer>
-      {context => <Component {...props} modal={{ ...context }} />}
+      {context => <Component {...props as T} modal={{ ...context }} />}
     </ModalContext.Consumer>
   );
 }

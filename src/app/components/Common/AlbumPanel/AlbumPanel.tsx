@@ -17,9 +17,9 @@ import classes from './AlbumPanel.scss';
 import QueryParameters = MusicKit.QueryParameters;
 
 interface IAlbumPanelProps extends RouteComponentProps {
-  id: any;
-  album: MusicKit.Resource;
-  className: string | { [s: string]: boolean };
+  id?: any;
+  album?: MusicKit.Resource;
+  className?: string;
   modal: IModalProviderValue;
 }
 
@@ -34,10 +34,8 @@ interface IAlbumPanelState {
 class AlbumPanel extends React.Component<IAlbumPanelProps, IAlbumPanelState> {
   public static defaultProps = {
     id: null,
-    album: null,
-    history: null,
-    modal: null,
-    className: null,
+    album: undefined,
+    className: '',
   };
 
   private readonly albumId: any;
@@ -50,7 +48,7 @@ class AlbumPanel extends React.Component<IAlbumPanelProps, IAlbumPanelState> {
   constructor(props: IAlbumPanelProps) {
     super(props);
 
-    this.albumId = this.props.id || this.props.album.id;
+    this.albumId = this.props.id || this.props.album!.id;
     this.isCatalog = !isNaN(this.albumId);
 
     this.state = {
@@ -256,8 +254,8 @@ class AlbumPanel extends React.Component<IAlbumPanelProps, IAlbumPanelState> {
   }
 }
 
-const pseudoRoute = ({ id, album }: { id: any; album: MusicKit.MediaItem }) => {
-  const albumId = id || album.id;
+const pseudoRoute = ({ id, album }: { id?: any; album?: MusicKit.Resource }) => {
+  const albumId = id || album!.id;
   let route = `/album/${albumId}`;
   if (isNaN(albumId)) {
     route = '/me' + route;

@@ -33,14 +33,14 @@ const PlaylistItem: React.FC<IPlaylistItemProps> = ({
   const { push: pushModal } = useModal();
 
   function handleOpen() {
-    if (navigate) {
-      const playlistId = id || playlist.id;
+    const playlistId = id || playlist.id;
 
+    if (navigate) {
       history.push(`/playlists/${playlistId}`);
       return;
     }
 
-    pushModal(<PlaylistPanel id={id} pseudoRoute />);
+    pushModal(<PlaylistPanel id={playlistId} pseudoRoute />);
   }
 
   const artwork = artworkForMediaItem(playlist, size);

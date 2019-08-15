@@ -1,10 +1,17 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
+import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { setPseudoRoute } from '../utils/Utils';
 
-function withPseudoRoute(Component, route) {
-  return withRouter(props => {
+interface IWithPseudoRoute {
+  pseudoRoute?: boolean;
+}
+
+function withPseudoRoute<P>(
+  Component: React.ComponentType<P>,
+  route: (props: RouteComponentProps & P) => string | string,
+) {
+  return withRouter((props: RouteComponentProps & IWithPseudoRoute & P) => {
     const link = route instanceof Function ? route(props) : route;
     if (props.pseudoRoute) {
       useEffect(() => {
@@ -21,13 +28,5 @@ function withPseudoRoute(Component, route) {
     return <Component {...props} />;
   });
 }
-
-withPseudoRoute.propTypes = {
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
-};
-
-withPseudoRoute.defaultTypes = {
-  children: null,
-};
 
 export default withPseudoRoute;

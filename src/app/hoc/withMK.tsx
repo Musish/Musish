@@ -1,18 +1,18 @@
 import hoistNonReactStatic from 'hoist-non-react-statics';
 import React from 'react';
-import { Omit } from 'react-dnd';
 
 export default function withMK<P extends IMKProps>(
   WrappedComponent: React.ComponentType<P>,
   bindings: { [k: string]: any } = {},
-): React.ComponentClass<Omit<P, keyof IMKProps>> {
+): React.ComponentClass<Subtract<P, IMKProps>> {
   interface IEnhanceProps {
     [k: string]: any;
   }
-  class Enhance extends React.Component<P, IEnhanceProps> {
+  type EnhanceProps = Subtract<P, IMKProps>;
+  class Enhance extends React.Component<EnhanceProps, IEnhanceProps> {
     private readonly bindingFunctions: { [k: string]: () => any } = {};
 
-    constructor(props: P) {
+    constructor(props: EnhanceProps) {
       super(props);
 
       this.state = {};
@@ -48,7 +48,7 @@ export default function withMK<P extends IMKProps>(
         ...this.state,
       };
 
-      return <WrappedComponent mk={mk} {...this.props} />;
+      return <WrappedComponent {...this.props as P} mk={mk} />;
     }
   }
 

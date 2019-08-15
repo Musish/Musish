@@ -3,10 +3,8 @@ import debounce from 'lodash/debounce';
 import React, { ChangeEvent, ReactNode } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
-import withContext from '../../../../hoc/withContext';
 import withMK from '../../../../hoc/withMK';
 import translate from '../../../../utils/translations/Translations';
-import { AuthorizeContext } from '../../../Providers/AuthorizeProvider';
 import Loader from '../../Loader/Loader';
 import AlbumResultItem from './AlbumResultItem';
 import ArtistResultItem from './ArtistResultItem';
@@ -231,4 +229,4 @@ class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
   }
 }
 
-export default withRouter(withMK(withContext(SearchBar, AuthorizeContext)));
+export default withMK(withRouter(SearchBar));

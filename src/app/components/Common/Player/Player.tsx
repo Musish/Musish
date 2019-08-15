@@ -19,20 +19,18 @@ import {
   RepeatModeOne,
 } from '../../../utils/Utils';
 import { AuthorizeContext } from '../../Providers/AuthorizeProvider';
-import { withLyricsModal } from '../../Providers/LyricsModalProvider';
+import { ILyricsModalProps, withLyricsModal } from '../../Providers/LyricsModalProvider';
 import { IModalProviderValue, withModal } from '../../Providers/ModalProvider';
-import { withQueueModal } from '../../Providers/QueueProvider';
+import { IQueueModalProps, withQueueModal } from '../../Providers/QueueProvider';
 import AlbumPanel from '../AlbumPanel/AlbumPanel';
 import styles from './Player.scss';
 import PlayerTime from './PlayerTime';
 import Rating from './Rating/Rating';
 import VolumeControl from './VolumeControl';
 
-interface IPlayerProps extends IMKProps {
+interface IPlayerProps extends IMKProps, IQueueModalProps, ILyricsModalProps {
   authorized: boolean;
   modal: IModalProviderValue;
-  lyricsModal?: any;
-  queueModal?: any;
 }
 
 class Player extends React.Component<IPlayerProps> {
@@ -198,9 +196,7 @@ class Player extends React.Component<IPlayerProps> {
 
           <span
             className={cx(styles.controls, { [styles.enabled]: lyricsModal.isOpen })}
-            onClick={() =>
-              lyricsModal.isOpen ? lyricsModal.close() : lyricsModal.open(nowPlayingItem)
-            }
+            onClick={() => (lyricsModal.isOpen ? lyricsModal.close() : lyricsModal.open())}
           >
             <i className={'fas fa-align-left'} />
           </span>
