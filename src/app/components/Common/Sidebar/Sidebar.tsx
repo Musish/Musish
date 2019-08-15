@@ -1,37 +1,42 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Player from '../Player/Player';
-import classes from './Sidebar.scss';
-import PlaylistMenuItem from './Menu/MenuItem/PlaylistMenuItem';
-import withMK from '../../../hoc/withMK';
 import withContext from '../../../hoc/withContext';
-import SidebarMenu from './Menu/SidebarMenu';
-import SidebarLibraryMenu from './Menu/SidebarLibraryMenu';
-import { AuthorizeContext } from '../../Providers/AuthorizeProvider';
-import InfiniteLoader from '../InfiniteLoader/InfiniteLoader';
 import translate from '../../../utils/translations/Translations';
+import { AuthorizeContext } from '../../Providers/AuthorizeProvider';
 import { usePlaylists } from '../../Providers/PlaylistsProvider';
+import InfiniteLoader, {
+  IInfiniteLoaderState,
+  InfiniteLoaderOnScroll,
+} from '../InfiniteLoader/InfiniteLoader';
+import Player from '../Player/Player';
+import PlaylistMenuItem from './Menu/MenuItem/PlaylistMenuItem';
+import SidebarLibraryMenu from './Menu/SidebarLibraryMenu';
+import SidebarMenu from './Menu/SidebarMenu';
+import classes from './Sidebar.scss';
 
-function Sidebar(props) {
+interface ISidebarProps {
+  authorized: boolean;
+}
+
+const Sidebar: React.FC<ISidebarProps> = props => {
   const { authorized } = props;
 
   const playlistsData = usePlaylists();
 
-  async function loadPlaylists(params) {
+  async function loadPlaylists(params: MusicKit.QueryParameters) {
     const music = MusicKit.getInstance();
 
     return music.api.library.playlists(null, params);
   }
 
-  function renderPlaylists(args, { items }) {
-    return items.map(playlist => (
-      <PlaylistMenuItem
-        playlist={playlist}
-        to={`/me/playlists/${playlist.id}`}
-        label={playlist.attributes.name}
-        key={playlist.id}
-      />
-    ));
+  function renderPlaylists(
+    _: InfiniteLoaderOnScroll,
+    { items }: IInfiniteLoaderState<MusicKit.MediaItem>,
+  ) {
+    if (!items) {
+      return null;
+    }
+
+    return items.map(playlist => <PlaylistMenuItem playlist={playlist} key={playlist.id} />);
   }
 
   const appleMusic = authorized ? (
@@ -97,10 +102,6 @@ function Sidebar(props) {
       <Player />
     </aside>
   );
-}
-
-Sidebar.propTypes = {
-  authorized: PropTypes.bool.isRequired,
 };
 
-export default withMK(withContext(Sidebar, AuthorizeContext));
+export default withContext(Sidebar, AuthorizeContext);
