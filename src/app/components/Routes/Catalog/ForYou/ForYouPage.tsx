@@ -1,16 +1,32 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
 import cx from 'classnames';
+import React from 'react';
+import { RouteComponentProps } from 'react-router';
+import { withRouter } from 'react-router-dom';
+import translate from '../../../../utils/translations/Translations';
+import AlbumItem from '../../../Common/AlbumItem/AlbumItem';
+import Loader from '../../../Common/Loader/Loader';
 import PageContent from '../../../Common/PageContent/PageContent';
 import PageTitle from '../../../Common/PageTitle/PageTitle';
-import classes from './ForYouPage.scss';
-import Loader from '../../../Common/Loader/Loader';
-import AlbumItem from '../../../Common/AlbumItem/AlbumItem';
 import PlaylistItem from '../../../Common/PlaylistItem/PlaylistItem';
-import translate from '../../../../utils/translations/Translations';
+import classes from './ForYouPage.scss';
 
-class ForYouPage extends React.Component {
-  constructor(props) {
+type IForYouPageProps = RouteComponentProps;
+
+interface IForYouPageState {
+  heavyRotation: any;
+  recentlyPlayed: any;
+  recommendations: any;
+}
+
+type RecentlyPlayedItem = any;
+type HeavyRotationItem = any;
+type RecommendationGroup = any;
+type RecommendationGroupItem = any;
+
+class ForYouPage extends React.Component<IForYouPageProps, IForYouPageState> {
+  public readonly ref = React.createRef<HTMLDivElement>();
+
+  constructor(props: IForYouPageProps) {
     super(props);
 
     this.state = {
@@ -18,11 +34,9 @@ class ForYouPage extends React.Component {
       recentlyPlayed: null,
       recommendations: null,
     };
-
-    this.ref = React.createRef();
   }
 
-  async componentDidMount() {
+  public async componentDidMount() {
     const music = MusicKit.getInstance();
 
     let heavyRotation;
@@ -41,6 +55,7 @@ class ForYouPage extends React.Component {
 
     let recommendations;
     try {
+      // @ts-ignore Incorrect type signature
       recommendations = await music.api.recommendations();
     } catch (error) {
       recommendations = false;
@@ -53,7 +68,7 @@ class ForYouPage extends React.Component {
     });
   }
 
-  renderRecentlyPlayed = () => {
+  public renderRecentlyPlayed = () => {
     const { recentlyPlayed } = this.state;
 
     if (recentlyPlayed === false) {
@@ -69,7 +84,7 @@ class ForYouPage extends React.Component {
         <h3>{translate.recentlyPlayed}</h3>
         <div className={cx(classes.scrollWrapper)}>
           <div className={classes.scrollGrid}>
-            {recentlyPlayed.map(item => {
+            {recentlyPlayed.map((item: RecentlyPlayedItem) => {
               switch (item.type) {
                 case 'playlists':
                   return <PlaylistItem key={item.id} playlist={item} size={120} />;
@@ -85,7 +100,7 @@ class ForYouPage extends React.Component {
     );
   };
 
-  renderHeavyRotation = () => {
+  public renderHeavyRotation = () => {
     const { heavyRotation } = this.state;
 
     if (heavyRotation === false) {
@@ -101,7 +116,7 @@ class ForYouPage extends React.Component {
         <h3>{translate.heavyRotation}</h3>
         <div className={classes.scrollWrapper}>
           <div className={classes.scrollGrid}>
-            {heavyRotation.map(item => {
+            {heavyRotation.map((item: HeavyRotationItem) => {
               switch (item.type) {
                 case 'playlists':
                   return <PlaylistItem key={item.id} playlist={item} size={120} />;
@@ -117,7 +132,7 @@ class ForYouPage extends React.Component {
     );
   };
 
-  renderRecommendations = () => {
+  public renderRecommendations = () => {
     const { recommendations } = this.state;
 
     if (recommendations === false) {
@@ -128,7 +143,7 @@ class ForYouPage extends React.Component {
       return null; // Loading items
     }
 
-    function renderGroup(group) {
+    function renderGroup(group: RecommendationGroup) {
       const { relationships } = group;
 
       if (!relationships) {
@@ -140,7 +155,9 @@ class ForYouPage extends React.Component {
       const shouldRenderLegacyGroup = !!group.attributes.title;
 
       if (isGroup && !shouldRenderLegacyGroup) {
-        return relationships.recommendations.data.map(nestedGroup => renderGroup(nestedGroup));
+        return relationships.recommendations.data.map((nestedGroup: RecommendationGroup) =>
+          renderGroup(nestedGroup),
+        );
       }
 
       const id = group.attributes.title.stringForDisplay; // TODO: switch back to group.id?
@@ -149,9 +166,9 @@ class ForYouPage extends React.Component {
         <React.Fragment key={id}>
           <h3>{group.attributes.title.stringForDisplay}</h3>
           <div className={cx(classes.scrollWrapper)}>
-            <div className={cx(classes.scrollWrapper, { [classes.groupedScroller]: isGroup })}>
+            <div className={cx(classes.scrollWrapper)}>
               <div className={classes.scrollGrid}>
-                {items.data.map(item => {
+                {items.data.map((item: RecommendationGroupItem) => {
                   switch (item.type) {
                     case 'playlists':
                       return <PlaylistItem key={item.id} playlist={item} size={120} />;
@@ -168,17 +185,21 @@ class ForYouPage extends React.Component {
                             {recommendationName}
                           </span>
                           <div className={classes.personalRecommendationsGrid}>
-                            {item.relationships.contents.data.map(subItem => {
-                              const subId = `${item.id}-${subItem.id}`;
-                              switch (subItem.type) {
-                                case 'playlists':
-                                  return <PlaylistItem key={subId} playlist={subItem} size={100} />;
-                                case 'albums':
-                                  return <AlbumItem key={subId} album={subItem} size={100} />;
-                                default:
-                                  return null;
-                              }
-                            })}
+                            {item.relationships.contents.data.map(
+                              (subItem: RecommendationGroupItem) => {
+                                const subId = `${item.id}-${subItem.id}`;
+                                switch (subItem.type) {
+                                  case 'playlists':
+                                    return (
+                                      <PlaylistItem key={subId} playlist={subItem} size={100} />
+                                    );
+                                  case 'albums':
+                                    return <AlbumItem key={subId} album={subItem} size={100} />;
+                                  default:
+                                    return null;
+                                }
+                              },
+                            )}
                           </div>
                         </div>
                       );
@@ -194,10 +215,10 @@ class ForYouPage extends React.Component {
       );
     }
 
-    return recommendations.map(group => renderGroup(group));
+    return recommendations.map((group: RecommendationGroup) => renderGroup(group));
   };
 
-  render() {
+  public render() {
     const recentlyPlayed = this.renderRecentlyPlayed();
     const heavyRotation = this.renderHeavyRotation();
     const recommendations = this.renderRecommendations();
