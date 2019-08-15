@@ -128,5 +128,7 @@ declare namespace MusicKit {
     public storekit: {
       storefrontCountryCode: string;
     };
+    // @ts-ignore bitrate is not read-only
+    public bitrate: number;
   }
 }

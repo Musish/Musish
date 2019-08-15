@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react';
-import classes from './Settings.scss';
+import React, { useContext, useState } from 'react';
 import useMK from '../../../../hooks/useMK';
-import { LastfmContext } from '../../../Providers/LastfmProvider';
 import translate from '../../../../utils/translations/Translations';
+import { LastfmContext } from '../../../Providers/LastfmProvider';
+import classes from './Settings.scss';
 
 export default function Settings() {
   const { login, reset, connected } = useContext(LastfmContext);
