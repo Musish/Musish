@@ -1,33 +1,34 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
-import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+import { RouteComponentProps } from 'react-router';
+import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import Alert from 'react-s-alert';
-import MusicKitProvider from './Providers/MusicKitProvider';
-import AuthorizeProvider from './Providers/AuthorizeProvider';
-import AlbumsPage from './Routes/Library/Albums/AlbumsPage';
-import Layout from './Layout';
-import ArtistPage from './Routes/Catalog/Artist/ArtistPage';
-import ArtistsPage from './Routes/Library/Artists/ArtistsPage';
-import PlaylistPage from './Routes/Playlist/PlaylistPage';
-import SongsPage from './Routes/Library/Songs/SongsPage';
-import PlaylistsPage from './Routes/Library/Playlists/PlaylistsPage';
-import RecentlyAddedPage from './Routes/Library/RecentlyAdded/RecentlyAddedPage';
-import ForYouPage from './Routes/Catalog/ForYou/ForYouPage';
-import BrowsePage from './Routes/Catalog/Browse/BrowsePage';
-import GenrePage from './Routes/Catalog/Browse/Genres/Genre/GenrePage';
-import RadioPage from './Routes/Catalog/Radio/RadioPage';
 import ConnectedMenu from './Common/ContextMenu/ContextMenu';
 import LyricsModal from './Common/Player/Lyrics/LyricsModal';
-import SearchPage from './Routes/Search/SearchPage';
+import Layout from './Layout';
+import AuthorizeProvider from './Providers/AuthorizeProvider';
 import GoogleAnalyticsProvider from './Providers/GoogleAnalyticsProvider';
-import SentryBoundary from './Providers/SentryBoundary';
 import LastfmProvider from './Providers/LastfmProvider';
-import ModalProvider, { ModalRenderer } from './Providers/ModalProvider';
 import LyricsModalProvider from './Providers/LyricsModalProvider';
-import QueueModalProvider from './Providers/QueueProvider';
+import ModalProvider, { ModalRenderer } from './Providers/ModalProvider';
+import MusicKitProvider from './Providers/MusicKitProvider';
 import PlaylistsProvider from './Providers/PlaylistsProvider';
+import QueueModalProvider from './Providers/QueueProvider';
+import SentryBoundary from './Providers/SentryBoundary';
 import AlbumPage from './Routes/Album/AlbumPage';
+import ArtistPage from './Routes/Catalog/Artist/ArtistPage';
+import BrowsePage from './Routes/Catalog/Browse/BrowsePage';
+import GenrePage from './Routes/Catalog/Browse/Genres/Genre/GenrePage';
+import ForYouPage from './Routes/Catalog/ForYou/ForYouPage';
+import RadioPage from './Routes/Catalog/Radio/RadioPage';
+import AlbumsPage from './Routes/Library/Albums/AlbumsPage';
+import ArtistsPage from './Routes/Library/Artists/ArtistsPage';
+import PlaylistsPage from './Routes/Library/Playlists/PlaylistsPage';
+import RecentlyAddedPage from './Routes/Library/RecentlyAdded/RecentlyAddedPage';
+import SongsPage from './Routes/Library/Songs/SongsPage';
+import PlaylistPage from './Routes/Playlist/PlaylistPage';
+import SearchPage from './Routes/Search/SearchPage';
 
 function App() {
   useEffect(() => {
@@ -60,28 +61,28 @@ function App() {
                             <Route
                               path={'/playlist/:id'}
                               exact
-                              component={props => (
+                              component={(props: RouteComponentProps) => (
                                 <PlaylistPage key={props.location.pathname} {...props} />
                               )}
                             />
                             <Route
                               path={'/me/playlist/:id'}
                               exact
-                              component={props => (
+                              component={(props: RouteComponentProps) => (
                                 <PlaylistPage key={props.location.pathname} {...props} />
                               )}
                             />
                             <Route
                               path={'/album/:id'}
                               exact
-                              component={props => (
+                              component={(props: RouteComponentProps) => (
                                 <AlbumPage key={props.location.pathname} {...props} />
                               )}
                             />
                             <Route
                               path={'/me/album/:id'}
                               exact
-                              component={props => (
+                              component={(props: RouteComponentProps) => (
                                 <AlbumPage key={props.location.pathname} {...props} />
                               )}
                             />
@@ -99,7 +100,9 @@ function App() {
                                 match: {
                                   params: { source, query },
                                 },
-                              }) => <SearchPage key={`${source}${query}`} />}
+                              }: RouteComponentProps<{ source: string; query: string }>) => (
+                                <SearchPage key={`${source}${query}`} />
+                              )}
                             />
                             <Redirect to={'/'} />
                           </Switch>
