@@ -131,4 +131,8 @@ declare namespace MusicKit {
     // @ts-ignore bitrate is not read-only
     public bitrate: number;
   }
+
+  export class Library {
+    public collection(id: string, a: any, parameters: QueryParameters)
+  }
 }

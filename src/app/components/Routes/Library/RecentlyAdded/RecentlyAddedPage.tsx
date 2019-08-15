@@ -1,29 +1,30 @@
 import React from 'react';
-import AlbumItem from '../../../Common/AlbumItem/AlbumItem';
-import classes from './RecentlyAddedPage.scss';
-import PageTitle from '../../../Common/PageTitle/PageTitle';
-import PageContent from '../../../Common/PageContent/PageContent';
-import InfiniteLoader from '../../../Common/InfiniteLoader/InfiniteLoader';
-import PlaylistItem from '../../../Common/PlaylistItem/PlaylistItem';
 import translate from '../../../../utils/translations/Translations';
+import AlbumItem from '../../../Common/AlbumItem/AlbumItem';
+import InfiniteLoader, {
+  IInfiniteLoaderState,
+  InfiniteLoaderOnScroll,
+} from '../../../Common/InfiniteLoader/InfiniteLoader';
+import PageContent from '../../../Common/PageContent/PageContent';
+import PageTitle from '../../../Common/PageTitle/PageTitle';
+import PlaylistItem from '../../../Common/PlaylistItem/PlaylistItem';
+import classes from './RecentlyAddedPage.scss';
 
 export default class RecentlyAddedPage extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.ref = React.createRef();
-  }
-
-  static async load(params) {
+  public static async load(params: MusicKit.QueryParameters) {
     const music = MusicKit.getInstance();
 
     return music.api.library.collection('recently-added', null, params);
   }
 
-  static renderItems({ items }) {
+  public static renderItems({ items }: IInfiniteLoaderState<any>) {
+    if (!items) {
+      return null;
+    }
+
     return (
       <div className={classes.artworkItemGrid}>
-        {items.map(item => {
+        {items.map((item: any) => {
           switch (item.type) {
             case 'library-playlists':
               return <PlaylistItem key={item.id} playlist={item} size={150} />;
@@ -37,11 +38,13 @@ export default class RecentlyAddedPage extends React.Component {
     );
   }
 
-  static renderContent({ onScroll }, state) {
+  public static renderContent(_: InfiniteLoaderOnScroll, state: IInfiniteLoaderState<any>) {
     return RecentlyAddedPage.renderItems(state);
   }
 
-  render() {
+  private readonly ref = React.createRef<HTMLDivElement>();
+
+  public render() {
     return (
       <PageContent innerRef={this.ref}>
         <PageTitle title={translate.recentlyAdded} context={translate.myLibrary} />
