@@ -9,13 +9,13 @@ import ContextMenuTrigger from '../../ContextMenu/ContextMenuTrigger';
 import AlbumContextMenu from '../../ContextMenu/Types/Album/AlbumContextMenu';
 import classes from './SearchBar.scss';
 
-interface IAlbumResultItemProps {
+interface AlbumResultItemProps {
   album: any;
   size: number;
   connectDragSource: ConnectDragSource;
 }
 
-const AlbumResultItem: React.FC<IAlbumResultItemProps> = ({ album, size, connectDragSource }) => {
+const AlbumResultItem: React.FC<AlbumResultItemProps> = ({ album, size, connectDragSource }) => {
   const isCatalog = album.type === 'albums';
 
   const { push: pushModal } = useModal();
@@ -48,7 +48,7 @@ const AlbumResultItem: React.FC<IAlbumResultItemProps> = ({ album, size, connect
 };
 
 const dndSpec = {
-  beginDrag(props: IAlbumResultItemProps) {
+  beginDrag(props: AlbumResultItemProps) {
     return {
       album: props.album.id,
     };

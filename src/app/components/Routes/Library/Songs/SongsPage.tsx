@@ -4,7 +4,7 @@ import translate from '../../../../utils/translations/Translations';
 import PageContent from '../../../Common/PageContent/PageContent';
 import PageTitle from '../../../Common/PageTitle/PageTitle';
 import TracksList from '../../../Common/Tracks/TracksList/TracksList';
-import { IPlayTrackParams } from '../../../Common/Tracks/TracksList/TracksListItem';
+import { PlayTrackParams } from '../../../Common/Tracks/TracksList/TracksListItem';
 
 async function load(params: MusicKit.QueryParameters) {
   const music = MusicKit.getInstance();
@@ -12,7 +12,7 @@ async function load(params: MusicKit.QueryParameters) {
   return ((await music.api.library.songs(null, params)) as unknown) as MusicKit.MediaItem[];
 }
 
-function playTrack({ tracks, index }: IPlayTrackParams) {
+function playTrack({ tracks, index }: PlayTrackParams) {
   MusicPlayerApi.playTrack(tracks, index);
 }
 

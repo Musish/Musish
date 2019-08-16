@@ -1,12 +1,12 @@
 import MusicKitInstance = MusicKit.MusicKitInstance;
 
-interface IBindingsType {
+interface BindingsType {
   [s: string]: string;
 }
 
 type MKEvent = any;
 
-declare interface IMusishMK<E extends IBindingsType = {}> {
+declare interface MusishMK<E extends BindingsType = {}> {
   // Allow `instance` to not be a string, eventually all events should go under their own property
   // @ts-ignore
   instance: MusicKitInstance;
@@ -14,6 +14,6 @@ declare interface IMusishMK<E extends IBindingsType = {}> {
   [s: string]: any;
 }
 
-declare interface IMKProps {
-  mk: IMusishMK;
+declare interface MKProps {
+  mk: MusishMK;
 }

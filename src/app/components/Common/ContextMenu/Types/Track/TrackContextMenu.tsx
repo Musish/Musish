@@ -8,13 +8,13 @@ import { useModal } from '../../../../Providers/ModalProvider';
 import PlaylistSelector from '../../../PlaylistSelector/PlaylistSelector';
 import classes from './TrackContextMenu.scss';
 
-interface ITrackContextMenuProps {
+interface TrackContextMenuProps {
   track: MusicKit.MediaItem;
   tracks: MusicKit.MediaItem[];
   index: number;
 }
 
-const TrackContextMenu: React.FC<ITrackContextMenuProps> = ({ track, tracks, index }) => {
+const TrackContextMenu: React.FC<TrackContextMenuProps> = ({ track, tracks, index }) => {
   const { push: pushModal, pop: popModal } = useModal();
 
   const { attributes } = track;

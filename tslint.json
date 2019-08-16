@@ -10,7 +10,8 @@
   "jsRules": true,
   "rules": {
     "prettier": [true, ".prettierrc"],
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "interface-name": [true, "never-prefix"]
   },
   "linterOptions": {
     "exclude": [

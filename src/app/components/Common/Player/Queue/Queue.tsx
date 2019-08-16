@@ -3,13 +3,13 @@ import React from 'react';
 import Draggable from 'react-draggable';
 import withMK from '../../../../hoc/withMK';
 import translate from '../../../../utils/translations/Translations';
-import { IQueueModalProps, withQueueModal } from '../../../Providers/QueueProvider';
+import { QueueModalProps, withQueueModal } from '../../../Providers/QueueProvider';
 import classes from './Queue.scss';
 import QueueList from './QueueList';
 
-type IQueueProps = IQueueModalProps & IMKProps;
+type QueueProps = QueueModalProps & MKProps;
 
-class Queue extends React.Component<IQueueProps> {
+class Queue extends React.Component<QueueProps> {
   public static shouldCancelStart(e: React.MouseEvent<any, MouseEvent>) {
     return (e.target as Element).classList.contains(classes.notSortable);
   }

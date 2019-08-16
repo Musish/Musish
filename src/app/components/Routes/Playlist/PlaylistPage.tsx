@@ -6,9 +6,9 @@ import PageContent from '../../Common/PageContent/PageContent';
 import PageTitle from '../../Common/PageTitle/PageTitle';
 import PlaylistPanel from '../../Common/PlaylistPanel/PlaylistPanel';
 
-type IPlaylistPageProps = RouteComponentProps<{ id: string }>;
+type PlaylistPageProps = RouteComponentProps<{ id: string }>;
 
-const PlaylistPage: React.FC<IPlaylistPageProps> = ({ match }: IPlaylistPageProps) => {
+const PlaylistPage: React.FC<PlaylistPageProps> = ({ match }: PlaylistPageProps) => {
   const scrollRef = React.createRef<HTMLDivElement>();
 
   const playlistId = match.params.id;

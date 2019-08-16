@@ -1,23 +1,23 @@
 import React, { ReactNode, useContext, useState } from 'react';
 
-interface IPlaylistsProviderProps {
+interface PlaylistsProviderProps {
   children: ReactNode;
 }
 
-interface IPlaylistProviderValue {
+interface PlaylistProviderValue {
   playlists: any[];
   setItems: (items: any) => void;
 }
 
-export const PlaylistsContext = React.createContext<IPlaylistProviderValue>({
+export const PlaylistsContext = React.createContext<PlaylistProviderValue>({
   playlists: [],
   setItems: () => undefined,
 });
 
-function PlaylistsProvider({ children }: IPlaylistsProviderProps) {
+function PlaylistsProvider({ children }: PlaylistsProviderProps) {
   const [playlists, setItems] = useState([]);
 
-  const state: IPlaylistProviderValue = {
+  const state: PlaylistProviderValue = {
     playlists,
     setItems,
   };

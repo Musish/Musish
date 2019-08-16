@@ -9,13 +9,13 @@ import PlaylistContextMenu from '../../ContextMenu/Types/Playlist/PlaylistContex
 import PlaylistPanel from '../../PlaylistPanel/PlaylistPanel';
 import classes from './SearchBar.scss';
 
-interface IPlaylistResultItemProps {
+interface PlaylistResultItemProps {
   playlist: any;
   size: number;
   connectDragSource: ConnectDragSource;
 }
 
-const PlaylistResultItem: React.FC<IPlaylistResultItemProps> = ({
+const PlaylistResultItem: React.FC<PlaylistResultItemProps> = ({
   playlist,
   size,
   connectDragSource,
@@ -55,7 +55,7 @@ const PlaylistResultItem: React.FC<IPlaylistResultItemProps> = ({
 };
 
 const dndSpec = {
-  beginDrag(props: IPlaylistResultItemProps) {
+  beginDrag(props: PlaylistResultItemProps) {
     return {
       playlist: props.playlist.id,
     };

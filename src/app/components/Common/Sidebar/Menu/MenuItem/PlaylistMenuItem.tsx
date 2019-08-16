@@ -6,19 +6,19 @@ import * as MusicApi from '../../../../../services/MusicApi';
 import DragDropType from '../../../../../utils/Constants/DragDropType';
 import classes from '../../Sidebar.scss';
 
-interface IPlaylistMenuItemProps {
+interface PlaylistMenuItemProps {
   playlist: any;
   connectDropTarget: ConnectDropTarget;
   isDndOver: boolean;
   activeDndItem: string | symbol | null;
 }
 
-const PlaylistMenuItem: React.FC<IPlaylistMenuItemProps> = ({
+const PlaylistMenuItem: React.FC<PlaylistMenuItemProps> = ({
   playlist,
   connectDropTarget,
   isDndOver,
   activeDndItem,
-}: IPlaylistMenuItemProps) => {
+}: PlaylistMenuItemProps) => {
   const to = `/me/playlist/${playlist.id}`;
 
   return connectDropTarget(
@@ -53,7 +53,7 @@ const dndSpec = {
   canDrop() {
     return true;
   },
-  drop(props: IPlaylistMenuItemProps, monitor: DropTargetMonitor) {
+  drop(props: PlaylistMenuItemProps, monitor: DropTargetMonitor) {
     const { playlist } = props;
     const item = monitor.getItem();
 

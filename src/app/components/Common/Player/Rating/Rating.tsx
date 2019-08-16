@@ -3,17 +3,17 @@ import React from 'react';
 import { getRating, setRating } from '../../../../services/MusicApi';
 import styles from '../Player.scss';
 
-interface IRatingProps {
+interface RatingProps {
   nowPlayingItem: MusicKit.MediaItem;
 }
 
-interface IRatingState {
+interface RatingState {
   rating: number;
   loading: boolean;
 }
 
-class Rating extends React.Component<IRatingProps, IRatingState> {
-  constructor(props: IRatingProps) {
+class Rating extends React.Component<RatingProps, RatingState> {
+  constructor(props: RatingProps) {
     super(props);
 
     this.state = {

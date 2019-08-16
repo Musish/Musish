@@ -12,9 +12,9 @@ import PlaylistResultItem from './PlaylistResultItem';
 import classes from './SearchBar.scss';
 import SongResultItem from './SongResultItem';
 
-type ISearchBarProps = RouteComponentProps & IMKProps;
+type SearchBarProps = RouteComponentProps & MKProps;
 
-interface ISearchBarState {
+interface SearchBarState {
   showResults: boolean;
   query: string;
   catalogData: any;
@@ -22,10 +22,10 @@ interface ISearchBarState {
   loading: boolean;
 }
 
-class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
+class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
   private readonly ref = React.createRef<HTMLDivElement>();
 
-  constructor(props: ISearchBarProps) {
+  constructor(props: SearchBarProps) {
     super(props);
 
     this.state = {

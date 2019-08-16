@@ -9,16 +9,16 @@ import PageTitle from '../../../Common/PageTitle/PageTitle';
 import PlaylistItem from '../../../Common/PlaylistItem/PlaylistItem';
 import classes from './ArtistPage.scss';
 
-interface IArtistPageProps extends RouteComponentProps<{ id: string }> {}
+interface ArtistPageProps extends RouteComponentProps<{ id: string }> {}
 
-interface IArtistPageState {
+interface ArtistPageState {
   artist: any;
   geniusData: any;
   albums: any;
   playlists: any;
 }
 
-class ArtistPage extends React.Component<IArtistPageProps, IArtistPageState> {
+class ArtistPage extends React.Component<ArtistPageProps, ArtistPageState> {
   public static flattenDesc(object: any, props = {}): ReactNode {
     if (typeof object === 'string') {
       return object;
@@ -42,7 +42,7 @@ class ArtistPage extends React.Component<IArtistPageProps, IArtistPageState> {
 
   public readonly pageRef = React.createRef<HTMLDivElement>();
 
-  constructor(props: IArtistPageProps) {
+  constructor(props: ArtistPageProps) {
     super(props);
 
     this.state = {

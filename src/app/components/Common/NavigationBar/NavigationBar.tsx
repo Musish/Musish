@@ -8,11 +8,11 @@ import classes from './NavigationBar.scss';
 import SearchBar from './Search/SearchBar';
 import Settings from './Settings/Settings';
 
-interface INavigationBarProps {
+interface NavigationBarProps {
   authorized: boolean;
 }
 
-const NavigationBar: React.FC<INavigationBarProps> = props => {
+const NavigationBar: React.FC<NavigationBarProps> = props => {
   return (
     <nav className={classes.navigationBar}>
       <h1 className={classes.brand}>

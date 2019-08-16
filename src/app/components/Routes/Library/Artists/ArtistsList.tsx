@@ -3,14 +3,14 @@ import React, { useRef } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { Link, Route, withRouter } from 'react-router-dom';
 import InfiniteScroll, {
-  IInfiniteScrollListRowProps,
+  InfiniteScrollListRowProps,
 } from '../../../Common/InfiniteLoader/InfiniteScroll';
 import classes from './ArtistsPage.scss';
 import Resource = MusicKit.Resource;
 
-type IArtistsListProps = RouteComponentProps;
+type ArtistsListProps = RouteComponentProps;
 
-function rowRenderer({ item: artist, key, style }: IInfiniteScrollListRowProps<Resource>) {
+function rowRenderer({ item: artist, key, style }: InfiniteScrollListRowProps<Resource>) {
   const path = `/me/artists/${artist.id}`;
   const initials = artist.attributes.name
     .split(' ')
@@ -44,7 +44,7 @@ async function load(params: { limit: number; offset: number }) {
   return await music.api.library.artists(null, params);
 }
 
-const ArtistsList: React.FC<IArtistsListProps> = ({ history, location }: IArtistsListProps) => {
+const ArtistsList: React.FC<ArtistsListProps> = ({ history, location }: ArtistsListProps) => {
   const ref = useRef<HTMLElement>(null);
 
   return (

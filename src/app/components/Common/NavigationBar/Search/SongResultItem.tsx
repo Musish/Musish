@@ -9,12 +9,12 @@ import TrackContextMenu from '../../ContextMenu/Types/Track/TrackContextMenu';
 import TrackDecoration from '../../Tracks/TracksList/TrackDecoration';
 import classes from './SearchBar.scss';
 
-interface ISongResultItemProps {
+interface SongResultItemProps {
   song: MusicKit.MediaItem;
   connectDragSource: ConnectDragSource;
 }
 
-const SongResultItem: React.FC<ISongResultItemProps> = ({ song, connectDragSource }) => {
+const SongResultItem: React.FC<SongResultItemProps> = ({ song, connectDragSource }) => {
   const mk = useMK();
 
   const play = async () => {
@@ -56,7 +56,7 @@ const SongResultItem: React.FC<ISongResultItemProps> = ({ song, connectDragSourc
 };
 
 const dndSpec = {
-  beginDrag(props: ISongResultItemProps) {
+  beginDrag(props: SongResultItemProps) {
     return {
       track: props.song,
     };

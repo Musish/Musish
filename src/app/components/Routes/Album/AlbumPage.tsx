@@ -7,9 +7,9 @@ import PageContent from '../../Common/PageContent/PageContent';
 import PageTitle from '../../Common/PageTitle/PageTitle';
 import classes from './AlbumPage.scss';
 
-type IAlbumPageProps = RouteComponentProps<{ id: string }>;
+type AlbumPageProps = RouteComponentProps<{ id: string }>;
 
-const AlbumPage: React.FC<IAlbumPageProps> = ({ match }: IAlbumPageProps) => {
+const AlbumPage: React.FC<AlbumPageProps> = ({ match }: AlbumPageProps) => {
   const scrollRef = React.createRef<HTMLDivElement>();
 
   const albumId = match.params.id;

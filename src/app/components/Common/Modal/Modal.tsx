@@ -2,14 +2,14 @@ import React, { CSSProperties, ReactNode } from 'react';
 
 import classes from './Modal.scss';
 
-interface IModalProps {
+interface ModalProps {
   handleClose: () => void;
   style?: CSSProperties;
   width?: number;
   render: () => ReactNode;
 }
 
-function Modal(props: IModalProps) {
+function Modal(props: ModalProps) {
   const { style = {}, width } = props;
   const inlineStyles = {
     width,

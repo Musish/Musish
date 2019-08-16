@@ -1,16 +1,16 @@
 import React, { ReactNode, useContext, useState } from 'react';
 
-export interface ILyricsModalProps {
-  lyricsModal: ILyricsModalProviderValue;
+export interface LyricsModalProps {
+  lyricsModal: LyricsModalProviderValue;
 }
 
-interface ILyricsModalProviderValue {
+interface LyricsModalProviderValue {
   isOpen: boolean;
   open: () => void;
   close: () => void;
 }
 
-export const LyricsModalContext = React.createContext<ILyricsModalProviderValue>({
+export const LyricsModalContext = React.createContext<LyricsModalProviderValue>({
   isOpen: false,
   open: () => undefined,
   close: () => undefined,
@@ -30,10 +30,10 @@ function LyricsModalProvider({ children }: { children: ReactNode }) {
 
 export default LyricsModalProvider;
 
-export function withLyricsModal<T extends ILyricsModalProps>(
+export function withLyricsModal<T extends LyricsModalProps>(
   Component: React.ComponentType<T>,
-): React.ComponentType<Subtract<T, ILyricsModalProps>> {
-  return (props: Subtract<T, ILyricsModalProps>) => (
+): React.ComponentType<Subtract<T, LyricsModalProps>> {
+  return (props: Subtract<T, LyricsModalProps>) => (
     <LyricsModalContext.Consumer>
       {context => <Component {...props as T} lyricsModal={{ ...context }} />}
     </LyricsModalContext.Consumer>

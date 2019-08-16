@@ -3,7 +3,7 @@ import * as React from 'react';
 import TrackListItem from '../TracksList/TracksListItem';
 import * as classes from './TracksGrid.scss';
 
-interface ITracksGridProps {
+interface TracksGridProps {
   showArtist?: boolean;
   showAlbum?: boolean;
   tracks: any[];
@@ -18,7 +18,7 @@ interface ITracksGridProps {
   }) => void;
 }
 
-const TracksGrid: React.FC<ITracksGridProps> = ({
+const TracksGrid: React.FC<TracksGridProps> = ({
   tracks,
   showArtist = false,
   showAlbum = false,

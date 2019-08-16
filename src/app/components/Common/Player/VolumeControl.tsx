@@ -4,14 +4,14 @@ import React, { SyntheticEvent } from 'react';
 import withMK from '../../../hoc/withMK';
 import styles from './Player.scss';
 
-type IVolumeControlProps = IMKProps;
+type VolumeControlProps = MKProps;
 
-interface IVolumeControlState {
+interface VolumeControlState {
   volume: any;
 }
 
-class VolumeControl extends React.Component<IVolumeControlProps, IVolumeControlState> {
-  constructor(props: IVolumeControlProps) {
+class VolumeControl extends React.Component<VolumeControlProps, VolumeControlState> {
+  constructor(props: VolumeControlProps) {
     super(props);
 
     this.state = {

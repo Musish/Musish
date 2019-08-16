@@ -10,11 +10,11 @@ import Loader from '../../Loader/Loader';
 import TrackDecoration from './TrackDecoration';
 import * as classes from './TracksListItem.scss';
 
-interface ITracksListItemProps {
+interface TracksListItemProps {
   className?: string;
   connectDragSource: ConnectDragSource;
   index: number;
-  playTrack: ({ track, tracks, index }: IPlayTrackParams) => void;
+  playTrack: ({ track, tracks, index }: PlayTrackParams) => void;
   showAlbum?: boolean;
   showArtist?: boolean;
   style?: object;
@@ -22,13 +22,13 @@ interface ITracksListItemProps {
   tracks: MusicKit.MediaItem[] | null;
 }
 
-export interface IPlayTrackParams {
+export interface PlayTrackParams {
   track: MusicKit.MediaItem;
   tracks: MusicKit.MediaItem[];
   index: number;
 }
 
-function TracksListItem(props: ITracksListItemProps) {
+function TracksListItem(props: TracksListItemProps) {
   const {
     showArtist,
     showAlbum,
@@ -128,7 +128,7 @@ function TracksListItem(props: ITracksListItemProps) {
 export default DragSource(
   DragDropType.SONG,
   {
-    beginDrag(props: ITracksListItemProps) {
+    beginDrag(props: TracksListItemProps) {
       return {
         track: props.track,
       };

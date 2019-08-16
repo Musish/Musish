@@ -7,14 +7,14 @@ import Loader from '../../../../Common/Loader/Loader';
 import classes from '../../../Search/SearchPage.scss';
 import { genres } from '../browse.json';
 
-type IGenresProps = RouteComponentProps;
+type GenresProps = RouteComponentProps;
 
-interface IGenresState {
+interface GenresState {
   genreCurators: any | null;
 }
 
-class Genres extends React.Component<IGenresProps, IGenresState> {
-  constructor(props: IGenresProps) {
+class Genres extends React.Component<GenresProps, GenresState> {
+  constructor(props: GenresProps) {
     super(props);
 
     this.state = {

@@ -2,13 +2,13 @@ import React from 'react';
 import { usePlaylists } from '../../Providers/PlaylistsProvider';
 import classes from './PlaylistSelector.scss';
 
-interface IPlaylistSelectorProps {
+interface PlaylistSelectorProps {
   onClick?: (playlist: any) => void;
 }
 
-const PlaylistSelector: React.FC<IPlaylistSelectorProps> = ({
+const PlaylistSelector: React.FC<PlaylistSelectorProps> = ({
   onClick = () => undefined,
-}: IPlaylistSelectorProps) => {
+}: PlaylistSelectorProps) => {
   const { playlists } = usePlaylists();
 
   return (

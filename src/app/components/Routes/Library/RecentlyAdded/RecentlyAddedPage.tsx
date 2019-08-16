@@ -2,8 +2,8 @@ import React from 'react';
 import translate from '../../../../utils/translations/Translations';
 import AlbumItem from '../../../Common/AlbumItem/AlbumItem';
 import InfiniteLoader, {
-  IInfiniteLoaderState,
   InfiniteLoaderOnScroll,
+  InfiniteLoaderState,
 } from '../../../Common/InfiniteLoader/InfiniteLoader';
 import PageContent from '../../../Common/PageContent/PageContent';
 import PageTitle from '../../../Common/PageTitle/PageTitle';
@@ -17,7 +17,7 @@ export default class RecentlyAddedPage extends React.Component {
     return music.api.library.collection('recently-added', null, params);
   }
 
-  public static renderItems({ items }: IInfiniteLoaderState<any>) {
+  public static renderItems({ items }: InfiniteLoaderState<any>) {
     if (!items) {
       return null;
     }
@@ -38,7 +38,7 @@ export default class RecentlyAddedPage extends React.Component {
     );
   }
 
-  public static renderContent(_: InfiniteLoaderOnScroll, state: IInfiniteLoaderState<any>) {
+  public static renderContent(_: InfiniteLoaderOnScroll, state: InfiniteLoaderState<any>) {
     return RecentlyAddedPage.renderItems(state);
   }
 

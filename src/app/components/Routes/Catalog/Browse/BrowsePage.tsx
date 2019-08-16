@@ -9,9 +9,9 @@ import Tabs from '../../../Common/Tabs/Tabs';
 import Genres from './Genres/Genres';
 import TopCharts from './TopCharts/TopCharts';
 
-type IBrowsePageProps = RouteComponentProps;
+type BrowsePageProps = RouteComponentProps;
 
-const BrowsePage: React.FC<IBrowsePageProps> = () => {
+const BrowsePage: React.FC<BrowsePageProps> = () => {
   const ref = useRef<HTMLDivElement>(null);
 
   return (

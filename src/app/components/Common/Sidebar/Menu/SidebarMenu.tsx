@@ -1,13 +1,13 @@
 import React from 'react';
 import classes from '../Sidebar.scss';
-import MenuItem, { IMenuItemProps } from './MenuItem/MenuItem';
+import MenuItem, { MenuItemProps } from './MenuItem/MenuItem';
 
-interface ISidebarMenuProps {
+interface SidebarMenuProps {
   title: string;
-  items: IMenuItemProps[];
+  items: MenuItemProps[];
 }
 
-const SidebarMenu: React.FC<ISidebarMenuProps> = props => {
+const SidebarMenu: React.FC<SidebarMenuProps> = props => {
   const { title, items } = props;
 
   return (

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function useMK<B extends IBindingsType>(bindings: B = {} as B): IMusishMK<B> {
+export default function useMK<B extends BindingsType>(bindings: B = {} as B): MusishMK<B> {
   type BindingsEvent = { [s in keyof B]: MKEvent };
   type BindingsList = keyof B;
 

@@ -7,18 +7,18 @@ import SplashScreen from '../Routes/SplashScreen/SplashScreen';
 
 export const AuthorizeContext = React.createContext({ authorized: false });
 
-interface IAuthorizeProviderProps extends IMKProps, RouteComponentProps {
+interface AuthorizeProviderProps extends MKProps, RouteComponentProps {
   children: ReactNode;
 }
 
-interface IAuthorizeProviderState {
+interface AuthorizeProviderState {
   ready: boolean;
   browsing: boolean;
   isAuthorized: boolean;
 }
 
-class AuthorizeProvider extends React.Component<IAuthorizeProviderProps, IAuthorizeProviderState> {
-  constructor(props: IAuthorizeProviderProps) {
+class AuthorizeProvider extends React.Component<AuthorizeProviderProps, AuthorizeProviderState> {
+  constructor(props: AuthorizeProviderProps) {
     super(props);
 
     const allowDirectBrowse = /^\/(?!(me|$)).*$/i.test(props.location.pathname);

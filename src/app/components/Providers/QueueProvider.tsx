@@ -1,16 +1,16 @@
 import React, { ReactNode, useContext, useState } from 'react';
 
-interface IQueueModalValue {
+interface QueueModalValue {
   isOpen: boolean;
   open: () => void;
   close: () => void;
 }
 
-export interface IQueueModalProps {
-  queueModal: IQueueModalValue;
+export interface QueueModalProps {
+  queueModal: QueueModalValue;
 }
 
-export const QueueModalContext = React.createContext<IQueueModalValue>({
+export const QueueModalContext = React.createContext<QueueModalValue>({
   isOpen: false,
   open: () => undefined,
   close: () => undefined,
@@ -19,7 +19,7 @@ export const QueueModalContext = React.createContext<IQueueModalValue>({
 function QueueModalProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const state: IQueueModalValue = {
+  const state: QueueModalValue = {
     isOpen,
     open: () => setIsOpen(true),
     close: () => setIsOpen(false),
@@ -30,10 +30,10 @@ function QueueModalProvider({ children }: { children: ReactNode }) {
 
 export default QueueModalProvider;
 
-export function withQueueModal<T extends IQueueModalProps>(
+export function withQueueModal<T extends QueueModalProps>(
   Component: React.ComponentType<T>,
-): React.ComponentType<Subtract<T, IQueueModalProps>> {
-  return (props: Subtract<T, IQueueModalProps>) => (
+): React.ComponentType<Subtract<T, QueueModalProps>> {
+  return (props: Subtract<T, QueueModalProps>) => (
     <QueueModalContext.Consumer>
       {context => <Component {...props as T} queueModal={{ ...context }} />}
     </QueueModalContext.Consumer>

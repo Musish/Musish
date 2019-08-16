@@ -10,13 +10,13 @@ export const QueueItemState = {
   Queued: 2,
 };
 
-interface IQueueItemProps extends SortableElementProps {
+interface QueueItemProps extends SortableElementProps {
   removeItemFunc: (queuPosition: number) => void;
   style?: CSSProperties | null;
   item: MusicKit.QueueItem;
 }
 
-const QueueItem = ({ style, item, removeItemFunc }: IQueueItemProps) => {
+const QueueItem = ({ style, item, removeItemFunc }: QueueItemProps) => {
   const stateClass = item.queueState === QueueItemState.Playing ? classes.playing : '';
 
   return (

@@ -1,4 +1,4 @@
-interface IAnonymousObject {
+interface AnonymousObject {
   [key: string]: any;
 }
 
@@ -122,7 +122,7 @@ declare namespace MusicKit {
 
 // tslint:disable-next-line:no-namespace
 declare namespace MusicKit {
-  export type QueueItem = IAnonymousObject;
+  export type QueueItem = AnonymousObject;
 
   export class MusicKitInstance {
     public storekit: {

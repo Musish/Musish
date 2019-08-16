@@ -9,11 +9,11 @@ import AlbumPanel from '../../../AlbumPanel/AlbumPanel';
 import PlaylistSelector from '../../../PlaylistSelector/PlaylistSelector';
 import classes from './AlbumContextMenu.scss';
 
-interface IAlbumContextMenuProps {
+interface AlbumContextMenuProps {
   album: MusicKit.MediaItem;
 }
 
-const AlbumContextMenu: React.FC<IAlbumContextMenuProps> = ({ album }) => {
+const AlbumContextMenu: React.FC<AlbumContextMenuProps> = ({ album }) => {
   const { push: pushModal, pop: popModal } = useModal();
 
   const { attributes } = album;

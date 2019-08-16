@@ -2,19 +2,19 @@ import React, { ReactNode } from 'react';
 import translate from '../../utils/translations/Translations';
 import Loader from '../Common/Loader/Loader';
 
-interface IMusicKitProviderProps {
+interface MusicKitProviderProps {
   children: ReactNode;
 }
 
-interface IMusicKitProviderState {
+interface MusicKitProviderState {
   ready: boolean;
 }
 
 export default class MusicKitProvider extends React.Component<
-  IMusicKitProviderProps,
-  IMusicKitProviderState
+  MusicKitProviderProps,
+  MusicKitProviderState
 > {
-  constructor(props: IMusicKitProviderProps) {
+  constructor(props: MusicKitProviderProps) {
     super(props);
 
     this.state = {

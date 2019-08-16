@@ -14,12 +14,12 @@ function CrashPage() {
   );
 }
 
-interface ISentryBoundaryProps {
+interface SentryBoundaryProps {
   children: ReactNode;
 }
 
-class SentryBoundary extends React.Component<ISentryBoundaryProps, { error: any }> {
-  constructor(props: ISentryBoundaryProps) {
+class SentryBoundary extends React.Component<SentryBoundaryProps, { error: any }> {
+  constructor(props: SentryBoundaryProps) {
     super(props);
 
     this.state = { error: null };

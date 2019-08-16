@@ -4,13 +4,13 @@ import { withRouter } from 'react-router-dom';
 import NavigationBar from './Common/NavigationBar/NavigationBar';
 import Queue from './Common/Player/Queue/Queue';
 import Sidebar from './Common/Sidebar/Sidebar';
-import { IModalProps, withModal } from './Providers/ModalProvider';
+import { ModalProps, withModal } from './Providers/ModalProvider';
 
-interface ILayoutProps extends RouteComponentProps, IModalProps {
+interface LayoutProps extends RouteComponentProps, ModalProps {
   children: ReactNode;
 }
 
-class Layout extends Component<ILayoutProps> {
+class Layout extends Component<LayoutProps> {
   public componentDidMount() {
     const { history, modal } = this.props;
 

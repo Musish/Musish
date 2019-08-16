@@ -5,18 +5,18 @@ import { withRouter } from 'react-router-dom';
 import { artworkForMediaItem } from '../../../utils/Utils';
 import classes from './CuratorItem.scss';
 
-interface ICuratorItemProps extends RouteComponentProps {
+interface CuratorItemProps extends RouteComponentProps {
   curator?: any;
   id?: string;
   size: number;
 }
 
-const CuratorItem: React.FC<ICuratorItemProps> = ({
+const CuratorItem: React.FC<CuratorItemProps> = ({
   size,
   history,
   curator,
   id,
-}: ICuratorItemProps) => {
+}: CuratorItemProps) => {
   const artwork = artworkForMediaItem(curator, size);
 
   function handleOpen() {

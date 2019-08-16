@@ -1,12 +1,12 @@
 import React, { ReactNode } from 'react';
 
-export interface ITabProps {
+export interface TabProps {
   children: ReactNode;
   name: string;
   route: string;
 }
 
-const Tab: React.FC<ITabProps> = ({ children }: ITabProps) => {
+const Tab: React.FC<TabProps> = ({ children }: TabProps) => {
   return <>{children}</>;
 };
 

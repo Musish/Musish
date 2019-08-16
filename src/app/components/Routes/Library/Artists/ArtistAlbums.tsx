@@ -6,18 +6,18 @@ import PageContent from '../../../Common/PageContent/PageContent';
 import PageTitle from '../../../Common/PageTitle/PageTitle';
 import classes from './ArtistAlbums.scss';
 
-interface IArtistAlbumsProps {
+interface ArtistAlbumsProps {
   id: any;
 }
 
-interface IArtistAlbumsState {
+interface ArtistAlbumsState {
   artist: any;
 }
 
-class ArtistAlbums extends React.Component<IArtistAlbumsProps, IArtistAlbumsState> {
+class ArtistAlbums extends React.Component<ArtistAlbumsProps, ArtistAlbumsState> {
   private readonly pageRef = React.createRef<HTMLDivElement>();
 
-  constructor(props: IArtistAlbumsProps) {
+  constructor(props: ArtistAlbumsProps) {
     super(props);
 
     this.state = {

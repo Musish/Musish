@@ -1,17 +1,17 @@
 import React, { ReactNode, RefObject } from 'react';
 import classes from './PageContent.scss';
 
-interface IPageContentProps {
+interface PageContentProps {
   innerRef: RefObject<HTMLDivElement>;
   children: ReactNode;
 }
 
-interface IPageContentState {
+interface PageContentState {
   mounted: boolean;
 }
 
-class PageContent extends React.Component<IPageContentProps, IPageContentState> {
-  constructor(props: IPageContentProps) {
+class PageContent extends React.Component<PageContentProps, PageContentState> {
+  constructor(props: PageContentProps) {
     super(props);
 
     this.state = {

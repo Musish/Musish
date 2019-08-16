@@ -5,12 +5,12 @@ import { withRouter } from 'react-router-dom';
 import translate from '../../../utils/translations/Translations';
 import classes from './SplashScreen.scss';
 
-interface ISplashScreenProps extends RouteComponentProps {
+interface SplashScreenProps extends RouteComponentProps {
   onClick: () => void;
   onBrowse: () => void;
 }
 
-class SplashScreen extends React.Component<ISplashScreenProps> {
+class SplashScreen extends React.Component<SplashScreenProps> {
   public loginNavigate = () => {
     this.props.onClick();
     this.props.history.push('/');

@@ -10,21 +10,21 @@ function collect(props: any, render: any) {
 }
 
 // From node_modules/react-contextmenu/src/index.d.ts
-interface IContextMenuTriggerProps {
+interface ContextMenuTriggerProps {
   attributes?: React.HTMLAttributes<any>;
   disable?: boolean;
   holdToDisplay?: number;
   renderTag?: React.ElementType;
 }
 
-interface IContextMenuTrigger extends IContextMenuTriggerProps {
+interface ContextMenuTrigger extends ContextMenuTriggerProps {
   render: any;
 }
 
-const ContextMenuTrigger: React.FC<IContextMenuTrigger> = ({
+const ContextMenuTrigger: React.FC<ContextMenuTrigger> = ({
   render,
   ...rest
-}: IContextMenuTrigger) => {
+}: ContextMenuTrigger) => {
   return (
     <OriginalContextMenuTrigger
       id={MENU_TYPE}

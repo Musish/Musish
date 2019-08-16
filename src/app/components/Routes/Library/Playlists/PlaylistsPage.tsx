@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import translate from '../../../../utils/translations/Translations';
 import InfiniteLoader, {
-  IInfiniteLoaderState,
   InfiniteLoaderOnScroll,
+  InfiniteLoaderState,
 } from '../../../Common/InfiniteLoader/InfiniteLoader';
 import PageContent from '../../../Common/PageContent/PageContent';
 import PageTitle from '../../../Common/PageTitle/PageTitle';
@@ -17,7 +17,7 @@ async function load(params: MusicKit.QueryParameters) {
 
 function renderContent(
   _: InfiniteLoaderOnScroll,
-  { items }: IInfiniteLoaderState<MusicKit.MediaItem>,
+  { items }: InfiniteLoaderState<MusicKit.MediaItem>,
 ) {
   if (!items) {
     return null;

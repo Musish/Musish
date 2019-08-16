@@ -3,11 +3,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import classes from './SearchBar.scss';
 
-interface IArtistResultItemProps {
+interface ArtistResultItemProps {
   artist: any;
 }
 
-const ArtistResultItem: React.FC<IArtistResultItemProps> = ({ artist }) => {
+const ArtistResultItem: React.FC<ArtistResultItemProps> = ({ artist }) => {
   const link = isNaN(artist.id) ? `/me/artists/${artist.id}` : `/artist/${artist.id}`;
   const isCatalog = artist.type === 'artists';
 

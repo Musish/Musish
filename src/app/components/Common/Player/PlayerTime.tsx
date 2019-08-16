@@ -4,11 +4,11 @@ import { seekToTime } from '../../../services/MusicPlayerApi';
 import { getTime } from '../../../utils/Utils';
 import styles from './Player.scss';
 
-interface IPlayerTimeProps {
+interface PlayerTimeProps {
   nowPlayingItem: any;
 }
 
-function PlayerTime(props: IPlayerTimeProps) {
+function PlayerTime(props: PlayerTimeProps) {
   const mk = useMK({
     playbackTime: MusicKit.Events.playbackTimeDidChange,
     mediaItem: MusicKit.Events.mediaItemDidChange,

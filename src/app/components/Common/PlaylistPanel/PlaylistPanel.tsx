@@ -5,24 +5,24 @@ import * as MusicApi from '../../../services/MusicApi';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
 import translate from '../../../utils/translations/Translations';
 import { artworkForMediaItem, humanifyMillis, humanifyTrackNumbers } from '../../../utils/Utils';
-import { IInfiniteLoaderState } from '../InfiniteLoader/InfiniteLoader';
+import { InfiniteLoaderState } from '../InfiniteLoader/InfiniteLoader';
 import Loader from '../Loader/Loader';
 import TracksList from '../Tracks/TracksList/TracksList';
 import classes from './PlaylistPanel.scss';
 
-interface IPlaylistPanelProps {
+interface PlaylistPanelProps {
   playlist?: any;
   id?: any;
   className?: string;
 }
 
-interface IPlaylistPanelState {
+interface PlaylistPanelState {
   playlist: any;
   runtime: null | string;
   tracks: MusicKit.MediaItem[];
 }
 
-class PlaylistPanel extends React.Component<IPlaylistPanelProps, IPlaylistPanelState> {
+class PlaylistPanel extends React.Component<PlaylistPanelProps, PlaylistPanelState> {
   public static defaultProps = {
     playlist: null,
     id: null,
@@ -32,7 +32,7 @@ class PlaylistPanel extends React.Component<IPlaylistPanelProps, IPlaylistPanelS
   private readonly store = {};
   private readonly playlistId: string;
 
-  constructor(props: IPlaylistPanelProps) {
+  constructor(props: PlaylistPanelProps) {
     super(props);
 
     this.state = {
@@ -65,7 +65,7 @@ class PlaylistPanel extends React.Component<IPlaylistPanelProps, IPlaylistPanelS
     return music.api.playlist(...args);
   };
 
-  public onSetItems = ({ items: tracks }: IInfiniteLoaderState<MusicKit.MediaItem>) => {
+  public onSetItems = ({ items: tracks }: InfiniteLoaderState<MusicKit.MediaItem>) => {
     if (!tracks) {
       return;
     }
@@ -166,7 +166,7 @@ class PlaylistPanel extends React.Component<IPlaylistPanelProps, IPlaylistPanelS
   }
 }
 
-const pseudoRoute = ({ id, playlist }: IPlaylistPanelProps) => {
+const pseudoRoute = ({ id, playlist }: PlaylistPanelProps) => {
   const playlistId = id || playlist.id;
   let route = `/playlist/${playlistId}`;
   if (playlistId.startsWith('p.')) {

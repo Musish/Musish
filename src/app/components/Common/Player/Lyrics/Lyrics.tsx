@@ -27,11 +27,11 @@ const iframeCss = `
 </style>
 `;
 
-interface ILyricsProps {
+interface LyricsProps {
   song: MusicKit.MediaItem;
 }
 
-const Lyrics: React.FC<ILyricsProps> = ({ song }: ILyricsProps) => {
+const Lyrics: React.FC<LyricsProps> = ({ song }: LyricsProps) => {
   const [geniusSong, setGeniusSong] = useState<false | any>(null);
 
   async function fetchGeniusSong() {

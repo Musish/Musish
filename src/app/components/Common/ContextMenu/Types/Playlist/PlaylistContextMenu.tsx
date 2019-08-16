@@ -9,11 +9,11 @@ import PlaylistPanel from '../../../PlaylistPanel/PlaylistPanel';
 import PlaylistSelector from '../../../PlaylistSelector/PlaylistSelector';
 import classes from './PlaylistContextMenu.scss';
 
-interface IPlaylistContextMenuProps {
+interface PlaylistContextMenuProps {
   playlist: any;
 }
 
-const PlaylistContextMenu: React.FC<IPlaylistContextMenuProps> = ({ playlist }) => {
+const PlaylistContextMenu: React.FC<PlaylistContextMenuProps> = ({ playlist }) => {
   const { push: pushModal, pop: popModal } = useModal();
 
   const { attributes } = playlist;

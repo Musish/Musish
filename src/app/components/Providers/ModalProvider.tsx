@@ -2,7 +2,7 @@ import Mousetrap from 'mousetrap';
 import React, { CSSProperties, ReactNode, useContext, useState } from 'react';
 import Modal from '../Common/Modal/Modal';
 
-export const ModalContext = React.createContext<IModalProviderValue>({
+export const ModalContext = React.createContext<ModalProviderValue>({
   queue: [],
   push: () => undefined,
   replace: () => undefined,
@@ -10,17 +10,17 @@ export const ModalContext = React.createContext<IModalProviderValue>({
   flush: () => undefined,
 });
 
-export interface IModalProps {
-  modal: IModalProviderValue;
+export interface ModalProps {
+  modal: ModalProviderValue;
 }
 
-interface IModal {
+interface Modal {
   content: ReactNode;
   style: CSSProperties;
 }
 
-export interface IModalProviderValue {
-  queue: IModal[];
+export interface ModalProviderValue {
+  queue: Modal[];
   push: (content: ReactNode, style?: CSSProperties) => void;
   replace: (content: ReactNode, style?: CSSProperties) => void;
   pop: () => void;
@@ -28,9 +28,9 @@ export interface IModalProviderValue {
 }
 
 function ModalProvider({ children = null }: { children: ReactNode }) {
-  const [modals, setModals] = useState<IModal[]>([]);
+  const [modals, setModals] = useState<Modal[]>([]);
 
-  const state: IModalProviderValue = {
+  const state: ModalProviderValue = {
     queue: modals,
     push: (content, style = {}) => setModals([{ content, style }, ...modals]),
     replace: (content, style = {}) => setModals([...modals.slice(0, -1), { content, style }]),
@@ -45,18 +45,18 @@ function ModalProvider({ children = null }: { children: ReactNode }) {
 
 export default ModalProvider;
 
-export function withModal<T extends IModalProps>(
+export function withModal<T extends ModalProps>(
   Component: React.ComponentType<T>,
-): React.ComponentType<Subtract<T, IModalProps>> {
-  return (props: Subtract<T, IModalProps>) => (
+): React.ComponentType<Subtract<T, ModalProps>> {
+  return (props: Subtract<T, ModalProps>) => (
     <ModalContext.Consumer>
       {context => <Component {...props as T} modal={{ ...context }} />}
     </ModalContext.Consumer>
   );
 }
 
-export function useModal(): IModalProviderValue {
-  return useContext(ModalContext) as IModalProviderValue;
+export function useModal(): ModalProviderValue {
+  return useContext(ModalContext) as ModalProviderValue;
 }
 
 export function ModalRenderer() {

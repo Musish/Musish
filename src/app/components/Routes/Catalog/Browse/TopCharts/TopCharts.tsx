@@ -6,11 +6,11 @@ import TracksGrid from '../../../../Common/Tracks/TracksGrid/TracksGrid';
 import browseData from '../browse.json';
 import ItemList from '../ItemList';
 
-interface ITopChartsState {
+interface TopChartsState {
   charts: any;
 }
 
-class TopCharts extends React.Component<{}, ITopChartsState> {
+class TopCharts extends React.Component<{}, TopChartsState> {
   public static playTrack({ tracks, index }: { tracks: MusicKit.MediaItem[]; index: number }) {
     MusicPlayerApi.playTrack(tracks, index);
   }

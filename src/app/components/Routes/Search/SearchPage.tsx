@@ -15,11 +15,9 @@ import Tabs from '../../Common/Tabs/Tabs';
 import TracksGrid from '../../Common/Tracks/TracksGrid/TracksGrid';
 import classes from './SearchPage.scss';
 
-interface ISearchPageProps
-  extends IMKProps,
-    RouteComponentProps<{ query: string; source: string }> {}
+interface SearchPageProps extends MKProps, RouteComponentProps<{ query: string; source: string }> {}
 
-interface ISearchPageState {
+interface SearchPageState {
   results: {
     albums: MusicKit.Resource | null;
     songs: MusicKit.MediaItem[] | null;
@@ -29,7 +27,7 @@ interface ISearchPageState {
   loading: boolean | null;
 }
 
-class SearchPage extends React.Component<ISearchPageProps, ISearchPageState> {
+class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
   public static playTrack({
     tracks,
     index,
@@ -42,7 +40,7 @@ class SearchPage extends React.Component<ISearchPageProps, ISearchPageState> {
   }
   public readonly ref = React.createRef<HTMLDivElement>();
 
-  constructor(props: ISearchPageProps) {
+  constructor(props: SearchPageProps) {
     super(props);
 
     this.state = {

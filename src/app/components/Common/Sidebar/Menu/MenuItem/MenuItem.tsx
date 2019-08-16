@@ -2,13 +2,13 @@ import React from 'react';
 import { Link, Route } from 'react-router-dom';
 import classes from '../../Sidebar.scss';
 
-export interface IMenuItemProps {
+export interface MenuItemProps {
   to: string;
   label: string;
   exact?: boolean;
 }
 
-const MenuItem: React.FC<IMenuItemProps> = ({ to, label, exact = true }: IMenuItemProps) => {
+const MenuItem: React.FC<MenuItemProps> = ({ to, label, exact = true }: MenuItemProps) => {
   return (
     <li>
       <Route path={to} exact={exact}>

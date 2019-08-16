@@ -10,7 +10,7 @@ import ContextMenuTrigger from '../ContextMenu/ContextMenuTrigger';
 import AlbumContextMenu from '../ContextMenu/Types/Album/AlbumContextMenu';
 import classes from './AlbumItem.scss';
 
-interface IAlbumItemProps extends RouteComponentProps {
+interface AlbumItemProps extends RouteComponentProps {
   navigate?: boolean;
   album?: any;
   id?: any;
@@ -19,7 +19,7 @@ interface IAlbumItemProps extends RouteComponentProps {
   isOver?: boolean;
 }
 
-const AlbumItem: React.FC<IAlbumItemProps> = (props: IAlbumItemProps) => {
+const AlbumItem: React.FC<AlbumItemProps> = (props: AlbumItemProps) => {
   const { push: pushModal } = useModal();
 
   function handleOpen() {
@@ -78,7 +78,7 @@ AlbumItem.defaultProps = {
 };
 
 const dndSpec = {
-  beginDrag(props: IAlbumItemProps) {
+  beginDrag(props: AlbumItemProps) {
     return {
       album: props.id || props.album.id,
     };

@@ -9,21 +9,21 @@ import * as MusicApi from '../../../services/MusicApi';
 import * as MusicPlayerApi from '../../../services/MusicPlayerApi';
 import translate from '../../../utils/translations/Translations';
 import { artworkForMediaItem, humanifyMillis, humanifyTrackNumbers } from '../../../utils/Utils';
-import { IModalProviderValue, withModal } from '../../Providers/ModalProvider';
+import { ModalProviderValue, withModal } from '../../Providers/ModalProvider';
 import Loader from '../Loader/Loader';
 import TracksList from '../Tracks/TracksList/TracksList';
 import EAlbumPanel from './AlbumPanel';
 import classes from './AlbumPanel.scss';
 import QueryParameters = MusicKit.QueryParameters;
 
-interface IAlbumPanelProps extends RouteComponentProps {
+interface AlbumPanelProps extends RouteComponentProps {
   id?: any;
   album?: MusicKit.Resource;
   className?: string;
-  modal: IModalProviderValue;
+  modal: ModalProviderValue;
 }
 
-interface IAlbumPanelState {
+interface AlbumPanelState {
   album: MusicKit.Resource | null;
   shouldMatchCatalogAlbum: boolean;
   matchedCatalogAlbum: MusicKit.Resource | null;
@@ -31,7 +31,7 @@ interface IAlbumPanelState {
   runtime: string;
 }
 
-class AlbumPanel extends React.Component<IAlbumPanelProps, IAlbumPanelState> {
+class AlbumPanel extends React.Component<AlbumPanelProps, AlbumPanelState> {
   public static defaultProps = {
     id: null,
     album: undefined,
@@ -45,7 +45,7 @@ class AlbumPanel extends React.Component<IAlbumPanelProps, IAlbumPanelState> {
   private readonly tracksListListRef: RefObject<List>;
   private readonly store: {};
 
-  constructor(props: IAlbumPanelProps) {
+  constructor(props: AlbumPanelProps) {
     super(props);
 
     this.albumId = this.props.id || this.props.album!.id;

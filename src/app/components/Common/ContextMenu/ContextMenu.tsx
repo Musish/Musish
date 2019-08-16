@@ -3,11 +3,11 @@ import { connectMenu, ContextMenu } from 'react-contextmenu';
 
 export const MENU_TYPE = 'DYNAMIC';
 
-interface IDynamicMenuProps {
+interface DynamicMenuProps {
   trigger?: any;
 }
 
-const DynamicMenu: React.FC<IDynamicMenuProps> = ({ trigger = null }: IDynamicMenuProps) => {
+const DynamicMenu: React.FC<DynamicMenuProps> = ({ trigger = null }: DynamicMenuProps) => {
   const renderer = trigger ? trigger.render : <></>;
 
   return <ContextMenu id={MENU_TYPE}>{renderer}</ContextMenu>;

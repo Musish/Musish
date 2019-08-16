@@ -6,24 +6,24 @@ import translate from '../../../../utils/translations/Translations';
 import AlbumItem from '../../../Common/AlbumItem/AlbumItem';
 import AlbumPanel from '../../../Common/AlbumPanel/AlbumPanel';
 import InfiniteLoader, {
-  IInfiniteLoaderState,
   InfiniteLoaderOnScroll,
+  InfiniteLoaderState,
 } from '../../../Common/InfiniteLoader/InfiniteLoader';
 import Modal from '../../../Common/Modal/Modal';
 import PageContent from '../../../Common/PageContent/PageContent';
 import PageTitle from '../../../Common/PageTitle/PageTitle';
 import classes from './AlbumsPage.scss';
 
-type IAlbumsPageProps = RouteComponentProps;
+type AlbumsPageProps = RouteComponentProps;
 
-class AlbumsPage extends React.Component<IAlbumsPageProps> {
+class AlbumsPage extends React.Component<AlbumsPageProps> {
   public static async load(params: MusicKit.QueryParameters) {
     const music = MusicKit.getInstance();
 
     return music.api.library.albums(null, params);
   }
 
-  public static renderItems({ items }: IInfiniteLoaderState<MusicKit.Resource>) {
+  public static renderItems({ items }: InfiniteLoaderState<MusicKit.Resource>) {
     if (!items) {
       return null;
     }
@@ -35,7 +35,7 @@ class AlbumsPage extends React.Component<IAlbumsPageProps> {
 
   public static renderContent(
     _: InfiniteLoaderOnScroll,
-    state: IInfiniteLoaderState<MusicKit.Resource>,
+    state: InfiniteLoaderState<MusicKit.Resource>,
   ) {
     return AlbumsPage.renderItems(state);
   }

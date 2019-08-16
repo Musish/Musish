@@ -1,7 +1,7 @@
 declare module 'react-lines-ellipsis/lib/html' {
   import * as React from 'react';
 
-  interface IReactLinesEllipsisProps {
+  interface ReactLinesEllipsisProps {
     /** Max lines allowed */
     maxLine: number;
     /** HTML string */
@@ -14,8 +14,8 @@ declare module 'react-lines-ellipsis/lib/html' {
     onReflow?: () => void;
   }
 
-  class LinesEllipsis extends React.Component<IReactLinesEllipsisProps> {
-    public static defaultProps?: IReactLinesEllipsisProps;
+  class LinesEllipsis extends React.Component<ReactLinesEllipsisProps> {
+    public static defaultProps?: ReactLinesEllipsisProps;
   }
 
   export default LinesEllipsis;

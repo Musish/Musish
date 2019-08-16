@@ -5,15 +5,15 @@ import withMK from '../../../../hoc/withMK';
 import classes from './Queue.scss';
 import QueueItem, { QueueItemState } from './QueueItem';
 
-interface IQueueListProps extends SortableContainerProps, IMKProps {
+interface QueueListProps extends SortableContainerProps, MKProps {
   removeItemFunc: (queuePosition: number) => void;
 }
 
-interface IQueueListState {
+interface QueueListState {
   filteredItems: MusicKit.QueueItem[];
 }
 
-class QueueList extends React.Component<IQueueListProps, IQueueListState> {
+class QueueList extends React.Component<QueueListProps, QueueListState> {
   public static queueState(index: number, position: number) {
     if (index < position) {
       return QueueItemState.Played;
@@ -26,7 +26,7 @@ class QueueList extends React.Component<IQueueListProps, IQueueListState> {
     return QueueItemState.Queued;
   }
 
-  public static getDerivedStateFromProps(props: IQueueListProps) {
+  public static getDerivedStateFromProps(props: QueueListProps) {
     const { queue } = props.mk.instance.player;
     const filteredItems = (queue.items as MusicKit.QueueItem[])
       .map((item, index) => {
@@ -43,7 +43,7 @@ class QueueList extends React.Component<IQueueListProps, IQueueListState> {
       filteredItems,
     };
   }
-  constructor(props: IQueueListProps) {
+  constructor(props: QueueListProps) {
     super(props);
 
     this.state = QueueList.getDerivedStateFromProps(this.props);
@@ -83,4 +83,4 @@ const bindings = {
   [MusicKit.Events.queuePositionDidChange]: 'queuePosition',
 };
 
-export default withMK(SortableContainer<IQueueListProps>(QueueList, { withRef: true }), bindings);
+export default withMK(SortableContainer<QueueListProps>(QueueList, { withRef: true }), bindings);

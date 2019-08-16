@@ -4,8 +4,8 @@ import { withRouter } from 'react-router-dom';
 import * as MusicApi from '../../../../../../services/MusicApi';
 import { artworkForMediaItem } from '../../../../../../utils/Utils';
 import InfiniteLoader, {
-  IInfiniteLoaderState,
   InfiniteLoaderOnScroll,
+  InfiniteLoaderState,
 } from '../../../../../Common/InfiniteLoader/InfiniteLoader';
 import Loader from '../../../../../Common/Loader/Loader';
 import PageContent from '../../../../../Common/PageContent/PageContent';
@@ -13,17 +13,17 @@ import PageTitle from '../../../../../Common/PageTitle/PageTitle';
 import PlaylistItem from '../../../../../Common/PlaylistItem/PlaylistItem';
 import classes from './GenrePage.scss';
 
-type IGenrePageProps = RouteComponentProps<{ id: string }>;
+type GenrePageProps = RouteComponentProps<{ id: string }>;
 
-interface IGenrePageState {
+interface GenrePageState {
   curatorId: any;
   curator: any;
 }
 
-class GenrePage extends React.Component<IGenrePageProps, IGenrePageState> {
+class GenrePage extends React.Component<GenrePageProps, GenrePageState> {
   public static renderContent(
     _: InfiniteLoaderOnScroll,
-    { items }: IInfiniteLoaderState<MusicKit.Resource>,
+    { items }: InfiniteLoaderState<MusicKit.Resource>,
   ) {
     if (!items) {
       return null;
@@ -47,7 +47,7 @@ class GenrePage extends React.Component<IGenrePageProps, IGenrePageState> {
   private readonly store = {};
   private readonly scrollRef = React.createRef<HTMLDivElement>();
 
-  constructor(props: IGenrePageProps) {
+  constructor(props: GenrePageProps) {
     super(props);
 
     this.state = {

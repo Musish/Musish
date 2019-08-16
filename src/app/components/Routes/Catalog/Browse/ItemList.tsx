@@ -7,7 +7,7 @@ import classes from './BrowsePage.scss';
 import MediaItem = MusicKit.MediaItem;
 import Resource = MusicKit.Resource;
 
-interface IItemListProps {
+interface ItemListProps {
   title: ReactNode;
   type: 'playlist' | 'album' | 'curator' | 'apple-curator';
   items?: Resource[] | null;
@@ -16,14 +16,14 @@ interface IItemListProps {
   size?: number;
 }
 
-const ItemList: React.FC<IItemListProps> = ({
+const ItemList: React.FC<ItemListProps> = ({
   title,
   items = null,
   itemIds = null,
   type,
   rows = 1,
   size = 170,
-}: IItemListProps) => {
+}: ItemListProps) => {
   const [innerItems, setInnerItems] = useState<Resource[] | null>(null);
 
   async function fetchItems(ids: string[]) {

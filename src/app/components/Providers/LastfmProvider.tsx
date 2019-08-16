@@ -11,11 +11,11 @@ const secret = process.env.LASTFM_SECRET;
 
 const SK_STORAGE_KEY = 'lastfm_sk';
 
-interface ILastfmProviderProps extends IMKProps {
+interface LastfmProviderProps extends MKProps {
   children: ReactNode;
 }
 
-export interface ILastfmProviderValue {
+export interface LastfmProviderValue {
   login: () => void;
   reset: () => void;
   connected: boolean;
@@ -25,13 +25,13 @@ function getSK() {
   return localStorage.getItem(SK_STORAGE_KEY);
 }
 
-export const LastfmContext = React.createContext<ILastfmProviderValue>({
+export const LastfmContext = React.createContext<LastfmProviderValue>({
   connected: !!getSK(),
   login: () => undefined,
   reset: () => undefined,
 });
 
-const LastfmProvider: React.FC<ILastfmProviderProps> = ({ children, mk }: ILastfmProviderProps) => {
+const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmProviderProps) => {
   const [connected, setConnected] = useState(() => !!getSK());
 
   async function request(isWrite: boolean, method: string, callParams = {}, sk = true) {
@@ -168,7 +168,7 @@ const LastfmProvider: React.FC<ILastfmProviderProps> = ({ children, mk }: ILastf
     }
   }, [mk.mediaItem]);
 
-  const state: ILastfmProviderValue = {
+  const state: LastfmProviderValue = {
     login,
     reset,
     connected,

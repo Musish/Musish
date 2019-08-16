@@ -19,21 +19,21 @@ import {
   RepeatModeOne,
 } from '../../../utils/Utils';
 import { AuthorizeContext } from '../../Providers/AuthorizeProvider';
-import { ILyricsModalProps, withLyricsModal } from '../../Providers/LyricsModalProvider';
-import { IModalProviderValue, withModal } from '../../Providers/ModalProvider';
-import { IQueueModalProps, withQueueModal } from '../../Providers/QueueProvider';
+import { LyricsModalProps, withLyricsModal } from '../../Providers/LyricsModalProvider';
+import { ModalProviderValue, withModal } from '../../Providers/ModalProvider';
+import { QueueModalProps, withQueueModal } from '../../Providers/QueueProvider';
 import AlbumPanel from '../AlbumPanel/AlbumPanel';
 import styles from './Player.scss';
 import PlayerTime from './PlayerTime';
 import Rating from './Rating/Rating';
 import VolumeControl from './VolumeControl';
 
-interface IPlayerProps extends IMKProps, IQueueModalProps, ILyricsModalProps {
+interface PlayerProps extends MKProps, QueueModalProps, LyricsModalProps {
   authorized: boolean;
-  modal: IModalProviderValue;
+  modal: ModalProviderValue;
 }
 
-class Player extends React.Component<IPlayerProps> {
+class Player extends React.Component<PlayerProps> {
   public componentDidMount() {
     // Disable default scroll behaviour on click
     Mousetrap.bind(

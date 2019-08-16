@@ -2,14 +2,11 @@ import React, { ReactNode, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 
-interface IGoogleAnalyticsProviderProps extends RouteComponentProps {
+interface GoogleAnalyticsProviderProps extends RouteComponentProps {
   children: ReactNode;
 }
 
-const GoogleAnalyticsProvider: React.FC<IGoogleAnalyticsProviderProps> = ({
-  children,
-  history,
-}) => {
+const GoogleAnalyticsProvider: React.FC<GoogleAnalyticsProviderProps> = ({ children, history }) => {
   useEffect(() => {
     const ga = (window as any).ga;
     if (ga) {

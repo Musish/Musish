@@ -10,9 +10,9 @@ import PageTitle from '../../../Common/PageTitle/PageTitle';
 import PlaylistItem from '../../../Common/PlaylistItem/PlaylistItem';
 import classes from './ForYouPage.scss';
 
-type IForYouPageProps = RouteComponentProps;
+type ForYouPageProps = RouteComponentProps;
 
-interface IForYouPageState {
+interface ForYouPageState {
   heavyRotation: any;
   recentlyPlayed: any;
   recommendations: any;
@@ -23,10 +23,10 @@ type HeavyRotationItem = any;
 type RecommendationGroup = any;
 type RecommendationGroupItem = any;
 
-class ForYouPage extends React.Component<IForYouPageProps, IForYouPageState> {
+class ForYouPage extends React.Component<ForYouPageProps, ForYouPageState> {
   public readonly ref = React.createRef<HTMLDivElement>();
 
-  constructor(props: IForYouPageProps) {
+  constructor(props: ForYouPageProps) {
     super(props);
 
     this.state = {

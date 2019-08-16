@@ -4,8 +4,8 @@ import translate from '../../../utils/translations/Translations';
 import { AuthorizeContext } from '../../Providers/AuthorizeProvider';
 import { usePlaylists } from '../../Providers/PlaylistsProvider';
 import InfiniteLoader, {
-  IInfiniteLoaderState,
   InfiniteLoaderOnScroll,
+  InfiniteLoaderState,
 } from '../InfiniteLoader/InfiniteLoader';
 import Player from '../Player/Player';
 import PlaylistMenuItem from './Menu/MenuItem/PlaylistMenuItem';
@@ -13,11 +13,11 @@ import SidebarLibraryMenu from './Menu/SidebarLibraryMenu';
 import SidebarMenu from './Menu/SidebarMenu';
 import classes from './Sidebar.scss';
 
-interface ISidebarProps {
+interface SidebarProps {
   authorized: boolean;
 }
 
-const Sidebar: React.FC<ISidebarProps> = props => {
+const Sidebar: React.FC<SidebarProps> = props => {
   const { authorized } = props;
 
   const playlistsData = usePlaylists();
@@ -30,7 +30,7 @@ const Sidebar: React.FC<ISidebarProps> = props => {
 
   function renderPlaylists(
     _: InfiniteLoaderOnScroll,
-    { items }: IInfiniteLoaderState<MusicKit.MediaItem>,
+    { items }: InfiniteLoaderState<MusicKit.MediaItem>,
   ) {
     if (!items) {
       return null;

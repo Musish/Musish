@@ -11,7 +11,7 @@ import PlaylistContextMenu from '../ContextMenu/Types/Playlist/PlaylistContextMe
 import PlaylistPanel from '../PlaylistPanel/PlaylistPanel';
 import classes from './PlaylistItem.scss';
 
-interface IPlaylistItemProps extends RouteComponentProps {
+interface PlaylistItemProps extends RouteComponentProps {
   navigate?: boolean;
   history: any;
   playlist?: any;
@@ -21,7 +21,7 @@ interface IPlaylistItemProps extends RouteComponentProps {
   isOver?: boolean;
 }
 
-const PlaylistItem: React.FC<IPlaylistItemProps> = ({
+const PlaylistItem: React.FC<PlaylistItemProps> = ({
   connectDragSource,
   history,
   id,
@@ -74,7 +74,7 @@ const PlaylistItem: React.FC<IPlaylistItemProps> = ({
 };
 
 const dndSpec = {
-  beginDrag(props: IPlaylistItemProps) {
+  beginDrag(props: PlaylistItemProps) {
     return {
       playlist: props.id || props.playlist.id,
     };

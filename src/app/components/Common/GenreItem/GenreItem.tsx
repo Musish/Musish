@@ -5,13 +5,13 @@ import { withRouter } from 'react-router-dom';
 import { artworkForMediaItem } from '../../../utils/Utils';
 import classes from './GenreItem.scss';
 
-interface IGenreItemProps extends RouteComponentProps {
+interface GenreItemProps extends RouteComponentProps {
   curator?: any;
   id?: string;
   size: number;
 }
 
-const GenreItem: React.FC<IGenreItemProps> = ({ curator, history, id, size }) => {
+const GenreItem: React.FC<GenreItemProps> = ({ curator, history, id, size }) => {
   function handleOpen() {
     const curatorId = id || curator.id;
 

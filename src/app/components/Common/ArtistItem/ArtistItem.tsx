@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import classes from './ArtistItem.scss';
 
-interface IArtistItemProps {
+interface ArtistItemProps {
   artist: any;
   size: number;
 }
 
-const ArtistItem: React.FC<IArtistItemProps> = ({ artist, size }: IArtistItemProps) => {
+const ArtistItem: React.FC<ArtistItemProps> = ({ artist, size }: ArtistItemProps) => {
   const link = isNaN(artist.id) ? `/me/artists/${artist.id}` : `/artist/${artist.id}`;
   const initials = artist.attributes.name
     .split(' ')

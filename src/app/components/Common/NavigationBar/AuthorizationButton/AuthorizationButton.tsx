@@ -5,11 +5,11 @@ import translate from '../../../../utils/translations/Translations';
 import { AuthorizeContext } from '../../../Providers/AuthorizeProvider';
 import classes from './AuthorizationButton.scss';
 
-interface IAuthorizationButtonProps extends IMKProps {
+interface AuthorizationButtonProps extends MKProps {
   authorized: boolean;
 }
 
-const AuthorizationButton: React.FC<IAuthorizationButtonProps> = ({ mk, authorized }) => {
+const AuthorizationButton: React.FC<AuthorizationButtonProps> = ({ mk, authorized }) => {
   async function logout() {
     await mk.instance.unauthorize();
   }

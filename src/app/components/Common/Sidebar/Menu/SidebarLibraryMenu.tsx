@@ -4,17 +4,17 @@ import { ConnectDropTarget, DropTarget, DropTargetConnector, DropTargetMonitor }
 import { addToLibrary } from '../../../../services/MusicApi';
 import DragDropType from '../../../../utils/Constants/DragDropType';
 import classes from '../Sidebar.scss';
-import MenuItem, { IMenuItemProps } from './MenuItem/MenuItem';
+import MenuItem, { MenuItemProps } from './MenuItem/MenuItem';
 
-interface ISidebarLibraryMenuProps {
+interface SidebarLibraryMenuProps {
   title: string;
-  items: IMenuItemProps[];
+  items: MenuItemProps[];
   connectDropTarget: ConnectDropTarget;
   isDndOver: boolean;
   activeDndItem: string | symbol | null;
 }
 
-const SidebarLibraryMenu: React.FC<ISidebarLibraryMenuProps> = props => {
+const SidebarLibraryMenu: React.FC<SidebarLibraryMenuProps> = props => {
   const { title, items, connectDropTarget, isDndOver, activeDndItem } = props;
 
   return connectDropTarget(
@@ -47,7 +47,7 @@ const dndSpec = {
   canDrop() {
     return true;
   },
-  drop(_: ISidebarLibraryMenuProps, monitor: DropTargetMonitor) {
+  drop(_: SidebarLibraryMenuProps, monitor: DropTargetMonitor) {
     const item = monitor.getItem();
 
     switch (monitor.getItemType()) {
