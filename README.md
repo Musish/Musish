@@ -1,4 +1,5 @@
 ![Musish](https://i.imgur.com/ROMO267.png)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FMusish%2FMusish.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FMusish%2FMusish?ref=badge_shield)
 
 # Musish ([musi.sh](https://musi.sh/))
 
@@ -91,3 +92,7 @@ Our official build (https://musi.sh/) is powered by Github Pages with an AWS lam
 Credits:
 
 - Musish logo (headphone icon) provided by zidney from the Noun Project.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FMusish%2FMusish.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FMusish%2FMusish?ref=badge_large)
