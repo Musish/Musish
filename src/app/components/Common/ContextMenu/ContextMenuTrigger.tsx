@@ -9,13 +9,10 @@ function collect(props: any, render: any) {
   };
 }
 
-// From node_modules/react-contextmenu/src/index.d.ts
-interface ContextMenuTriggerProps {
-  attributes?: React.HTMLAttributes<any>;
-  disable?: boolean;
-  holdToDisplay?: number;
-  renderTag?: React.ElementType;
-}
+type ContextMenuTriggerProps = Omit<
+  React.ComponentProps<typeof OriginalContextMenuTrigger>,
+  'id' | 'collect'
+>;
 
 interface ContextMenuTrigger extends ContextMenuTriggerProps {
   render: any;
