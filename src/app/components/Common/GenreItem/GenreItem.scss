@@ -35,8 +35,8 @@
       top: 0;
       width: 100%;
       height: 100%;
-      border-radius: 8px;
       transition: opacity 0.2s;
+      border-radius: 8px;
     }
   }
 
@@ -63,6 +63,7 @@
     background: rgba(255, 255, 255, 0.65);
     color: $text_color_strong;
     font-weight: 600;
+    border-radius: 8px;
 
     > span {
       display: block;

@@ -1,16 +1,26 @@
-@import '../../../assets/styles/settings/colors';
+@import '../../../assets/styles/utils';
+@import '../../../assets/styles/themes/light';
+@import '../../../assets/styles/themes/dark';
 
 .sidebar {
   display: flex;
   flex-direction: column;
-  background: $background_color;
-  border-right: solid 2px $background_tint_color;
   height: 100%;
   min-height: 500px;
   top: 66px;
   bottom: 0;
   width: 280px;
   padding: 0;
+
+  @include themeLight {
+    background: $light__background_color;
+    border-right: solid 2px $light__background_tint_color;
+  }
+
+  @include themeDark {
+    background: $dark__background_color;
+    border-right: solid 2px $dark__background_tint_color;
+  }
 
   .menus {
     flex: 1;
@@ -22,24 +32,51 @@
     }
 
     .menu {
-      background: $background_color;
       padding: 10px 0;
-      border: solid 1px $background_color;
       margin-top: 15px;
 
+      @include themeLight {
+        background: $light__background_color;
+        border: solid 1px $light__background_color;
+      }
+
+      @include themeDark {
+        background: $dark__background_color;
+        border: solid 1px $dark__background_color;
+      }
+
       &.dndSeeking {
-        border: dashed 1px lighten($accent_color, 20%);
+        @include themeLight {
+          border: dashed 1px lighten($light__accent_color, 20%);
+        }
+
+        @include themeDark {
+          border: dashed 1px lighten($dark__accent_color, 20%);
+        }
       }
 
       &.dndHovered {
-        background: lighten($accent_color, 20%);
-        color: $background_color;
+        @include themeLight {
+          background: lighten($light__accent_color, 20%);
+          color: $light__background_color;
+        }
+
+        @include themeDark {
+          background: lighten($dark__accent_color, 20%);
+          color: $dark__background_color;
+        }
       }
 
       h3 {
         margin: 0 0 10px;
         padding: 0 24px;
-        color: $accent_color;
+        @include themeLight {
+          color: $light__accent_color;
+        }
+
+        @include themeDark {
+          color: $dark__accent_color;
+        }
         font-weight: 700;
         font-size: 12px;
         text-transform: uppercase;
@@ -51,7 +88,14 @@
         padding: 0;
 
         li {
-          color: $text_color_strong;
+          @include themeLight {
+            color: $light__text_color_strong;
+          }
+
+          @include themeDark {
+            color: $dark__text_color_strong;
+          }
+
           font-weight: 500;
           margin: 0;
 
@@ -66,23 +110,52 @@
             border: solid 1px transparent;
 
             &:hover {
-              color: $text_color_strong;
+              @include themeLight {
+                color: $light__text_color_strong;
+              }
+
+              @include themeDark {
+                color: $dark__text_color_strong;
+              }
             }
 
             &.dndSeeking {
-              border: dashed 1px lighten($accent_color, 20%);
+              @include themeLight {
+                border: dashed 1px lighten($light__accent_color, 20%);
+              }
+
+              @include themeDark {
+                border: dashed 1px lighten($dark__accent_color, 20%);
+              }
             }
 
             &.dndHovered {
-              background: lighten($accent_color, 20%);
-              color: $background_color;
+              @include themeLight {
+                background: lighten($light__accent_color, 20%);
+                color: $light__background_color;
+              }
+
+              @include themeDark {
+                background: lighten($dark__accent_color, 20%);
+                color: $dark__background_color;
+              }
+
             }
 
             &.active {
-              background: $container_background;
-              border: solid 1px $container_background;
-              color: $text_color_strong;
               font-weight: 500;
+
+              @include themeLight {
+                background: $light__container_background;
+                border: solid 1px $light__container_background;
+                color: $light__text_color_strong;
+              }
+
+              @include themeDark {
+                background: $dark__container_background;
+                border: solid 1px $dark__container_background;
+                color: $dark__text_color_strong;
+              }
             }
           }
         }
@@ -93,13 +166,31 @@
       text-align: center;
       margin-top: 30px;
       margin-bottom: 10px;
-      color: lighten($tertiary_color, 20%);
+      @include themeLight {
+        color: lighten($light__tertiary_color, 20%);
+      }
+
+      @include themeDark {
+        color: lighten($dark__tertiary_color, 20%);
+      }
 
       a {
-        color: lighten($tertiary_color, 10%);
+        @include themeLight {
+          color: lighten($light__tertiary_color, 20%);
+        }
+
+        @include themeDark {
+          color: lighten($dark__tertiary_color, 20%);
+        }
 
         &:hover {
-          color: $accent_color;
+          @include themeLight {
+            color: $light__accent_color;
+          }
+
+          @include themeDark {
+            color: $light__accent_color;
+          }
         }
       }
 

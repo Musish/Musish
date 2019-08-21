@@ -1,7 +1,16 @@
-@import '../../../assets/styles/settings/colors';
+@import '../../../assets/styles/utils';
+@import '../../../assets/styles/themes/light';
+@import '../../../assets/styles/themes/dark';
 
 .player {
-  background: $container_background;
+  @include themeLight {
+    background: $light__container_background;
+  }
+
+  @include themeDark {
+    background: $dark__container_background;
+  }
+
   padding: 20px 15px;
 
   .main-info, .mainInfo {
@@ -34,7 +43,13 @@
         &.link {
           &:hover {
             cursor: pointer;
-            color: $accent_color;
+            @include themeLight {
+              color: $light__accent_color;
+            }
+
+            @include themeDark {
+              color: $dark__accent_color;
+            }
           }
         }
       }
@@ -68,7 +83,13 @@
 
     span {
       font-size: 11px;
-      color: $player_secondary_button_color;
+      @include themeLight {
+        color: $light__player_secondary_button_color;
+      }
+
+      @include themeDark {
+        color: $dark__player_secondary_button_color;
+      }
     }
 
     .playbackTime {
@@ -86,14 +107,29 @@
     height: 4px;
     outline: none;
     border-radius: 2px;
-    background: linear-gradient(
-        to right,
-        $accent_color 0%,
-        $accent_color 50%,
-        white 50%,
-        white 100%
+
+    @include themeLight {
+      background: linear-gradient(
+                      to right,
+                      $light__accent_color 0%,
+                      $light__accent_color 50%,
+                      white 50%,
+                      white 100%
       )
       no-repeat;
+    }
+
+    @include themeDark {
+      background: linear-gradient(
+                      to right,
+                      $dark__accent_color 0%,
+                      $dark__accent_color 50%,
+                      white 50%,
+                      white 100%
+      )
+      no-repeat;
+    }
+
     cursor: pointer;
     -webkit-appearance: none;
 
@@ -108,7 +144,15 @@
       height: 10px;
       width: 5px;
       border: 0;
-      background: $tertiary_color;
+
+      @include themeLight {
+        background: $light__tertiary_color;
+      }
+
+      @include themeDark {
+        background: $dark__tertiary_color;
+      }
+
       border-radius: 2px;
       -webkit-appearance: none;
     }
@@ -123,7 +167,13 @@
       margin: 0 10px;
       font-size: 20px;
       line-height: 24px;
-      color: $player_button_color;
+      @include themeLight {
+        color: $light__player_button_color;
+      }
+
+      @include themeDark {
+        color: $dark__player_button_color;
+      }
       cursor: pointer;
 
       &.main {
@@ -136,11 +186,23 @@
         display: flex;
         flex: 1;
         justify-content: center;
-        color: $player_secondary_button_color;
+        @include themeLight {
+          color: $light__player_secondary_button_color;
+        }
+
+        @include themeDark {
+          color: $dark__player_secondary_button_color;
+        }
       }
 
       &:hover {
-        color: $tertiary_color;
+        @include themeLight {
+          color: $light__tertiary_color;
+        }
+
+        @include themeDark {
+          color: $dark__tertiary_color;
+        }
       }
 
       &:active i {
@@ -148,9 +210,22 @@
       }
 
       &.enabled {
-        color: $accent_color;
+        @include themeLight {
+          color: $light__accent_color;
+        }
+
+        @include themeDark {
+          color: $dark__accent_color;
+        }
+
         &:hover {
-          color: darken($accent_color, 10%);
+          @include themeLight {
+            color: darken($light__accent_color, 10%);
+          }
+
+          @include themeDark {
+            color: darken($dark__accent_color, 10%);
+          }
         }
       }
 
@@ -167,7 +242,13 @@
           font-weight: 500;
           font-size: 12px;
           line-height: 12px;
-          background: $container_background;
+          @include themeLight {
+            background: $light__container_background;
+          }
+
+          @include themeDark {
+            background: $dark__container_background;
+          }
           border-radius: 2px;
           text-align: center;
         }
@@ -192,7 +273,13 @@
     position: absolute;
     display: none;
     z-index: 5;
-    background: $player_volume_container_color;
+    @include themeLight {
+      background: $light__player_volume_container_color;
+    }
+
+    @include themeDark {
+      background: $dark__player_volume_container_color;
+    }
     border-radius: 5px;
     width: 30px;
     height: 120px;

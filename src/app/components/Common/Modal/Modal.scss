@@ -1,4 +1,7 @@
-@import '../../../assets/styles/settings/colors';
+
+@import "../../../assets/styles/utils";
+@import "../../../assets/styles/themes/light";
+@import "../../../assets/styles/themes/dark";
 
 .container {
   position: absolute !important; // Forcefully define size
@@ -8,7 +11,15 @@
   top: 0 !important; // Forcefully define size
   left: 0 !important; // Forcefully define size
   z-index: 250;
-  background: rgba(255, 255, 255, 0.5);
+
+  @include themeLight {
+    background: transparentize($light__background_color, 0.5);
+  }
+
+  @include themeDark {
+    background: transparentize($dark__background_color, 0.5);
+  }
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -20,9 +31,16 @@
     max-height: 80%;
     padding: 20px 25px;
     overflow: auto;
-    background: $background_color;
+    @include themeLight {
+      background: $light__background_color;
+      box-shadow: 0 8px 36px -10px $light__background_tint_color_strong;
+    }
+
+    @include themeDark {
+      background: $dark__background_color;
+      box-shadow: 0 8px 36px -10px $dark__background_color;
+    }
     border-radius: 8px;
-    box-shadow: 0 8px 36px -10px rgba(150, 150, 150, 0.75);
     animation: fadein 0.1s;
   }
 }

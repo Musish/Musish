@@ -1,0 +1,60 @@
+@import "utils";
+@import "themes/light";
+@import "themes/dark";
+
+@mixin scrollbars {
+  &::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    border-radius: 1px;
+  }
+
+  &::-webkit-scrollbar-track {
+    @include themeLight {
+      background: $light__background_color;
+    }
+
+    @include themeDark {
+      background: $dark__background_color;
+    }
+
+    border-radius: 1px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @include themeLight {
+      background: lighten($light__accent_color, 40%);
+    }
+
+    @include themeDark {
+      background: darken($dark__accent_color, 40%);
+    }
+
+    border-radius: 1px;
+    cursor: pointer;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    @include themeLight {
+      background: $light__accent_color;
+    }
+
+    @include themeDark {
+      background: $dark__accent_color;
+    }
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    @include themeLight {
+      background: lighten($light__accent_color, 25%);
+    }
+
+    @include themeDark {
+      background: darken($dark__accent_color, 25%);
+    }
+  }
+
+  &::-webkit-scrollbar-corner {
+    display: none;
+  }
+}

@@ -1,9 +1,18 @@
-@import "../../../assets/styles/settings/colors";
+@import "../../../assets/styles/utils";
+@import "../../../assets/styles/themes/light";
+@import "../../../assets/styles/themes/dark";
 
 .navigationBar {
   height: 65px;
-  background: $background_color;
-  box-shadow: 0 3px 2px -2px rgba(0, 0, 0, 0.1);
+
+  @include themeLight {
+    box-shadow: 0 3px 2px -2px rgba(0, 0, 0, 0.1);
+  }
+
+  @include themeDark {
+    box-shadow: 0 3px 2px -2px $dark__background_tint_color;
+  }
+
   text-align: center;
   z-index: 300;
   width: 100%;
@@ -17,14 +26,27 @@
     display: flex;
 
     a {
-      color: $brand_color;
+      @include themeLight {
+        color: #222222;
+      }
+
+      @include themeDark {
+        color: $dark__text_color;
+      }
+
       height: 100%;
       align-items: center;
       margin: auto 6px auto 0;
       display: flex;
 
       &:hover {
-        color: $accent_color;
+        @include themeLight {
+          color: $light__accent_color;
+        }
+
+        @include themeDark {
+          color: $dark__accent_color;
+        }
       }
 
       .icon {

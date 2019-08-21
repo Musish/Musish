@@ -1,15 +1,26 @@
 @import 'settings/colors';
+@import 'utils';
+@import 'themes/dark';
+@import 'themes/light';
 
 body {
   min-height: 100vh;
   margin: 0;
-  background: $background_color;
-  color: $text_color_strong;
   overflow: hidden;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   font-family: -apple-system, BlinkMacSystemFont, ' Helvetica Neue', 'Roboto', sans-serif;
+
+  &:global(.theme-light) {
+    background: $light__background_color;
+    color: $light__text_color_strong;
+  }
+
+  &:global(.theme-dark) {
+    background: $dark__background_color;
+    color: $dark__text_color_strong;
+  }
 }
 
 * {
@@ -25,14 +36,27 @@ div, span {
 }
 
 a {
-  color: rgb(105, 105, 105);
+  @include themeLight {
+    color: $light__text_color;
+  }
+
+  @include themeDark {
+    color: $dark__text_color;
+  }
+
   text-decoration: none;
   transition: color 0.1s;
   cursor: pointer;
 }
 
 a:hover {
-  color: #fe2851;
+  @include themeLight {
+    color: $light__accent_color;
+  }
+
+  @include themeDark {
+    color: $dark__accent_color;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -42,11 +66,19 @@ h1, h2, h3, h4, h5, h6 {
 button {
   -webkit-appearance: none;
   background: none;
-  border: solid 1px #fe2851;
   padding: 10px 15px;
-  color: #fe2851;
   font-size: 11px;
   cursor: pointer;
+
+  @include themeLight {
+    color: $light__accent_color;
+    border: 1px solid $light__accent_color;
+  }
+
+  @include themeDark {
+    color: $dark__accent_color;
+    border: 1px solid $dark__accent_color;
+  }
 }
 
 img {
@@ -61,24 +93,6 @@ img {
     flex-direction: column;
     width: 100%;
     -ms-overflow-style: -ms-autohiding-scrollbar;
-  }
-
-  #main-wrapper {
-    display: flex;
-    flex: 1;
-    width: 100%;
-    overflow: auto;
-
-    > aside {
-      overflow-y: auto;
-      flex-shrink: 0;
-    }
-
-    #main-content {
-      position: relative;
-      display: flex;
-      flex: 1;
-    }
   }
 
   @import 'vendor/react-contextmenu';

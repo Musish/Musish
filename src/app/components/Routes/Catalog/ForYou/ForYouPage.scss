@@ -1,4 +1,7 @@
-  @import '../../../../assets/styles/settings/colors';
+@import "../../../../assets/styles/utils";
+@import "../../../../assets/styles/themes/light";
+@import "../../../../assets/styles/themes/dark";
+@import "../../../../assets/styles/scrollbars";
 
 .albumHeading {
   margin-top: 20px;
@@ -12,7 +15,13 @@
   padding: 10px;
 
   .personalRecommendationsTitle {
-    color: $text_color;
+    @include themeLight {
+      color: $dark__text_color;
+    }
+
+    @include themeDark {
+      color: $dark__text_color;
+    }
     margin-left: 5px;
   }
 
@@ -34,34 +43,7 @@
 .scrollWrapper {
   overflow: auto;
 
-  &::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
-    border-radius: 1px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: $background_color;
-    border-radius: 1px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: lighten($accent_color, 40%);
-    border-radius: 1px;
-    cursor: pointer;
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: $accent_color;
-  }
-
-  &:hover::-webkit-scrollbar-thumb {
-    background: lighten($accent_color, 25%);
-  }
-
-  &::-webkit-scrollbar-corner {
-    display: none;
-  }
+  @include scrollbars
 }
 
 .scrollGrid {

@@ -16,6 +16,7 @@ import MusicKitProvider from './Providers/MusicKitProvider';
 import PlaylistsProvider from './Providers/PlaylistsProvider';
 import QueueModalProvider from './Providers/QueueProvider';
 import SentryBoundary from './Providers/SentryBoundary';
+import ThemeProvider from './Providers/ThemeProvider';
 import AlbumPage from './Routes/Album/AlbumPage';
 import ArtistPage from './Routes/Catalog/Artist/ArtistPage';
 import BrowsePage from './Routes/Catalog/Browse/BrowsePage';
@@ -52,66 +53,68 @@ function App() {
                   <QueueModalProvider>
                     <LyricsModalProvider>
                       <LastfmProvider>
-                        <Layout>
-                          <Switch>
-                            <Route path={'/'} exact component={ForYouPage} />
-                            <Route path={'/me/added'} component={RecentlyAddedPage} />
-                            <Route path={'/me/albums'} component={AlbumsPage} />
-                            <Route path={'/me/playlists'} exact component={PlaylistsPage} />
-                            <Route
-                              path={'/playlist/:id'}
-                              exact
-                              component={(props: RouteComponentProps) => (
-                                <PlaylistPage key={props.location.pathname} {...props} />
-                              )}
-                            />
-                            <Route
-                              path={'/me/playlist/:id'}
-                              exact
-                              component={(props: RouteComponentProps) => (
-                                <PlaylistPage key={props.location.pathname} {...props} />
-                              )}
-                            />
-                            <Route
-                              path={'/album/:id'}
-                              exact
-                              component={(props: RouteComponentProps) => (
-                                <AlbumPage key={props.location.pathname} {...props} />
-                              )}
-                            />
-                            <Route
-                              path={'/me/album/:id'}
-                              exact
-                              component={(props: RouteComponentProps) => (
-                                <AlbumPage key={props.location.pathname} {...props} />
-                              )}
-                            />
-                            <Route path={'/me/artists'} exact component={ArtistsPage} />
-                            <Route path={'/me/artists/:id'} component={ArtistsPage} />
-                            <Route path={'/me/songs'} exact component={SongsPage} />
-                            <Route path={'/artist/:id'} exact component={ArtistPage} />
-                            <Route path={'/browse/genre/:id'} exact component={GenrePage} />
-                            <Route path={'/browse'} component={BrowsePage} />
-                            <Route path={'/radio'} exact component={RadioPage} />
-                            <Route
-                              path={'/search/:source/:query'}
-                              exact
-                              component={({
-                                match: {
-                                  params: { source, query },
-                                },
-                              }: RouteComponentProps<{ source: string; query: string }>) => (
-                                <SearchPage key={`${source}${query}`} />
-                              )}
-                            />
-                            <Redirect to={'/'} />
-                          </Switch>
+                        <ThemeProvider>
+                          <Layout>
+                            <Switch>
+                              <Route path={'/'} exact component={ForYouPage} />
+                              <Route path={'/me/added'} component={RecentlyAddedPage} />
+                              <Route path={'/me/albums'} component={AlbumsPage} />
+                              <Route path={'/me/playlists'} exact component={PlaylistsPage} />
+                              <Route
+                                path={'/playlist/:id'}
+                                exact
+                                component={(props: RouteComponentProps) => (
+                                  <PlaylistPage key={props.location.pathname} {...props} />
+                                )}
+                              />
+                              <Route
+                                path={'/me/playlist/:id'}
+                                exact
+                                component={(props: RouteComponentProps) => (
+                                  <PlaylistPage key={props.location.pathname} {...props} />
+                                )}
+                              />
+                              <Route
+                                path={'/album/:id'}
+                                exact
+                                component={(props: RouteComponentProps) => (
+                                  <AlbumPage key={props.location.pathname} {...props} />
+                                )}
+                              />
+                              <Route
+                                path={'/me/album/:id'}
+                                exact
+                                component={(props: RouteComponentProps) => (
+                                  <AlbumPage key={props.location.pathname} {...props} />
+                                )}
+                              />
+                              <Route path={'/me/artists'} exact component={ArtistsPage} />
+                              <Route path={'/me/artists/:id'} component={ArtistsPage} />
+                              <Route path={'/me/songs'} exact component={SongsPage} />
+                              <Route path={'/artist/:id'} exact component={ArtistPage} />
+                              <Route path={'/browse/genre/:id'} exact component={GenrePage} />
+                              <Route path={'/browse'} component={BrowsePage} />
+                              <Route path={'/radio'} exact component={RadioPage} />
+                              <Route
+                                path={'/search/:source/:query'}
+                                exact
+                                component={({
+                                  match: {
+                                    params: { source, query },
+                                  },
+                                }: RouteComponentProps<{ source: string; query: string }>) => (
+                                  <SearchPage key={`${source}${query}`} />
+                                )}
+                              />
+                              <Redirect to={'/'} />
+                            </Switch>
 
-                          <ModalRenderer />
-                        </Layout>
-                        <ConnectedMenu />
-                        <Alert stack offset={60} />
-                        <LyricsModal />
+                            <ModalRenderer />
+                          </Layout>
+                          <ConnectedMenu />
+                          <Alert stack offset={60} />
+                          <LyricsModal />
+                        </ThemeProvider>
                       </LastfmProvider>
                     </LyricsModalProvider>
                   </QueueModalProvider>

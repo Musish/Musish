@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import useMK from '../../../../hooks/useMK';
 import translate from '../../../../utils/translations/Translations';
 import { LastfmContext } from '../../../Providers/LastfmProvider';
+import ThemeSwitcher from '../ThemeSwitcher/ThemeSwitcher';
 import classes from './Settings.scss';
 
 export default function Settings() {
@@ -62,6 +63,7 @@ export default function Settings() {
               Standard (64kbps)
             </label>
           </span>
+          <ThemeSwitcher />
         </div>
       </div>
     </span>

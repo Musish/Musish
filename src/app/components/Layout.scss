@@ -1,0 +1,18 @@
+.mainWrapper {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  overflow: auto;
+
+  > aside {
+    overflow-y: auto;
+    flex-shrink: 0;
+  }
+
+  .mainContent {
+    position: relative;
+    display: flex;
+    flex: 1;
+  }
+}
+

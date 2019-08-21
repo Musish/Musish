@@ -1,0 +1,11 @@
+@mixin themeLight {
+  :global(.theme-light) & {
+    @content
+  }
+}
+
+@mixin themeDark {
+  :global(.theme-dark) & {
+    @content
+  }
+}
