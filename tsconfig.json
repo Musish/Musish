@@ -7,7 +7,6 @@
     "module": "es6",            // specify module code generation
     "jsx": "react",             // use typescript to transpile jsx to js
     "target": "es5",            // specify ECMAScript target version
-    "allowJs": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "noImplicitReturns": false,
@@ -15,9 +14,11 @@
     "noImplicitThis": false,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
+    "resolveJsonModule": true,
     "typeRoots": [
       "node_modules/musickit-typescript",
-      "node_modules/@types"
+      "node_modules/@types",
+      "src/app/types"
     ],
     "lib": [
       "es2015",

@@ -8,7 +8,7 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 Encore.setOutputPath('build/')
   .setPublicPath('/')
-  .addEntry('app', './src/app/index.jsx')
+  .addEntry('app', './src/app/index.tsx')
   .enableSingleRuntimeChunk()
   .cleanupOutputBeforeBuild()
   .enableSourceMaps(true)
@@ -30,7 +30,6 @@ const config = Encore.getWebpackConfig();
 
 config.plugins.push(
   new HtmlWebpackPlugin({
-    // Also generate a test.html
     template: 'src/app/app.html',
     title: 'Musish',
     meta: {

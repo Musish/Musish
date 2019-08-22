@@ -2,54 +2,47 @@ import { Ref, RefObject, useState } from 'react';
 import * as React from 'react';
 import { List, WindowScroller } from 'react-virtualized';
 import {
-  IInfiniteLoaderState,
   InfiniteLoaderLoad,
   InfiniteLoaderOnSetItems,
+  InfiniteLoaderState,
 } from '../../InfiniteLoader/InfiniteLoader';
-import InfiniteScroll, { IInfiniteScrollListRowProps } from '../../InfiniteLoader/InfiniteScroll';
+import InfiniteScroll, { InfiniteScrollListRowProps } from '../../InfiniteLoader/InfiniteScroll';
 import * as classes from './TracksList.scss';
-import TrackListItem from './TracksListItem';
+import TrackListItem, { PlayTrackParams } from './TracksListItem';
 
-interface ITracksListProps {
+interface TracksListProps {
   showArtist?: boolean;
   showAlbum?: boolean;
-  scrollElement: RefObject<HTMLBaseElement>;
-  scrollElementModifier?: (e: HTMLBaseElement | null) => HTMLBaseElement | null;
+  scrollElement: RefObject<HTMLElement>;
+  scrollElementModifier?: (e: HTMLElement | null) => HTMLElement | null;
   load: InfiniteLoaderLoad<MusicKit.MediaItem>;
   tracks?: MusicKit.MediaItem[];
   onSetItems?: InfiniteLoaderOnSetItems<MusicKit.MediaItem>;
-  playTrack: any;
-  wsRef: Ref<WindowScroller>;
-  listRef: Ref<List>;
+  playTrack: ({ track, tracks, index }: PlayTrackParams) => void;
+  wsRef?: Ref<WindowScroller>;
+  listRef?: Ref<List>;
 }
 
-const defaultProps: Partial<ITracksListProps> = {
-  showArtist: false,
-  showAlbum: false,
-  onSetItems: () => null,
-  scrollElementModifier: (e: HTMLBaseElement | null) => e,
-};
-
 function TracksList({
-  showArtist,
-  showAlbum,
+  showArtist = false,
+  showAlbum = false,
   scrollElement,
-  scrollElementModifier,
+  scrollElementModifier = (e: HTMLElement | null) => e,
   load,
   tracks: initialTracks,
-  onSetItems,
+  onSetItems = () => null,
   playTrack,
   wsRef = React.createRef<WindowScroller>(),
   listRef = React.createRef<List>(),
-}: ITracksListProps) {
+}: TracksListProps) {
   const [tracks, setTracks] = useState<MusicKit.MediaItem[] | null>(null);
 
-  function localOnSetItems(state: IInfiniteLoaderState<MusicKit.MediaItem>) {
+  function localOnSetItems(state: InfiniteLoaderState<MusicKit.MediaItem>) {
     setTracks(state.items);
     onSetItems!(state);
   }
 
-  function rowRenderer(rowProps: IInfiniteScrollListRowProps<MusicKit.MediaItem>) {
+  function rowRenderer(rowProps: InfiniteScrollListRowProps<MusicKit.MediaItem>) {
     const { item: track, index, key, style } = rowProps;
 
     return (
@@ -62,8 +55,6 @@ function TracksList({
         showAlbum={showAlbum}
         style={style}
         playTrack={playTrack}
-        wsRef={wsRef}
-        listRef={listRef}
       />
     );
   }
@@ -84,7 +75,5 @@ function TracksList({
     </div>
   );
 }
-
-TracksList.defaultProps = defaultProps;
 
 export default TracksList;

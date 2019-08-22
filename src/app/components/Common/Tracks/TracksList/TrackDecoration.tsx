@@ -7,11 +7,11 @@ import * as classes from './TrackDecoration.scss';
 
 export default function TrackDecoration({
   track,
-  showAlbum,
+  showAlbum = false,
   size = 40,
 }: {
   track: MusicKit.MediaItem;
-  showAlbum: boolean;
+  showAlbum?: boolean;
   size?: number;
 }) {
   useMK({

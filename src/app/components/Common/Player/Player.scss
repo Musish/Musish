@@ -4,7 +4,7 @@
   background: $container_background;
   padding: 20px 15px;
 
-  .main-info {
+  .main-info, .mainInfo {
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -80,7 +80,7 @@
     }
   }
 
-  .progress-bar {
+  .progress-bar, .progressBar {
     margin: 4px auto;
     width: 100%;
     height: 4px;

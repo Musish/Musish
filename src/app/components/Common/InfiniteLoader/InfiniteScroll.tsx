@@ -4,35 +4,35 @@ import { Ref } from 'react';
 import { ReactNode } from 'react';
 import { AutoSizer, List, ListRowProps, WindowScroller } from 'react-virtualized';
 import InfiniteLoader, {
-  IInfiniteLoaderState,
   InfiniteLoaderLoad,
   InfiniteLoaderOnScroll,
   InfiniteLoaderOnSetItems,
+  InfiniteLoaderState,
 } from './InfiniteLoader';
 
-export interface IInfiniteScrollListRowProps<I> extends ListRowProps {
+export interface InfiniteScrollListRowProps<I> extends ListRowProps {
   item: I;
 }
 
-interface IInfiniteScrollProps<I> {
+interface InfiniteScrollProps<I> {
   load: InfiniteLoaderLoad<I>;
   items?: I[];
-  rowRenderer: (props: IInfiniteScrollListRowProps<I>) => React.ReactNode;
+  rowRenderer: (props: InfiniteScrollListRowProps<I>) => React.ReactNode;
   onSetItems?: InfiniteLoaderOnSetItems<I>;
   listClassName?: string;
   rowHeight: number;
-  scrollElement: RefObject<HTMLBaseElement>;
-  scrollElementModifier?: (e: HTMLBaseElement | null) => HTMLBaseElement | null;
-  wsRef: Ref<WindowScroller>;
-  listRef: Ref<List>;
+  scrollElement: RefObject<HTMLElement>;
+  scrollElementModifier?: (e: HTMLElement | null) => HTMLElement | null;
+  wsRef?: Ref<WindowScroller>;
+  listRef?: Ref<List>;
 }
 
-export default class InfiniteScroll<I> extends React.Component<IInfiniteScrollProps<I>> {
+export default class InfiniteScroll<I> extends React.Component<InfiniteScrollProps<I>> {
   public static defaultProps = {
     listClassName: '',
     items: null,
     onSetItems: () => null,
-    scrollElementModifier: (e: HTMLBaseElement | null) => e,
+    scrollElementModifier: (e: HTMLElement | null) => e,
   };
 
   public componentDidMount() {
@@ -54,13 +54,13 @@ export default class InfiniteScroll<I> extends React.Component<IInfiniteScrollPr
     onScroll({ scrollTop, scrollHeight, clientHeight });
   };
 
-  public rowRenderer = (props: ListRowProps, { items }: IInfiniteLoaderState<I>) =>
+  public rowRenderer = (props: ListRowProps, { items }: InfiniteLoaderState<I>) =>
     this.props.rowRenderer({
       ...props,
       item: items![props.index] as I,
     });
 
-  public getElement = (): HTMLBaseElement | null => {
+  public getElement = (): HTMLElement | null => {
     const { scrollElement, scrollElementModifier } = this.props;
 
     return scrollElementModifier!(scrollElement.current);
@@ -77,7 +77,7 @@ export default class InfiniteScroll<I> extends React.Component<IInfiniteScrollPr
 
     const wsRenderer = (
       onScroll: InfiniteLoaderOnScroll,
-      state: IInfiniteLoaderState<I>,
+      state: InfiniteLoaderState<I>,
     ): ReactNode => (
       <WindowScroller
         scrollElement={element}
