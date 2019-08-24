@@ -148,7 +148,14 @@ class Player extends React.Component<PlayerProps> {
         title: nowPlayingItem.title,
         artist: nowPlayingItem.attributes.artistName,
         album: nowPlayingItem.attributes.albumName,
-        artwork: [{ src: artworkURL }],
+        artwork: [
+          { src: artworkForMediaItem(nowPlayingItem, 96), type: 'image/jpeg', sizes: '96x96' },
+          { src: artworkForMediaItem(nowPlayingItem, 128), type: 'image/jpeg', sizes: '128x128' },
+          { src: artworkForMediaItem(nowPlayingItem, 192), type: 'image/jpeg', sizes: '192x192' },
+          { src: artworkForMediaItem(nowPlayingItem, 256), type: 'image/jpeg', sizes: '256x256' },
+          { src: artworkForMediaItem(nowPlayingItem, 384), type: 'image/jpeg', sizes: '384x384' },
+          { src: artworkForMediaItem(nowPlayingItem, 512), type: 'image/jpeg', sizes: '512x512' },
+        ],
       });
     }
     return (
