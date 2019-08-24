@@ -143,6 +143,14 @@ class Player extends React.Component<PlayerProps> {
       <span className={cx(styles.albumName)}>{nowPlayingItem.attributes.albumName}</span>
     );
 
+    if (navigator.mediaSession && hasMeta) {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: nowPlayingItem.title,
+        artist: nowPlayingItem.attributes.artistName,
+        album: nowPlayingItem.attributes.albumName,
+        artwork: [{ src: artworkURL }],
+      });
+    }
     return (
       <div className={styles.player}>
         <div className={styles.mainInfo}>
