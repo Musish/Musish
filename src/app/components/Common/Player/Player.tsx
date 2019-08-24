@@ -48,6 +48,10 @@ class Player extends React.Component<PlayerProps> {
     Mousetrap.bind('left', this.handlePrevious, 'keyup');
     Mousetrap.bind('right', this.handleNext, 'keyup');
     Mousetrap.bind('space', togglePlayback, 'keyup');
+    if (navigator.mediaSession) {
+      navigator.mediaSession.setActionHandler('nexttrack', this.handleNext);
+      navigator.mediaSession.setActionHandler('previoustrack', this.handlePrevious);
+    }
   }
 
   public handlePrevious = () => {
