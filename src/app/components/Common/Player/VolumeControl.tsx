@@ -20,6 +20,32 @@ class VolumeControl extends React.Component<VolumeControlProps, VolumeControlSta
   }
 
   public componentDidMount() {
+    // Extend Mousetrap to support media keys
+    Mousetrap.addKeycodes({
+      173: 'mute',
+      174: 'volumedown',
+      175: 'volumeup',
+    });
+
+    Mousetrap.bind(
+      'mute',
+      e => {
+        this.toggleVolume();
+      },
+      'keyup',
+    );
+
+    // Volume controls (VOLUME UP)
+    Mousetrap.bind(
+      'volumeup',
+      e => {
+        const { player } = MusicKit.getInstance();
+        const newVolume = player.volume < 0.9 ? player.volume + 0.1 : 1;
+        this.changeVolume(newVolume);
+      },
+      'keydown',
+    );
+
     // Volume controls (VOLUME UP)
     Mousetrap.bind(
       'up',
@@ -27,6 +53,17 @@ class VolumeControl extends React.Component<VolumeControlProps, VolumeControlSta
         e.preventDefault();
         const { player } = MusicKit.getInstance();
         const newVolume = player.volume < 0.9 ? player.volume + 0.1 : 1;
+        this.changeVolume(newVolume);
+      },
+      'keydown',
+    );
+
+    // Volume controls (VOLUME DOWN)
+    Mousetrap.bind(
+      'volumedown',
+      e => {
+        const { player } = MusicKit.getInstance();
+        const newVolume = player.volume > 0.1 ? player.volume - 0.1 : 0;
         this.changeVolume(newVolume);
       },
       'keydown',

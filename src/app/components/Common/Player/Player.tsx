@@ -44,10 +44,23 @@ class Player extends React.Component<PlayerProps> {
       'keydown',
     );
 
+    // Extend Mousetrap to support media keys
+    Mousetrap.addKeycodes({
+      176: 'nexttrack',
+      177: 'previoustrack',
+      178: 'stop',
+      179: 'playpause',
+    });
+
     // Playback controls
     Mousetrap.bind('left', this.handlePrevious, 'keyup');
     Mousetrap.bind('right', this.handleNext, 'keyup');
     Mousetrap.bind('space', togglePlayback, 'keyup');
+
+    Mousetrap.bind('previoustrack', this.handlePrevious, 'keyup');
+    Mousetrap.bind('nexttrack', this.handleNext, 'keyup');
+    Mousetrap.bind('playpause', togglePlayback, 'keyup');
+    Mousetrap.bind('stop', pause, 'keyup');
   }
 
   public handlePrevious = () => {
