@@ -67,5 +67,10 @@
   "inYourPersonalLibrary": "Nella tua libreria personale",
   "unauthorisedLibrarySearch": "Devi effettuare il login per cercare nella tua libreria.",
 
-  "noLyricsAvailable": "Nessun testo disponibile "
+  "noLyricsAvailable": "Nessun testo disponibile ",
+
+  "lfmConnect": "Connetti",
+  "lfmDisconnect": "Disconnetti",
+  "lfmConnectSuccess": "Last.fm è ora connesso!",
+  "lfmConnectError": "Connessione a Last.fm fallita"
 }
