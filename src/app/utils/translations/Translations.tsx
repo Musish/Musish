@@ -9,8 +9,8 @@ import italian from './languages/Italian.json';
 import korean from './languages/Korean.json';
 import polish from './languages/Polish.json';
 import russian from './languages/Russian.json';
-import turkish from './languages/Turkish.json';
 import SChinese from './languages/SChinese.json';
+import turkish from './languages/Turkish.json';
 
 const localization = new LocalizedStrings({
   en: english,
