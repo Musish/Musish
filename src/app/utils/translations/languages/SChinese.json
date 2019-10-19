@@ -1,0 +1,76 @@
+{
+  "musishDescription": "Musish 利用 Apple Music 曲库为您提供超凡的聆听体验。请登录您的 Apple Music 账户。",
+  "connect": "登录 Apple Music 账户",
+  "securityMessage": "{0} 通过 Apple.com 安全登录",
+  "justBrowse": "或者只是浏览曲库",
+  "legalNotice": "Musish 不附属于 Apple, Inc.。我们的服务不访问、收集或存储任何个人或账户信息。 「Apple」「Apple Music」和 Apple 标识是 Apple, Inc. 的商标。",
+
+  "appleMusic": "Apple Music",
+
+  "logout": "退出登录",
+  "login": "登录",
+  "searchMusic": "搜索音乐",
+
+  "play": "播放",
+  "playNext": "作为下一曲播放",
+  "playLater": "稍后播放",
+  "shuffle": "随机播放",
+  "search": "搜索",
+  "searchingFor": "正在搜索 {0}",
+
+  "openAlbum": "打开专辑",
+  "openPlaylist": "打开播放列表",
+  "addToPlaylist": "添加到播放列表",
+  "addToLibrary": "添加到我的曲库",
+
+  "playlistBy": "{0} 的播放列表",
+
+  "forYou": "为您推荐",
+  "recentlyPlayed": "最近播放",
+  "heavyRotation": "常听歌曲",
+
+  "browse": "浏览",
+  "topCharts": "榜单",
+  "genres": "流派",
+  "topSongs": "热门歌曲",
+  "dailyTop100": "每日前百",
+  "topPlaylists": "热门播放列表",
+  "topAlbums": "热门专辑",
+
+  "radio": "电台",
+  "radioMessage": "我们将尽快为您带来电台功能。",
+
+  "myLibrary": "我的曲库",
+  "recentlyAdded": "最近添加",
+  "artists": "艺术家",
+  "albums": "专辑",
+  "song": "曲目",
+  "songs": "曲目",
+  "playlists": "播放列表",
+
+  "feedback": "反馈",
+  "designCredits": "Musish 团队用 {0} 设计",
+
+  "lyrics": "歌词",
+  "upNext": "下一曲",
+
+  "showCompleteAlbum": "显示完整专辑",
+  "hour": "小时",
+  "hours": "小时",
+  "minute": "分钟",
+  "minutes": "分钟",
+
+  "noResultsFound": "唔，没有找到结果。",
+  "trackNotAvailable": "曲目不可用。",
+
+  "dataProvidedByGenius": "数据由 Genius 提供",
+  "inYourPersonalLibrary": "在您的个人曲库",
+  "unauthorisedLibrarySearch": "您必须登录才能搜索曲库。",
+
+  "noLyricsAvailable": "无歌词可用 ",
+
+  "lfmConnect": "连接",
+  "lfmDisconnect": "断开连接",
+  "lfmConnectSuccess": "Last.fm 连接成功",
+  "lfmConnectError": "无法连接到 Last.fm"
+}
