@@ -9,6 +9,7 @@ import italian from './languages/Italian.json';
 import korean from './languages/Korean.json';
 import polish from './languages/Polish.json';
 import russian from './languages/Russian.json';
+import SChinese from './languages/SChinese.json';
 import turkish from './languages/Turkish.json';
 
 const localization = new LocalizedStrings({
@@ -23,6 +24,7 @@ const localization = new LocalizedStrings({
   br: Brazilian,
   kr: korean,
   hu: hungarian,
+  'zh-CN': SChinese,
 });
 
 // This sets the default storefront language.
