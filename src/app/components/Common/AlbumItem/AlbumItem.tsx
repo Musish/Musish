@@ -33,7 +33,12 @@ const AlbumItem: React.FC<AlbumItemProps> = (props: AlbumItemProps) => {
   }
 
   const { album, size, connectDragSource, isOver } = props;
-  const artwork = MusicKit.formatArtworkURL(album.attributes.artwork, size, size);
+  let artwork;
+  try {
+    artwork = MusicKit.formatArtworkURL(album.attributes.artwork, size, size);
+  } catch (e) {
+    artwork = `https://is1-ssl.mzstatic.com/image/thumb/Features127/v4/75/f9/6f/75f96fa5-99ca-0854-3aae-8f76f5cb7fb5/source/${size}x${size}bb.jpeg`;
+  }
 
   const explicit = album.attributes.contentRating === 'explicit' && (
     <div className={classes.explicit}>
