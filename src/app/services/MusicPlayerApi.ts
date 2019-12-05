@@ -6,6 +6,7 @@ let originalQueue: MusicKit.MediaItem[] | null = null;
 export async function playTrack(tracks: MusicKit.MediaItem[], index: number) {
   const music = MusicKit.getInstance();
   await setQueueItems(tracks, index);
+  await music.player.prepareToPlay();
   await music.player.play();
 }
 
@@ -20,7 +21,8 @@ export async function playAlbum(album: MusicKit.Resource, index: number) {
   }
 
   await setQueueItems(albumData.relationships.tracks.data, index);
-
+  
+  await music.player.prepareToPlay();
   await music.player.play();
 }
 
@@ -28,6 +30,7 @@ export async function shufflePlayAlbum(album: MusicKit.Resource) {
   const music = MusicKit.getInstance();
   const queue = _shuffle(album.relationships.tracks.data);
   await setQueueItems(queue, 0, album);
+  await music.player.prepareToPlay();
   await music.player.play();
 }
 
@@ -40,6 +43,7 @@ export async function playPlaylist(playlist: MusicKit.Resource, index: number) {
       : await music.api.playlist(playlist.id);
   }
   await setQueueItems(playlistData.relationships.tracks.data, index, playlist);
+  await music.player.prepareToPlay();
   await music.player.play();
 }
 
@@ -47,6 +51,7 @@ export async function shufflePlayPlaylist(playlist: MusicKit.Resource) {
   const music = MusicKit.getInstance();
   const queue = _shuffle(playlist.relationships.tracks.data);
   await setQueueItems(queue, 0, playlist);
+  await music.player.prepareToPlay();
   await music.player.play();
 }
 
@@ -105,6 +110,7 @@ export async function playLater(item: MusicKit.MediaItem) {
 }
 
 export async function play() {
+  await MusicKit.getInstance().player.prepareToPlay();
   await MusicKit.getInstance().player.play();
 }
 export async function pause() {
@@ -115,6 +121,7 @@ export async function togglePlayback() {
   if (isPlaying()) {
     await player.pause();
   } else {
+    await player.prepareToPlay();
     await player.play();
   }
 }
