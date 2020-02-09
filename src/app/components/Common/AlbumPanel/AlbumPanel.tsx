@@ -190,7 +190,7 @@ class AlbumPanel extends React.Component<AlbumPanelProps, AlbumPanelState> {
 
           <span className={classes.subtitle}>{artistName}</span>
           <span className={classes.subtitle}>
-            {albumGenre} - {albumYear}
+            {album.attributes.isComplete ? `${albumGenre} - ${albumYear}` : 'Upcoming Album'}
           </span>
 
           {album.attributes.editorialNotes && album.attributes.editorialNotes.standard && (
