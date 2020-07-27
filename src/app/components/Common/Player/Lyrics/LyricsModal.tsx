@@ -23,9 +23,9 @@ function LyricsModal() {
   const nowPlaying = getPlayingItem();
 
   return (
-    <Draggable handle={'.handle'} defaultPosition={{ x: 0, y: 0 }}>
+    <Draggable handle={'.lyricsHandle'} defaultPosition={{ x: 0, y: 0 }}>
       <div className={cx(queueClasses.modal, classes.modal)} onClick={e => e.stopPropagation()}>
-        <div className={cx(queueClasses.header, 'handle')}>
+        <div className={cx(queueClasses.header, 'lyricsHandle')}>
           <div className={queueClasses.title}>
             <span>
               <i className='fas fa-grip-vertical' />
