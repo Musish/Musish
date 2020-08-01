@@ -2,13 +2,13 @@ import cx from 'classnames';
 import React from 'react';
 import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import commonClasses from '../../../../assets/styles/common.scss';
 import translate from '../../../../utils/translations/Translations';
 import AlbumItem from '../../../Common/AlbumItem/AlbumItem';
 import Loader from '../../../Common/Loader/Loader';
 import PageContent from '../../../Common/PageContent/PageContent';
 import PageTitle from '../../../Common/PageTitle/PageTitle';
 import PlaylistItem from '../../../Common/PlaylistItem/PlaylistItem';
-import commonClasses from '../../../../assets/styles/common.scss';
 import classes from './ForYouPage.scss';
 
 type ForYouPageProps = RouteComponentProps;

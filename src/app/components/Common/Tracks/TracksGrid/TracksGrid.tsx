@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import TrackListItem from '../TracksList/TracksListItem';
 import commonClasses from '../../../../assets/styles/common.scss';
+import TrackListItem from '../TracksList/TracksListItem';
 import classes from './TracksGrid.scss';
 
 interface TracksGridProps {

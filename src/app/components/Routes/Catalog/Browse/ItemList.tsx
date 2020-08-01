@@ -1,9 +1,9 @@
 import cx from 'classnames';
 import React, { ReactNode, useEffect, useState } from 'react';
+import commonClasses from '../../../../assets/styles/common.scss';
 import AlbumItem from '../../../Common/AlbumItem/AlbumItem';
 import CuratorItem from '../../../Common/CuratorItem/CuratorItem';
 import PlaylistItem from '../../../Common/PlaylistItem/PlaylistItem';
-import commonClasses from '../../../../assets/styles/common.scss';
 import classes from './BrowsePage.scss';
 import MediaItem = MusicKit.MediaItem;
 import Resource = MusicKit.Resource;
