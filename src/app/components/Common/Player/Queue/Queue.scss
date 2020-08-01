@@ -1,4 +1,5 @@
-@import "../../../../assets/styles/settings/colors";
+@import '../../../../assets/styles/common.scss';
+@import '../../../../assets/styles/settings/colors';
 
 .modal {
   position: absolute;
@@ -67,10 +68,12 @@
   }
 }
 
-.QueueList {
-  position: relative;
-  width: 400px;
-  padding: 0;
+.queueList {
+  @extend .scrollWrapper;
+
+  // position: relative;
+  // width: 400px;
+  // padding: 0;
 }
 
 .queueItem {
@@ -159,7 +162,7 @@
     > i {
       padding: 5px 5px;
       margin-right: 15px;
-      margin-left:5px;
+      margin-left: 5px;
       color: $background_color;
       cursor: pointer;
       transition: color 0.1s;
