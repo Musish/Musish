@@ -98,6 +98,15 @@ img {
   &:hover {
     scrollbar-color: lighten($accent_color, 25%) $background_color;
   }
+
+  &-thick {
+    @extend .scrollWrapper;
+    &::-webkit-scrollbar {
+      width: 9px;
+      height: 9px;
+    }
+    scrollbar-width: unset; // Firefox specific
+  }
 }
 
 :global {

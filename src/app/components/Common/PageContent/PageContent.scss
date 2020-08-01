@@ -1,9 +1,18 @@
+@import '../../../assets/styles/common.scss';
+
 .pageContent {
+  @extend .scrollWrapper-thick;
+
   padding: 0 1.5em 15px;
   flex: 1;
   overflow: auto;
 
-  > h1, h2, h3, h3, h4, h5 {
+  > h1,
+  h2,
+  h3,
+  h3,
+  h4,
+  h5 {
     margin: 15px 0 5px 0;
   }
 }
