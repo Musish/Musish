@@ -30,46 +30,6 @@
   }
 }
 
-.scrollWrapper {
-  overflow: auto;
-
-  &::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
-    border-radius: 1px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: $background_color;
-    border-radius: 1px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: lighten($accent_color, 40%);
-    border-radius: 1px;
-    cursor: pointer;
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: $accent_color;
-  }
-
-  &:hover::-webkit-scrollbar-thumb {
-    background: lighten($accent_color, 25%);
-  }
-
-  &::-webkit-scrollbar-corner {
-    display: none;
-  }
-
-  // Firefox specific
-  scrollbar-width: thin;
-  scrollbar-color: lighten($accent_color, 40%) $background_color;
-  &:hover {
-    scrollbar-color: lighten($accent_color, 25%) $background_color;
-  }
-}
-
 .scrollGrid {
   display: grid;
   grid-auto-flow: column dense;

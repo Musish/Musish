@@ -17,7 +17,8 @@ body {
   box-sizing: border-box;
 }
 
-div, span {
+div,
+span {
   user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -35,7 +36,12 @@ a:hover {
   color: #fe2851;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
 }
 
@@ -52,6 +58,46 @@ button {
 img {
   user-drag: none;
   -webkit-user-drag: none;
+}
+
+.scrollWrapper {
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    border-radius: 1px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background_color;
+    border-radius: 1px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: lighten($accent_color, 40%);
+    border-radius: 1px;
+    cursor: pointer;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: $background_color;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background: lighten($accent_color, 25%);
+  }
+
+  &::-webkit-scrollbar-corner {
+    display: none;
+  }
+
+  // Firefox specific
+  scrollbar-width: thin;
+  scrollbar-color: lighten($accent_color, 40%) $background_color;
+  &:hover {
+    scrollbar-color: lighten($accent_color, 25%) $background_color;
+  }
 }
 
 :global {

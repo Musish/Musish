@@ -1,7 +1,8 @@
 import * as React from 'react';
 
 import TrackListItem from '../TracksList/TracksListItem';
-import * as classes from './TracksGrid.scss';
+import commonClasses from '../../../../assets/styles/common.scss';
+import classes from './TracksGrid.scss';
 
 interface TracksGridProps {
   showArtist?: boolean;
@@ -25,7 +26,7 @@ const TracksGrid: React.FC<TracksGridProps> = ({
   playTrack,
 }) => {
   return (
-    <div className={classes.scrollWrapper}>
+    <div className={commonClasses.scrollWrapper}>
       <div className={classes.trackGrid}>
         {tracks.map((track, index) => (
           <TrackListItem

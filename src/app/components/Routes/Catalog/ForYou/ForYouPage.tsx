@@ -8,6 +8,7 @@ import Loader from '../../../Common/Loader/Loader';
 import PageContent from '../../../Common/PageContent/PageContent';
 import PageTitle from '../../../Common/PageTitle/PageTitle';
 import PlaylistItem from '../../../Common/PlaylistItem/PlaylistItem';
+import commonClasses from '../../../../assets/styles/common.scss';
 import classes from './ForYouPage.scss';
 
 type ForYouPageProps = RouteComponentProps;
@@ -82,7 +83,7 @@ class ForYouPage extends React.Component<ForYouPageProps, ForYouPageState> {
     return (
       <>
         <h3>{translate.recentlyPlayed}</h3>
-        <div className={cx(classes.scrollWrapper)}>
+        <div className={cx(commonClasses.scrollWrapper)}>
           <div className={classes.scrollGrid}>
             {recentlyPlayed.map((item: RecentlyPlayedItem) => {
               switch (item.type) {
@@ -114,7 +115,7 @@ class ForYouPage extends React.Component<ForYouPageProps, ForYouPageState> {
     return (
       <>
         <h3>{translate.heavyRotation}</h3>
-        <div className={classes.scrollWrapper}>
+        <div className={commonClasses.scrollWrapper}>
           <div className={classes.scrollGrid}>
             {heavyRotation.map((item: HeavyRotationItem) => {
               switch (item.type) {
@@ -165,8 +166,8 @@ class ForYouPage extends React.Component<ForYouPageProps, ForYouPageState> {
       return (
         <React.Fragment key={id}>
           <h3>{group.attributes.title.stringForDisplay}</h3>
-          <div className={cx(classes.scrollWrapper)}>
-            <div className={cx(classes.scrollWrapper)}>
+          <div className={cx(commonClasses.scrollWrapper)}>
+            <div className={cx(commonClasses.scrollWrapper)}>
               <div className={classes.scrollGrid}>
                 {items.data.map((item: RecommendationGroupItem) => {
                   switch (item.type) {

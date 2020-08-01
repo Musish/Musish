@@ -3,6 +3,7 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import AlbumItem from '../../../Common/AlbumItem/AlbumItem';
 import CuratorItem from '../../../Common/CuratorItem/CuratorItem';
 import PlaylistItem from '../../../Common/PlaylistItem/PlaylistItem';
+import commonClasses from '../../../../assets/styles/common.scss';
 import classes from './BrowsePage.scss';
 import MediaItem = MusicKit.MediaItem;
 import Resource = MusicKit.Resource;
@@ -69,7 +70,7 @@ const ItemList: React.FC<ItemListProps> = ({
   return (
     <>
       <h3>{title}</h3>
-      <div className={classes.scrollWrapper}>
+      <div className={commonClasses.scrollWrapper}>
         <div className={cx(classes.scrollGrid)} style={styles}>
           {finalItems.map((item: MediaItem) => {
             switch (type) {
