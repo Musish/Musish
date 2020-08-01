@@ -26,7 +26,7 @@ const TracksGrid: React.FC<TracksGridProps> = ({
   playTrack,
 }) => {
   return (
-    <div className={commonClasses.scrollWrapper}>
+    <div className={commonClasses.scrollWrapperThin}>
       <div className={classes.trackGrid}>
         {tracks.map((track, index) => (
           <TrackListItem

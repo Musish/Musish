@@ -64,8 +64,8 @@ img {
   overflow: auto;
 
   &::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+    width: 7px;
+    height: 7px;
     border-radius: 2px;
   }
 
@@ -106,7 +106,16 @@ img {
     scrollbar-color: lighten($accent_color, 18%) $background_color;
   }
 
-  &-thick {
+  &Thin {
+    @extend .scrollWrapper;
+    &::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    scrollbar-width: thin; // Firefox specific
+  }
+
+  &Thick {
     @extend .scrollWrapper;
     &::-webkit-scrollbar {
       width: 9px;

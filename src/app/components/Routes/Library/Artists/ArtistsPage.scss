@@ -12,7 +12,7 @@
 }
 
 .artistList {
-  @extend .scrollWrapper;
+  @extend .scrollWrapperThin;
 
   width: 250px;
   height: 100%;

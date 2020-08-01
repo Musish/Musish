@@ -70,7 +70,7 @@ const ItemList: React.FC<ItemListProps> = ({
   return (
     <>
       <h3>{title}</h3>
-      <div className={commonClasses.scrollWrapper}>
+      <div className={commonClasses.scrollWrapperThin}>
         <div className={cx(classes.scrollGrid)} style={styles}>
           {finalItems.map((item: MediaItem) => {
             switch (type) {

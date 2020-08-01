@@ -1,7 +1,7 @@
 @import '../../../assets/styles/common.scss';
 
 .pageContent {
-  @extend .scrollWrapper-thick;
+  @extend .scrollWrapperThick;
 
   padding: 0 1.5em 15px;
   flex: 1;

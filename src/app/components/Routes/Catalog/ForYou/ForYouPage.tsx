@@ -83,7 +83,7 @@ class ForYouPage extends React.Component<ForYouPageProps, ForYouPageState> {
     return (
       <>
         <h3>{translate.recentlyPlayed}</h3>
-        <div className={cx(commonClasses.scrollWrapper)}>
+        <div className={cx(commonClasses.scrollWrapperThin)}>
           <div className={classes.scrollGrid}>
             {recentlyPlayed.map((item: RecentlyPlayedItem) => {
               switch (item.type) {
@@ -115,7 +115,7 @@ class ForYouPage extends React.Component<ForYouPageProps, ForYouPageState> {
     return (
       <>
         <h3>{translate.heavyRotation}</h3>
-        <div className={commonClasses.scrollWrapper}>
+        <div className={commonClasses.scrollWrapperThin}>
           <div className={classes.scrollGrid}>
             {heavyRotation.map((item: HeavyRotationItem) => {
               switch (item.type) {
@@ -166,8 +166,8 @@ class ForYouPage extends React.Component<ForYouPageProps, ForYouPageState> {
       return (
         <React.Fragment key={id}>
           <h3>{group.attributes.title.stringForDisplay}</h3>
-          <div className={cx(commonClasses.scrollWrapper)}>
-            <div className={cx(commonClasses.scrollWrapper)}>
+          <div className={cx(commonClasses.scrollWrapperThin)}>
+            <div className={cx(commonClasses.scrollWrapperThin)}>
               <div className={classes.scrollGrid}>
                 {items.data.map((item: RecommendationGroupItem) => {
                   switch (item.type) {
