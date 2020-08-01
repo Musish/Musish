@@ -64,19 +64,19 @@ img {
   overflow: auto;
 
   &::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
-    border-radius: 1px;
+    width: 4px;
+    height: 4px;
+    border-radius: 2px;
   }
 
   &::-webkit-scrollbar-track {
     background: $background_color;
-    border-radius: 1px;
+    border-radius: 2px;
   }
 
   &::-webkit-scrollbar-thumb {
     background: lighten($accent_color, 40%);
-    border-radius: 1px;
+    border-radius: 2px;
     cursor: pointer;
   }
 
