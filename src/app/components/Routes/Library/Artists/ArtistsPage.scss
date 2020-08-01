@@ -1,3 +1,4 @@
+@import '../../../../assets/styles/common.scss';
 @import '../../../../assets/styles/settings/colors';
 
 .container {
@@ -11,6 +12,8 @@
 }
 
 .artistList {
+  @extend .scrollWrapper;
+
   width: 250px;
   height: 100%;
   border-right: solid 1px $container_background;
