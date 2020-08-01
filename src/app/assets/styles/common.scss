@@ -88,6 +88,10 @@ img {
     background: lighten($accent_color, 25%);
   }
 
+  &::-webkit-scrollbar-thumb:active {
+    background: lighten($accent_color, 18%);
+  }
+
   &::-webkit-scrollbar-corner {
     display: none;
   }
@@ -97,6 +101,9 @@ img {
   scrollbar-color: lighten($accent_color, 40%) $background_color;
   &:hover {
     scrollbar-color: lighten($accent_color, 25%) $background_color;
+  }
+  &:active {
+    scrollbar-color: lighten($accent_color, 18%) $background_color;
   }
 
   &-thick {
