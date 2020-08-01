@@ -27,6 +27,13 @@
   &:hover::-webkit-scrollbar-thumb {
     background: lighten($accent_color, 25%);
   }
+
+  // Firefox specific
+  scrollbar-width: thin;
+  scrollbar-color: lighten($accent_color, 40%) $background_color;
+  &:hover {
+    scrollbar-color: lighten($accent_color, 25%) $background_color;
+  }
 }
 
 .scrollGrid {

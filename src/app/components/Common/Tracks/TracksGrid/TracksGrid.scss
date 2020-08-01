@@ -27,6 +27,13 @@
   &:hover::-webkit-scrollbar-thumb {
     background: lighten($accent_color, 25%);
   }
+
+  // Firefox specific
+  scrollbar-width: thin;
+  scrollbar-color: lighten($accent_color, 40%) $background_color;
+  &:hover {
+    scrollbar-color: lighten($accent_color, 25%) $background_color;
+  }
 }
 
 .trackGrid {
@@ -42,7 +49,8 @@
     width: 350px;
     height: 50px;
 
-    &:nth-child(4n+1) > :first-child > :first-child:before  { // This is getting a little bit too "creative" now...
+    // This is getting a little bit too "creative" now...
+    &:nth-child(4n + 1) > :first-child > :first-child:before {
       display: none;
     }
   }

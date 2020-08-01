@@ -1,4 +1,4 @@
-  @import '../../../../assets/styles/settings/colors';
+@import '../../../../assets/styles/settings/colors';
 
 .albumHeading {
   margin-top: 20px;
@@ -25,11 +25,10 @@
     justify-content: left;
 
     > * {
-      margin: 5px 5px
+      margin: 5px 5px;
     }
   }
 }
-
 
 .scrollWrapper {
   overflow: auto;
@@ -61,6 +60,13 @@
 
   &::-webkit-scrollbar-corner {
     display: none;
+  }
+
+  // Firefox specific
+  scrollbar-width: thin;
+  scrollbar-color: lighten($accent_color, 40%) $background_color;
+  &:hover {
+    scrollbar-color: lighten($accent_color, 25%) $background_color;
   }
 }
 
