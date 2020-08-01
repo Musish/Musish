@@ -4,6 +4,10 @@ import translate from '../../../../utils/translations/Translations';
 import Loader from '../../Loader/Loader';
 import classes from './LyricsModal.scss';
 
+// It is not possible to assign CSS dynamically by traversing the DOM in Javascript, the iframe's child elements cannot be accessed.
+// It is also not possible to use the embedded content's class-names and assign properties to them in our own CSS files - these will not be applied.
+// Our only option seems to be to compile and enter CSS dynamically into the below variable.
+// Consider: "https://sass-lang.com/documentation/js-api"
 const iframeCss = `
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
 <style>
@@ -11,8 +15,19 @@ const iframeCss = `
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Roboto', sans-serif;
+      scrollbar-color: #d4d4d4 #eee;
   }
   
+  ::-webkit-scrollbar {
+    width: 9px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #eee;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #d4d4d4;
+  }
+
   .rg_embed_body * {
     background: none !important;
     color: #000 !important;
