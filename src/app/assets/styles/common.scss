@@ -66,17 +66,17 @@ img {
   &::-webkit-scrollbar {
     width: 7px;
     height: 7px;
-    border-radius: 2px;
+    border-radius: 99px;
   }
 
   &::-webkit-scrollbar-track {
     background: $background_color;
-    border-radius: 2px;
+    border-radius: 99px;
   }
 
   &::-webkit-scrollbar-thumb {
     background: lighten($accent_color, 40%);
-    border-radius: 2px;
+    border-radius: 99px;
     cursor: pointer;
   }
 
