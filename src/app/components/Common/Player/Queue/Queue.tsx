@@ -72,12 +72,14 @@ class Queue extends React.Component<QueueProps> {
               </span>
             </div>
           </div>
-          <QueueList
-            onSortEnd={this.onSortEnd}
-            shouldCancelStart={Queue.shouldCancelStart}
-            helperClass={classes.sortableHelper}
-            removeItemFunc={this.removeItem}
-          />
+          <div className={classes.queueListWrapper}>
+            <QueueList
+              onSortEnd={this.onSortEnd}
+              shouldCancelStart={Queue.shouldCancelStart}
+              helperClass={classes.sortableHelper}
+              removeItemFunc={this.removeItem}
+            />
+          </div>
         </div>
       </Draggable>
     );
