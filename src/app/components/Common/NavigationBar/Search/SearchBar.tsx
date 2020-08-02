@@ -132,7 +132,8 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
 
     const catalogItems = catalogData && catalogData[type] ? catalogData[type].data : [];
 
-    return [...libraryItems, ...catalogItems];
+    // Filter out invalid items returned from the API.
+    return [...libraryItems, ...catalogItems].filter(item => item.attributes !== undefined);
   };
 
   public renderType = (
