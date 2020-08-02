@@ -15,17 +15,44 @@ const iframeCss = `
       margin: 0;
       padding: 0;
       font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'Roboto', sans-serif;
-      scrollbar-color: #d4d4d4 #eee;
+
+      scrollbar-width: thin;
+      scrollbar-color: #ffa7b8 #fff;
   }
-  
+
+  html {
+    padding-right: 6px;
+  }
+
+  // :hover selector is not used because it behaves strangely in here
+
+  :active {
+    scrollbar-color: #fe839b #fff;
+  }
+
   ::-webkit-scrollbar {
-    width: 9px;
+    width: 7px;
+    height: 7px;
+    border-radius: 99px;
   }
+
   ::-webkit-scrollbar-track {
-    background: #eee;
+    background: #fff;
+    border-radius: 99px;
   }
+
   ::-webkit-scrollbar-thumb {
-    background: #d4d4d4;
+    background: #ffa7b8;
+    border-radius: 99px;
+    cursor: pointer;
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background: #fe839b;
+  }
+
+  ::-webkit-scrollbar-corner {
+    display: none;
   }
 
   .rg_embed_body * {

@@ -1,4 +1,4 @@
-@import "../../../../assets/styles/settings/colors";
+@import '../../../../assets/styles/settings/colors';
 
 .modal {
   width: 400px;
@@ -7,7 +7,8 @@
 }
 
 .lyricsSection {
-  height: 455px;
+  height: 100%;
+  margin: 6px;
 }
 
 .noMatch {
