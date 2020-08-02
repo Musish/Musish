@@ -3,7 +3,9 @@
 .pageContent {
   @extend .scrollWrapperThick;
 
-  padding: 0 1.5em 15px;
+  // padding: 0 1.5em 15px;
+  margin: 10px 8px 9px 22px;
+  padding-right: 8px;
   flex: 1;
   overflow: auto;
 

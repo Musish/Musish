@@ -18,8 +18,10 @@ function Modal(props: ModalProps) {
 
   return (
     <div className={classes.container} onClick={props.handleClose}>
-      <div className={classes.modal} onClick={e => e.stopPropagation()} style={inlineStyles}>
-        {props.render()}
+      <div className={classes.modalWrapper}>
+        <div className={classes.modal} onClick={e => e.stopPropagation()} style={inlineStyles}>
+          {props.render()}
+        </div>
       </div>
     </div>
   );
