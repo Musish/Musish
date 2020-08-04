@@ -79,12 +79,14 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
             'timestamp[0]': Math.floor(Date.now() / 1000),
             'album[0]': item.albumName,
             'trackNumber[0]': item.trackNumber,
+            'duration[0]': Math.round(item.playbackDuration / 1000),
           }
         : {
             artist: item.artistName,
             track: item.title,
             album: item.albumName,
             trackNumber: item.trackNumber,
+            duration: Math.round(item.playbackDuration / 1000),
           };
 
     try {
