@@ -163,7 +163,7 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
   }, []);
 
   useEffect(() => {
-    if (mk.mediaItem && mk.mediaItem.item) {
+    if (connected && mk.mediaItem && mk.mediaItem.item) {
       scrobble(mk.mediaItem.item);
     }
   }, [mk.mediaItem]);
