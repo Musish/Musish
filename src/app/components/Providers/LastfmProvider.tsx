@@ -6,6 +6,11 @@ import Alert from 'react-s-alert';
 import withMK from '../../hoc/withMK';
 import translate from '../../utils/translations/Translations';
 
+enum UpdateType {
+  Scrobble,
+  UpdateNowPlaying,
+}
+
 const apikey = process.env.LASTFM_API_KEY;
 const secret = process.env.LASTFM_SECRET;
 
@@ -65,17 +70,29 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
     return data;
   }
 
-  async function scrobble(item: MusicKit.MediaItem) {
-    const params = {
-      'artist[0]': item.artistName,
-      'track[0]': item.title,
-      'timestamp[0]': Math.floor(Date.now() / 1000),
-      'album[0]': item.albumName,
-      'trackNumber[0]': item.trackNumber,
-    };
+  async function sendUpdate(type: UpdateType, item: MusicKit.MediaItem) {
+    const params =
+      type === UpdateType.Scrobble
+        ? {
+            'artist[0]': item.artistName,
+            'track[0]': item.title,
+            'timestamp[0]': Math.floor(Date.now() / 1000),
+            'album[0]': item.albumName,
+            'trackNumber[0]': item.trackNumber,
+          }
+        : {
+            artist: item.artistName,
+            track: item.title,
+            album: item.albumName,
+            trackNumber: item.trackNumber,
+          };
 
     try {
-      await request(true, 'track.scrobble', params);
+      await request(
+        true,
+        type === UpdateType.Scrobble ? 'track.scrobble' : 'track.updateNowPlaying',
+        params,
+      );
     } catch (e) {
       if (e.response && e.response.data) {
         const { data } = e.response;
@@ -164,7 +181,8 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
 
   useEffect(() => {
     if (connected && mk.mediaItem && mk.mediaItem.item) {
-      scrobble(mk.mediaItem.item);
+      sendUpdate(UpdateType.UpdateNowPlaying, mk.mediaItem.item);
+      sendUpdate(UpdateType.Scrobble, mk.mediaItem.item);
     }
   }, [mk.mediaItem]);
 
