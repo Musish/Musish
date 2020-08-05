@@ -1,10 +1,15 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import md5 from 'js-md5';
 import qs from 'qs';
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import Alert from 'react-s-alert';
 import withMK from '../../hoc/withMK';
+import useMK from '../../hooks/useMK';
 import translate from '../../utils/translations/Translations';
+
+const MIN_SCROBBLE_SONG_LENGTH_MS = 30000; // Last.fm recommends: 30s
+const MAX_SCROBBLE_WAIT_MS = 240000; // Last.fm recommends 4m
+const SCROBBLE_THRESHOLD = 0.5; // Last.fm recommends: >= 50%
 
 enum UpdateType {
   Scrobble,
@@ -38,6 +43,14 @@ export const LastfmContext = React.createContext<LastfmProviderValue>({
 
 const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmProviderProps) => {
   const [connected, setConnected] = useState(() => !!getSK());
+  const trackStatus = useRef({
+    id: '',
+    playing: false,
+    playTimeMs: 0,
+    lastTimestamp: 0,
+    scrobbleTimeoutId: 0,
+    hasScrobbled: false,
+  });
 
   async function request(isWrite: boolean, method: string, callParams = {}, sk = true) {
     const params: any = {
@@ -181,18 +194,64 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
     fetchToken();
   }, []);
 
-  useEffect(() => {
-    if (connected && mk.mediaItem && mk.mediaItem.item) {
-      sendUpdate(UpdateType.UpdateNowPlaying, mk.mediaItem.item);
-      sendUpdate(UpdateType.Scrobble, mk.mediaItem.item);
-    }
-  }, [mk.mediaItem]);
+  useMK({
+    mediaItem: MusicKit.Events.mediaItemDidChange,
+    playbackState: MusicKit.Events.playbackStateDidChange,
+  });
 
   const state: LastfmProviderValue = {
     login,
     reset,
     connected,
   };
+
+  if (connected) {
+    // Cancels upcoming scrobbles and schedules a new scrobble
+    const scheduleScrobble = () => {
+      clearTimeout(trackStatus.current.scrobbleTimeoutId);
+
+      if (
+        !trackStatus.current.hasScrobbled &&
+        mk.instance.player.isPlaying &&
+        mk.mediaItem &&
+        mk.mediaItem.item.playbackDuration > MIN_SCROBBLE_SONG_LENGTH_MS
+      ) {
+        trackStatus.current.scrobbleTimeoutId = window.setTimeout(() => {
+          trackStatus.current.hasScrobbled = true;
+          sendUpdate(UpdateType.Scrobble, mk.mediaItem.item);
+        }, Math.min(MAX_SCROBBLE_WAIT_MS, mk.mediaItem.item.playbackDuration * SCROBBLE_THRESHOLD - trackStatus.current.playTimeMs));
+      }
+    };
+
+    // New track has started playin
+    if (
+      mk.mediaItem &&
+      trackStatus.current.id !== mk.mediaItem.item.id &&
+      mk.instance.player.isPlaying
+    ) {
+      trackStatus.current.id = mk.mediaItem.item.id;
+      trackStatus.current.playTimeMs = 0;
+      trackStatus.current.lastTimestamp = performance.now();
+      trackStatus.current.hasScrobbled = false;
+
+      sendUpdate(UpdateType.UpdateNowPlaying, mk.mediaItem.item);
+      scheduleScrobble();
+    }
+    // Track has stopped playing
+    else if (!mk.instance.player.isPlaying && trackStatus.current.playing) {
+      trackStatus.current.playTimeMs += performance.now() - trackStatus.current.lastTimestamp;
+    }
+
+    // Track has started or stopped playing
+    if (trackStatus.current.playing !== mk.instance.player.isPlaying) {
+      trackStatus.current.playing = mk.instance.player.isPlaying;
+      trackStatus.current.lastTimestamp = performance.now();
+
+      if (mk.instance.player.isPlaying) {
+        scheduleScrobble();
+      }
+    }
+  }
 
   return <LastfmContext.Provider value={state}>{children}</LastfmContext.Provider>;
 };
