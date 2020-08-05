@@ -226,7 +226,9 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
     // New track has started playin
     if (
       mk.mediaItem &&
-      trackStatus.current.id !== mk.mediaItem.item.id &&
+      (trackStatus.current.id !== mk.mediaItem.item.id ||
+        // Track is being repeated (either manually or automatically)
+        (mk.instance.player.currentPlaybackProgress === 0 && trackStatus.current.hasScrobbled)) &&
       mk.instance.player.isPlaying
     ) {
       trackStatus.current.id = mk.mediaItem.item.id;
