@@ -95,3 +95,8 @@ export const getRatingUrl = (type: string, id: any) => {
 export function setPseudoRoute(route: string) {
   window.history.pushState('', '', route);
 }
+
+// TODO: Replace this with comprehensive validation of API responses.
+export function hasAttributes(resource: any): boolean {
+  return !!resource.attributes;
+}

@@ -4,6 +4,7 @@ import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import commonClasses from '../../../../assets/styles/common.scss';
 import translate from '../../../../utils/translations/Translations';
+import { hasAttributes } from '../../../../utils/Utils';
 import AlbumItem from '../../../Common/AlbumItem/AlbumItem';
 import Loader from '../../../Common/Loader/Loader';
 import PageContent from '../../../Common/PageContent/PageContent';
@@ -42,14 +43,14 @@ class ForYouPage extends React.Component<ForYouPageProps, ForYouPageState> {
 
     let heavyRotation;
     try {
-      heavyRotation = await music.api.historyHeavyRotation();
+      heavyRotation = (await music.api.historyHeavyRotation()).filter(hasAttributes);
     } catch (error) {
       heavyRotation = false;
     }
 
     let recentlyPlayed;
     try {
-      recentlyPlayed = await music.api.recentPlayed();
+      recentlyPlayed = (await music.api.recentPlayed()).filter(hasAttributes);
     } catch (error) {
       recentlyPlayed = false;
     }
@@ -57,7 +58,7 @@ class ForYouPage extends React.Component<ForYouPageProps, ForYouPageState> {
     let recommendations;
     try {
       // @ts-ignore Incorrect type signature
-      recommendations = await music.api.recommendations();
+      recommendations = (await music.api.recommendations()).filter(hasAttributes);
     } catch (error) {
       recommendations = false;
     }
