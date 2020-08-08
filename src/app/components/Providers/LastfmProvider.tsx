@@ -45,12 +45,11 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
   const [connected, setConnected] = useState(() => !!getSK());
   const trackStatus = useRef({
     id: '',
-    playing: false,
     playTimeMs: 0,
-    lastTimestamp: 0,
+    playingSince: 0,
     scrobbleTimeoutId: 0,
     hasScrobbled: false,
-  });
+  }).current;
 
   async function request(isWrite: boolean, method: string, callParams = {}, sk = true) {
     const params: any = {
@@ -206,52 +205,54 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
   };
 
   if (connected) {
+    const track = mk.mediaItem && mk.mediaItem.item;
+    const player = mk.instance.player;
+
     // Cancels upcoming scrobbles and schedules a new scrobble
     const scheduleScrobble = () => {
-      clearTimeout(trackStatus.current.scrobbleTimeoutId);
+      clearTimeout(trackStatus.scrobbleTimeoutId);
 
       if (
-        !trackStatus.current.hasScrobbled &&
-        mk.instance.player.isPlaying &&
-        mk.mediaItem &&
-        mk.mediaItem.item.playbackDuration > MIN_SCROBBLE_SONG_LENGTH_MS
+        !trackStatus.hasScrobbled &&
+        track &&
+        track.playbackDuration > MIN_SCROBBLE_SONG_LENGTH_MS
       ) {
-        trackStatus.current.scrobbleTimeoutId = window.setTimeout(() => {
-          trackStatus.current.hasScrobbled = true;
-          sendUpdate(UpdateType.Scrobble, mk.mediaItem.item);
-        }, Math.min(MAX_SCROBBLE_WAIT_MS, mk.mediaItem.item.playbackDuration * SCROBBLE_THRESHOLD - trackStatus.current.playTimeMs));
+        trackStatus.scrobbleTimeoutId = window.setTimeout(() => {
+          trackStatus.hasScrobbled = true;
+          sendUpdate(UpdateType.Scrobble, track);
+        }, Math.min(MAX_SCROBBLE_WAIT_MS, track.playbackDuration * SCROBBLE_THRESHOLD - trackStatus.playTimeMs));
       }
     };
 
-    // New track has started playin
+    // Reset scrobble-status
     if (
-      mk.mediaItem &&
-      (trackStatus.current.id !== mk.mediaItem.item.id ||
-        // Track is being repeated (either manually or automatically)
-        (mk.instance.player.currentPlaybackProgress === 0 && trackStatus.current.hasScrobbled)) &&
-      mk.instance.player.isPlaying
+      // New track has started playing
+      (track && trackStatus.id !== track.id) ||
+      // Track is being repeated
+      (player.currentPlaybackProgress === 0 && trackStatus.hasScrobbled)
     ) {
-      trackStatus.current.id = mk.mediaItem.item.id;
-      trackStatus.current.playTimeMs = 0;
-      trackStatus.current.lastTimestamp = performance.now();
-      trackStatus.current.hasScrobbled = false;
+      trackStatus.id = track.id;
+      trackStatus.playTimeMs = 0;
+      trackStatus.playingSince = 0;
+      trackStatus.hasScrobbled = false;
 
-      sendUpdate(UpdateType.UpdateNowPlaying, mk.mediaItem.item);
-      scheduleScrobble();
-    }
-    // Track has stopped playing
-    else if (!mk.instance.player.isPlaying && trackStatus.current.playing) {
-      trackStatus.current.playTimeMs += performance.now() - trackStatus.current.lastTimestamp;
+      sendUpdate(UpdateType.UpdateNowPlaying, track);
     }
 
-    // Track has started or stopped playing
-    if (trackStatus.current.playing !== mk.instance.player.isPlaying) {
-      trackStatus.current.playing = mk.instance.player.isPlaying;
-      trackStatus.current.lastTimestamp = performance.now();
-
-      if (mk.instance.player.isPlaying) {
+    // Started playing
+    if (player.isPlaying) {
+      if (!trackStatus.playingSince) {
+        trackStatus.playingSince = performance.now();
         scheduleScrobble();
       }
+    }
+    // Stopped playing
+    else {
+      if (trackStatus.playingSince) {
+        trackStatus.playTimeMs += performance.now() - trackStatus.playingSince;
+        trackStatus.playingSince = 0;
+      }
+      clearTimeout(trackStatus.scrobbleTimeoutId);
     }
   }
 
