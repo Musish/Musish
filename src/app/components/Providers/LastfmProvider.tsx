@@ -4,7 +4,6 @@ import qs from 'qs';
 import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import Alert from 'react-s-alert';
 import withMK from '../../hoc/withMK';
-import useMK from '../../hooks/useMK';
 import translate from '../../utils/translations/Translations';
 
 const MIN_SCROBBLE_SONG_LENGTH_MS = 30000; // Last.fm recommends: 30s
@@ -193,11 +192,6 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
     fetchToken();
   }, []);
 
-  useMK({
-    mediaItem: MusicKit.Events.mediaItemDidChange,
-    playbackState: MusicKit.Events.playbackStateDidChange,
-  });
-
   const state: LastfmProviderValue = {
     login,
     reset,
@@ -261,6 +255,7 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
 
 const bindings = {
   [MusicKit.Events.mediaItemDidChange]: 'mediaItem',
+  [MusicKit.Events.playbackStateDidChange]: 'playbackState',
 };
 
 export default withMK(LastfmProvider, bindings);
