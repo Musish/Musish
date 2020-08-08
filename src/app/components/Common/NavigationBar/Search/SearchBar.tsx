@@ -5,6 +5,7 @@ import { RouteComponentProps } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import withMK from '../../../../hoc/withMK';
 import translate from '../../../../utils/translations/Translations';
+import { hasAttributes } from '../../../../utils/Utils';
 import Loader from '../../Loader/Loader';
 import AlbumResultItem from './AlbumResultItem';
 import ArtistResultItem from './ArtistResultItem';
@@ -132,7 +133,7 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
 
     const catalogItems = catalogData && catalogData[type] ? catalogData[type].data : [];
 
-    return [...libraryItems, ...catalogItems];
+    return [...libraryItems, ...catalogItems].filter(hasAttributes);
   };
 
   public renderType = (
