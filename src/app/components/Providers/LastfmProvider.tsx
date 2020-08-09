@@ -82,23 +82,41 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
   }
 
   async function sendUpdate(type: UpdateType, item: MusicKit.MediaItem) {
-    const params =
-      type === UpdateType.Scrobble
-        ? {
-            'artist[0]': item.artistName,
-            'track[0]': item.title,
-            'timestamp[0]': Math.floor(Date.now() / 1000),
-            'album[0]': item.albumName,
-            'trackNumber[0]': item.trackNumber,
-            'duration[0]': Math.round(item.playbackDuration / 1000),
-          }
-        : {
-            artist: item.artistName,
-            track: item.title,
-            album: item.albumName,
-            trackNumber: item.trackNumber,
-            duration: Math.round(item.playbackDuration / 1000),
-          };
+    let metadataAlbumArtist: string | undefined;
+    {
+      const metadataItem = item as {
+        assets?: Array<{ metadata?: { playlistArtistName?: string } }>;
+      };
+      if (
+        metadataItem.assets &&
+        metadataItem.assets[0] &&
+        metadataItem.assets[0].metadata &&
+        metadataItem.assets[0].metadata.playlistArtistName
+      ) {
+        metadataAlbumArtist = metadataItem.assets[0].metadata.playlistArtistName;
+      }
+    }
+
+    const params: { [key: string]: any } = {};
+
+    function addParameters(parameters: { [key: string]: any }) {
+      const keySuffix = type === UpdateType.Scrobble ? '[0]' : '';
+      for (const key in parameters) {
+        if (parameters[key]) {
+          params[key + keySuffix] = parameters[key];
+        }
+      }
+    }
+
+    addParameters({
+      artist: item.artistName,
+      track: item.title,
+      timestamp: Math.floor(Date.now() / 1000),
+      album: item.albumName,
+      trackNumber: item.trackNumber,
+      duration: Math.round(item.playbackDuration / 1000),
+      albumArtist: metadataAlbumArtist,
+    });
 
     try {
       await request(
