@@ -10,9 +10,10 @@ const MIN_SCROBBLE_SONG_LENGTH_MS = 30000; // Last.fm recommends: 30s
 const MAX_SCROBBLE_WAIT_MS = 240000; // Last.fm recommends 4m
 const SCROBBLE_THRESHOLD = 0.5; // Last.fm recommends: >= 50%
 
-enum UpdateType {
-  Scrobble,
-  UpdateNowPlaying,
+enum RequestType {
+  Scrobble = 'track.scrobble',
+  UpdateNowPlaying = 'track.updateNowPlaying',
+  GetSession = 'auth.getSession',
 }
 
 const apikey = process.env.LASTFM_API_KEY;
@@ -50,9 +51,22 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
     hasScrobbled: false,
   }).current;
 
-  async function request(isWrite: boolean, method: string, callParams = {}, sk = true) {
+  async function request(isWrite: boolean, method: RequestType, callParams = {}, sk = true) {
+    function getValidatedCallParams(inParams: { [key: string]: any }): object {
+      const formattedParams: { [key: string]: any } = {};
+      const keySuffix = method === RequestType.Scrobble ? '[0]' : '';
+
+      for (const key in inParams) {
+        if (inParams[key]) {
+          formattedParams[key + keySuffix] = inParams[key];
+        }
+      }
+
+      return formattedParams;
+    }
+
     const params: any = {
-      ...callParams,
+      ...getValidatedCallParams(callParams),
       method,
       api_key: apikey,
     };
@@ -81,7 +95,7 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
     return data;
   }
 
-  async function sendUpdate(type: UpdateType, item: MusicKit.MediaItem) {
+  async function sendUpdate(type: RequestType, item: MusicKit.MediaItem) {
     let metadataAlbumArtist: string | undefined;
     {
       const metadataItem = item as {
@@ -97,18 +111,7 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
       }
     }
 
-    const params: { [key: string]: any } = {};
-
-    function addParameters(parameters: { [key: string]: any }) {
-      const keySuffix = type === UpdateType.Scrobble ? '[0]' : '';
-      for (const key in parameters) {
-        if (parameters[key]) {
-          params[key + keySuffix] = parameters[key];
-        }
-      }
-    }
-
-    addParameters({
+    const params = {
       artist: item.artistName,
       track: item.title,
       timestamp: Math.floor(Date.now() / 1000),
@@ -116,14 +119,10 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
       trackNumber: item.trackNumber,
       duration: Math.round(item.playbackDuration / 1000),
       albumArtist: metadataAlbumArtist,
-    });
+    };
 
     try {
-      await request(
-        true,
-        type === UpdateType.Scrobble ? 'track.scrobble' : 'track.updateNowPlaying',
-        params,
-      );
+      await request(true, type, params);
     } catch (e) {
       if (e.response && e.response.data) {
         const { data } = e.response;
@@ -162,7 +161,7 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
       token,
     };
 
-    const data = await request(true, 'auth.getSession', params, false);
+    const data = await request(true, RequestType.GetSession, params, false);
 
     localStorage.setItem(SK_STORAGE_KEY, data.session.key);
 
@@ -231,7 +230,7 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
       ) {
         trackStatus.scrobbleTimeoutId = window.setTimeout(() => {
           trackStatus.hasScrobbled = true;
-          sendUpdate(UpdateType.Scrobble, track);
+          sendUpdate(RequestType.Scrobble, track);
         }, Math.min(MAX_SCROBBLE_WAIT_MS, track.playbackDuration * SCROBBLE_THRESHOLD - trackStatus.playTimeMs));
       }
     };
@@ -248,7 +247,7 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
       trackStatus.playingSince = 0;
       trackStatus.hasScrobbled = false;
 
-      sendUpdate(UpdateType.UpdateNowPlaying, track);
+      sendUpdate(RequestType.UpdateNowPlaying, track);
     }
 
     // Started playing
