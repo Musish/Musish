@@ -10,7 +10,7 @@ const MIN_SCROBBLE_SONG_LENGTH_MS = 30000; // Last.fm recommends: 30s
 const MAX_SCROBBLE_WAIT_MS = 240000; // Last.fm recommends 4m
 const SCROBBLE_THRESHOLD = 0.5; // Last.fm recommends: >= 50%
 
-enum RequestType {
+enum ApiMethod {
   Scrobble = 'track.scrobble',
   UpdateNowPlaying = 'track.updateNowPlaying',
   GetSession = 'auth.getSession',
@@ -51,22 +51,9 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
     hasScrobbled: false,
   }).current;
 
-  async function request(isWrite: boolean, method: RequestType, callParams = {}, sk = true) {
-    function getValidatedCallParams(inParams: { [key: string]: any }): object {
-      const formattedParams: { [key: string]: any } = {};
-      const keySuffix = method === RequestType.Scrobble ? '[0]' : '';
-
-      for (const key in inParams) {
-        if (inParams[key]) {
-          formattedParams[key + keySuffix] = inParams[key];
-        }
-      }
-
-      return formattedParams;
-    }
-
+  async function request(isWrite: boolean, method: ApiMethod, callParams = {}, sk = true) {
     const params: any = {
-      ...getValidatedCallParams(callParams),
+      ...callParams,
       method,
       api_key: apikey,
     };
@@ -95,8 +82,17 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
     return data;
   }
 
-  async function sendUpdate(type: RequestType, item: MusicKit.MediaItem) {
-    let metadataAlbumArtist: string | undefined;
+  async function sendUpdate(type: ApiMethod, item: MusicKit.MediaItem) {
+    const params: { [key: string]: any } = {
+      artist: item.artistName,
+      track: item.title,
+      timestamp: Math.floor(Date.now() / 1000),
+      album: item.albumName,
+      trackNumber: item.trackNumber,
+      duration: Math.round(item.playbackDuration / 1000),
+    };
+
+    // Find the album-artist and add it to params
     {
       const metadataItem = item as {
         assets?: Array<{ metadata?: { playlistArtistName?: string } }>;
@@ -107,19 +103,17 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
         metadataItem.assets[0].metadata &&
         metadataItem.assets[0].metadata.playlistArtistName
       ) {
-        metadataAlbumArtist = metadataItem.assets[0].metadata.playlistArtistName;
+        params.albumArtist = metadataItem.assets[0].metadata.playlistArtistName;
       }
     }
 
-    const params = {
-      artist: item.artistName,
-      track: item.title,
-      timestamp: Math.floor(Date.now() / 1000),
-      album: item.albumName,
-      trackNumber: item.trackNumber,
-      duration: Math.round(item.playbackDuration / 1000),
-      albumArtist: metadataAlbumArtist,
-    };
+    // Add '[0]' suffix to params when a scrobble-request is made
+    if (type === ApiMethod.Scrobble) {
+      for (const key of Object.keys(params)) {
+        params[key + '[0]'] = params[key];
+        delete params[key];
+      }
+    }
 
     try {
       await request(true, type, params);
@@ -161,7 +155,7 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
       token,
     };
 
-    const data = await request(true, RequestType.GetSession, params, false);
+    const data = await request(true, ApiMethod.GetSession, params, false);
 
     localStorage.setItem(SK_STORAGE_KEY, data.session.key);
 
@@ -230,7 +224,7 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
       ) {
         trackStatus.scrobbleTimeoutId = window.setTimeout(() => {
           trackStatus.hasScrobbled = true;
-          sendUpdate(RequestType.Scrobble, track);
+          sendUpdate(ApiMethod.Scrobble, track);
         }, Math.min(MAX_SCROBBLE_WAIT_MS, track.playbackDuration * SCROBBLE_THRESHOLD - trackStatus.playTimeMs));
       }
     };
@@ -247,7 +241,7 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
       trackStatus.playingSince = 0;
       trackStatus.hasScrobbled = false;
 
-      sendUpdate(RequestType.UpdateNowPlaying, track);
+      sendUpdate(ApiMethod.UpdateNowPlaying, track);
     }
 
     // Started playing
