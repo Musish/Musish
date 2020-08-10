@@ -40,7 +40,7 @@
     "js-md5": "^0.7.3",
     "lodash": "^4.17.13",
     "mousetrap": "^1.6.2",
-    "node-sass": "^4.10.0",
+    "node-sass": "^4.14.1",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.6.2",
     "qs": "^6.7.0",
