@@ -10,9 +10,10 @@ const MIN_SCROBBLE_SONG_LENGTH_MS = 30000; // Last.fm recommends: 30s
 const MAX_SCROBBLE_WAIT_MS = 240000; // Last.fm recommends 4m
 const SCROBBLE_THRESHOLD = 0.5; // Last.fm recommends: >= 50%
 
-enum UpdateType {
-  Scrobble,
-  UpdateNowPlaying,
+enum ApiMethod {
+  Scrobble = 'track.scrobble',
+  UpdateNowPlaying = 'track.updateNowPlaying',
+  GetSession = 'auth.getSession',
 }
 
 const apikey = process.env.LASTFM_API_KEY;
@@ -50,7 +51,7 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
     hasScrobbled: false,
   }).current;
 
-  async function request(isWrite: boolean, method: string, callParams = {}, sk = true) {
+  async function request(isWrite: boolean, method: ApiMethod, callParams = {}, sk = true) {
     const params: any = {
       ...callParams,
       method,
@@ -81,31 +82,41 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
     return data;
   }
 
-  async function sendUpdate(type: UpdateType, item: MusicKit.MediaItem) {
-    const params =
-      type === UpdateType.Scrobble
-        ? {
-            'artist[0]': item.artistName,
-            'track[0]': item.title,
-            'timestamp[0]': Math.floor(Date.now() / 1000),
-            'album[0]': item.albumName,
-            'trackNumber[0]': item.trackNumber,
-            'duration[0]': Math.round(item.playbackDuration / 1000),
-          }
-        : {
-            artist: item.artistName,
-            track: item.title,
-            album: item.albumName,
-            trackNumber: item.trackNumber,
-            duration: Math.round(item.playbackDuration / 1000),
-          };
+  async function sendUpdate(type: ApiMethod, item: MusicKit.MediaItem) {
+    const params: { [key: string]: any } = {
+      artist: item.artistName,
+      track: item.title,
+      timestamp: Math.floor(Date.now() / 1000),
+      album: item.albumName,
+      trackNumber: item.trackNumber,
+      duration: Math.round(item.playbackDuration / 1000),
+    };
+
+    // Find the album-artist and add it to params
+    {
+      const metadataItem = item as {
+        assets?: Array<{ metadata?: { playlistArtistName?: string } }>;
+      };
+      if (
+        metadataItem.assets &&
+        metadataItem.assets[0] &&
+        metadataItem.assets[0].metadata &&
+        metadataItem.assets[0].metadata.playlistArtistName
+      ) {
+        params.albumArtist = metadataItem.assets[0].metadata.playlistArtistName;
+      }
+    }
+
+    // Add '[0]' suffix to params when a scrobble-request is made
+    if (type === ApiMethod.Scrobble) {
+      for (const key of Object.keys(params)) {
+        params[key + '[0]'] = params[key];
+        delete params[key];
+      }
+    }
 
     try {
-      await request(
-        true,
-        type === UpdateType.Scrobble ? 'track.scrobble' : 'track.updateNowPlaying',
-        params,
-      );
+      await request(true, type, params);
     } catch (e) {
       if (e.response && e.response.data) {
         const { data } = e.response;
@@ -144,7 +155,7 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
       token,
     };
 
-    const data = await request(true, 'auth.getSession', params, false);
+    const data = await request(true, ApiMethod.GetSession, params, false);
 
     localStorage.setItem(SK_STORAGE_KEY, data.session.key);
 
@@ -213,7 +224,7 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
       ) {
         trackStatus.scrobbleTimeoutId = window.setTimeout(() => {
           trackStatus.hasScrobbled = true;
-          sendUpdate(UpdateType.Scrobble, track);
+          sendUpdate(ApiMethod.Scrobble, track);
         }, Math.min(MAX_SCROBBLE_WAIT_MS, track.playbackDuration * SCROBBLE_THRESHOLD - trackStatus.playTimeMs));
       }
     };
@@ -230,7 +241,7 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
       trackStatus.playingSince = 0;
       trackStatus.hasScrobbled = false;
 
-      sendUpdate(UpdateType.UpdateNowPlaying, track);
+      sendUpdate(ApiMethod.UpdateNowPlaying, track);
     }
 
     // Started playing
