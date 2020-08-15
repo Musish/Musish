@@ -1,10 +1,20 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import md5 from 'js-md5';
 import qs from 'qs';
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import Alert from 'react-s-alert';
 import withMK from '../../hoc/withMK';
 import translate from '../../utils/translations/Translations';
+
+const MIN_SCROBBLE_SONG_LENGTH_MS = 30000; // Last.fm recommends: 30s
+const MAX_SCROBBLE_WAIT_MS = 240000; // Last.fm recommends 4m
+const SCROBBLE_THRESHOLD = 0.5; // Last.fm recommends: >= 50%
+
+enum ApiMethod {
+  Scrobble = 'track.scrobble',
+  UpdateNowPlaying = 'track.updateNowPlaying',
+  GetSession = 'auth.getSession',
+}
 
 const apikey = process.env.LASTFM_API_KEY;
 const secret = process.env.LASTFM_SECRET;
@@ -33,8 +43,15 @@ export const LastfmContext = React.createContext<LastfmProviderValue>({
 
 const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmProviderProps) => {
   const [connected, setConnected] = useState(() => !!getSK());
+  const trackStatus = useRef({
+    id: '',
+    playTimeMs: 0,
+    playingSince: 0,
+    scrobbleTimeoutId: 0,
+    hasScrobbled: false,
+  }).current;
 
-  async function request(isWrite: boolean, method: string, callParams = {}, sk = true) {
+  async function request(isWrite: boolean, method: ApiMethod, callParams = {}, sk = true) {
     const params: any = {
       ...callParams,
       method,
@@ -65,17 +82,41 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
     return data;
   }
 
-  async function scrobble(item: MusicKit.MediaItem) {
-    const params = {
-      'artist[0]': item.artistName,
-      'track[0]': item.title,
-      'timestamp[0]': Math.floor(Date.now() / 1000),
-      'album[0]': item.albumName,
-      'trackNumber[0]': item.trackNumber,
+  async function sendUpdate(type: ApiMethod, item: MusicKit.MediaItem) {
+    const params: { [key: string]: any } = {
+      artist: item.artistName,
+      track: item.title,
+      timestamp: Math.floor(Date.now() / 1000),
+      album: item.albumName,
+      trackNumber: item.trackNumber,
+      duration: Math.round(item.playbackDuration / 1000),
     };
 
+    // Find the album-artist and add it to params
+    {
+      const metadataItem = item as {
+        assets?: Array<{ metadata?: { playlistArtistName?: string } }>;
+      };
+      if (
+        metadataItem.assets &&
+        metadataItem.assets[0] &&
+        metadataItem.assets[0].metadata &&
+        metadataItem.assets[0].metadata.playlistArtistName
+      ) {
+        params.albumArtist = metadataItem.assets[0].metadata.playlistArtistName;
+      }
+    }
+
+    // Add '[0]' suffix to params when a scrobble-request is made
+    if (type === ApiMethod.Scrobble) {
+      for (const key of Object.keys(params)) {
+        params[key + '[0]'] = params[key];
+        delete params[key];
+      }
+    }
+
     try {
-      await request(true, 'track.scrobble', params);
+      await request(true, type, params);
     } catch (e) {
       if (e.response && e.response.data) {
         const { data } = e.response;
@@ -114,7 +155,7 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
       token,
     };
 
-    const data = await request(true, 'auth.getSession', params, false);
+    const data = await request(true, ApiMethod.GetSession, params, false);
 
     localStorage.setItem(SK_STORAGE_KEY, data.session.key);
 
@@ -162,23 +203,70 @@ const LastfmProvider: React.FC<LastfmProviderProps> = ({ children, mk }: LastfmP
     fetchToken();
   }, []);
 
-  useEffect(() => {
-    if (mk.mediaItem && mk.mediaItem.item) {
-      scrobble(mk.mediaItem.item);
-    }
-  }, [mk.mediaItem]);
-
   const state: LastfmProviderValue = {
     login,
     reset,
     connected,
   };
 
+  if (connected) {
+    const track = mk.mediaItem && mk.mediaItem.item;
+    const player = mk.instance.player;
+
+    // Cancels upcoming scrobbles and schedules a new scrobble
+    const scheduleScrobble = () => {
+      clearTimeout(trackStatus.scrobbleTimeoutId);
+
+      if (
+        !trackStatus.hasScrobbled &&
+        track &&
+        track.playbackDuration > MIN_SCROBBLE_SONG_LENGTH_MS
+      ) {
+        trackStatus.scrobbleTimeoutId = window.setTimeout(() => {
+          trackStatus.hasScrobbled = true;
+          sendUpdate(ApiMethod.Scrobble, track);
+        }, Math.min(MAX_SCROBBLE_WAIT_MS, track.playbackDuration * SCROBBLE_THRESHOLD - trackStatus.playTimeMs));
+      }
+    };
+
+    // Reset scrobble-status
+    if (
+      // New track has started playing
+      (track && trackStatus.id !== track.id) ||
+      // Track is being repeated
+      (player.currentPlaybackProgress === 0 && trackStatus.hasScrobbled)
+    ) {
+      trackStatus.id = track.id;
+      trackStatus.playTimeMs = 0;
+      trackStatus.playingSince = 0;
+      trackStatus.hasScrobbled = false;
+
+      sendUpdate(ApiMethod.UpdateNowPlaying, track);
+    }
+
+    // Started playing
+    if (player.isPlaying) {
+      if (!trackStatus.playingSince) {
+        trackStatus.playingSince = performance.now();
+        scheduleScrobble();
+      }
+    }
+    // Stopped playing
+    else {
+      if (trackStatus.playingSince) {
+        trackStatus.playTimeMs += performance.now() - trackStatus.playingSince;
+        trackStatus.playingSince = 0;
+      }
+      clearTimeout(trackStatus.scrobbleTimeoutId);
+    }
+  }
+
   return <LastfmContext.Provider value={state}>{children}</LastfmContext.Provider>;
 };
 
 const bindings = {
   [MusicKit.Events.mediaItemDidChange]: 'mediaItem',
+  [MusicKit.Events.playbackStateDidChange]: 'playbackState',
 };
 
 export default withMK(LastfmProvider, bindings);
