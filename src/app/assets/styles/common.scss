@@ -17,7 +17,8 @@ body {
   box-sizing: border-box;
 }
 
-div, span {
+div,
+span {
   user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
@@ -35,7 +36,12 @@ a:hover {
   color: #fe2851;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
 }
 
@@ -52,6 +58,71 @@ button {
 img {
   user-drag: none;
   -webkit-user-drag: none;
+}
+
+.scrollWrapper {
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+    border-radius: 99px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background_color;
+    border-radius: 99px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: lighten($accent_color, 40%);
+    border-radius: 99px;
+    cursor: pointer;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: $background_color;
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background: lighten($accent_color, 25%);
+  }
+
+  &::-webkit-scrollbar-thumb:active {
+    background: lighten($accent_color, 18%);
+  }
+
+  &::-webkit-scrollbar-corner {
+    display: none;
+  }
+
+  // Firefox specific
+  scrollbar-width: thin;
+  scrollbar-color: lighten($accent_color, 40%) $background_color;
+  &:hover {
+    scrollbar-color: lighten($accent_color, 25%) $background_color;
+  }
+  &:active {
+    scrollbar-color: lighten($accent_color, 18%) $background_color;
+  }
+
+  &Thin {
+    @extend .scrollWrapper;
+    &::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    scrollbar-width: thin; // Firefox specific
+  }
+
+  &Thick {
+    @extend .scrollWrapper;
+    &::-webkit-scrollbar {
+      width: 9px;
+      height: 9px;
+    }
+    scrollbar-width: unset; // Firefox specific
+  }
 }
 
 :global {

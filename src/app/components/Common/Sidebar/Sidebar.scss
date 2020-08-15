@@ -20,6 +20,7 @@
     &::-webkit-scrollbar {
       display: none;
     }
+    scrollbar-width: none; // Firefox specific
 
     .menu {
       background: $background_color;

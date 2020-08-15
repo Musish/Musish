@@ -1,11 +1,10 @@
-@import "../../../../assets/styles/settings/colors";
+@import '../../../../assets/styles/common.scss';
+@import '../../../../assets/styles/settings/colors';
 
 .modal {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 320px;
-  height: 400px;
   margin-top: -200px;
   margin-left: -137.5px;
   z-index: 2000;
@@ -67,10 +66,14 @@
   }
 }
 
-.QueueList {
-  position: relative;
-  width: 400px;
-  padding: 0;
+.queueListWrapper {
+  margin: 6px;
+}
+
+.queueList {
+  @extend .scrollWrapper;
+
+  padding-right: 6px;
 }
 
 .queueItem {
@@ -115,7 +118,7 @@
     align-items: center;
     position: relative;
     border-radius: 3px;
-    padding-left: 10px;
+    padding-left: 6px;
 
     .artworkWrapper {
       border-radius: 3px;
@@ -157,9 +160,8 @@
 
   .removeButton {
     > i {
-      padding: 5px 5px;
-      margin-right: 15px;
-      margin-left:5px;
+      padding: 10px;
+      margin-left: 5px;
       color: $background_color;
       cursor: pointer;
       transition: color 0.1s;

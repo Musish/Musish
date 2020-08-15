@@ -76,4 +76,6 @@ node_modules/
 secrets.json
 *.scss.d.ts
 
+# Log-files
 yarn-error.log
+report.*.json

@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import React, { ReactNode, useEffect, useState } from 'react';
+import commonClasses from '../../../../assets/styles/common.scss';
 import AlbumItem from '../../../Common/AlbumItem/AlbumItem';
 import CuratorItem from '../../../Common/CuratorItem/CuratorItem';
 import PlaylistItem from '../../../Common/PlaylistItem/PlaylistItem';
@@ -69,7 +70,7 @@ const ItemList: React.FC<ItemListProps> = ({
   return (
     <>
       <h3>{title}</h3>
-      <div className={classes.scrollWrapper}>
+      <div className={commonClasses.scrollWrapperThin}>
         <div className={cx(classes.scrollGrid)} style={styles}>
           {finalItems.map((item: MediaItem) => {
             switch (type) {

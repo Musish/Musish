@@ -1,3 +1,4 @@
+@import '../../../assets/styles/common.scss';
 @import '../../../assets/styles/settings/colors';
 
 .container {
@@ -14,20 +15,30 @@
   align-items: center;
   animation: fadein 0.1s ease-out;
 
-  .modal {
+  .modalWrapper {
     width: 70%;
     max-width: 900px;
-    max-height: 80%;
-    padding: 20px 25px;
-    overflow: auto;
+    height: 80%;
+    padding: 9px;
     background: $background_color;
     border-radius: 8px;
     box-shadow: 0 8px 36px -10px rgba(150, 150, 150, 0.75);
     animation: fadein 0.1s;
   }
+
+  .modal {
+    @extend .scrollWrapper;
+
+    height: 100%;
+    padding: 12px 12px 12px 17px;
+  }
 }
 
 @keyframes fadein {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
